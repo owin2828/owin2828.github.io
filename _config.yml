@@ -1,4 +1,4 @@
-title:              Fake it, tiil U make it
+title:              Already done, cause do it anyway
 email:              owin2828@gmail.com
 description:        낮코밤코
 author:             owin2828
@@ -12,7 +12,7 @@ facebook_username:
 linkedin_username:
 
 # Add your google-analytics ID here to activate google analytics
-#google_analytics:   UA-XXXXXXXXX-X # out your google-analytics code
+google_analytics:   UA-154694140-1 # out your google-analytics code
 
 # Build settings
 markdown:           kramdown
