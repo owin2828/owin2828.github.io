@@ -4474,6 +4474,16 @@ input[type="button"].btn-block {
   color: rgba(0, 0, 0, 0.3);
 }
 
+/* 작아졌을 때, 드롭다운 메뉴 출력 */
+.navbar-light .navbar-nav .show .show > .dropdown-item{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* 작아졌을 때, 드롭다운 메뉴 출력 */
+.navbar-light .navbar-nav .show .show > .dropdown-item:hover{
+  color: rgba(0,0,0, 0.9);
+}
+
 .navbar-light .navbar-nav .show > .nav-link,
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
