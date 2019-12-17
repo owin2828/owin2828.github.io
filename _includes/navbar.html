@@ -14,8 +14,16 @@
         <li class="nav-item">
           <a class="nav-link" href="{{"/about" | relative_url }}">About</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ "/posts" | relative_url }}">Posts</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{{ "/posts" | relative_url }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Posts
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Java</a>
+            <a class="dropdown-item" href="#">Node.js</a>
+            <a class="dropdown-item" href="#">Spring</a>
+          </div>
+          <!--<a class="nav-link" href="{{ "/posts" | relative_url }}">Posts</a>-->
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{"/contact" | relative_url }}">Contact</a>
