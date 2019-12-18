@@ -46,6 +46,16 @@
             color: fade-out($white, .2);
           }
         }
+        > .dropdown-menu{
+          > .dropdown-item{
+            padding: 10px 20px;
+            color: $white;
+            &:focus,
+            &:hover {
+            color: fade-out($white, .2);
+          }
+          }
+        }
       }
     }
   }
