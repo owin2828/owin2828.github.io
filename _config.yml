@@ -1,8 +1,14 @@
+# --------------------------------------
+# User config
+# --------------------------------------
 title:              낮코밤코
+
 email:              owin2828@gmail.com
 description:        Already done, cause will do it anyway
 author:             owin2828
 baseurl:            ""
+
+# The unique resource location
 url:                "https://owin2828.github.io"
 
 navtitle:           Fake it, till U make it              
@@ -24,3 +30,14 @@ plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
+
+# --------------------------------------
+# Collection
+# --------------------------------------
+collections:
+  featured_categories:
+    permalink:       /category/:name/
+    output:          true
+  featured_tags:
+    permalink:       /tag/:name/
+    output:          true
