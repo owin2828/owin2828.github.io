@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Dinosaurs are extinct today"
-subtitle: "because they lacked opposable thumbs and the brainpower to build a space program."
-date: 2017-10-26 20:45:13 -0400
-background: '/img/posts/01.jpg'
+title: "End of 2019"
+subtitle: "Damn good 2019"
+date: 2019-12-26 23:45:13 -0400
+background: '/img/posts/05.jpg'
 categories: devlog
 tags: java
 ---
