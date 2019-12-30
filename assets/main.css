@@ -221,7 +221,8 @@ header.masthead {
     margin-bottom: 10px; }
   .post-preview > a > .post-subtitle {
     font-weight: 300;
-    margin: 0 0 10px; }
+    margin: 0 0 10px;
+    color: #be9595; }
 .post-preview > .post-meta {
   font-size: 18px;
   font-style: italic;
