@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring]의 첫걸음 - 6 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. 스프링 Bean 객체의 라이프 사이클">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-6.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 6</h1>
+            
+            <h2 class="subheading">Bean의 라이프사이클과 범위</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 11:20:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   8 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-스프링-bean-객체의-라이프-사이클">1. 스프링 Bean 객체의 라이프 사이클</h2>
+<hr />
+
+<h4 id="1-1-컨테이너의-초기화와-종료">1-1. 컨테이너의 초기화와 종료</h4>
+<ul>
+  <li>스프링 컨테이너는 <code class="highlighter-rouge">초기화</code>와 <code class="highlighter-rouge">종료</code>라는 라이프 사이클을 가짐</li>
+  <li>컨텍스트 객체가 <code class="highlighter-rouge">생성되는 시점에 컨테이너를 초기화</code>함</li>
+  <li>스프링 컨테이너는 설정 클래스에서 정보를 읽어와 알맞은 Bean 객체를 생성하고,<br />
+각 Bean을 연결(의존 주입)하는 작업 수행</li>
+  <li>초기화가 끝난 후 컨테이너를 사용 가능(getBean()등의 작업으로 Bean 객체를 구하는 행위 등)</li>
+  <li>컨테이너 사용이 끝나면 컨테이너를 <code class="highlighter-rouge">close()</code> 매서드를 사용해 종료, Bean 객체의 <code class="highlighter-rouge">소멸</code>
+    <blockquote>
+      <ul>
+        <li>기본적으로 Spring의 ApplicationContext 구현은 초기화 프로세스에서 <code class="highlighter-rouge">모든</code> 싱글톤 빈을 생성 및 설정</li>
+        <li>따라서 Bean에 문제가 있을 경우 초기화 단계에서 알 수 있다는 <code class="highlighter-rouge">장점</code>이 존재</li>
+        <li>만약 어떤 이유로, 특정 Bean이 <code class="highlighter-rouge">늦은 초기화</code>를 원한다면 다음과 같이 두 가지 방법이 존재
+          <ol>
+            <li>xml에서 Bean을 등록시 <code class="highlighter-rouge">lazy-init</code> 속성을 이용하여 초기화</li>
+            <li>Java Config에서 Bean을 등록시 <code class="highlighter-rouge">@Lazy</code> 어노테이션을 이용</li>
+          </ol>
+        </li>
+      </ul>
+    </blockquote>
+
+    <blockquote>
+      <blockquote>
+        <p>설정파일 <code class="highlighter-rouge">전체</code>를 Lazy-init</p>
+      </blockquote>
+    </blockquote>
+
+    <blockquote>
+      <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Lazy</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">"com.baeldung.lazy"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppConfig</span> <span class="o">{</span>
+ 
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Region</span> <span class="nf">getRegion</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Region</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+</code></pre></div>      </div>
+    </blockquote>
+
+    <blockquote>
+      <blockquote>
+        <p><code class="highlighter-rouge">특정 Bean</code>을 Lazy-init</p>
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Bean</span>
+<span class="nd">@Lazy</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">Region</span> <span class="nf">getRegion</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Region</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>        </div>
+      </blockquote>
+    </blockquote>
+
+    <blockquote>
+      <p>Lazy init을 하더라도 해당 Bean을 다른 Bean이 <code class="highlighter-rouge">참조</code>한다면 그 시점에 초기화 됨<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="1-2-bean-객체의-라이프-사이클">1-2. Bean 객체의 라이프 사이클</h4>
+<p>Bean 객체는 아래와 같은 라이프 사이클을 가지며 <code class="highlighter-rouge">스프링 컨테이너</code>에 의해 관리됨</p>
+<ul>
+  <li>객체생성 -&gt; 의존설정 -&gt; 초기화 -&gt; 소멸<br />
+<br /></li>
+</ul>
+
+<h2 id="2-bean-객체의-초기화와-소멸">2. Bean 객체의 초기화와 소멸</h2>
+<hr />
+<h4 id="2-1-스프링-인터페이스를-통한-구현">2-1. 스프링 인터페이스를 통한 구현</h4>
+<p>스프링 컨테이너는 Bean 객체를 초기화하고 소멸하기 위해 빈 객체의 <code class="highlighter-rouge">지정한 매서드</code>를 호출</p>
+<ol>
+  <li>매서드 정의 인터페이스:
+    <ul>
+      <li>org.springframework.beans.factory.InitializingBean</li>
+      <li>org.springframework.beans.factory.DisposableBean</li>
+    </ul>
+  </li>
+  <li>인터페이스:
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// 초기화 인터페이스</span>
+ <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">InitializingBean</span> <span class="o">{</span>
+     <span class="kt">void</span> <span class="nf">afterPropertiesSet</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+ <span class="o">}</span>
+ <span class="c1">// 소멸 인터페이스</span>
+ <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DisposableBean</span> <span class="o">{</span>
+     <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>Bean 객체가 각 인터페이스를 구현하면 스프링 컨테이너는 해당하는 매서드를 실행</li>
+      <li>우리는 위의 코드에서 <code class="highlighter-rouge">afterPropertiesSet()</code>와 <code class="highlighter-rouge">destroy()</code> 매서드를 구현하면 됨</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// Client.java</span>
+ <span class="c1">// 초기화와 소멸에 해당하는 인터페이스를 상속 후, 각 매서드 재정의</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="kd">implements</span> <span class="nc">InitializingBean</span><span class="o">,</span> <span class="nc">DisposableBean</span> <span class="o">{</span>
+         <span class="o">...</span>
+         <span class="c1">// 초기화 매서드 오버라이딩</span>
+     <span class="nd">@Override</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterPropertiesSet</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Client.afterPropertiesSet() 실행"</span><span class="o">);</span>
+     <span class="o">}</span>
+         <span class="o">...</span>
+         <span class="c1">// 소멸 매서드 오버라이딩</span>
+     <span class="nd">@Override</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Client.destroy() 실행"</span><span class="o">);</span>
+     <span class="o">}</span>
+
+ <span class="o">}</span>
+</code></pre></div>    </div>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   * 해당 코드를 수행하면 콘솔 화면에 매서드에서 정의한  `"Client.afterPropertiesSet() 실행"` 및 `"Client.destroy() 실행"`이 출력 됨  
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h4 id="2-2-커스텀-매서드를-통한-구현">2-2. 커스텀 매서드를 통한 구현</h4>
+<p>위의 두 인터페이스를 구현할 수 없거나, 두 인터페이스를 사용하지 않고 싶을 때 스프링 설정에서 <code class="highlighter-rouge">직접 매서드를 지정</code> 가능</p>
+<ul>
+  <li>Bean 태그에서 <code class="highlighter-rouge">initMethod</code> 속성과 <code class="highlighter-rouge">destoryMethod</code> 속성을 사용해 사용할 매서드 이름을 지정</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtxWithprototype.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithPrototype</span> <span class="o">{</span>
+	<span class="o">...</span>
+	<span class="c1">// 매서드의 이름을 지정해 초기화와 소멸 로직을 처리</span>
+	<span class="nd">@Bean</span><span class="o">(</span><span class="n">initMethod</span> <span class="o">=</span> <span class="s">"connect"</span><span class="o">,</span> <span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">Client2</span> <span class="nf">client2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">Client2</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client2</span><span class="o">();</span>
+		<span class="n">client</span><span class="o">.</span><span class="na">setHost</span><span class="o">(</span><span class="s">"host"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">client</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="2-3-bean-설정-코드에서-직접-초기화소멸을-수행">2-3. Bean 설정 코드에서 직접 초기화/소멸을 수행</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtxWithprototype.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithPrototype</span> <span class="o">{</span>
+	<span class="o">...</span>
+	<span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">Client2</span> <span class="nf">client2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">Client2</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client2</span><span class="o">();</span>
+		<span class="n">client</span><span class="o">.</span><span class="na">setHost</span><span class="o">(</span><span class="s">"host"</span><span class="o">);</span>
+                <span class="c1">// 초기화는 직접 수행, 소멸은 커스텀 매서드를 통해 수행</span>
+                <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">();</span>
+		<span class="k">return</span> <span class="n">client</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li>위와 같이 <code class="highlighter-rouge">직접 매서드를 호출</code>하여 초기화도 가능</li>
+  <li>이때 해당 클래스 내부적으로 인터페이스를 상속받아 초기화를 실행해 <code class="highlighter-rouge">두 번 초기화 과정이 수행되지 않도록</code> 주의</li>
+</ul>
+
+<blockquote>
+  <p>initMethod 속성과 destroyMethod 속성에 지정한 매서드는 <code class="highlighter-rouge">파라미터가 없어야 함</code><br />
+만약 파라미터가 존재할 경우, 스프링 컨테이너는 <code class="highlighter-rouge">Exception</code>을 발생<br />
+<br /></p>
+</blockquote>
+
+<h2 id="3-bean-객체의-생성과-관리-범위">3. Bean 객체의 생성과 관리 범위</h2>
+<ul>
+  <li>Bean 객체는 기본적으로 <code class="highlighter-rouge">싱글톤(singleton)</code>의 범위를 가짐</li>
+  <li>Bean 객체의 범위를 <code class="highlighter-rouge">프로토타입(prototype)</code>으로 지정시 Bean 객체를 <code class="highlighter-rouge">매번</code> 새롭게 생성</li>
+  <li>특정 Bean을 프로토타입으로 지정하려면, 다음과 같이 <code class="highlighter-rouge">@Scope</code> 어노테이션을 <code class="highlighter-rouge">@Bean</code> 어노테이션과 <code class="highlighter-rouge">함께</code> 사용
+    <blockquote>
+      <ul>
+        <li>프로토타입은 새로운 요청이 들어오면, 기존의 Bean을 바탕으로 <code class="highlighter-rouge">복사해</code> 새로운 객체를 생성</li>
+        <li>이렇게 만들어진 새로운 Bean은 <code class="highlighter-rouge">스케줄링</code>, <code class="highlighter-rouge">멀티스레딩</code>등에 사용이 됨
+          <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtxWithprototype.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithPrototype</span> <span class="o">{</span>
+        <span class="c1">// 해당 Bean 객체를 프로토 타입으로 지정</span>
+    <span class="nd">@Bean</span>
+    <span class="nd">@Scope</span><span class="o">(</span><span class="s">"prototype"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Client</span> <span class="nf">client</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="o">();</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">setHost</span><span class="o">(</span><span class="s">"host"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">client</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// 해당 Bean을 명시저으로 싱글톤으로 지정</span>
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">initMethod</span> <span class="o">=</span> <span class="s">"connect"</span><span class="o">,</span> <span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+    <span class="nd">@Scope</span><span class="o">(</span><span class="s">"singleton"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Client2</span> <span class="nf">client2</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Client2</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client2</span><span class="o">();</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">setHost</span><span class="o">(</span><span class="s">"host"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">client</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>          </div>
+        </li>
+      </ul>
+    </blockquote>
+  </li>
+  <li>각 경우 해당 Bean 객체의 동일성은 아래와 같음
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 프로토 타입의 경우</span>
+  <span class="nc">Client</span> <span class="n">client1</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"client"</span><span class="o">,</span> <span class="nc">Client</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="nc">Client</span> <span class="n">client2</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"client"</span><span class="o">,</span> <span class="nc">Client</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// client1 != client -&gt; true</span>
+
+  <span class="c1">// 싱글톤의 경우</span>
+  <span class="nc">Client</span> <span class="n">client1</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"client"</span><span class="o">,</span> <span class="nc">Client2</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="nc">Client</span> <span class="n">client2</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"client"</span><span class="o">,</span> <span class="nc">Client2</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// client1 != client -&gt; false</span>
+</code></pre></div>    </div>
+  </li>
+  <li>프로토 타입을 갖는 Bean은 완전한 라이프 사이클을 <code class="highlighter-rouge">따르지 않음</code></li>
+  <li>생성 및 초기화는 컨테이너가 해주지만, 소멸 처리는 코드에서 <code class="highlighter-rouge">직접</code> 해줘야 함</li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-5.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 5">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring]의 첫걸음 - 5 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. About Component 스캔 1-1. 컴포넌트 스캔이란? 자동 주입과 함께 사용되는 기능 스프링이 직접 클래스를 검색해서 빈으로 등록해주는 기능 설정 코드가 크게 줄어듦">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-5.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 5</h1>
+            
+            <h2 class="subheading">컴포넌트 스캔</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 11:20:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   8 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-about-component-스캔">1. About Component 스캔</h2>
+<hr />
+<h4 id="1-1-컴포넌트-스캔이란">1-1. 컴포넌트 스캔이란?</h4>
+<ul>
+  <li>자동 주입과 함께 사용되는 기능</li>
+  <li><code class="highlighter-rouge">스프링이 직접 클래스를 검색해서 빈으로 등록</code>해주는 기능</li>
+  <li>설정 코드가 크게 줄어듦<br />
+<br /></li>
+</ul>
+
+<h4 id="1-2-component-어노테이션으로-스캔-대상-지정">1-2. @Component 어노테이션으로 스캔 대상 지정</h4>
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">기본 속성 값</code>으로 해당 클래스를 스캔 대상으로 지정</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">//MemberDao.java</span>
+ <span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+ <span class="nd">@Component</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberDao</span> <span class="o">{</span>
+     <span class="o">...</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">속성 값을 주어</code> 스캔 대상으로 지정</p>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//MemberInfoPrinter.java</span>
+<span class="c1">// 빈의 이름을 지정</span>
+<span class="nd">@Component</span><span class="o">(</span><span class="s">"infoPrinter"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberInfoPrinter</span> <span class="o">{</span>
+ <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>컴포넌트 스캔시 Bean의 이름이 지정되는 방법은 위의 두 가지 방법에 따라 아래와 같이 결정됨</p>
+<ol>
+  <li>@Component 어노테이션에 값을 주지 않을 경우, Bean으로 등록할 때 사용될 이름은 클래스 이름의 <code class="highlighter-rouge">첫 글자를 소문자</code>로 바꾼 이름  <br />
+  즉, 클래스 이름이  MemberDao 라면 Bean 이름으로는 memberDao를 사용</li>
+  <li>@Component 어노테이션에 값을 주었다면, <code class="highlighter-rouge">그 값을 Bean의 이름</code>으로 사용<br />
+<br /></li>
+</ol>
+
+<h4 id="1-3-componentscan-어노테이션으로-스캔-설정">1-3. @ComponentScan 어노테이션으로 스캔 설정</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtx.java</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="o">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="c1">// ComponentScan 어노테이션</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">})</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+       <span class="cm">/*
+        * 다음과 같은 코드가 줄어들게 됨
+        * public MemberDao memberDao(){
+	*     ...
+        * }
+        * public MemberInfoPrinter memberInfoPrinter(){
+	*     ...
+        * }
+        */</span>
+
+	<span class="nd">@Bean</span>
+	<span class="nd">@Qualifier</span><span class="o">(</span><span class="s">"printer"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">MemberPrinter</span> <span class="nf">memberPrinter1</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberPrinter</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="nd">@Qualifier</span><span class="o">(</span><span class="s">"summaryPrinter"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">MemberSummaryPrinter</span> <span class="nf">memberPrinter2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberSummaryPrinter</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">VersionPrinter</span> <span class="nf">versionPrinter</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">VersionPrinter</span> <span class="n">versionPrinter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VersionPrinter</span><span class="o">();</span>
+		<span class="n">versionPrinter</span><span class="o">.</span><span class="na">setMajorVersion</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+		<span class="n">versionPrinter</span><span class="o">.</span><span class="na">setMinorVersion</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">versionPrinter</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">@ComponentScan</code> 어노테이션으로 인해, 4장의 AppCtx 코드와 비교하여 <code class="highlighter-rouge">설정 코드가 줄어듦</code></li>
+  <li>@ComponentScan의 <code class="highlighter-rouge">basePackage 속성값</code>은 {“spring”} 인데,<br />
+이는 spring 한 개만 존재하고 <code class="highlighter-rouge">그 패키지와 하위 패키지에 속한 클래스</code>를 스캔 대상으로 설정<br />
+<br /></li>
+</ul>
+
+<h4 id="1-4-스캔-대상에서-제외하거나-포함시키기">1-4. 스캔 대상에서 제외하거나 포함시키기</h4>
+<p><code class="highlighter-rouge">excludeFilters</code> 속성을 사용하면 스캔할 때 특정 대상을 자동 등록 대상에서 제외 가능하고, 아래와 같이 3가지 사용법이 존재</p>
+<ol>
+  <li>제외 대상을 직접 지정</li>
+  <li>특정 어노티에션을 붙인 타입을 컴포넌트 대상에서 제외</li>
+  <li>특정 타입이나 그 하위 타입을 컴포넌트 스캔 대상에서 제외</li>
+</ol>
+
+<p>각 방법별 사용 예시는 아래와 같음</p>
+<ol>
+  <li><code class="highlighter-rouge">정규 표현식 / AspectJ 패턴</code>을 사용한 대상 지정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// AppCtxWithExclude.java</span>
+ <span class="kn">import</span> <span class="nn">org.springframework.context.annotation.FilterType</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.springframework.context.annotation.ComponentScan.Filter</span><span class="o">;</span>
+
+ <span class="c1">// 동일 코드에 대하여 정규표현식 / AspectJ 패턴 사용 방식</span>
+ <span class="c1">// 정규표현식을 이용한 1번째 방법</span>
+ <span class="nd">@Configuration</span>
+ <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">},</span> 
+     <span class="n">excludeFilters</span> <span class="o">=</span> 
+             <span class="o">(</span><span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">REGEX</span><span class="o">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">"spring\\..*Dao"</span> <span class="o">)</span>		
+ <span class="o">)</span>
+
+ <span class="c1">// AspectJ를 이용한 2번째 방법</span>
+ <span class="nd">@Configuration</span>
+ <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">},</span> 
+     <span class="n">excludeFilters</span> <span class="o">=</span> 
+             <span class="o">(</span><span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">ASPECTJ</span><span class="o">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">"spring.*Dao"</span> <span class="o">)</span>		
+ <span class="o">)</span>
+
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithExclude</span> <span class="o">{</span>
+     <span class="o">...</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li><code class="highlighter-rouge">정규 표현식</code>은 “spring”으로 시작하고 Dao로 끝나는 타입을 지정</li>
+      <li><code class="highlighter-rouge">AspectJ 패턴</code>은 spring 패키지의 Dao로 끝나는 타입을 지정<br />
+ <br /></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">특정 어노테이션</code>을 제외
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// NoProduct.java</span>
+ <span class="nd">@Retention</span><span class="o">(</span><span class="no">RUNTIME</span><span class="o">)</span>
+ <span class="nd">@Target</span><span class="o">(</span><span class="no">TYPE</span><span class="o">)</span>
+ <span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">NoProduct</span> <span class="o">{</span>
+
+ <span class="o">}</span>
+
+ <span class="c1">// ManualBean.java</span>
+ <span class="nd">@Retention</span><span class="o">(</span><span class="no">RUNTIME</span><span class="o">)</span>
+ <span class="nd">@Target</span><span class="o">(</span><span class="no">TYPE</span><span class="o">)</span>
+ <span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">ManualBean</span> <span class="o">{</span>
+
+ <span class="o">}</span>
+</code></pre></div>    </div>
+    <p>위와 같은 특정 어노테이션을 붙인 타입을 텀포넌트 대상에서 제외하는 방법은 아래와 같이 존재</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// AppCtxWithExclude.java</span>
+ <span class="nd">@Configuration</span>
+ <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">},</span> 
+     <span class="n">excludeFilters</span> <span class="o">=</span> <span class="o">{</span> 
+             <span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">ANNOTATION</span><span class="o">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="nc">ManualBean</span><span class="o">.</span><span class="na">class</span> <span class="o">)</span>			
+ <span class="o">})</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>type 속성값으로 <code class="highlighter-rouge">FilterType.ANNOTATION</code>을 사용하면 class 속성에 <code class="highlighter-rouge">필터로 사용할 어노테이션 타입</code>을 값으로 줌</li>
+      <li>이 코드는 @ManualBean 어노테이션을 제외 대상에 추가했으므로, 결국 다음 클래스를 컴포넌트 스캔 대상에서 제외</li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// MemberDao.java</span>
+ <span class="nd">@ManualBean</span>
+ <span class="nd">@Component</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="nc">Dao</span><span class="o">{</span>
+     <span class="o">...</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>@Retention, @Target 어노테이션?</p>
+      <ul>
+        <li>어노테이션을 Customizing 하는 방법</li>
+        <li><code class="highlighter-rouge">@Retention</code>: <code class="highlighter-rouge">어느 시점</code>까지 어노테이션을 남길 것인가? (파라미터는 아래와 같음)
+          <ol>
+            <li>SOURCE: 컴파일시 사라짐</li>
+            <li>CLASS: 컴파일러가 클래스를 참조할 때까지 유효</li>
+            <li>RUNTIME: 컴파일 이후에도 VM을 통해 참조 가능</li>
+          </ol>
+        </li>
+        <li><code class="highlighter-rouge">@Target</code>: <code class="highlighter-rouge">어디</code>에 우리가 만든 어노테이션을 적용할 것인가? (파라미터는 아래와 같음)
+          <ol>
+            <li>TYPE: 클래스, 인터페이스</li>
+            <li>FIELD: 필드</li>
+            <li>METHOD: 매서드</li>
+            <li>PARAMETER: 파라미터</li>
+            <li>CONSTRUCTOR: 생성자</li>
+            <li>LOCAL_VARIABLE: 지역변수</li>
+            <li>ANNOTATION_TYPE: 어노테이션 타입</li>
+            <li>PACKAGE: 패키지</li>
+          </ol>
+        </li>
+      </ul>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">특정 타입이나 그 하위 타입</code>을 제외
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtxWithExclude.java</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">},</span> 
+ <span class="n">excludeFilters</span> <span class="o">=</span> <span class="o">{</span> 
+         <span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">ASSIGNABLE_TYPE</span><span class="o">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="nc">MemberDao</span><span class="o">.</span><span class="na">class</span> <span class="o">)</span>			
+<span class="o">})</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>classes 속성에는 <code class="highlighter-rouge">제외할 타입</code>의 목록을 지정</li>
+    </ul>
+
+    <p><code class="highlighter-rouge">설정할 필터가 두 개 이상</code>이면 @ComponentScan의 exludeFilters 속성에 <code class="highlighter-rouge">배열</code>을 사용해 @Filter 목록을 전달</p>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// AppCtxWithExclude.java</span>
+ <span class="nd">@Configuration</span>
+ <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"spring"</span><span class="o">},</span> 
+     <span class="n">excludeFilters</span> <span class="o">=</span> <span class="o">{</span> 
+             <span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">ANNOTATION</span><span class="o">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="nc">ManualBean</span><span class="o">.</span><span class="na">class</span> <span class="o">),</span>
+             <span class="o">(</span><span class="nd">@Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">REGEX</span><span class="o">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">"spring\\..*Dao"</span> <span class="o">)</span>
+ <span class="o">})</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ol>
+
+<h2 id="2-컴포넌트-스캔에-따른-충돌-처리">2. 컴포넌트 스캔에 따른 충돌 처리</h2>
+<hr />
+<p>컴포넌트 스캔 기능을 사용해서 Bean을 등록할 경우, 아래와 같은 두 가지 충돌이 발생 가능</p>
+<ol>
+  <li>Bean 이름의 충돌</li>
+  <li>수동 등록에 따른 충돌</li>
+</ol>
+
+<h4 id="2-1-bean-이름-충돌">2-1. Bean 이름 충돌</h4>
+<ul>
+  <li><code class="highlighter-rouge">서로 다른 패키지에 같은 클래스의 이름</code>이 존재하고, 두 클래스 모두 @Component 어노테이션이 붙게 된다면, <br />
+Exception이 발생하게 됨</li>
+  <li>이럴 경우, 둘 중 하나에 <code class="highlighter-rouge">명시적</code>으로 Bean 이름을 지정해서 이름 충돌을 피해야 함<br />
+<br /></li>
+</ul>
+
+<h4 id="2-2-수동-등록에-따른-충돌">2-2. 수동 등록에 따른 충돌</h4>
+<ol>
+  <li>같은 클래스를 같은 이름으로 설정할 때:
+    <ul>
+      <li>@Component 어노테이션을 통해 이미 지정한 Bean의 클래스 이름이 존재하지만,<br />
+  클래스 설정에 직접 해당 클래스를 동일한 이름으로 정해 등록하는 경우 발생</li>
+      <li>즉, 스캔할 때 사용하는 Bean 이름과 수동 등록한 이름이 같을 경우, <code class="highlighter-rouge">수동 등록한 Bean이 우선</code>시 됨</li>
+    </ul>
+  </li>
+  <li>같은 클래스를 다른 이름으로 설정할 때:
+    <ul>
+      <li>만약, 스캔할 때 사용하는 Bean 이름과 동일한 클래스를 다른 이름으로 수동 등록하는 경우에는 <br />
+  <code class="highlighter-rouge">다른 이름의 두 개의 Bean</code>이 만들어지게 됨</li>
+      <li>이런 경우에는 <code class="highlighter-rouge">@Qualifier</code> 어노테이션을 통해 알맞은 Bean을 선택해야 함</li>
+    </ul>
+  </li>
+</ol>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-4.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 4">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-6.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 6">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

@@ -8,10 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    낮코밤코
+    [Spring]의 첫걸음 - 1 - 낮코밤코
+    
   </title>
 
-  <meta name="description" content="Already done, cause will do it anyway">
+  <meta name="description" content="스프링이란? 흔히 말하는 스프링 = 스프링 프레임워크">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -22,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/26/spring-1.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -70,17 +71,24 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/whale.jpg')">
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1><!--낮코밤코--></h1>
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 1</h1>
             
-            <span class="subheading">Already done, cause will do it anyway</span>
+            <h2 class="subheading">스프링이란?</h2>
             
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 16:28:00 December 26, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   1 min  read </span>
+
+            </span>
           </div>
         </div>
       </div>
@@ -91,119 +99,73 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        
+        <h2 id="스프링이란">스프링이란?</h2>
+<hr />
+<blockquote>
+  <p>흔히 말하는 스프링 = 스프링 프레임워크</p>
+</blockquote>
 
-        <!-- Home Post List -->
-        
+<p>스프링 프레임워크의 특징은 다음와 같다.</p>
+<ul>
+  <li><code class="highlighter-rouge">의존 주입(Dependency Injection: DI)</code> 지원</li>
+  <li><code class="highlighter-rouge">AOP(Aspect-Oriented Programming)</code> 지원</li>
+  <li><code class="highlighter-rouge">MVC 웹 프레임워크</code> 제공</li>
+  <li><code class="highlighter-rouge">JDBC</code>, <code class="highlighter-rouge">JPA 연동</code>, <code class="highlighter-rouge">선언적 트랜잭션 처리</code> 등 DB 연동지원</li>
+</ul>
 
-        <article class="post-preview">
-          <a href="/devlog/2019/12/30/spring-6.html">
-            <h2 class="post-title">[Spring]의 첫걸음 - 6</h2>
-            
-            <h3 class="post-subtitle">Bean의 라이프사이클과 범위</h3>
-            
-          </a>
-          <p class="post-meta">
-          2019-12-30 11:20
-          in
-          devlog
-          on
-          spring          
-          </p>
-        </article>
+<blockquote>
+  <p>spring과 spring MVC는 <code class="highlighter-rouge">다르다</code></p>
+</blockquote>
 
-        <hr>
+<p>스프링 프레임워크의 주요 용어는 다음과 같다.</p>
 
-        
+<ul>
+  <li><code class="highlighter-rouge">의존 주입</code>: 객체를 직접 생성하는 것이 아닌 <code class="highlighter-rouge">외부에서 객체를 주입</code>시켜 사용하는 방식</li>
+  <li><code class="highlighter-rouge">AOP</code>: 핵심 기능과 공통 기능을 <code class="highlighter-rouge">분리</code> 시켜놓고, 공통 기능을 필요로 하는 핵심 기능들에서 사용하는 방식</li>
+  <li><code class="highlighter-rouge">JDBC</code>:  자바에서 <code class="highlighter-rouge">데이터베이스</code>에 접속할 수 있도록 하는 <code class="highlighter-rouge">자바 API</code></li>
+  <li><code class="highlighter-rouge">JPA</code>: JPA란 자바 <code class="highlighter-rouge">ORM </code>기술에 대한 API 표준 명세</li>
+  <li><code class="highlighter-rouge">ORM</code>: <code class="highlighter-rouge">객체와 DB 테이블</code>이 매핑을 이루는 것</li>
+  <li><code class="highlighter-rouge">선언적 트랜잭션</code>: <code class="highlighter-rouge">설정 파일</code>이나 <code class="highlighter-rouge">어노테이션</code>을 통해 트랜잭션의 범위, 롤백 규칙 등을 정의</li>
+</ul>
 
-        <article class="post-preview">
-          <a href="/devlog/2019/12/30/spring-5.html">
-            <h2 class="post-title">[Spring]의 첫걸음 - 5</h2>
-            
-            <h3 class="post-subtitle">컴포넌트 스캔</h3>
-            
-          </a>
-          <p class="post-meta">
-          2019-12-30 11:20
-          in
-          devlog
-          on
-          spring          
-          </p>
-        </article>
+<p>스프링 프레임워크외 다른 스프링 프로젝트는 아래와 같다.</p>
+<ul>
+  <li><code class="highlighter-rouge">스프링 데이터</code>: 적은 양의 코드로 데이터 연동을 처리할 수 있도록 도와주는 프레임워크. JPA, 몽고DB, 레디스등 다양한 저장소 지원</li>
+  <li><code class="highlighter-rouge">스프링 시큐리티</code>: 인증/인가와 관련된 프레임워크로서 웹 접근 제어, 객체 접근 제어, DB, 오픈 ID, LDAP 등 다양한 인증 방식, 암호화 기능 제공</li>
+  <li><code class="highlighter-rouge">스프링 배치</code>: 로깅/추적, 작업 통계, 실패 처리 등 배치 처리에 필요한 기본 기능을 제공<br />
+<br /></li>
+</ul>
 
-        <hr>
+<h2 id="개발환경">개발환경</h2>
+<hr />
+<ul>
+  <li>Spring: 5.0.2.RELEASE</li>
+  <li>Java openjdk 1.8.0_22</li>
+  <li>Apache maven 3.7</li>
+  <li>Tomcat 8.5.43</li>
+</ul>
 
-        
-
-        <article class="post-preview">
-          <a href="/devlog/2019/12/30/spring-4.html">
-            <h2 class="post-title">[Spring]의 첫걸음 - 4</h2>
-            
-            <h3 class="post-subtitle">의존 자동 주입</h3>
-            
-          </a>
-          <p class="post-meta">
-          2019-12-30 11:15
-          in
-          devlog
-          on
-          spring          
-          </p>
-        </article>
 
         <hr>
 
-        
-
-        <article class="post-preview">
-          <a href="/devlog/2019/12/30/spring-3.html">
-            <h2 class="post-title">[Spring]의 첫걸음 - 3</h2>
-            
-            <h3 class="post-subtitle">스프링 DI</h3>
-            
-          </a>
-          <p class="post-meta">
-          2019-12-30 10:51
-          in
-          devlog
-          on
-          spring          
-          </p>
-        </article>
-
-        <hr>
-
-        
-
-        <article class="post-preview">
-          <a href="/devlog/2019/12/26/spring-2.html">
-            <h2 class="post-title">[Spring]의 첫걸음 - 2</h2>
-            
-            <h3 class="post-subtitle">스프링 시작하기</h3>
-            
-          </a>
-          <p class="post-meta">
-          2019-12-26 16:28
-          in
-          devlog
-          on
-          spring          
-          </p>
-        </article>
-
-        <hr>
-
-        
-
-        <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="/posts">View All Posts &rarr;</a>
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/26/spring-0.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 0">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/26/spring-2.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 2">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
         </div>
 
       </div>
     </div>
   </div>
+
+
 
 
   <!-- Footer -->

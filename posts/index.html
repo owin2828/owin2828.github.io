@@ -1,32 +1,306 @@
----
-layout: page
-title: Posts
-background: '/img/bg-post.jpg'
-pagination:
-  enabled: ture
----
+<!DOCTYPE html>
 
-{% for post in paginator.posts %}
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    Posts - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="Already done, cause will do it anyway">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/posts/">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/bg-post.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Posts</h1>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        
 
 <article class="post-preview">
-  <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
-    <h2 class="post-title">{{ post.title }}</h2>
-    {% if post.subtitle %}
-    <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-    {% else %}
-    <h3 class="post-subtitle">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
-    {% endif %}
+  <a href="/devlog/2019/12/30/spring-6.html">
+    <h2 class="post-title">[Spring]의 첫걸음 - 6</h2>
+    
+    <h3 class="post-subtitle">Bean의 라이프사이클과 범위</h3>
+    
   </a>
   <p class="post-meta">
-    {{ post.date | date: '%F %R' }}
+    2019-12-30 11:20
     in
-    {{ post.categories}}
+    devlog
     on
-    {{ post.tags}}
+    spring
 </article>
 
 <hr>
 
-{% endfor %}
 
-{% include pagination.html %}
+
+<article class="post-preview">
+  <a href="/devlog/2019/12/30/spring-5.html">
+    <h2 class="post-title">[Spring]의 첫걸음 - 5</h2>
+    
+    <h3 class="post-subtitle">컴포넌트 스캔</h3>
+    
+  </a>
+  <p class="post-meta">
+    2019-12-30 11:20
+    in
+    devlog
+    on
+    spring
+</article>
+
+<hr>
+
+
+
+<article class="post-preview">
+  <a href="/devlog/2019/12/30/spring-4.html">
+    <h2 class="post-title">[Spring]의 첫걸음 - 4</h2>
+    
+    <h3 class="post-subtitle">의존 자동 주입</h3>
+    
+  </a>
+  <p class="post-meta">
+    2019-12-30 11:15
+    in
+    devlog
+    on
+    spring
+</article>
+
+<hr>
+
+
+
+<article class="post-preview">
+  <a href="/devlog/2019/12/30/spring-3.html">
+    <h2 class="post-title">[Spring]의 첫걸음 - 3</h2>
+    
+    <h3 class="post-subtitle">스프링 DI</h3>
+    
+  </a>
+  <p class="post-meta">
+    2019-12-30 10:51
+    in
+    devlog
+    on
+    spring
+</article>
+
+<hr>
+
+
+
+<article class="post-preview">
+  <a href="/devlog/2019/12/26/spring-2.html">
+    <h2 class="post-title">[Spring]의 첫걸음 - 2</h2>
+    
+    <h3 class="post-subtitle">스프링 시작하기</h3>
+    
+  </a>
+  <p class="post-meta">
+    2019-12-26 16:28
+    in
+    devlog
+    on
+    spring
+</article>
+
+<hr>
+
+
+
+
+  <div class='pagination'>
+    
+      <span>&laquo; Prev</span>
+    
+
+    
+      
+        <span  class="pagination-selected" >
+          <a href="/posts/index.html" title="Posts">
+            1
+          </a>
+        </span>
+      
+        <span >
+          <a href="/posts/page/2/index.html" title="Posts">
+            2
+          </a>
+        </span>
+      
+    
+
+    
+      <a href="/posts/page/2/">
+        Next &raquo;
+      </a>
+    
+  </div>
+  
+</div>
+
+<!-- 다음의 코드는 assets/vendor/startbootstrap-clean-blog/scss/pagination.scss로 이동 -->
+<!-- <style lang="scss">
+  .pagination {
+    margin: auto;
+    text-align: center;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 55px 0 25px 0;
+    color: #999;
+  }
+  span.pagination-selected {
+    display: inline-block;
+    font-size: 1.7rem;
+  }
+</style> -->
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

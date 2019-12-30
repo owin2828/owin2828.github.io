@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2019-12-30T15:28:52+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do it anyway</subtitle><author><name>owin2828</name></author><entry><title type="html">[Spring]의 첫걸음 - 5</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-5.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 5" /><published>2019-12-30T11:20:00+09:00</published><updated>2019-12-30T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-5.html">&lt;h2 id=&quot;1-about-component-스캔&quot;&gt;1. About Component 스캔&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;1-1-컴포넌트-스캔이란&quot;&gt;1-1. 컴포넌트 스캔이란?&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;자동 주입과 함께 사용되는 기능&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;스프링이 직접 클래스를 검색해서 빈으로 등록&lt;/code&gt;해주는 기능&lt;/li&gt;
+  &lt;li&gt;설정 코드가 크게 줄어듦&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-2-component-어노테이션으로-스캔-대상-지정&quot;&gt;1-2. @Component 어노테이션으로 스캔 대상 지정&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;기본 속성 값&lt;/code&gt;으로 해당 클래스를 스캔 대상으로 지정&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;//MemberDao.java&lt;/span&gt;
+ &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.stereotype.Component&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+ &lt;span class=&quot;nd&quot;&gt;@Component&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;속성 값을 주어&lt;/code&gt; 스캔 대상으로 지정&lt;/p&gt;
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//MemberInfoPrinter.java&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 빈의 이름을 지정&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Component&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;infoPrinter&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;컴포넌트 스캔시 Bean의 이름이 지정되는 방법은 위의 두 가지 방법에 따라 아래와 같이 결정됨&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;@Component 어노테이션에 값을 주지 않을 경우, Bean으로 등록할 때 사용될 이름은 클래스 이름의 &lt;code class=&quot;highlighter-rouge&quot;&gt;첫 글자를 소문자&lt;/code&gt;로 바꾼 이름  &lt;br /&gt;
+  즉, 클래스 이름이  MemberDao 라면 Bean 이름으로는 memberDao를 사용&lt;/li&gt;
+  &lt;li&gt;@Component 어노테이션에 값을 주었다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;그 값을 Bean의 이름&lt;/code&gt;으로 사용&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;1-3-componentscan-어노테이션으로-스캔-설정&quot;&gt;1-3. @ComponentScan 어노테이션으로 스캔 설정&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtx.java&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.context.annotation.ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ComponentScan 어노테이션&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;cm&quot;&gt;/*
+        * 다음과 같은 코드가 줄어들게 됨
+        * public MemberDao memberDao(){
+	*     ...
+        * }
+        * public MemberInfoPrinter memberInfoPrinter(){
+	*     ...
+        * }
+        */&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;printer&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberPrinter1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;summaryPrinter&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberSummaryPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberPrinter2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberSummaryPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;VersionPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;versionPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;VersionPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;versionPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;VersionPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;versionPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMajorVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;versionPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMinorVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;versionPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@ComponentScan&lt;/code&gt; 어노테이션으로 인해, 4장의 AppCtx 코드와 비교하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;설정 코드가 줄어듦&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;@ComponentScan의 &lt;code class=&quot;highlighter-rouge&quot;&gt;basePackage 속성값&lt;/code&gt;은 {“spring”} 인데,&lt;br /&gt;
+이는 spring 한 개만 존재하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;그 패키지와 하위 패키지에 속한 클래스&lt;/code&gt;를 스캔 대상으로 설정&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-4-스캔-대상에서-제외하거나-포함시키기&quot;&gt;1-4. 스캔 대상에서 제외하거나 포함시키기&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;excludeFilters&lt;/code&gt; 속성을 사용하면 스캔할 때 특정 대상을 자동 등록 대상에서 제외 가능하고, 아래와 같이 3가지 사용법이 존재&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;제외 대상을 직접 지정&lt;/li&gt;
+  &lt;li&gt;특정 어노티에션을 붙인 타입을 컴포넌트 대상에서 제외&lt;/li&gt;
+  &lt;li&gt;특정 타입이나 그 하위 타입을 컴포넌트 스캔 대상에서 제외&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;각 방법별 사용 예시는 아래와 같음&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;정규 표현식 / AspectJ 패턴&lt;/code&gt;을 사용한 대상 지정
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// AppCtxWithExclude.java&lt;/span&gt;
+ &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.context.annotation.FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.context.annotation.ComponentScan.Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+ &lt;span class=&quot;c1&quot;&gt;// 동일 코드에 대하여 정규표현식 / AspectJ 패턴 사용 방식&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 정규표현식을 이용한 1번째 방법&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; 
+     &lt;span class=&quot;n&quot;&gt;excludeFilters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
+             &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REGEX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;spring\\..*Dao&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;		
+ &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+ &lt;span class=&quot;c1&quot;&gt;// AspectJ를 이용한 2번째 방법&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; 
+     &lt;span class=&quot;n&quot;&gt;excludeFilters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
+             &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ASPECTJ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;spring.*Dao&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;		
+ &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtxWithExclude&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;정규 표현식&lt;/code&gt;은 “spring”으로 시작하고 Dao로 끝나는 타입을 지정&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AspectJ 패턴&lt;/code&gt;은 spring 패키지의 Dao로 끝나는 타입을 지정&lt;br /&gt;
+ &lt;br /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정 어노테이션&lt;/code&gt;을 제외
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// NoProduct.java&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Retention&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RUNTIME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NoProduct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+ &lt;span class=&quot;c1&quot;&gt;// ManualBean.java&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Retention&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RUNTIME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ManualBean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;위와 같은 특정 어노테이션을 붙인 타입을 텀포넌트 대상에서 제외하는 방법은 아래와 같이 존재&lt;/p&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// AppCtxWithExclude.java&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; 
+     &lt;span class=&quot;n&quot;&gt;excludeFilters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+             &lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ANNOTATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ManualBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;			
+ &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;type 속성값으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;FilterType.ANNOTATION&lt;/code&gt;을 사용하면 class 속성에 &lt;code class=&quot;highlighter-rouge&quot;&gt;필터로 사용할 어노테이션 타입&lt;/code&gt;을 값으로 줌&lt;/li&gt;
+      &lt;li&gt;이 코드는 @ManualBean 어노테이션을 제외 대상에 추가했으므로, 결국 다음 클래스를 컴포넌트 스캔 대상에서 제외&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// MemberDao.java&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ManualBean&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Component&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Member&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Dao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;@Retention, @Target 어노테이션?&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;어노테이션을 Customizing 하는 방법&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Retention&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;어느 시점&lt;/code&gt;까지 어노테이션을 남길 것인가? (파라미터는 아래와 같음)
+          &lt;ol&gt;
+            &lt;li&gt;SOURCE: 컴파일시 사라짐&lt;/li&gt;
+            &lt;li&gt;CLASS: 컴파일러가 클래스를 참조할 때까지 유효&lt;/li&gt;
+            &lt;li&gt;RUNTIME: 컴파일 이후에도 VM을 통해 참조 가능&lt;/li&gt;
+          &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Target&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;어디&lt;/code&gt;에 우리가 만든 어노테이션을 적용할 것인가? (파라미터는 아래와 같음)
+          &lt;ol&gt;
+            &lt;li&gt;TYPE: 클래스, 인터페이스&lt;/li&gt;
+            &lt;li&gt;FIELD: 필드&lt;/li&gt;
+            &lt;li&gt;METHOD: 매서드&lt;/li&gt;
+            &lt;li&gt;PARAMETER: 파라미터&lt;/li&gt;
+            &lt;li&gt;CONSTRUCTOR: 생성자&lt;/li&gt;
+            &lt;li&gt;LOCAL_VARIABLE: 지역변수&lt;/li&gt;
+            &lt;li&gt;ANNOTATION_TYPE: 어노테이션 타입&lt;/li&gt;
+            &lt;li&gt;PACKAGE: 패키지&lt;/li&gt;
+          &lt;/ol&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정 타입이나 그 하위 타입&lt;/code&gt;을 제외
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtxWithExclude.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; 
+ &lt;span class=&quot;n&quot;&gt;excludeFilters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+         &lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ASSIGNABLE_TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;			
+&lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;classes 속성에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;제외할 타입&lt;/code&gt;의 목록을 지정&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;설정할 필터가 두 개 이상&lt;/code&gt;이면 @ComponentScan의 exludeFilters 속성에 &lt;code class=&quot;highlighter-rouge&quot;&gt;배열&lt;/code&gt;을 사용해 @Filter 목록을 전달&lt;/p&gt;
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// AppCtxWithExclude.java&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+ &lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spring&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; 
+     &lt;span class=&quot;n&quot;&gt;excludeFilters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+             &lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ANNOTATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ManualBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;),&lt;/span&gt;
+             &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FilterType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;REGEX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;spring\\..*Dao&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;2-컴포넌트-스캔에-따른-충돌-처리&quot;&gt;2. 컴포넌트 스캔에 따른 충돌 처리&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;컴포넌트 스캔 기능을 사용해서 Bean을 등록할 경우, 아래와 같은 두 가지 충돌이 발생 가능&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Bean 이름의 충돌&lt;/li&gt;
+  &lt;li&gt;수동 등록에 따른 충돌&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;2-1-bean-이름-충돌&quot;&gt;2-1. Bean 이름 충돌&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;서로 다른 패키지에 같은 클래스의 이름&lt;/code&gt;이 존재하고, 두 클래스 모두 @Component 어노테이션이 붙게 된다면, &lt;br /&gt;
+Exception이 발생하게 됨&lt;/li&gt;
+  &lt;li&gt;이럴 경우, 둘 중 하나에 &lt;code class=&quot;highlighter-rouge&quot;&gt;명시적&lt;/code&gt;으로 Bean 이름을 지정해서 이름 충돌을 피해야 함&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-2-수동-등록에-따른-충돌&quot;&gt;2-2. 수동 등록에 따른 충돌&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;같은 클래스를 같은 이름으로 설정할 때:
+    &lt;ul&gt;
+      &lt;li&gt;@Component 어노테이션을 통해 이미 지정한 Bean의 클래스 이름이 존재하지만,&lt;br /&gt;
+  클래스 설정에 직접 해당 클래스를 동일한 이름으로 정해 등록하는 경우 발생&lt;/li&gt;
+      &lt;li&gt;즉, 스캔할 때 사용하는 Bean 이름과 수동 등록한 이름이 같을 경우, &lt;code class=&quot;highlighter-rouge&quot;&gt;수동 등록한 Bean이 우선&lt;/code&gt;시 됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;같은 클래스를 다른 이름으로 설정할 때:
+    &lt;ul&gt;
+      &lt;li&gt;만약, 스캔할 때 사용하는 Bean 이름과 동일한 클래스를 다른 이름으로 수동 등록하는 경우에는 &lt;br /&gt;
+  &lt;code class=&quot;highlighter-rouge&quot;&gt;다른 이름의 두 개의 Bean&lt;/code&gt;이 만들어지게 됨&lt;/li&gt;
+      &lt;li&gt;이런 경우에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Qualifier&lt;/code&gt; 어노테이션을 통해 알맞은 Bean을 선택해야 함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. About Component 스캔 1-1. 컴포넌트 스캔이란? 자동 주입과 함께 사용되는 기능 스프링이 직접 클래스를 검색해서 빈으로 등록해주는 기능 설정 코드가 크게 줄어듦</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 6</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-6.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 6" /><published>2019-12-30T11:20:00+09:00</published><updated>2019-12-30T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-6.html">&lt;h2 id=&quot;1-스프링-bean-객체의-라이프-사이클&quot;&gt;1. 스프링 Bean 객체의 라이프 사이클&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;1-1-컨테이너의-초기화와-종료&quot;&gt;1-1. 컨테이너의 초기화와 종료&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;스프링 컨테이너는 &lt;code class=&quot;highlighter-rouge&quot;&gt;초기화&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;종료&lt;/code&gt;라는 라이프 사이클을 가짐&lt;/li&gt;
+  &lt;li&gt;컨텍스트 객체가 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성되는 시점에 컨테이너를 초기화&lt;/code&gt;함&lt;/li&gt;
+  &lt;li&gt;스프링 컨테이너는 설정 클래스에서 정보를 읽어와 알맞은 Bean 객체를 생성하고,&lt;br /&gt;
+각 Bean을 연결(의존 주입)하는 작업 수행&lt;/li&gt;
+  &lt;li&gt;초기화가 끝난 후 컨테이너를 사용 가능(getBean()등의 작업으로 Bean 객체를 구하는 행위 등)&lt;/li&gt;
+  &lt;li&gt;컨테이너 사용이 끝나면 컨테이너를 &lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt; 매서드를 사용해 종료, Bean 객체의 &lt;code class=&quot;highlighter-rouge&quot;&gt;소멸&lt;/code&gt;
+    &lt;blockquote&gt;
+      &lt;ul&gt;
+        &lt;li&gt;기본적으로 Spring의 ApplicationContext 구현은 초기화 프로세스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; 싱글톤 빈을 생성 및 설정&lt;/li&gt;
+        &lt;li&gt;따라서 Bean에 문제가 있을 경우 초기화 단계에서 알 수 있다는 &lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;이 존재&lt;/li&gt;
+        &lt;li&gt;만약 어떤 이유로, 특정 Bean이 &lt;code class=&quot;highlighter-rouge&quot;&gt;늦은 초기화&lt;/code&gt;를 원한다면 다음과 같이 두 가지 방법이 존재
+          &lt;ol&gt;
+            &lt;li&gt;xml에서 Bean을 등록시 &lt;code class=&quot;highlighter-rouge&quot;&gt;lazy-init&lt;/code&gt; 속성을 이용하여 초기화&lt;/li&gt;
+            &lt;li&gt;Java Config에서 Bean을 등록시 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Lazy&lt;/code&gt; 어노테이션을 이용&lt;/li&gt;
+          &lt;/ol&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;설정파일 &lt;code class=&quot;highlighter-rouge&quot;&gt;전체&lt;/code&gt;를 Lazy-init&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Lazy&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ComponentScan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePackages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.baeldung.lazy&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+ 
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Region&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정 Bean&lt;/code&gt;을 Lazy-init&lt;/p&gt;
+        &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Lazy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Region&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getRegion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Region&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;Lazy init을 하더라도 해당 Bean을 다른 Bean이 &lt;code class=&quot;highlighter-rouge&quot;&gt;참조&lt;/code&gt;한다면 그 시점에 초기화 됨&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-2-bean-객체의-라이프-사이클&quot;&gt;1-2. Bean 객체의 라이프 사이클&lt;/h4&gt;
+&lt;p&gt;Bean 객체는 아래와 같은 라이프 사이클을 가지며 &lt;code class=&quot;highlighter-rouge&quot;&gt;스프링 컨테이너&lt;/code&gt;에 의해 관리됨&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;객체생성 -&amp;gt; 의존설정 -&amp;gt; 초기화 -&amp;gt; 소멸&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-bean-객체의-초기화와-소멸&quot;&gt;2. Bean 객체의 초기화와 소멸&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;2-1-스프링-인터페이스를-통한-구현&quot;&gt;2-1. 스프링 인터페이스를 통한 구현&lt;/h4&gt;
+&lt;p&gt;스프링 컨테이너는 Bean 객체를 초기화하고 소멸하기 위해 빈 객체의 &lt;code class=&quot;highlighter-rouge&quot;&gt;지정한 매서드&lt;/code&gt;를 호출&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;매서드 정의 인터페이스:
+    &lt;ul&gt;
+      &lt;li&gt;org.springframework.beans.factory.InitializingBean&lt;/li&gt;
+      &lt;li&gt;org.springframework.beans.factory.DisposableBean&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;인터페이스:
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// 초기화 인터페이스&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InitializingBean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;afterPropertiesSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 소멸 인터페이스&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DisposableBean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Bean 객체가 각 인터페이스를 구현하면 스프링 컨테이너는 해당하는 매서드를 실행&lt;/li&gt;
+      &lt;li&gt;우리는 위의 코드에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;afterPropertiesSet()&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;destroy()&lt;/code&gt; 매서드를 구현하면 됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;예시
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c1&quot;&gt;// Client.java&lt;/span&gt;
+ &lt;span class=&quot;c1&quot;&gt;// 초기화와 소멸에 해당하는 인터페이스를 상속 후, 각 매서드 재정의&lt;/span&gt;
+ &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InitializingBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DisposableBean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// 초기화 매서드 오버라이딩&lt;/span&gt;
+     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;afterPropertiesSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Client.afterPropertiesSet() 실행&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+         &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+         &lt;span class=&quot;c1&quot;&gt;// 소멸 매서드 오버라이딩&lt;/span&gt;
+     &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Client.destroy() 실행&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+ &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   * 해당 코드를 수행하면 콘솔 화면에 매서드에서 정의한  `&quot;Client.afterPropertiesSet() 실행&quot;` 및 `&quot;Client.destroy() 실행&quot;`이 출력 됨  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-2-커스텀-매서드를-통한-구현&quot;&gt;2-2. 커스텀 매서드를 통한 구현&lt;/h4&gt;
+&lt;p&gt;위의 두 인터페이스를 구현할 수 없거나, 두 인터페이스를 사용하지 않고 싶을 때 스프링 설정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접 매서드를 지정&lt;/code&gt; 가능&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bean 태그에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;initMethod&lt;/code&gt; 속성과 &lt;code class=&quot;highlighter-rouge&quot;&gt;destoryMethod&lt;/code&gt; 속성을 사용해 사용할 매서드 이름을 지정&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtxWithprototype.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtxWithPrototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// 매서드의 이름을 지정해 초기화와 소멸 로직을 처리&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;connect&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destroyMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;close&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-3-bean-설정-코드에서-직접-초기화소멸을-수행&quot;&gt;2-3. Bean 설정 코드에서 직접 초기화/소멸을 수행&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtxWithprototype.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtxWithPrototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;destroyMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;close&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// 초기화는 직접 수행, 소멸은 커스텀 매서드를 통해 수행&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접 매서드를 호출&lt;/code&gt;하여 초기화도 가능&lt;/li&gt;
+  &lt;li&gt;이때 해당 클래스 내부적으로 인터페이스를 상속받아 초기화를 실행해 &lt;code class=&quot;highlighter-rouge&quot;&gt;두 번 초기화 과정이 수행되지 않도록&lt;/code&gt; 주의&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;initMethod 속성과 destroyMethod 속성에 지정한 매서드는 &lt;code class=&quot;highlighter-rouge&quot;&gt;파라미터가 없어야 함&lt;/code&gt;&lt;br /&gt;
+만약 파라미터가 존재할 경우, 스프링 컨테이너는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Exception&lt;/code&gt;을 발생&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;3-bean-객체의-생성과-관리-범위&quot;&gt;3. Bean 객체의 생성과 관리 범위&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bean 객체는 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;싱글톤(singleton)&lt;/code&gt;의 범위를 가짐&lt;/li&gt;
+  &lt;li&gt;Bean 객체의 범위를 &lt;code class=&quot;highlighter-rouge&quot;&gt;프로토타입(prototype)&lt;/code&gt;으로 지정시 Bean 객체를 &lt;code class=&quot;highlighter-rouge&quot;&gt;매번&lt;/code&gt; 새롭게 생성&lt;/li&gt;
+  &lt;li&gt;특정 Bean을 프로토타입으로 지정하려면, 다음과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Scope&lt;/code&gt; 어노테이션을 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Bean&lt;/code&gt; 어노테이션과 &lt;code class=&quot;highlighter-rouge&quot;&gt;함께&lt;/code&gt; 사용
+    &lt;blockquote&gt;
+      &lt;ul&gt;
+        &lt;li&gt;프로토타입은 새로운 요청이 들어오면, 기존의 Bean을 바탕으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;복사해&lt;/code&gt; 새로운 객체를 생성&lt;/li&gt;
+        &lt;li&gt;이렇게 만들어진 새로운 Bean은 &lt;code class=&quot;highlighter-rouge&quot;&gt;스케줄링&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;멀티스레딩&lt;/code&gt;등에 사용이 됨
+          &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtxWithprototype.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtxWithPrototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 해당 Bean 객체를 프로토 타입으로 지정&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Scope&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;prototype&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// 해당 Bean을 명시저으로 싱글톤으로 지정&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;connect&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destroyMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;close&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Scope&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;singleton&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;host&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;          &lt;/div&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;각 경우 해당 Bean 객체의 동일성은 아래와 같음
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;// 프로토 타입의 경우&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;client&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;client&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// client1 != client -&amp;gt; true&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 싱글톤의 경우&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;client&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;client&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Client2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// client1 != client -&amp;gt; false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;프로토 타입을 갖는 Bean은 완전한 라이프 사이클을 &lt;code class=&quot;highlighter-rouge&quot;&gt;따르지 않음&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;생성 및 초기화는 컨테이너가 해주지만, 소멸 처리는 코드에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt; 해줘야 함&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. 스프링 Bean 객체의 라이프 사이클</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 4</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-4.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 4" /><published>2019-12-30T11:15:00+09:00</published><updated>2019-12-30T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-4.html">&lt;h2 id=&quot;1-자동-의존-주입&quot;&gt;1. 자동 의존 주입&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;1-1-자동-의존-주입&quot;&gt;1-1. 자동 의존 주입?&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;의존 주입에 필요한 객체들을 찾아 스프링이 &lt;code class=&quot;highlighter-rouge&quot;&gt;자동으로 필드에 할당&lt;/code&gt;해 주는 기능&lt;/li&gt;
+  &lt;li&gt;스프링에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Autowired&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Resource&lt;/code&gt; 어노테이션 두 가지 방법이 존재&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MVC&lt;/code&gt; 관점에서&lt;br /&gt;
+Component는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Resource&lt;/code&gt;를&lt;br /&gt;
+Service는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Autowired&lt;/code&gt;를 주로 사용하는 추세라고 함&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;1-2-자동-의존-주입-예제-bean-객체&quot;&gt;1-2. 자동 의존 주입 예제: Bean 객체&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// ChangePasswordService.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChangePasswordService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memberDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//AppCtx.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberRegisterService&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberRegSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberRegisterService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// 아래 함수에서 의존을 주입하지 않아도 스프링이 @Autowired가 붙인 필드에&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 해당 타입의 Bean 객체를 찾아서 주입	&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChangePasswordService&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;changePwdSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ChangePasswordService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* 기존 코드
+	 @Bean
+	 public ChangePasswordService changePwdSvc() {
+	 	ChangePasswordService pwdSvc = new ChangePasswordService();
+		pwdSvc.setMemberDao(memberDao());
+		return pwdSvc;
+	 }
+        */&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;기존의 코드와는 다르게 memberDao()를 통해 생성된 Bean 객체를 setter 매서드에 &lt;code class=&quot;highlighter-rouge&quot;&gt;넘겨주지 않음&lt;/code&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-3-자동-의존-주입-예제-method&quot;&gt;1-3. 자동 의존 주입 예제: method&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberInfoPrinter.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//AppCtx.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 원래 호출하던 두 매서드 setPrinter(), setMemberDao()를 호출하지 않음&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;infoPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;infoPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;infoPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* 기존코드
+        @Bean
+	public MemberInfoPrinter infoPrinter() {
+		MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
+		infoPrinter.setMemberDao(memberDao());
+		infoPrinter.setPrinter(memberPrinter());
+		return infoPrinter;
+	}
+        */&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Autowired&lt;/code&gt; 어노테이션을 필드나 매서드에 붙이게 되면, 스프링은 타입이 일치하는 Bean 객체를 찾아서 주입&lt;/li&gt;
+  &lt;li&gt;만약 일치하는 Bean이나 매서드가 없는 경우, Exception이 발생하고 제대로 실행되지 않음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;최근에는 위와 같은 방법이 권장&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;1-4-자동-주입-가능-bean이-두-개-이상이라면&quot;&gt;1-4. 자동 주입 가능 Bean이 두 개 이상이라면?&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtx.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// memberPrinter1() 매서드의 Bean의 한정 값으로 &quot;printer&quot;를 지정&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;printer&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberPrinter1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberPrinter2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberListPrinter.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberListPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 앞서 스프링 설정 클래스에서 @Qualifier 어노테이션의 값으로 &quot;printer&quot;를 준&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// MembeerPrinter 타입의 Bean(memberPrinter1)을 자동 주입 대상으로 사용&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@Qualifier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;printer&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMemberPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Qualifier&lt;/code&gt; 어노테이션을 통해 자동 주입 Bean을 지정할 수 있음&lt;/li&gt;
+  &lt;li&gt;Bean 설정에 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Qualifier&lt;/code&gt; 어노테이션이 없다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;Bean의 이름&lt;/code&gt;을 한정자로 지정&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-autowired-어노테이션의-필수-여부&quot;&gt;2. @Autowired 어노테이션의 필수 여부&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;자동 주입할 대상이 필수가 아닌 경우(NULL값 등) 아래와 같이 세가지 방법이 존재&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Autowired(required = false)&lt;/code&gt; 어노테이션 사용&lt;/li&gt;
+  &lt;li&gt;자동 주입 대상 타입의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Optional 지정&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Nullable&lt;/code&gt; 어노테이션 사용&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;아래와 같이 dateTimeFormatter 필드값이 Null이어도 되는 경우 3가지 방법 예시
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberPrinter.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DateTimeFormatter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 차례대로 1~3번 방법의 동일 매서드 코드&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 1번 방법&lt;/span&gt;
+  &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setDateFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DateTimeFormatter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;dateTimeFormatter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 2번 방법&lt;/span&gt;
+  &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setDateFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Optional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;dateTimeFormatter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 3번 방법&lt;/span&gt;
+  &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setDateFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@Nullable&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DateTimeFormatter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;dateTimeFormatter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTimeFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;각 방법의 특징은 아래와 같음
+      1. 매칭되는 Bean이 없어도 Exception이 발생하지 않으며 &lt;code class=&quot;highlighter-rouge&quot;&gt;자동 주입을 수행하지 않음&lt;/code&gt;
+      2. 일치하는 Bean이 존재하지 않으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;값이 없는 Optional을 인자로 전달&lt;/code&gt;(Exception 발생하지 않음),&lt;br /&gt;
+ 일치하는 Bean이 존재하면 해당 Bean을 값으로 갖는 Optional을 인자로 전달
+      3. 스프링 컨테이너는 setter 매서드를 호출할 때 자동 주입할 Bean이 존재하면 해당 빈을 인자로 전달,&lt;br /&gt;
+ 존재하지 않으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;인자로 NULL을 전달&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;1번 방법은 매칭되는 Bean이 없으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;매서드를 실행하지 않지만&lt;/code&gt;,&lt;br /&gt;
+2,3번 방법은 매칭되는 Bean이 없어도 &lt;code class=&quot;highlighter-rouge&quot;&gt;해당 매서드를 실행&lt;/code&gt;함&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. 자동 의존 주입 1-1. 자동 의존 주입? 의존 주입에 필요한 객체들을 찾아 스프링이 자동으로 필드에 할당해 주는 기능 스프링에서는 @Autowired와 @Resource 어노테이션 두 가지 방법이 존재</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 3</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-3.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 3" /><published>2019-12-30T10:51:00+09:00</published><updated>2019-12-30T10:51:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-3.html">&lt;h2 id=&quot;1-의존이란&quot;&gt;1. 의존이란?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DI&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Dependency Injection&lt;/code&gt;의 약자로 우리말로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;의존주입&lt;/code&gt;이라 번역&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;의존&lt;/code&gt;이란 객체간의 의존을 의미&lt;/li&gt;
+  &lt;li&gt;한 클래스가 다른 클래스의 매서드를 실행할 경우 이를 &lt;code class=&quot;highlighter-rouge&quot;&gt;의존&lt;/code&gt;한다고 표현(변경에 의해 영향을 받는 관계)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-about-di&quot;&gt;2. About DI&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;OOP의 &lt;code class=&quot;highlighter-rouge&quot;&gt;DIP&lt;/code&gt;와는 비슷한 개념&lt;/li&gt;
+  &lt;li&gt;디자인 패턴의 &lt;code class=&quot;highlighter-rouge&quot;&gt;IoC(Inversion of Control)&lt;/code&gt; 제어 반전의 한 종류
+    &lt;blockquote&gt;
+      &lt;p&gt;용어가 정확하게 구분되어 있지는 않지만, 대략 IoC &amp;gt; DIP &amp;gt; DI 정도로 정리가능&lt;br /&gt;
+자세한 사항은 링크 참조: https://bit.ly/2Zt9cnf&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;객체지향 5대 원칙: &lt;code class=&quot;highlighter-rouge&quot;&gt;SOLID&lt;/code&gt;
+    &lt;blockquote&gt;
+      &lt;ol&gt;
+        &lt;li&gt;단일 책임 원칙(Single responsibility principle) - SRP&lt;/li&gt;
+        &lt;li&gt;개방 폐쇄 원칙(Open/closed principle) - OCP&lt;/li&gt;
+        &lt;li&gt;리스코프 치환 원칙(Liskov substitution principle) - LSP&lt;/li&gt;
+        &lt;li&gt;인터페이스 분리 원칙(Interface segregation principle) - ISP&lt;/li&gt;
+        &lt;li&gt;의존관계 역전 원칙(Dependency inversion principle) - &lt;code class=&quot;highlighter-rouge&quot;&gt;DIP&lt;/code&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-1-di를-통한-의존-처리&quot;&gt;2-1. DI를 통한 의존 처리&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;DI는 의존하는 객체를 직접 생성하는 대신, &lt;code class=&quot;highlighter-rouge&quot;&gt;의존 객체를 전달받는 방식&lt;/code&gt;을 이용
+    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberRegisterService.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberRegisterService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// MemberDao 객체를 전달 받아 DI를 구현&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberRegisterService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memberDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-2-why-di&quot;&gt;2-2. Why DI?&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;DI를 사용하는 가장 큰 이유는 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경의 유연함&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;객체를 전달받아 사용하게 되면, 코드의 수정을 최소한으로 줄이고 &lt;code class=&quot;highlighter-rouge&quot;&gt;유연함&lt;/code&gt;을 가져갈 수 있음(주입 대상이 되는 객체를 생성하는 코드만 변경하면 됨)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-3-di-방식-1-생성자-방식&quot;&gt;2-3. DI 방식 1: 생성자 방식&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberRegisterService.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberRegisterService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// 생성자를 통해 의존 객체를 주입 받음&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberRegisterService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memberDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;regist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RegisterRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// 주입 받은 의존 객체의 매서드를 사용&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Member&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;member&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;selectByEmail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getEmail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newMember&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMember&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;생성자&lt;/code&gt;를 통해 의존 객체를 주입받아 필드에 할당&lt;/li&gt;
+  &lt;li&gt;전달할 의존 객체가 &lt;code class=&quot;highlighter-rouge&quot;&gt;두 개 이상이어도 동일한 방식&lt;/code&gt;으로 주입&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-4-di-방식-2-setter-매서드-방식&quot;&gt;2-4. DI 방식 2: setter 매서드 방식&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// MemberInfoPrinter.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberInfoPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// setter를 통해 의존 객체를 주입 받는다.&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memDao&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberPrinter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;setter 매서드&lt;/code&gt;를 이용하여 객체를 주입&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-5-생성자-vs-setter&quot;&gt;2-5. 생성자 VS setter?&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;각 방식의 장점은 곧 다른 방식의 단점&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;생성자 방식&lt;/code&gt; 장점: Bean 객체를 생성하는 시점에 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든 의존 객체가 주입&lt;/code&gt;, 그러나 생성자의 파라미터가 많을 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;일일히 확인&lt;/code&gt;해 주어야 함&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;setter 매서드 방식&lt;/code&gt;: sstter 매서드 이름을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;어떤 의존 객체가 주입 되는지 알 수 있음&lt;/code&gt;, 그러나 정확한 전달이 안될 시  &lt;code class=&quot;highlighter-rouge&quot;&gt;NullPointerException&lt;/code&gt; 발생가능&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-싱글톤의-이해와-어노테이션&quot;&gt;3. 싱글톤의 이해와 어노테이션&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;3-1-configuration-설정-클래스의-bean-설정과-싱글톤&quot;&gt;3-1. @Configuration 설정 클래스의 @Bean 설정과 싱글톤&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AppCtx.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberRegisterService&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberRegSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// memberDao() 매서드 호출&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MemberRegisterService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+	
+	&lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChangePasswordService&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;changePwdSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;ChangePasswordService&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwdSvc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChangePasswordService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// memberDao() 매서드 호출&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;pwdSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setMemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwdSvc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;memberRegSvc() 매서드와 changePwdSvc() 매서드는 &lt;code class=&quot;highlighter-rouge&quot;&gt;둘 다 memberDao() 매서드를 실행&lt;/code&gt;&lt;br /&gt;
+그리고 memberDao() 매서드는 &lt;code class=&quot;highlighter-rouge&quot;&gt;매번 새로운 MemberDao 객체를 생성해서 리턴&lt;/code&gt;&lt;br /&gt;
+두 매서드는 과연 &lt;code class=&quot;highlighter-rouge&quot;&gt;같은&lt;/code&gt; MemberDao 객체를 사용하는가?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;스프링 컨테이너는 @Bean이 붙은 매서드에 대해 &lt;code class=&quot;highlighter-rouge&quot;&gt;한 개의 객체만 생성&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;이는 다른 설정에서 memberDao()를 몇 번을 호출하더라도 &lt;code class=&quot;highlighter-rouge&quot;&gt;항상 같은&lt;/code&gt; 객체를 리턴&lt;/li&gt;
+  &lt;li&gt;이것이 가능한 이유는 스프링이 설정 클래스를 그대로 사용하지 않고,&lt;br /&gt;
+설정한 클래스를 상속한 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운 설정 클래스&lt;/code&gt;를 만들어서 사용하기 때문&lt;/li&gt;
+  &lt;li&gt;따라서 런타임에 매번 생성하지 않고, &lt;br /&gt;
+한 번 생성한 객체를 보관했다가 이후에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일한 객체를 리턴&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 이해를 돕기 위한 가상의 코드. 실제 코드는 이보다 훨씬 복잡하다.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtxExt&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...;&lt;/span&gt;
+
+	&lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beans&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;containersKey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;memberDao&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;beans&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;memberDao&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;memberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MemberDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beans&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;memberDao&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;매번 새로운 객체를 리턴하는 것이 아니라, 한 번 생성한 객체를 보관했다가 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일 객체&lt;/code&gt;를 리턴&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-2-두-개-이상의-설정-파일을-사용하기&quot;&gt;3-2. 두 개 이상의 설정 파일을 사용하기&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@AutoWired&lt;/code&gt; 어노테이션을 통해 필요한 Bean 객체를 자동 주입&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Import&lt;/code&gt; 어노테이션을 통해 함께 사용할 클래스를 지정&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. 의존이란? DI는 Dependency Injection의 약자로 우리말로는 의존주입이라 번역 의존이란 객체간의 의존을 의미 한 클래스가 다른 클래스의 매서드를 실행할 경우 이를 의존한다고 표현(변경에 의해 영향을 받는 관계)</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 1</title><link href="https://owin2828.github.io/devlog/2019/12/26/spring-1.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 1" /><published>2019-12-26T16:28:00+09:00</published><updated>2019-12-26T16:28:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/26/spring-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/26/spring-1.html">&lt;h2 id=&quot;스프링이란&quot;&gt;스프링이란?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;흔히 말하는 스프링 = 스프링 프레임워크&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;스프링 프레임워크의 특징은 다음와 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;의존 주입(Dependency Injection: DI)&lt;/code&gt; 지원&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP(Aspect-Oriented Programming)&lt;/code&gt; 지원&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MVC 웹 프레임워크&lt;/code&gt; 제공&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JDBC&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;JPA 연동&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;선언적 트랜잭션 처리&lt;/code&gt; 등 DB 연동지원&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;spring과 spring MVC는 &lt;code class=&quot;highlighter-rouge&quot;&gt;다르다&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;스프링 프레임워크의 주요 용어는 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;의존 주입&lt;/code&gt;: 객체를 직접 생성하는 것이 아닌 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부에서 객체를 주입&lt;/code&gt;시켜 사용하는 방식&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AOP&lt;/code&gt;: 핵심 기능과 공통 기능을 &lt;code class=&quot;highlighter-rouge&quot;&gt;분리&lt;/code&gt; 시켜놓고, 공통 기능을 필요로 하는 핵심 기능들에서 사용하는 방식&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JDBC&lt;/code&gt;:  자바에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;데이터베이스&lt;/code&gt;에 접속할 수 있도록 하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;자바 API&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JPA&lt;/code&gt;: JPA란 자바 &lt;code class=&quot;highlighter-rouge&quot;&gt;ORM &lt;/code&gt;기술에 대한 API 표준 명세&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ORM&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;객체와 DB 테이블&lt;/code&gt;이 매핑을 이루는 것&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;선언적 트랜잭션&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;설정 파일&lt;/code&gt;이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;어노테이션&lt;/code&gt;을 통해 트랜잭션의 범위, 롤백 규칙 등을 정의&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;스프링 프레임워크외 다른 스프링 프로젝트는 아래와 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;스프링 데이터&lt;/code&gt;: 적은 양의 코드로 데이터 연동을 처리할 수 있도록 도와주는 프레임워크. JPA, 몽고DB, 레디스등 다양한 저장소 지원&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;스프링 시큐리티&lt;/code&gt;: 인증/인가와 관련된 프레임워크로서 웹 접근 제어, 객체 접근 제어, DB, 오픈 ID, LDAP 등 다양한 인증 방식, 암호화 기능 제공&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;스프링 배치&lt;/code&gt;: 로깅/추적, 작업 통계, 실패 처리 등 배치 처리에 필요한 기본 기능을 제공&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;개발환경&quot;&gt;개발환경&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring: 5.0.2.RELEASE&lt;/li&gt;
+  &lt;li&gt;Java openjdk 1.8.0_22&lt;/li&gt;
+  &lt;li&gt;Apache maven 3.7&lt;/li&gt;
+  &lt;li&gt;Tomcat 8.5.43&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">스프링이란? 흔히 말하는 스프링 = 스프링 프레임워크</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 2</title><link href="https://owin2828.github.io/devlog/2019/12/26/spring-2.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 2" /><published>2019-12-26T16:28:00+09:00</published><updated>2019-12-26T16:28:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/26/spring-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/26/spring-2.html">&lt;h2 id=&quot;0-들어가기-앞서&quot;&gt;0. 들어가기 앞서&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;스프링을 이용한 자바 프로젝트 진행 과정은 아래와 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;메이븐 프로젝트 생성&lt;/li&gt;
+  &lt;li&gt;이클립스에서 메이븐 프로젝트 Import&lt;/li&gt;
+  &lt;li&gt;스프링에 맞는 자바 코드와 설정 파일 작성&lt;/li&gt;
+  &lt;li&gt;실행&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-maven&quot;&gt;1. Maven&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;1-1-메이븐-기본-디렉토리-구조&quot;&gt;1-1. 메이븐 기본 디렉토리 구조&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Maven 기본 설정 파일인 &lt;code class=&quot;highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt; 파일이 프로젝트 root에 위치&lt;/li&gt;
+  &lt;li&gt;기본 소스코드 디렉토리
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;src/main/java&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;테스트코드 디렉토리
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;src/test/java&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;compile 결과 디렉토리
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;target&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/spring/spring_2_1.png&quot; alt=&quot;디렉토리구조&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-메이븐-기초&quot;&gt;1-2. 메이븐 기초&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;메이븐의 핵심 &lt;code class=&quot;highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pom.xml&lt;/code&gt;은 메이븐 프로젝트에 대한 설정 정보를 관리하는 파일&lt;/li&gt;
+  &lt;li&gt;의존 모듈이나 플러그인 등에 대한 설정을 담음&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-3-메이븐-의존-설정&quot;&gt;1-3. 메이븐 의존 설정&lt;/h4&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- pom.xml --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-context&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.0.2.RELEASE&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;메이븐은 한 개의 모듈을 &lt;code class=&quot;highlighter-rouge&quot;&gt;아티팩트&lt;/code&gt; 단위로 관리&lt;/li&gt;
+  &lt;li&gt;위 설정은 spring-context 식별자를 가진 5.0.2.RELEASE 버전의 아티팩트에 대한 의존을 추가한 예제&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1-4-메이븐-레포지토리&quot;&gt;1-4. 메이븐 레포지토리&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;메이븐의 아티팩트 파일은 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;원격 레포지토리&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;로컬 레포지토리&lt;/code&gt;를 이용&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;메이븐은 로컬 레포지토리&lt;/code&gt;에서 [그룹ID][아티팩트ID][버전] 폴더에 아티팩트ID-버전.jar 형식의 이름을 갖는 파일이 있는지 검사&lt;/li&gt;
+  &lt;li&gt;로컬 레포지토리에 파일이 없으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;메이븐은 원격 중앙 레포지토리&lt;/code&gt;로부터 해당 파일을 다운로드하여 로컬 레포지토리에 복사한 뒤 그 파일을 사용&lt;/li&gt;
+  &lt;li&gt;설정한 아티팩트가 &lt;code class=&quot;highlighter-rouge&quot;&gt;다시 의존하는&lt;/code&gt; 파일도 포함하여 다운로드&lt;/li&gt;
+  &lt;li&gt;배포 및 테스트할 때는 로컬 레포지토리(.m2등)에 있는 파일을 &lt;code class=&quot;highlighter-rouge&quot;&gt;지우고&lt;/code&gt; 원격 레포지토리에서 다운로드하는 것을 권장&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-5-메이븐-프로젝트-임포트&quot;&gt;1-5. 메이븐 프로젝트 임포트&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;이클립스에서 [File]-&amp;gt;[Import] 메뉴 이용&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-about-spring&quot;&gt;2. About Spring&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;2-1-스프링이-생성하고-관리하는-객체--bean&quot;&gt;2-1. 스프링이 생성하고 관리하는 객체 = Bean&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//AppContext.java&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AppContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Greeter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;greeter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@configuration&lt;/code&gt; 어노테이션은 해당 클래스를 &lt;code class=&quot;highlighter-rouge&quot;&gt;스프링 설정 클래스&lt;/code&gt;로 지정&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Bean&lt;/code&gt; 어노테이션을 매서드에 붙이면 해당 매서드가 생성한 객체를 스프링이 관리하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bean 객체로 등록&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@Bean&lt;/code&gt; 어노테이션을 붙인 &lt;code class=&quot;highlighter-rouge&quot;&gt;매서드의 이름&lt;/code&gt;은 Bean 객체를 구분할 때 사용 (위의 예시에서는 greeter를 사용하게 됨)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;@Configuration 어노테이션 말고, &lt;code class=&quot;highlighter-rouge&quot;&gt;XML 파일&lt;/code&gt;로도 설정파일을 생성 가능&lt;br /&gt;
+@Configuration 어노테이션은 변경사항이 생길 시, &lt;code class=&quot;highlighter-rouge&quot;&gt;매번&lt;/code&gt; 컴파일 해야하지만 XML로 설정한 파일은 &lt;code class=&quot;highlighter-rouge&quot;&gt;몇 글자&lt;/code&gt;를 고치기만 하면 됨&lt;br /&gt;
+자세한 사항은 링크 참조: &lt;a href=&quot;https://bit.ly/2MGXG1J&quot;&gt;https://bit.ly/2MGXG1J&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;2-2-스프링은-객체-컨테이너&quot;&gt;2-2. 스프링은 객체 컨테이너&lt;/h4&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//Main.java&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// 1. 설정 정보를 이용해 Bean 객체를 생성&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;AnnotationConfigApplicationContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
+				&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AnnotationConfigApplicationContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AppContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// 2. Bean 객체를 제공&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;Greeter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;greeter&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Greeter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AnnotationConfigApplicationContext&lt;/code&gt; 클래스는 스프링의 핵심인 객체 생성 및 초기화를 담당, 자바 클래스의 정보를 읽어옴&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AnnotationConfigApplicationContext&lt;/code&gt;의 상위 클래스 &lt;code class=&quot;highlighter-rouge&quot;&gt;ApplicationContext&lt;/code&gt; 또는 &lt;code class=&quot;highlighter-rouge&quot;&gt;BeanFactory&lt;/code&gt;는 Bean 객체의 생성, 초기화, 보관, 관리 등을 담당하고 있어 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨테이너(Container)&lt;/code&gt;라고도 부름&lt;/li&gt;
+  &lt;li&gt;getBean() 매서드를 통해 해당 Bean 객체를 제공
+    &lt;blockquote&gt;
+      &lt;p&gt;컨테이너는 보통 인스턴스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;생명주기를 관리&lt;/code&gt;하며, 생성된 인스턴스들에게&lt;code class=&quot;highlighter-rouge&quot;&gt; 추가적인 기능&lt;/code&gt;을 제공하도록하는 것&lt;br /&gt;
+스프링 컨테이너의 두 종류: &lt;code class=&quot;highlighter-rouge&quot;&gt;빈팩토리(BeanFactory)&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;어플리케이션 컨텍스트(ApplicationContext)&lt;/code&gt;&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BeanFactory&lt;/code&gt;: DI의 기본사항을 제공하는 가장 &lt;code class=&quot;highlighter-rouge&quot;&gt;단순한&lt;/code&gt; 컨테이너, Bean을 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;분배&lt;/code&gt;하는 책임을 지는 클래스&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ApplicationContext&lt;/code&gt;: 빈팩토리와 유사한 기능을 제공하지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;좀 더 많은 기능&lt;/code&gt;을 제공하는 어플리케이션 컨텍스트&lt;br /&gt;
+추가기능:&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;국제화가 지원되는 텍스트 메시지를 관리&lt;/li&gt;
+          &lt;li&gt;이미지같은 파일 자원을 로드 할 수 있는 포괄적인 방법을 제공&lt;/li&gt;
+          &lt;li&gt;리너스로 등록된 빈에게 이벤트 발생을 알려 줌&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-3-singleton-객체&quot;&gt;2-3. Singleton 객체&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;별도의 설정을 하지 않을 경우 스프링은 &lt;code class=&quot;highlighter-rouge&quot;&gt;한 개&lt;/code&gt;의 Bean 객체만을 생성&lt;/li&gt;
+  &lt;li&gt;이때 Bean 객체는 &lt;code class=&quot;highlighter-rouge&quot;&gt;싱글톤(singleton)&lt;/code&gt; 범위를 갖는다고 표현&lt;/li&gt;
+  &lt;li&gt;싱글톤은 &lt;code class=&quot;highlighter-rouge&quot;&gt;단일 객체(single object)&lt;/code&gt;를 의미&lt;/li&gt;
+  &lt;li&gt;스프링은 기본적으로 한 개의 @Bean 어노테이션에 한 개의 Bean 객체를 생성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;이때 singleton은 디자인 패턴의 singleton과는 약간의 차이가 존재&lt;/li&gt;
+    &lt;li&gt;스프링의 싱글톤은 직접 오브젝트를 만들고 관리&lt;/li&gt;
+    &lt;li&gt;자바의 싱글톤 = private static으로 인스턴스 생성 / 스프링의 싱글톤 = 싱글톤 레지스트리&lt;/li&gt;
+    &lt;li&gt;자세한 사항은 링크 참조: &lt;a href=&quot;https://bit.ly/2MG41KR&quot;&gt;https://bit.ly/2MG41KR&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">0. 들어가기 앞서 스프링을 이용한 자바 프로젝트 진행 과정은 아래와 같다. 메이븐 프로젝트 생성 이클립스에서 메이븐 프로젝트 Import 스프링에 맞는 자바 코드와 설정 파일 작성 실행</summary></entry><entry><title type="html">[Spring]의 첫걸음 - 0</title><link href="https://owin2828.github.io/devlog/2019/12/26/spring-0.html" rel="alternate" type="text/html" title="[Spring]의 첫걸음 - 0" /><published>2019-12-26T16:26:00+09:00</published><updated>2019-12-26T16:26:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/26/spring-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/26/spring-0.html">&lt;h1 id=&quot;스프링5-스터디를-위한-프로젝트&quot;&gt;스프링5 스터디를 위한 프로젝트&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;본 시리즈는 다음 2가지의 교재를 바탕으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;학습&lt;/code&gt;에 목적을 둔 글임을 밝힙니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;목차 1~17:
+    &lt;ul&gt;
+      &lt;li&gt;교재: &lt;code class=&quot;highlighter-rouge&quot;&gt;초보자를 위한 스프링5 프로그래밍 입문&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;저자: 최범균&lt;/li&gt;
+      &lt;li&gt;소스코드: &lt;a href=&quot;https://github.com/madvirus/spring5fs&quot;&gt;https://github.com/madvirus/spring5fs&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;목차 18~:
+    &lt;ul&gt;
+      &lt;li&gt;교재: &lt;code class=&quot;highlighter-rouge&quot;&gt;스프링5 레시피&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;저자: 마틴 데니엄, 다니엘 루비오, 조시 롱 지음, 이일웅 옮김&lt;/li&gt;
+      &lt;li&gt;소스코드: &lt;a href=&quot;https://github.com/nililee/spring-5-recipes&quot;&gt;https://github.com/nililee/spring-5-recipes&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;목차&quot;&gt;목차&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owin2828.github.io/devlog/2019/12/26/spring-1.html&quot;&gt;Intro&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owin2828.github.io/devlog/2019/12/26/spring-2.html&quot;&gt;스프링 시작하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/3.-%EC%8A%A4%ED%94%84%EB%A7%81-DI&quot;&gt;스프링 DI&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/4.-%EC%9D%98%EC%A1%B4-%EC%9E%90%EB%8F%99-%EC%A3%BC%EC%9E%85&quot;&gt;의존 자동 주입&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/5.-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%8A%A4%EC%BA%94&quot;&gt;컴포넌트 스캔&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/6.-Bean-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4%EA%B3%BC-%EB%B2%94%EC%9C%84&quot;&gt;Bean 라이프사이클과 범위&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/7.-AOP-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D&quot;&gt;AOP 프로그래밍&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/8.-DB%EC%97%B0%EB%8F%99&quot;&gt;DB연동&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/9.-%EC%8A%A4%ED%94%84%EB%A7%81-MVC-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0&quot;&gt;스프링 MVC 시작하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/10.-%EC%8A%A4%ED%94%84%EB%A7%81-MVC-%EB%8F%99%EC%9E%91%EB%B0%A9%EC%8B%9D&quot;&gt;스프링 MVC 동작방식&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/11.-MVC1:-%EC%9A%94%EC%B2%AD-%EB%A7%A4%ED%95%91,-%EC%BB%A4%EB%A7%A8%EB%93%9C-%EA%B0%9D%EC%B2%B4,-%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8,-%ED%8F%BC-%ED%83%9C%EA%B7%B8,-%EB%AA%A8%EB%8D%B8&quot;&gt;MVC1: 요청 매핑, 커맨드 객체, 리다이렉트, 폼 태그, 모델&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/12.-MVC2:-%EB%A9%94%EC%8B%9C%EC%A7%80,-%EC%BB%A4%EB%A7%A8%EB%93%9C-%EA%B0%9D%EC%B2%B4-%EA%B2%80%EC%A6%9D&quot;&gt;MVC2: 메시지, 커맨드 객체 검증&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/13.-MVC3:-%EC%84%B8%EC%85%98,-%EC%9D%B8%ED%84%B0%EC%85%89%EC%85%98,-%EC%BF%A0%ED%82%A4&quot;&gt;MVC3: 세션, 인터셉션, 쿠키&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/14.-MVC4:-%EB%82%A0%EC%A7%9C-%EA%B0%92-%EB%B3%80%ED%99%98,-@PathVariable,-%EC%9D%B5%EC%85%89%EC%85%98-%EC%B2%98%EB%A6%AC&quot;&gt;MVC4: 날짜 값 변환, @PathVariable, 익셉션 처리&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/15.-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%9B%B9-%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98%EC%9D%98-%EA%B5%AC%EC%A1%B0&quot;&gt;간단한 웹 어플리케이션의 구조&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/16.-JSON-%EC%9D%91%EB%8B%B5%EA%B3%BC-%EC%9A%94%EC%B2%AD-%EC%B2%98%EB%A6%AC&quot;&gt;JSON 응답과 요청 처리&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/17-%ED%94%84%EB%A1%9C%ED%95%84%EA%B3%BC-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%ED%8C%8C%EC%9D%BC&quot;&gt;프로필과 프로퍼티 파일&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/18.-Spring-Security&quot;&gt;Spring Security&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;부록&quot;&gt;부록&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;0-1. &lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/0.%EB%B6%80%EB%A1%9D/1.-try-~-catch-~-finally%EB%AC%B8-return%EC%9C%84%EC%B9%98%EC%97%90-%EB%94%B0%EB%A5%B8-%EA%B2%B0%EA%B3%BC-in-Java&quot;&gt;try ~ catch ~ finally문 return위치에 따른 결과 in Java&lt;/a&gt;&lt;br /&gt;
+0-2. &lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/0.%EB%B6%80%EB%A1%9D/2.-Abstract-Class-VS-Interface&quot;&gt;Abstract Class VS Interface&lt;/a&gt;&lt;br /&gt;
+0-3. &lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/0.%EB%B6%80%EB%A1%9D/3.-JDBC%EB%9E%80&quot;&gt;JDBC란&lt;/a&gt;&lt;br /&gt;
+0-4. &lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/0.%EB%B6%80%EB%A1%9D/4.-%EC%BB%A4%EB%84%A5%EC%85%98-%ED%92%80&quot;&gt;커넥션 풀&lt;/a&gt;&lt;br /&gt;
+0-5. &lt;a href=&quot;http://10.217.65.38/sw_architecture_tf/spring_study/wikis/0.%EB%B6%80%EB%A1%9D/5.-JDBC,-JPA-&amp;amp;-Hibernate,-Mybatis%EC%9D%98-%EC%B0%A8%EC%9D%B4&quot;&gt;JDBC, JPA/Hibernate, Mybatis 차이&lt;/a&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">스프링5 스터디를 위한 프로젝트 본 시리즈는 다음 2가지의 교재를 바탕으로 학습에 목적을 둔 글임을 밝힙니다.</summary></entry></feed>

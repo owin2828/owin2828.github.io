@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring]의 첫걸음 - 3 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. 의존이란? DI는 Dependency Injection의 약자로 우리말로는 의존주입이라 번역 의존이란 객체간의 의존을 의미 한 클래스가 다른 클래스의 매서드를 실행할 경우 이를 의존한다고 표현(변경에 의해 영향을 받는 관계)">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-3.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 3</h1>
+            
+            <h2 class="subheading">스프링 DI</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 10:51:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-의존이란">1. 의존이란?</h2>
+<hr />
+<ul>
+  <li><code class="highlighter-rouge">DI</code>는 <code class="highlighter-rouge">Dependency Injection</code>의 약자로 우리말로는 <code class="highlighter-rouge">의존주입</code>이라 번역</li>
+  <li><code class="highlighter-rouge">의존</code>이란 객체간의 의존을 의미</li>
+  <li>한 클래스가 다른 클래스의 매서드를 실행할 경우 이를 <code class="highlighter-rouge">의존</code>한다고 표현(변경에 의해 영향을 받는 관계)<br />
+<br /></li>
+</ul>
+
+<h2 id="2-about-di">2. About DI</h2>
+<hr />
+<ul>
+  <li>OOP의 <code class="highlighter-rouge">DIP</code>와는 비슷한 개념</li>
+  <li>디자인 패턴의 <code class="highlighter-rouge">IoC(Inversion of Control)</code> 제어 반전의 한 종류
+    <blockquote>
+      <p>용어가 정확하게 구분되어 있지는 않지만, 대략 IoC &gt; DIP &gt; DI 정도로 정리가능<br />
+자세한 사항은 링크 참조: https://bit.ly/2Zt9cnf</p>
+    </blockquote>
+  </li>
+  <li>객체지향 5대 원칙: <code class="highlighter-rouge">SOLID</code>
+    <blockquote>
+      <ol>
+        <li>단일 책임 원칙(Single responsibility principle) - SRP</li>
+        <li>개방 폐쇄 원칙(Open/closed principle) - OCP</li>
+        <li>리스코프 치환 원칙(Liskov substitution principle) - LSP</li>
+        <li>인터페이스 분리 원칙(Interface segregation principle) - ISP</li>
+        <li>의존관계 역전 원칙(Dependency inversion principle) - <code class="highlighter-rouge">DIP</code><br />
+<br /></li>
+      </ol>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="2-1-di를-통한-의존-처리">2-1. DI를 통한 의존 처리</h4>
+<ul>
+  <li>DI는 의존하는 객체를 직접 생성하는 대신, <code class="highlighter-rouge">의존 객체를 전달받는 방식</code>을 이용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberRegisterService.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberRegisterService</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">;</span>
+
+      <span class="c1">// MemberDao 객체를 전달 받아 DI를 구현</span>
+  <span class="kd">public</span> <span class="nf">MemberRegisterService</span><span class="o">(</span><span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">memberDao</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">;</span>
+  <span class="o">}</span>
+      <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-2-why-di">2-2. Why DI?</h4>
+<ul>
+  <li>DI를 사용하는 가장 큰 이유는 <code class="highlighter-rouge">변경의 유연함</code></li>
+  <li>객체를 전달받아 사용하게 되면, 코드의 수정을 최소한으로 줄이고 <code class="highlighter-rouge">유연함</code>을 가져갈 수 있음(주입 대상이 되는 객체를 생성하는 코드만 변경하면 됨)<br />
+<br /></li>
+</ul>
+
+<h4 id="2-3-di-방식-1-생성자-방식">2-3. DI 방식 1: 생성자 방식</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberRegisterService.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberRegisterService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">;</span>
+
+        <span class="c1">// 생성자를 통해 의존 객체를 주입 받음</span>
+	<span class="kd">public</span> <span class="nf">MemberRegisterService</span><span class="o">(</span><span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">memberDao</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">Long</span> <span class="nf">regist</span><span class="o">(</span><span class="nc">RegisterRequest</span> <span class="n">req</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 주입 받은 의존 객체의 매서드를 사용</span>
+		<span class="nc">Member</span> <span class="n">member</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">.</span><span class="na">selectByEmail</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getEmail</span><span class="o">());</span>
+                <span class="o">...</span>
+		<span class="n">memberDao</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">newMember</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">newMember</span><span class="o">.</span><span class="na">getId</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">생성자</code>를 통해 의존 객체를 주입받아 필드에 할당</li>
+  <li>전달할 의존 객체가 <code class="highlighter-rouge">두 개 이상이어도 동일한 방식</code>으로 주입<br />
+<br /></li>
+</ul>
+
+<h4 id="2-4-di-방식-2-setter-매서드-방식">2-4. DI 방식 2: setter 매서드 방식</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberInfoPrinter.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberInfoPrinter</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memDao</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">;</span>
+        <span class="o">...</span>
+        <span class="c1">// setter를 통해 의존 객체를 주입 받는다.</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemberDao</span><span class="o">(</span><span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">memDao</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPrinter</span><span class="o">(</span><span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">printer</span> <span class="o">=</span> <span class="n">printer</span><span class="o">;</span>
+	<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">setter 매서드</code>를 이용하여 객체를 주입<br />
+<br /></li>
+</ul>
+
+<h4 id="2-5-생성자-vs-setter">2-5. 생성자 VS setter?</h4>
+<ul>
+  <li>각 방식의 장점은 곧 다른 방식의 단점</li>
+  <li><code class="highlighter-rouge">생성자 방식</code> 장점: Bean 객체를 생성하는 시점에 <code class="highlighter-rouge">모든 의존 객체가 주입</code>, 그러나 생성자의 파라미터가 많을 경우 <code class="highlighter-rouge">일일히 확인</code>해 주어야 함</li>
+  <li><code class="highlighter-rouge">setter 매서드 방식</code>: sstter 매서드 이름을 통해 <code class="highlighter-rouge">어떤 의존 객체가 주입 되는지 알 수 있음</code>, 그러나 정확한 전달이 안될 시  <code class="highlighter-rouge">NullPointerException</code> 발생가능<br />
+<br /></li>
+</ul>
+
+<h2 id="3-싱글톤의-이해와-어노테이션">3. 싱글톤의 이해와 어노테이션</h2>
+<hr />
+
+<h4 id="3-1-configuration-설정-클래스의-bean-설정과-싱글톤">3-1. @Configuration 설정 클래스의 @Bean 설정과 싱글톤</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtx.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberDao</span> <span class="nf">memberDao</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberDao</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberRegisterService</span> <span class="nf">memberRegSvc</span><span class="o">()</span> <span class="o">{</span>
+                <span class="c1">// memberDao() 매서드 호출</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberRegisterService</span><span class="o">(</span><span class="n">memberDao</span><span class="o">());</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">ChangePasswordService</span> <span class="nf">changePwdSvc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ChangePasswordService</span> <span class="n">pwdSvc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ChangePasswordService</span><span class="o">();</span>
+                <span class="c1">// memberDao() 매서드 호출</span>
+		<span class="n">pwdSvc</span><span class="o">.</span><span class="na">setMemberDao</span><span class="o">(</span><span class="n">memberDao</span><span class="o">());</span>
+		<span class="k">return</span> <span class="n">pwdSvc</span><span class="o">;</span>
+	<span class="o">}</span>
+        <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>memberRegSvc() 매서드와 changePwdSvc() 매서드는 <code class="highlighter-rouge">둘 다 memberDao() 매서드를 실행</code><br />
+그리고 memberDao() 매서드는 <code class="highlighter-rouge">매번 새로운 MemberDao 객체를 생성해서 리턴</code><br />
+두 매서드는 과연 <code class="highlighter-rouge">같은</code> MemberDao 객체를 사용하는가?</p>
+</blockquote>
+
+<ul>
+  <li>스프링 컨테이너는 @Bean이 붙은 매서드에 대해 <code class="highlighter-rouge">한 개의 객체만 생성</code></li>
+  <li>이는 다른 설정에서 memberDao()를 몇 번을 호출하더라도 <code class="highlighter-rouge">항상 같은</code> 객체를 리턴</li>
+  <li>이것이 가능한 이유는 스프링이 설정 클래스를 그대로 사용하지 않고,<br />
+설정한 클래스를 상속한 <code class="highlighter-rouge">새로운 설정 클래스</code>를 만들어서 사용하기 때문</li>
+  <li>따라서 런타임에 매번 생성하지 않고, <br />
+한 번 생성한 객체를 보관했다가 이후에는 <code class="highlighter-rouge">동일한 객체를 리턴</code></li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 이해를 돕기 위한 가상의 코드. 실제 코드는 이보다 훨씬 복잡하다.</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxExt</span> <span class="kd">extends</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">beans</span> <span class="o">=</span> <span class="o">...;</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="nc">MemberDao</span> <span class="nf">memberDao</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(!</span><span class="n">beans</span><span class="o">.</span><span class="na">containersKey</span><span class="o">(</span><span class="s">"memberDao"</span><span class="o">))</span>
+                    <span class="n">beans</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"memberDao"</span><span class="o">,</span> <span class="kd">super</span><span class="o">.</span><span class="na">memberDao</span><span class="o">());</span>
+
+                <span class="k">return</span> <span class="o">(</span><span class="nc">MemberDao</span><span class="o">)</span> <span class="n">beans</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"memberDao"</span><span class="o">);</span>
+	<span class="o">}</span>
+        <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>매번 새로운 객체를 리턴하는 것이 아니라, 한 번 생성한 객체를 보관했다가 <code class="highlighter-rouge">동일 객체</code>를 리턴<br />
+<br /></li>
+</ul>
+
+<h4 id="3-2-두-개-이상의-설정-파일을-사용하기">3-2. 두 개 이상의 설정 파일을 사용하기</h4>
+<ul>
+  <li><code class="highlighter-rouge">@AutoWired</code> 어노테이션을 통해 필요한 Bean 객체를 자동 주입</li>
+  <li><code class="highlighter-rouge">@Import</code> 어노테이션을 통해 함께 사용할 클래스를 지정</li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/26/spring-2.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 2">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-4.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 4">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

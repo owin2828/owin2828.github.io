@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring]의 첫걸음 - 4 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. 자동 의존 주입 1-1. 자동 의존 주입? 의존 주입에 필요한 객체들을 찾아 스프링이 자동으로 필드에 할당해 주는 기능 스프링에서는 @Autowired와 @Resource 어노테이션 두 가지 방법이 존재">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-4.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 4</h1>
+            
+            <h2 class="subheading">의존 자동 주입</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 11:15:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   7 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-자동-의존-주입">1. 자동 의존 주입</h2>
+<hr />
+<h4 id="1-1-자동-의존-주입">1-1. 자동 의존 주입?</h4>
+<ul>
+  <li>의존 주입에 필요한 객체들을 찾아 스프링이 <code class="highlighter-rouge">자동으로 필드에 할당</code>해 주는 기능</li>
+  <li>스프링에서는 <code class="highlighter-rouge">@Autowired</code>와 <code class="highlighter-rouge">@Resource</code> 어노테이션 두 가지 방법이 존재</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li><code class="highlighter-rouge">MVC</code> 관점에서<br />
+Component는 <code class="highlighter-rouge">@Resource</code>를<br />
+Service는 <code class="highlighter-rouge">@Autowired</code>를 주로 사용하는 추세라고 함<br />
+<br /></li>
+  </ul>
+</blockquote>
+
+<h4 id="1-2-자동-의존-주입-예제-bean-객체">1-2. 자동 의존 주입 예제: Bean 객체</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ChangePasswordService.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChangePasswordService</span> <span class="o">{</span>
+
+	<span class="nd">@Autowired</span>
+	<span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">...</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemberDao</span><span class="o">(</span><span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">memberDao</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//AppCtx.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberDao</span> <span class="nf">memberDao</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberDao</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberRegisterService</span> <span class="nf">memberRegSvc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberRegisterService</span><span class="o">();</span>
+	<span class="o">}</span>
+
+        <span class="c1">// 아래 함수에서 의존을 주입하지 않아도 스프링이 @Autowired가 붙인 필드에</span>
+        <span class="c1">// 해당 타입의 Bean 객체를 찾아서 주입	</span>
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">ChangePasswordService</span> <span class="nf">changePwdSvc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">ChangePasswordService</span><span class="o">();</span>
+	<span class="o">}</span>
+        <span class="cm">/* 기존 코드
+	 @Bean
+	 public ChangePasswordService changePwdSvc() {
+	 	ChangePasswordService pwdSvc = new ChangePasswordService();
+		pwdSvc.setMemberDao(memberDao());
+		return pwdSvc;
+	 }
+        */</span>
+        <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>기존의 코드와는 다르게 memberDao()를 통해 생성된 Bean 객체를 setter 매서드에 <code class="highlighter-rouge">넘겨주지 않음</code><br />
+<br /></li>
+</ul>
+
+<h4 id="1-3-자동-의존-주입-예제-method">1-3. 자동 의존 주입 예제: method</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberInfoPrinter.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberInfoPrinter</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memDao</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">;</span>
+        <span class="o">...</span>
+	<span class="nd">@Autowired</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemberDao</span><span class="o">(</span><span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">memDao</span> <span class="o">=</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Autowired</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPrinter</span><span class="o">(</span><span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">printer</span> <span class="o">=</span> <span class="n">printer</span><span class="o">;</span>
+	<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//AppCtx.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberDao</span> <span class="nf">memberDao</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberDao</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="o">...</span>
+        <span class="c1">// 원래 호출하던 두 매서드 setPrinter(), setMemberDao()를 호출하지 않음</span>
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberInfoPrinter</span> <span class="nf">infoPrinter</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">MemberInfoPrinter</span> <span class="n">infoPrinter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MemberInfoPrinter</span><span class="o">();</span>
+		<span class="k">return</span> <span class="n">infoPrinter</span><span class="o">;</span>
+	<span class="o">}</span>
+        <span class="cm">/* 기존코드
+        @Bean
+	public MemberInfoPrinter infoPrinter() {
+		MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
+		infoPrinter.setMemberDao(memberDao());
+		infoPrinter.setPrinter(memberPrinter());
+		return infoPrinter;
+	}
+        */</span>
+	<span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">@Autowired</code> 어노테이션을 필드나 매서드에 붙이게 되면, 스프링은 타입이 일치하는 Bean 객체를 찾아서 주입</li>
+  <li>만약 일치하는 Bean이나 매서드가 없는 경우, Exception이 발생하고 제대로 실행되지 않음</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li>최근에는 위와 같은 방법이 권장<br />
+<br /></li>
+  </ul>
+</blockquote>
+
+<h4 id="1-4-자동-주입-가능-bean이-두-개-이상이라면">1-4. 자동 주입 가능 Bean이 두 개 이상이라면?</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// AppCtx.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberDao</span> <span class="nf">memberDao</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberDao</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="o">...</span>
+        <span class="c1">// memberPrinter1() 매서드의 Bean의 한정 값으로 "printer"를 지정</span>
+	<span class="nd">@Bean</span>
+	<span class="nd">@Qualifier</span><span class="o">(</span><span class="s">"printer"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="nc">MemberPrinter</span> <span class="nf">memberPrinter1</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberPrinter</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">MemberPrinter</span> <span class="nf">memberPrinter2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="k">new</span> <span class="nf">MemberPrinter</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberListPrinter.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberListPrinter</span> <span class="o">{</span>
+
+	<span class="kd">private</span> <span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">;</span>
+	<span class="o">...</span>
+	<span class="nd">@Autowired</span>
+        <span class="c1">// 앞서 스프링 설정 클래스에서 @Qualifier 어노테이션의 값으로 "printer"를 준</span>
+        <span class="c1">// MembeerPrinter 타입의 Bean(memberPrinter1)을 자동 주입 대상으로 사용</span>
+	<span class="nd">@Qualifier</span><span class="o">(</span><span class="s">"printer"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemberPrinter</span><span class="o">(</span><span class="nc">MemberPrinter</span> <span class="n">printer</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">printer</span> <span class="o">=</span> <span class="n">printer</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">@Qualifier</code> 어노테이션을 통해 자동 주입 Bean을 지정할 수 있음</li>
+  <li>Bean 설정에 <code class="highlighter-rouge">@Qualifier</code> 어노테이션이 없다면, <code class="highlighter-rouge">Bean의 이름</code>을 한정자로 지정<br />
+<br /></li>
+</ul>
+
+<h2 id="2-autowired-어노테이션의-필수-여부">2. @Autowired 어노테이션의 필수 여부</h2>
+<hr />
+<p>자동 주입할 대상이 필수가 아닌 경우(NULL값 등) 아래와 같이 세가지 방법이 존재</p>
+<ol>
+  <li><code class="highlighter-rouge">@Autowired(required = false)</code> 어노테이션 사용</li>
+  <li>자동 주입 대상 타입의 <code class="highlighter-rouge">Optional 지정</code></li>
+  <li><code class="highlighter-rouge">@Nullable</code> 어노테이션 사용</li>
+</ol>
+
+<ul>
+  <li>아래와 같이 dateTimeFormatter 필드값이 Null이어도 되는 경우 3가지 방법 예시
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MemberPrinter.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberPrinter</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">DateTimeFormatter</span> <span class="n">dateTimeFormatter</span><span class="o">;</span>
+  <span class="o">...</span>
+      <span class="c1">// 차례대로 1~3번 방법의 동일 매서드 코드</span>
+      <span class="c1">// 1번 방법</span>
+  <span class="nd">@Autowired</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDateFormatter</span><span class="o">(</span><span class="nc">DateTimeFormatter</span> <span class="n">dateTimeFormatter</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">dateTimeFormatter</span> <span class="o">=</span> <span class="n">dateTimeFormatter</span><span class="o">;</span>
+  <span class="o">}</span>
+
+      <span class="c1">// 2번 방법</span>
+  <span class="nd">@Autowired</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDateFormatter</span><span class="o">(</span><span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">DateTimeFormatter</span><span class="o">&gt;</span> <span class="n">dateTimeFormatter</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">dateTimeFormatter</span> <span class="o">=</span> <span class="n">dateTimeFormatter</span><span class="o">;</span>
+  <span class="o">}</span>
+
+      <span class="c1">// 3번 방법</span>
+  <span class="nd">@Autowired</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDateFormatter</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">DateTimeFormatter</span> <span class="n">dateTimeFormatter</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">dateTimeFormatter</span> <span class="o">=</span> <span class="n">dateTimeFormatter</span><span class="o">;</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <p>각 방법의 특징은 아래와 같음
+      1. 매칭되는 Bean이 없어도 Exception이 발생하지 않으며 <code class="highlighter-rouge">자동 주입을 수행하지 않음</code>
+      2. 일치하는 Bean이 존재하지 않으면 <code class="highlighter-rouge">값이 없는 Optional을 인자로 전달</code>(Exception 발생하지 않음),<br />
+ 일치하는 Bean이 존재하면 해당 Bean을 값으로 갖는 Optional을 인자로 전달
+      3. 스프링 컨테이너는 setter 매서드를 호출할 때 자동 주입할 Bean이 존재하면 해당 빈을 인자로 전달,<br />
+ 존재하지 않으면 <code class="highlighter-rouge">인자로 NULL을 전달</code></p>
+  </li>
+  <li>1번 방법은 매칭되는 Bean이 없으면 <code class="highlighter-rouge">매서드를 실행하지 않지만</code>,<br />
+2,3번 방법은 매칭되는 Bean이 없어도 <code class="highlighter-rouge">해당 매서드를 실행</code>함</li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-3.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 3">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-5.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 5">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring]의 첫걸음 - 2 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="0. 들어가기 앞서 스프링을 이용한 자바 프로젝트 진행 과정은 아래와 같다. 메이븐 프로젝트 생성 이클립스에서 메이븐 프로젝트 Import 스프링에 맞는 자바 코드와 설정 파일 작성 실행">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/26/spring-2.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring]의 첫걸음 - 2</h1>
+            
+            <h2 class="subheading">스프링 시작하기</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 16:28:00 December 26, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   5 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="0-들어가기-앞서">0. 들어가기 앞서</h2>
+<hr />
+<p>스프링을 이용한 자바 프로젝트 진행 과정은 아래와 같다.</p>
+<ul>
+  <li>메이븐 프로젝트 생성</li>
+  <li>이클립스에서 메이븐 프로젝트 Import</li>
+  <li>스프링에 맞는 자바 코드와 설정 파일 작성</li>
+  <li>실행<br />
+<br /></li>
+</ul>
+
+<h2 id="1-maven">1. Maven</h2>
+<hr />
+<h4 id="1-1-메이븐-기본-디렉토리-구조">1-1. 메이븐 기본 디렉토리 구조</h4>
+
+<ul>
+  <li>Maven 기본 설정 파일인 <code class="highlighter-rouge">pom.xml</code> 파일이 프로젝트 root에 위치</li>
+  <li>기본 소스코드 디렉토리
+    <ul>
+      <li><code class="highlighter-rouge">src/main/java</code></li>
+    </ul>
+  </li>
+  <li>테스트코드 디렉토리
+    <ul>
+      <li><code class="highlighter-rouge">src/test/java</code></li>
+    </ul>
+  </li>
+  <li>compile 결과 디렉토리
+    <ul>
+      <li><code class="highlighter-rouge">target</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/img/spring/spring_2_1.png" alt="디렉토리구조" /></p>
+
+<h4 id="1-2-메이븐-기초">1-2. 메이븐 기초</h4>
+
+<ul>
+  <li>메이븐의 핵심 <code class="highlighter-rouge">pom.xml</code></li>
+  <li><code class="highlighter-rouge">pom.xml</code>은 메이븐 프로젝트에 대한 설정 정보를 관리하는 파일</li>
+  <li>의존 모듈이나 플러그인 등에 대한 설정을 담음<br />
+<br /></li>
+</ul>
+
+<h4 id="1-3-메이븐-의존-설정">1-3. 메이븐 의존 설정</h4>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- pom.xml --&gt;</span>
+<span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-context<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>5.0.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>메이븐은 한 개의 모듈을 <code class="highlighter-rouge">아티팩트</code> 단위로 관리</li>
+  <li>위 설정은 spring-context 식별자를 가진 5.0.2.RELEASE 버전의 아티팩트에 대한 의존을 추가한 예제<br />
+<br /></li>
+</ul>
+
+<h3 id="1-4-메이븐-레포지토리">1-4. 메이븐 레포지토리</h3>
+<ul>
+  <li>메이븐의 아티팩트 파일은 기본적으로 <code class="highlighter-rouge">원격 레포지토리</code>와 <code class="highlighter-rouge">로컬 레포지토리</code>를 이용</li>
+  <li><code class="highlighter-rouge">메이븐은 로컬 레포지토리</code>에서 [그룹ID][아티팩트ID][버전] 폴더에 아티팩트ID-버전.jar 형식의 이름을 갖는 파일이 있는지 검사</li>
+  <li>로컬 레포지토리에 파일이 없으면 <code class="highlighter-rouge">메이븐은 원격 중앙 레포지토리</code>로부터 해당 파일을 다운로드하여 로컬 레포지토리에 복사한 뒤 그 파일을 사용</li>
+  <li>설정한 아티팩트가 <code class="highlighter-rouge">다시 의존하는</code> 파일도 포함하여 다운로드</li>
+  <li>배포 및 테스트할 때는 로컬 레포지토리(.m2등)에 있는 파일을 <code class="highlighter-rouge">지우고</code> 원격 레포지토리에서 다운로드하는 것을 권장<br />
+<br /></li>
+</ul>
+
+<h4 id="1-5-메이븐-프로젝트-임포트">1-5. 메이븐 프로젝트 임포트</h4>
+<ul>
+  <li>이클립스에서 [File]-&gt;[Import] 메뉴 이용<br />
+<br /></li>
+</ul>
+
+<h2 id="2-about-spring">2. About Spring</h2>
+<hr />
+<h4 id="2-1-스프링이-생성하고-관리하는-객체--bean">2-1. 스프링이 생성하고 관리하는 객체 = Bean</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//AppContext.java</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppContext</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Greeter</span> <span class="nf">greeter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">@configuration</code> 어노테이션은 해당 클래스를 <code class="highlighter-rouge">스프링 설정 클래스</code>로 지정</li>
+  <li><code class="highlighter-rouge">@Bean</code> 어노테이션을 매서드에 붙이면 해당 매서드가 생성한 객체를 스프링이 관리하는 <code class="highlighter-rouge">Bean 객체로 등록</code></li>
+  <li><code class="highlighter-rouge">@Bean</code> 어노테이션을 붙인 <code class="highlighter-rouge">매서드의 이름</code>은 Bean 객체를 구분할 때 사용 (위의 예시에서는 greeter를 사용하게 됨)</li>
+</ul>
+
+<blockquote>
+  <p>@Configuration 어노테이션 말고, <code class="highlighter-rouge">XML 파일</code>로도 설정파일을 생성 가능<br />
+@Configuration 어노테이션은 변경사항이 생길 시, <code class="highlighter-rouge">매번</code> 컴파일 해야하지만 XML로 설정한 파일은 <code class="highlighter-rouge">몇 글자</code>를 고치기만 하면 됨<br />
+자세한 사항은 링크 참조: <a href="https://bit.ly/2MGXG1J">https://bit.ly/2MGXG1J</a></p>
+</blockquote>
+
+<h4 id="2-2-스프링은-객체-컨테이너">2-2. 스프링은 객체 컨테이너</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Main.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 1. 설정 정보를 이용해 Bean 객체를 생성</span>
+		<span class="nc">AnnotationConfigApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> 
+				<span class="k">new</span> <span class="nf">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="nc">AppContext</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+                <span class="c1">// 2. Bean 객체를 제공</span>
+		<span class="nc">Greeter</span> <span class="n">g</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"greeter"</span><span class="o">,</span> <span class="nc">Greeter</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+		<span class="o">...</span>
+		<span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">AnnotationConfigApplicationContext</code> 클래스는 스프링의 핵심인 객체 생성 및 초기화를 담당, 자바 클래스의 정보를 읽어옴</li>
+  <li><code class="highlighter-rouge">AnnotationConfigApplicationContext</code>의 상위 클래스 <code class="highlighter-rouge">ApplicationContext</code> 또는 <code class="highlighter-rouge">BeanFactory</code>는 Bean 객체의 생성, 초기화, 보관, 관리 등을 담당하고 있어 <code class="highlighter-rouge">컨테이너(Container)</code>라고도 부름</li>
+  <li>getBean() 매서드를 통해 해당 Bean 객체를 제공
+    <blockquote>
+      <p>컨테이너는 보통 인스턴스의 <code class="highlighter-rouge">생명주기를 관리</code>하며, 생성된 인스턴스들에게<code class="highlighter-rouge"> 추가적인 기능</code>을 제공하도록하는 것<br />
+스프링 컨테이너의 두 종류: <code class="highlighter-rouge">빈팩토리(BeanFactory)</code>, <code class="highlighter-rouge">어플리케이션 컨텍스트(ApplicationContext)</code></p>
+      <blockquote>
+        <p><code class="highlighter-rouge">BeanFactory</code>: DI의 기본사항을 제공하는 가장 <code class="highlighter-rouge">단순한</code> 컨테이너, Bean을 <code class="highlighter-rouge">생성</code>하고 <code class="highlighter-rouge">분배</code>하는 책임을 지는 클래스<br />
+<code class="highlighter-rouge">ApplicationContext</code>: 빈팩토리와 유사한 기능을 제공하지만 <code class="highlighter-rouge">좀 더 많은 기능</code>을 제공하는 어플리케이션 컨텍스트<br />
+추가기능:</p>
+        <ul>
+          <li>국제화가 지원되는 텍스트 메시지를 관리</li>
+          <li>이미지같은 파일 자원을 로드 할 수 있는 포괄적인 방법을 제공</li>
+          <li>리너스로 등록된 빈에게 이벤트 발생을 알려 줌<br />
+<br /></li>
+        </ul>
+      </blockquote>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="2-3-singleton-객체">2-3. Singleton 객체</h4>
+<ul>
+  <li>별도의 설정을 하지 않을 경우 스프링은 <code class="highlighter-rouge">한 개</code>의 Bean 객체만을 생성</li>
+  <li>이때 Bean 객체는 <code class="highlighter-rouge">싱글톤(singleton)</code> 범위를 갖는다고 표현</li>
+  <li>싱글톤은 <code class="highlighter-rouge">단일 객체(single object)</code>를 의미</li>
+  <li>스프링은 기본적으로 한 개의 @Bean 어노테이션에 한 개의 Bean 객체를 생성</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li>이때 singleton은 디자인 패턴의 singleton과는 약간의 차이가 존재</li>
+    <li>스프링의 싱글톤은 직접 오브젝트를 만들고 관리</li>
+    <li>자바의 싱글톤 = private static으로 인스턴스 생성 / 스프링의 싱글톤 = 싱글톤 레지스트리</li>
+    <li>자세한 사항은 링크 참조: <a href="https://bit.ly/2MG41KR">https://bit.ly/2MG41KR</a></li>
+  </ul>
+</blockquote>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/26/spring-1.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 1">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-3.html" data-toggle="tooltip" data-placement="top" title="[Spring]의 첫걸음 - 3">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>
