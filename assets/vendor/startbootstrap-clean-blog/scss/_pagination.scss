@@ -1,0 +1,14 @@
+// Styling for the pagination
+  .pagination {
+    margin: auto;
+    text-align: center;
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 55px 0 25px 0;
+    color: #999;
+  }
+  span.pagination-selected {
+    display: inline-block;
+    font-size: 1.7rem;
+  }

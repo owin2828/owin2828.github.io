@@ -24,6 +24,7 @@ google_analytics:   UA-154694140-1 # out your google-analytics code
 
 # Build settings
 markdown:           kramdown
+# highlighter: rouge
 plugins:
   - jekyll-feed
   - jekyll-paginate-v2
@@ -35,6 +36,8 @@ plugins:
 pagination:
   enabled: true
   per_page: 5
+  sort_reverse: true 
+  title: ':title' # 이 변수가 없으면, 페이지가 넘어갈 때 title 값이 (기존 타이틀)-page2 이런식으로 변경됨..
   permalink: "/page/:num/"
   trail: 
     before: 2
