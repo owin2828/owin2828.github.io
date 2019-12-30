@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring] 첫걸음 - 18 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="0. 기본 보안 개념 인증(Authentication)은 주체(Principal)의 신원(Identity)을 증명하는 과정 주체(Principal): 유저, 기기, 시스템 등 주로 유저(사용자) 크레덴셜(Credential): 주체가 인증을 위해 제시하는 신원 증명 정보 주체가 유...">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-18.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring] 첫걸음 - 18</h1>
+            
+            <h2 class="subheading">Spring Security</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:08:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   42 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="0-기본-보안-개념">0. 기본 보안 개념</h2>
+<hr />
+<p><em><code class="highlighter-rouge">인증</code>(Authentication)은 <code class="highlighter-rouge">주체</code>(Principal)의 <code class="highlighter-rouge">신원</code>(Identity)을 증명하는 과정</em></p>
+<ul>
+  <li><code class="highlighter-rouge">주체</code>(Principal): 유저, 기기, 시스템 등
+    <ul>
+      <li>주로 <code class="highlighter-rouge">유저(사용자)</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">크레덴셜</code>(Credential): 주체가 인증을 위해 제시하는 <code class="highlighter-rouge">신원 증명 정보</code>
+    <ul>
+      <li>주체가 유저일 경우 주로 <code class="highlighter-rouge">Password</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">인가</code>(Authorization, 권한부여): 인증을 마친 유저에게 <code class="highlighter-rouge">권한</code>을 부여하여 특정 리소스에 접근을 허용
+    <ul>
+      <li>반드시 인증 이후에 수행</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">접근 통제</code>(Access control, 접근 제어): 어플리케이션 리소스에 접근하는 행위를 <code class="highlighter-rouge">제어</code>
+    <ul>
+      <li>접근 통제 결정(Access control decision, 접근 제어 결정)이 뒤따름<br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="1-url-접근">1. URL 접근</h2>
+<hr />
+<ul>
+  <li>Spring Security는 HTTP 요청에 <code class="highlighter-rouge">서블릿 필터</code>를 적용해 보안을 처리
+    <ul>
+      <li><code class="highlighter-rouge">AbstractSecurityWebApplicationInitializer</code> 베이스 클래스를 상속해 구현</li>
+    </ul>
+  </li>
+  <li>WebSecurityConfigurerAdapter 구성 어댑터의 <code class="highlighter-rouge">configure()</code> 매서드를 이용해 다음과 같은 기본 보안 설정 적용 가능
+    <ul>
+      <li>폼 기반 로그인 서비스</li>
+      <li>HTTP 기본 인증</li>
+      <li>로그아웃 서비스</li>
+      <li>익명 로그인</li>
+      <li>서블릿 API 연계</li>
+      <li>CSFR</li>
+      <li>보안 헤더
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityInitalizer.java</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoSecurityInitializer</span> <span class="kd">extends</span> <span class="nc">AbstractSecurityWebApplicationInitializer</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="nf">TodoSecurityInitializer</span><span class="o">()</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="nc">TodoSecurityConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>        </div>
+        <p><br /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="1-1-url-접근-보안">1-1. URL 접근 보안</h4>
+<ul>
+  <li>WebSecurityConfigurerAdapter 클래스의 <code class="highlighter-rouge">configure(HttpSecurity http)</code> 매서드는 기본적으로 다음의 특징을 지님
+    <ol>
+      <li>anyRequest().authenticated()해서 매번 요청이 들어올 때마다 반드시 <code class="highlighter-rouge">인증</code>을 받도록 강제함</li>
+      <li><code class="highlighter-rouge">HTTP 기본인증</code>(httpBasic()) 및 <code class="highlighter-rouge">폼 기반 로그인</code>(formLogin()) 기능은 기본적으로 킴</li>
+      <li>로그인 페이지를 만들지 않으면 <code class="highlighter-rouge">기본 로그인 페이지</code>를 보이도록 구성</li>
+    </ol>
+  </li>
+  <li>
+    <p>configure(HttpSecurity http) 매서드를 오버라이딩하여 <code class="highlighter-rouge">더 정교한 인가 규칙</code>을 적용 가능</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebSecurity</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoSecurityConfig</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+          <span class="n">auth</span><span class="o">.</span><span class="na">inMemoryAuthentication</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"user"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"{noop}user"</span><span class="o">)</span> <span class="c1">// .password("user")하면 인코딩 에러발생</span>
+                  <span class="o">.</span><span class="na">authorities</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"admin"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"{noop}admin"</span><span class="o">)</span> <span class="c1">// .password("admin")하면 인코딩 에러발생</span>
+                  <span class="o">.</span><span class="na">authorities</span><span class="o">(</span><span class="s">"USER"</span><span class="o">,</span> <span class="s">"ADMIN"</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+          <span class="n">http</span><span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span> <span class="c1">// URL 접근 보안의 시작</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="nc">HttpMethod</span><span class="o">.</span><span class="na">DELETE</span><span class="o">,</span> <span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">)</span>
+              <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">formLogin</span><span class="o">()</span>
+              <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">csrf</span><span class="o">().</span><span class="na">disable</span><span class="o">();</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>URL 접근 보안은 <code class="highlighter-rouge">authorizeRequests()</code>부터 시작되며, 여러가지 매처를 통해 규칙을 지정가능
+    <ul>
+      <li>앞선 코드에서는 <code class="highlighter-rouge">antMatchers</code>로 규칙을 지정
+        <blockquote>
+          <p>이때 “/todos*” 처럼 마지막에 <code class="highlighter-rouge">와일드카드</code>를 넣어줘야 쿼리 매개변수가 있는 URL도 걸림<br />
+그렇지 않다면, 해커들이 아무 쿼리 변수나 덧붙여 URL 관문을 통과할 수 있음</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">configure(AuthenticationManagerBuilder auth)</code> 매서드를 통해 메모리에 유저 정보를 저장
+    <ul>
+      <li>이때, Spring5 부터 유저 정보를 메모리에 저장하면 <code class="highlighter-rouge">PasswordEncoder</code>를 찾지 못해 예외가 발생</li>
+      <li>이러한 예외를 방지하기 위해 앞선 코드처럼 <code class="highlighter-rouge">{noop}</code>를 붙여줌으로써, 내부적으로 NoOpPasswoedEncoder를 사용하겠다는 선언</li>
+      <li>위 클래스도 <code class="highlighter-rouge">비권장</code> 클래스라 좋은 방법은 아니지만, 실제 메모리에 정보를 저장하는 일은 거의 없으므로 임시사용</li>
+    </ul>
+  </li>
+  <li>기본 접근 규칙 및 로그인 구성을 오버라이딩 했으므로, <code class="highlighter-rouge">formLogin</code> 기능을 다시 활성화 시켜줘야 함</li>
+  <li>앞선 코드처럼 구성하고, <code class="highlighter-rouge">CSFR</code>방어 기능을 키게 되면, 폼이 제대로 동작하지 않으므로 비활성화(활성방법 후술)<br />
+<br /></li>
+</ul>
+
+<h3 id="1-2-csrf-공격-방어">1-2. CSRF 공격 방어</h3>
+<ul>
+  <li><code class="highlighter-rouge">CSRF</code> 방어기능은 스프링 시큐리티 기본 설정 그대로 켜두면 되지만, 필요시 csrf().disable() 로 해제 가능
+    <blockquote>
+      <p><code class="highlighter-rouge">CSRF 공격</code>(Cross Site Request Forgery)은 웹 어플리케이션 취약점 중 하나로<br />
+    인터넷 사용자(희생자)가 자신의 의지와는 무관하게 <code class="highlighter-rouge">공격자가 의도한 행위</code>(수정, 삭제, 등록 등)를 특정 웹사이트에 <code class="highlighter-rouge">요청</code>하게 만드는 공격</p>
+    </blockquote>
+  </li>
+  <li>Spring Security는 CsrfTokenRepository 인터페이스의 구현체를 이용해 <code class="highlighter-rouge">토큰</code> 값을 생성/보관하는 CsrfFilter를 추가</li>
+  <li>CSRF 방어기능이 켜진 상태로, 할 일을 완료하거나 삭제하려면 토큰이 없어서 실패
+    <ul>
+      <li>콘텐츠를 수정하는 요청을 할 때, 다음처럼 hidden input에 CSRF 토큰을 심어 서버에 <code class="highlighter-rouge">재전송</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"${_csrf.parameterName}"</span> <span class="na">value=</span><span class="s">"${_csrf.token}"</span><span class="nt">/&gt;</span>
+</code></pre></div>        </div>
+        <p><br /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-웹-어플리케이션-로그인">2. 웹 어플리케이션 로그인</h2>
+<hr />
+<p>다음의 로그인 서비스는 <code class="highlighter-rouge">HTTP 자동 구성</code>을 활성화하면 <code class="highlighter-rouge">자동 등록</code> 되지만, 직접 커스터마이징 하는 경우 <code class="highlighter-rouge">명시적</code>으로 구성해야 함</p>
+<ul>
+  <li><code class="highlighter-rouge">예외 처리</code>나 <code class="highlighter-rouge">보안 컨텍스트</code> 연계등 Spring Security 필수 기능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">){</span>
+      <span class="n">http</span><span class="o">.</span><span class="na">securityContext</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">exceptionHandling</span><span class="o">();</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">서블릿 API</code> 연계 기능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">){</span>
+      <span class="n">http</span><span class="o">.</span><span class="na">servletApi</span><span class="o">();</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-1-http-기본-인증">2-1. HTTP 기본 인증</h4>
+<ul>
+  <li>HTTP 기본 인증은 <code class="highlighter-rouge">httpBasic()</code>으로 구성</li>
+  <li><code class="highlighter-rouge">HTTP 기본 인증</code>을 적용하면 대부분 브라우저는 로그인 대화상자를 띄우거나, 특정 로그인 페이지로 이동시킴
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">httpBasic</span><span class="o">();</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-2-폼-기반-로그인">2-2. 폼 기반 로그인</h4>
+<blockquote>
+  <p>HTTP 기본 인증과 폼 기반 로그인을 동시에 활성화 할 경우, <code class="highlighter-rouge">폼 기반 로그인</code>이 우선시 됨</p>
+  <ul>
+    <li><code class="highlighter-rouge">formLogin()</code> 매서드로 로그인 서비스를 구현하면, 유저가 로그인 정보를 입력하는 폼 페이지가 <code class="highlighter-rouge">자동 랜더링</code> 됨
+      <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">formLogin</span><span class="o">();</span>
+</code></pre></div>      </div>
+    </li>
+  </ul>
+</blockquote>
+
+<ul>
+  <li>기본 로그인 페이지가 아닌 <code class="highlighter-rouge">다른 로그인 페이지</code>를 사용하고 싶다면, <code class="highlighter-rouge">login.jsp</code> 파일을 작성 후 <code class="highlighter-rouge">wepapp 루트디렉토리</code>에 위치시킴
+    <ul>
+      <li>WEB-INF 안에 넣으면, USER는 접근조차 할 수 없음</li>
+    </ul>
+  </li>
+  <li>커스텀 로그인 페이지의 URL을 다음처럼 loginPage()의 <code class="highlighter-rouge">인수로 전달</code>하고, 기본 리다이렉트 페이지 및 에러처리
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">formLogin</span><span class="o">()</span>
+      <span class="o">.</span><span class="na">loginPage</span><span class="o">(</span><span class="s">"/login.jsp"</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">defaultSuccessUrl</span><span class="o">(</span><span class="s">"/messageList"</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">failureUrl</span><span class="o">(</span><span class="s">"login.jsp?error=true"</span><span class="o">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>요청 URL에 쿼리 매개변수 error이 존재하는지 체크하고 있다면 세션 속성값을 이용해 다음처럼 최근 <code class="highlighter-rouge">에러 메세지</code>를 표시
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;form&gt;</span>
+      ...
+      <span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">not</span> <span class="n">empty</span> <span class="n">parma</span><span class="o">.</span><span class="na">error</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+          Reason: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+      ...
+  <span class="nt">&lt;/form&gt;</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-3-로그아웃-서비스">2-3. 로그아웃 서비스</h4>
+<ul>
+  <li>로그아웃 기능은 <code class="highlighter-rouge">logout()</code> 매서드로 구현
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">logout</span><span class="o">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>기본 URL은 /logout 이며, <code class="highlighter-rouge">POST</code> 요청일 경우에만 작동하며 로그아웃한 유저는 기본 경로(초기화면)으로 이동</li>
+  <li><code class="highlighter-rouge">다른 URL</code>로 보내고 싶다면, 다음처럼 <code class="highlighter-rouge">logoutSuccessUrl()</code> 매서드에 지정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">logout</span><span class="o">().</span><span class="na">logoutSuccessUrl</span><span class="o">(</span><span class="s">"/logout.success.jsp"</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+      <span class="o">.</span><span class="na">headers</span><span class="o">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>로그아웃 이후 뒤로가기 버튼을 눌렀을 때, 브라우저가 페이지를 <code class="highlighter-rouge">캐싱</code>함으로 인해 로그인된 페이지로 이동하는 문제 발생
+    <ul>
+      <li><code class="highlighter-rouge">headers()</code> 매서드로 보안 헤더를 활성화하여 브라우저의 페이지 캐싱을 방지</li>
+      <li>캐싱 뿐 아니라, <code class="highlighter-rouge">content sniffing</code> 방지 및 <code class="highlighter-rouge">X-Frame</code> 방어를 활성화하는 역할도 수행
+        <blockquote>
+          <p><code class="highlighter-rouge">content sniffing</code>: 바이트 스트림을 읽어 그 안의 데이터 형식을 추론하는 해킹, MIME 스니핑이라고도 불림<br />
+<code class="highlighter-rouge">X-Frame</code>: 클릭 재킹은 웹 사용자를 클릭하여 사용자가 클릭 한 것으로 보이는 것과 다른 것을 클릭하여<br />
+기밀 정보를 공개하거나 자신의 컴퓨터를 제어하는 악의적인 기법이다.
+<br /></p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="2-4-익명-로그인-구현">2-4. 익명 로그인 구현</h4>
+<ul>
+  <li>익명 로그인 서비스는 <code class="highlighter-rouge">anonymous()</code> 매서드에 유저명과 익명유저의 권한을 주어 다음과 같이 지정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+      <span class="o">...</span>
+      <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+      <span class="o">.</span><span class="na">anonymous</span><span class="o">().</span><span class="na">principal</span><span class="o">(</span><span class="s">"quest"</span><span class="o">).</span><span class="na">authorities</span><span class="o">(</span><span class="s">"ROLE_GUEST"</span><span class="o">);</span>
+      <span class="c1">// 간단하게 .anonymous()로 동작가능</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-5-remember-me-구현">2-5. Remember Me 구현</h4>
+<ul>
+  <li>Remember Me 기능은 <code class="highlighter-rouge">rememberMe()</code> 매서드를 통해 구현
+    <ul>
+      <li>유저명, 패스워드, 리맴버 미 만료 시각, 개인키를 하나의 <code class="highlighter-rouge">토큰</code>으로 인코딩해 유저 브라우저 <code class="highlighter-rouge">쿠키</code>로 저장</li>
+      <li>재접속시 이 토큰값을 가져와 유저를 <code class="highlighter-rouge">자동</code> 로그인 시킴
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">http</span>
+  <span class="o">...</span>
+  <span class="o">.</span><span class="na">rememberMe</span><span class="o">();</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p>그러나 <code class="highlighter-rouge">정적</code>인 리맴버 미 토큰은 해커가 얼마든지 빼낼 수 있어 <code class="highlighter-rouge">잠재적인 보안 이슈</code>가 존재<br />
+이에 Spring Security는 토큰을 <code class="highlighter-rouge">rolling</code> 시키는 기술을 지원하며 토큰 저장을 위한 별도의 DB가 필요<br />
+<br /></p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3-유저-인증하기">3. 유저 인증하기</h2>
+<hr />
+<ul>
+  <li>Spring Security에서는 연쇄적으로 연결되 하나 이상의 인증 공급자를 이용해 인증을 수행하며, <code class="highlighter-rouge">모든</code> 공급자의 인증 과정을 통과해야 함</li>
+  <li>대부분의 인증 공급자는 유저 세부 내용을 <code class="highlighter-rouge">저장소</code>(메모리, RDBMS, LDAP 저장소)등에서 가져온 결과와 대조하여 인증을 수행</li>
+  <li>유저 세부 내용을 저장할 때 패스워드는 해커의 공격을 당할 수 있어 주로 <code class="highlighter-rouge">단방향 해시</code> 함수를 이용해 <code class="highlighter-rouge">암호화</code>하여 저장
+    <ul>
+      <li>Spring Security는 패스워드 인코딩 알고리즘으로 <code class="highlighter-rouge">MD5</code>, <code class="highlighter-rouge">SHA</code>등을 지원</li>
+    </ul>
+  </li>
+  <li>유저가 로그인할 때마다 저장소에서 조회하면 성능 저하를 유발하므로, Spring Security는 로컬 메모리와 저장 공간에 <code class="highlighter-rouge">캐싱</code>하는 기능 제공<br />
+<br /></li>
+</ul>
+
+<h4 id="3-1-in-memory-방식으로-유저-인증">3-1. In memory 방식으로 유저 인증</h4>
+<ul>
+  <li>유저가 <code class="highlighter-rouge">적고</code>, 정보를 수정할 일이 <code class="highlighter-rouge">없을</code> 경우
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebSecurity</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoSecurityConfig</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+      <span class="c1">// 한 사람씩 withUser 매서드를 이용하여 추가</span>
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+          <span class="n">auth</span><span class="o">.</span><span class="na">inMemoryAuthentication</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"admin@ya2do.io"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"secret"</span><span class="o">).</span><span class="na">authorities</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">,</span><span class="s">"USER"</span><span class="o">).</span><span class="na">and</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"marten@@ya2do.io"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"{noop}user"</span><span class="o">).</span><span class="na">authorities</span><span class="o">(</span><span class="s">"USER"</span><span class="o">).</span><span class="na">and</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">withUser</span><span class="o">(</span><span class="s">"jdoe@does.net"</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="s">"unknown"</span><span class="o">).</span><span class="na">disabled</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="na">authorities</span><span class="o">(</span><span class="s">"USER"</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="3-2-db-조회-결과에-따라-유저-인증">3-2. DB 조회 결과에 따라 유저 인증</h4>
+<ul>
+  <li>유저의 세부 내용은 <code class="highlighter-rouge">DB</code>에 저장하는 경우가 압도적</li>
+  <li>Spring Security는 다음과 같은 두 매서드를 통해 SQL을 이용하는 <code class="highlighter-rouge">조회</code> 기능을 제공
+    <ul>
+      <li>usersByUserNameQuery()</li>
+      <li>authoritiesByUsernameQuery()
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+  <span class="o">...</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+      <span class="n">auth</span>
+          <span class="o">.</span><span class="na">jdbcAuthentication</span><span class="o">()</span>
+              <span class="o">.</span><span class="na">dataSource</span><span class="o">(</span><span class="n">dataSource</span><span class="o">())</span>
+              <span class="o">.</span><span class="na">usersByUsernameQuery</span><span class="o">(</span><span class="s">"SELECT username, password, 'true' as enabled FROM member WHERE username = ?"</span><span class="o">)</span>
+              <span class="o">.</span><span class="na">authoritiesByUsernameQuery</span><span class="o">(</span>
+                      <span class="s">"SELECT member.username, member_role.role as authorities "</span> <span class="o">+</span>
+                              <span class="s">"FROM member, member_role "</span> <span class="o">+</span>
+                              <span class="s">"WHERE  member.username = ? AND member.id = member_role.member_id"</span><span class="o">);</span>
+  <span class="o">}</span>
+</code></pre></div>        </div>
+        <p><br /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="3-3-패스워드-암호화">3-3. 패스워드 암호화</h4>
+<ul>
+  <li><code class="highlighter-rouge">In memory</code> 방식의 경우, <code class="highlighter-rouge">passwordEncoder()</code> 매서드에 패스워드 인코더를 지정해 암호화하여 저장 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+      <span class="o">...</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">BCryptPasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">BCryptPasswordEncoder</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+          <span class="n">auth</span>
+              <span class="o">.</span><span class="na">jdbcAuthentication</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">passwordEncoder</span><span class="o">(</span><span class="n">passwordEncoder</span><span class="o">())</span>
+                  <span class="o">.</span><span class="na">dataSource</span><span class="o">(</span><span class="n">dataSource</span><span class="o">());</span>
+      <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p><code class="highlighter-rouge">BCrypt</code>: <code class="highlighter-rouge">단방향 해시 알고리즘</code>으로 설계시 부터 패스워드 저장을 목적으로 설계되어 강력함<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="3-4-ldap-저장소-조회-결과에-따라-유저-인증">3-4. LDAP 저장소 조회 결과에 따라 유저 인증</h4>
+<blockquote>
+  <p><code class="highlighter-rouge">LDAP</code>: LDAP는 조직이나, 개체, 그리고 인터넷이나 기업 내의 인트라넷 등<br />
+  네트웍 상에 있는 파일이나 장치들과 같은 자원 등의 <code class="highlighter-rouge">위치</code>를 찾을 수 있게 해주는 소프트웨어 <code class="highlighter-rouge">프로토콜</code></p>
+  <ul>
+    <li>LDAP의 저장소 구성은 <code class="highlighter-rouge">ldapAuthentication()</code> 매서드가 담당</li>
+    <li>유저 및 그룹을 검색하는 필터와 베이스는 <code class="highlighter-rouge">콜백 매서드</code>로 지정</li>
+    <li>Spring Security는 각 그룹마다 <code class="highlighter-rouge">ROLE_</code> 접두어를 붙혀 권한으로 사용
+      <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// TodoSecurityConfig.java</span>
+  <span class="o">...</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+      <span class="n">auth</span>
+          <span class="o">.</span><span class="na">ldapAuthentication</span><span class="o">()</span>
+              <span class="o">.</span><span class="na">contextSource</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">ldif</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">url</span><span class="o">(</span><span class="s">"ldap://ldap-server:389/dc=springrecipes,dc=com"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">managerDn</span><span class="o">(</span><span class="s">"cn=Directory Manager"</span><span class="o">).</span><span class="na">managerPassword</span><span class="o">(</span><span class="s">"ldap"</span><span class="o">)</span>
+          <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+              <span class="o">.</span><span class="na">userSearchFilter</span><span class="o">(</span><span class="s">"uid={0}"</span><span class="o">).</span><span class="na">userSearchBase</span><span class="o">(</span><span class="s">"ou=people"</span><span class="o">)</span>
+              <span class="o">.</span><span class="na">groupSearchFilter</span><span class="o">(</span><span class="s">"member={0}"</span><span class="o">).</span><span class="na">groupSearchBase</span><span class="o">(</span><span class="s">"ou=groups"</span><span class="o">)</span>
+              <span class="o">.</span><span class="na">passwordCompare</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">passwordEncoder</span><span class="o">(</span><span class="k">new</span> <span class="nc">BCryptPasswordEncoder</span><span class="o">())</span>
+                  <span class="o">.</span><span class="na">passwordAttribute</span><span class="o">(</span><span class="s">"userPassword"</span><span class="o">);</span>
+  <span class="o">}</span>
+</code></pre></div>      </div>
+    </li>
+    <li><code class="highlighter-rouge">LDAP</code>을 지원하는 자바 기반 오픈소스 디렉토리 서비스 엔진인 <code class="highlighter-rouge">OpenDS</code>는 기본적으로 <code class="highlighter-rouge">SSHA</code>를 사용하므로,<br />
+<code class="highlighter-rouge">LdapShaPasswordEncoder</code>를 지정해야 함
+      <blockquote>
+        <p><code class="highlighter-rouge">SSHA</code>: Salted Secure Hash Algorithm로서, 기존의 해싱의 단점(동일한 문자열에 대해 같은 해쉬값)을 극복하는 방법으로<br />
+   <code class="highlighter-rouge">무작위 문자열</code>을 추가해 같은 문자열에 대해 매번 다른 해쉬값을 가지도록 하여 보안성을 높이는 기법<br />
+<br /></p>
+      </blockquote>
+    </li>
+  </ul>
+</blockquote>
+
+<h2 id="4-접근-통제-결정">4. 접근 통제 결정</h2>
+<hr />
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">접근 통제 결정</code>은 유저가 리소스에 <code class="highlighter-rouge">접근 가능</code>한지 판단하는 행위로서 <code class="highlighter-rouge">유저 인증 상태</code>와 <code class="highlighter-rouge">리소스 속성</code>에 따라 좌우되며,<br />
+Spring Security에서는 <code class="highlighter-rouge">AccessDecisionManager 인터페이스</code> 구현을 통해 이를 판단</p>
+  </li>
+  <li>필요 시 직접 인터페이스를 구현할 수도 있지만, Spring Security는 <code class="highlighter-rouge">거수 방식</code>으로 동작하는 다음 3가지 <code class="highlighter-rouge">결정 관리자</code>를 기본 제공
+    <ol>
+      <li><code class="highlighter-rouge">AffirmativeBased</code>: 하나의 거수기만 거수해도 접근 허용</li>
+      <li><code class="highlighter-rouge">ConsensusBased</code>: 거수기 전원이 만장일치해야 접근 허용</li>
+      <li><code class="highlighter-rouge">UnanimousBased</code>: 거수기 전원이 기권 또는 찬성해야 접근 허용(적어도 반대는 없어야 함)</li>
+    </ol>
+  </li>
+  <li>
+    <p>위의 결정 관리자를 이용하기 위해, 접근 통제 결정에 대한 <code class="highlighter-rouge">거수기 그룹</code>을 구성해야 하며<br />
+각 거수기는 <code class="highlighter-rouge">AccessDecisionVoter 인터페이스</code>를 구현하고, 유저의 리소스 접근에 대해 찬성, 기권, 반대중 하나의 의사를 <code class="highlighter-rouge">표명</code></p>
+  </li>
+  <li>별도의 결정 관리자를 명시하지 않으면, <code class="highlighter-rouge">AffirmativeBased</code>를 기본 접근 통제 결정 관리자로 임명하고 다음 두 거수기를 구성
+    <ol>
+      <li><code class="highlighter-rouge">RolVoter</code>: 유저 롤을 기준으로 접근 허용 여부를 거수, ROLE_ 접두어(다른 접두어도 가능)로 시작하는 접근 속성만 처리</li>
+      <li><code class="highlighter-rouge">AuthenticatedVoter</code>: 유저 인증 레벨을 기준으로 접근 허용 여부를 거수하며, 다음 세 가지 접근 속성만 처리</li>
+    </ol>
+    <ol>
+      <li>IS_AUTHENTICATED_FULLY</li>
+      <li>IS_AUTHENTICATED_REMEMBERED</li>
+      <li>IS_AUTHENTICATED_ANONYMOUSLY
+        <blockquote>
+          <p>위 3가지는 순서대로 <code class="highlighter-rouge">인증레벨</code>이 정해지며(1번이 가장 높음), 유저의 인증 레벨이 리소스 접근 레벨보다 <code class="highlighter-rouge">높으면</code> 찬성<br />
+<br /></p>
+        </blockquote>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="4-1-표현식을-이용해-접근-통제-결정">4-1. 표현식을 이용해 접근 통제 결정</h4>
+<ul>
+  <li>Spring식 표현 언어인 <code class="highlighter-rouge">SpEL</code>(Spring Expression Language)를 사용</li>
+  <li><code class="highlighter-rouge">and</code>, <code class="highlighter-rouge">or</code>, <code class="highlighter-rouge">not</code>등을 조합해 강력하고 유연한 표현식 사용 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+      <span class="cm">/*
+          * 유저가 ADMIN 롤을 가지고 있거나, 로컬 머신에서 로그인한 유저일 경우 삭제 권한 부여
+          * 유저 IP주소에 따라 허용 여부를 결정  
+          * 주소가 127.0.0.1 또는 0:0:0:0:0:0:0:1 일때 찬성, 그렇지 않으면 반대
+          */</span>
+          <span class="n">http</span><span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="nc">HttpMethod</span><span class="o">.</span><span class="na">DELETE</span><span class="o">,</span> <span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/messageDelete*)
+              .access("</span><span class="n">hasRole</span><span class="o">(</span><span class="err">'</span><span class="no">ROLE_ADMIN</span><span class="err">'</span><span class="o">)</span> <span class="n">or</span> <span class="nf">hasIpAddress</span><span class="o">(</span><span class="err">'</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="err">'</span><span class="o">)</span> <span class="n">or</span>  
+                  <span class="nf">hasIpAddress</span><span class="o">(</span><span class="err">'</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">1</span><span class="err">'</span><span class="o">)</span><span class="err">"</span><span class="o">)</span>
+              <span class="o">...</span>
+      <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Spring Security는 앞선 내장 함수를 제공하지만, SecurityExpressionOperations 인터페이스를 구현해 <code class="highlighter-rouge">직접</code> 등록해 사용 가능</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ExtendWebSecurityExpressionRoot.java</span>
+  <span class="cm">/*
+  * 이 클래스가 상속받은 WebSecurityExpressionRoot 클래스의 
+  * 상위 클래스인 SecurityExpressionRoot 클래스가 
+  * SecurityExpressionOperations 인터페이스 구현 클래스
+  */</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExtendedWebSecurityExpressionRoot</span> <span class="kd">extends</span> <span class="nc">WebSecurityExpressionRoot</span> <span class="o">{</span>
+        
+      <span class="kd">public</span> <span class="nf">ExtendedWebSecurityExpressionRoot</span><span class="o">(</span><span class="nc">Authentication</span> <span class="n">a</span><span class="o">,</span> <span class="nc">FilterInvocation</span> <span class="n">fi</span><span class="o">)</span> <span class="o">{</span>
+          <span class="kd">super</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">fi</span><span class="o">);</span>
+      <span class="o">}</span>
+
+  <span class="cm">/*
+      * 로컬 머신 로그인 여부를 체크하는 매서드를 구현해 추가
+      * 커스텀 표현식으로 원하는 표현식 유연하게 추가 가능 
+      */</span>
+      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">localAccess</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="nf">hasIpAddress</span><span class="o">(</span><span class="s">"127.0.0.1"</span><span class="o">)</span> <span class="o">||</span> <span class="n">hasIpAddress</span><span class="o">(</span><span class="s">"0:0:0:0:0:0:0:1"</span><span class="o">);</span>
+
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위와 같은 <code class="highlighter-rouge">커스텀 표현식</code>을 등록해 사용하기 위해서, <code class="highlighter-rouge">SecurityExpressionHandler 인터페이스</code> 구현체를 생성해야 함
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ExtendWevSecurityExpressionHandler.java</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExtendedWebSecurityExpressionHandler</span> <span class="kd">extends</span> <span class="nc">DefaultWebSecurityExpressionHandler</span> <span class="o">{</span>
+
+      <span class="kd">private</span> <span class="nc">AuthenticationTrustResolver</span> <span class="n">trustResolver</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AuthenticationTrustResolverImpl</span><span class="o">();</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="nc">SecurityExpressionOperations</span> 
+      <span class="nf">createSecurityExpressionRoot</span><span class="o">(</span><span class="nc">Authentication</span> <span class="n">authentication</span><span class="o">,</span> <span class="nc">FilterInvocation</span> <span class="n">fi</span><span class="o">)</span> <span class="o">{</span>
+          <span class="c1">// 앞선 코드에서 생성한 ExtendedWebSecurityExpressionRoot 인스턴스 생성</span>
+          <span class="nc">ExtendedWebSecurityExpressionRoot</span> <span class="n">root</span> <span class="o">=</span>
+                  <span class="k">new</span> <span class="nf">ExtendedWebSecurityExpressionRoot</span><span class="o">(</span><span class="n">authentication</span><span class="o">,</span> <span class="n">fi</span><span class="o">);</span>
+          <span class="n">root</span><span class="o">.</span><span class="na">setPermissionEvaluator</span><span class="o">(</span><span class="n">getPermissionEvaluator</span><span class="o">());</span>
+          <span class="n">root</span><span class="o">.</span><span class="na">setTrustResolver</span><span class="o">(</span><span class="n">trustResolver</span><span class="o">);</span>
+          <span class="n">root</span><span class="o">.</span><span class="na">setRoleHierarchy</span><span class="o">(</span><span class="n">getRoleHierarchy</span><span class="o">());</span>
+          <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">createSecurityExpressionRoot()</code> 매서드를 오버라이드해 구현한 인스턴스를 생성</li>
+  <li>커스텀 표현식 핸들러를 다음처럼 <code class="highlighter-rouge">expressionHandler()</code> 매서드에 지정하여 커스텀 표현식을 활용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+
+          <span class="n">http</span><span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">expressionHandler</span><span class="o">(</span><span class="k">new</span> <span class="nc">ExtendedWebSecurityExpressionHandler</span><span class="o">())</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="no">DELETE</span><span class="o">,</span> <span class="s">"/todos*"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">access</span><span class="o">(</span><span class="s">"hasRole('ROLE_ADMIN') or localAccess()"</span><span class="o">)</span> <span class="c1">// 커스텀 표현식 사용</span>
+              <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="4-2-sprig-bean을-표현식에-넣어-접근-통제-결정">4-2. Sprig Bean을 표현식에 넣어 접근 통제 결정</h4>
+<ul>
+  <li>앞선 방식으로 Spring Security 클래스를 상속후 매서드를 오버라이드해 사용할 수 있지만, <code class="highlighter-rouge">비권장</code></li>
+  <li>표현식 내부에 커스텀 클래스를 만들어 사용하여, <code class="highlighter-rouge">@ 어노테이션</code>을 통해 Spring Bean으로 사용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AccessChecker.java</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessChecker</span> <span class="o">{</span>
+
+      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasLocalAccess</span><span class="o">(</span><span class="nc">Authentication</span> <span class="n">authentication</span><span class="o">)</span> <span class="o">{</span>
+          <span class="kt">boolean</span> <span class="n">access</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">authentication</span><span class="o">.</span><span class="na">getDetails</span><span class="o">()</span> <span class="k">instanceof</span> <span class="nc">WebAuthenticationDetails</span><span class="o">)</span> <span class="o">{</span>
+              <span class="nc">WebAuthenticationDetails</span> <span class="n">details</span> <span class="o">=</span> <span class="o">(</span><span class="nc">WebAuthenticationDetails</span><span class="o">)</span> <span class="n">authentication</span><span class="o">.</span><span class="na">getDetails</span><span class="o">();</span>
+              <span class="nc">String</span> <span class="n">address</span> <span class="o">=</span> <span class="n">details</span><span class="o">.</span><span class="na">getRemoteAddress</span><span class="o">();</span>
+              <span class="n">access</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"127.0.0.1"</span><span class="o">)</span> <span class="o">||</span> <span class="n">address</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"0:0:0:0:0:0:0:1"</span><span class="o">);</span>
+          <span class="o">}</span>
+          <span class="k">return</span> <span class="n">access</span><span class="o">;</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>AccessChecker 클래스는 앞선 커스텀 표현식 핸들러와 <code class="highlighter-rouge">동일한</code> 기능을 제공하지만, Spring Security 클래스를 <code class="highlighter-rouge">상속하지 않음</code></li>
+  <li>다음과 같은 방법으로 @accessChecker.hasLocalAccess(authentication) 표현식으로 호출 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoSecurityConfig.java</span>
+      <span class="o">...</span>
+      <span class="c1">// 사용할 표현식 클래스를 Spring Bean으로 등록</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AccessChecker</span> <span class="nf">accessChecker</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">AccessChecker</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+
+          <span class="n">http</span><span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/todos*"</span><span class="o">).</span><span class="na">hasAuthority</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+                  <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="nc">HttpMethod</span><span class="o">.</span><span class="na">DELETE</span><span class="o">,</span> <span class="s">"/todos*"</span><span class="o">)</span>
+                  <span class="c1">// 커스텀 매서드를 어노테이션을 통해 Bean을 부름으로써 사용  </span>
+                  <span class="o">.</span><span class="na">access</span><span class="o">(</span><span class="s">"hasAuthority('ADMIN') or @accessChecker.hasLocalAccess(authentication)"</span><span class="o">)</span>
+              <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="5-매서드-호출-보안">5. 매서드 호출 보안</h2>
+<hr />
+<p>Spring Security는 빈 인터페이스나 구현 클래스에서 대상 매서드에 다음의 <code class="highlighter-rouge">어노테이션</code>을 선언함으로 매서드 호출을 보안</p>
+<ul>
+  <li>@Secured</li>
+  <li>@PreAuthorize / @PostAuthorize</li>
+  <li>@PreFilter / @PostFilter</li>
+</ul>
+
+<p>위와 같은 어노테이션을 붙인 후, 구성 클래스 레벨에 <code class="highlighter-rouge">@EnableGlobalMethodSecurity</code>를 붙이면 보안 모드로 작동<br />
+<br /></p>
+
+<h4 id="5-1-어노테이션을-붙어-매서드-보안">5-1. 어노테이션을 붙어 매서드 보안</h4>
+<ul>
+  <li><code class="highlighter-rouge">@Secured</code> 어노테이션을 매서드에 붙이면 보안이 적용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoServiceImpl.java</span>
+  <span class="nd">@Service</span>
+  <span class="nd">@Transactional</span>
+  <span class="kd">class</span> <span class="nc">TodoServiceImpl</span> <span class="kd">implements</span> <span class="nc">TodoService</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@Secured</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Todo</span><span class="o">&gt;</span> <span class="nf">listTodos</span><span class="o">()</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@Secured</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Todo</span> <span class="n">todo</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@Secured</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">complete</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@Secured</span><span class="o">({</span><span class="s">"USER"</span><span class="o">,</span> <span class="s">"ADMIN"</span><span class="o">})</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@Secured</span><span class="o">(</span><span class="s">"USER"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">Todo</span> <span class="nf">findById</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>각 매서드에 <code class="highlighter-rouge">@Secured</code> 어노테이션을 붙인 후, <code class="highlighter-rouge">String[]</code> 타입의 access 속성에 매서드별 <code class="highlighter-rouge">접근 허용 권한</code> 설정</li>
+  <li>매서드 보안을 활성화하기 위해 구성 클래스에 다음처럼 <code class="highlighter-rouge">@EnableGlobalMethodSecurity</code>를 붙이고, <code class="highlighter-rouge">속성값</code> 설정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableGlobalMethodSecurity</span><span class="o">(</span><span class="n">securedEnable</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoWebconfiguration</span><span class="o">{...}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="5-2-어노테이션--표현식으로-매서드-보안preauthorize-postauthorize">5-2. 어노테이션 + 표현식으로 매서드 보안(@PreAuthorize, @PostAuthorize)</h4>
+<ul>
+  <li>조금 더 정교한 보안 규칙은 <code class="highlighter-rouge">@PreAuthorize</code>, <code class="highlighter-rouge">@PostAuthorize</code> 같은 어노테이션에 <code class="highlighter-rouge">SpEL</code> 기반의 보안 표현식을 적용</li>
+  <li>이 두 가지 어노테이션을 사용하기 위해 <code class="highlighter-rouge">@EnableGlobalMethodSecurity</code>의 <code class="highlighter-rouge">prePostEnabled</code> 속성을 <code class="highlighter-rouge">true</code>로 설정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableGlobalMethodSecurity</span><span class="o">(</span><span class="n">prePostEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoWebconfiguration</span><span class="o">{...}</span>
+</code></pre></div>    </div>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoServiceImple.java</span>
+  <span class="nd">@Service</span>
+  <span class="nd">@Transactional</span>
+  <span class="kd">class</span> <span class="nc">TodoServiceImpl</span> <span class="kd">implements</span> <span class="nc">TodoService</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Todo</span><span class="o">&gt;</span> <span class="nf">listTodos</span><span class="o">()</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Todo</span> <span class="n">todo</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">complete</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAnyAuthority('USER', 'ADMIN')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+  <span class="cm">/*
+      * returnObject 표현식으로 결과를 처리
+      * 할 일을 등록한 유저 이외의 다른 유저가 호출해 Todo 객체에 접근하면 보안 예외를 던짐
+      */</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="nd">@PostAuthorize</span><span class="o">(</span><span class="s">"returnObject.owner == authentication.name"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">Todo</span> <span class="nf">findById</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">@PreAuthorize</code>는 매서드 호출 <code class="highlighter-rouge">직전</code>, <code class="highlighter-rouge">@PostAuthorize</code>는 매서드 호출 <code class="highlighter-rouge">직후</code> 각각 동작</li>
+  <li><code class="highlighter-rouge">보안 표현식</code>을 사용하거나, <code class="highlighter-rouge">returnObject 표현식</code>으로 매서드 호출 결과를 받아올 수 있음
+<br /></li>
+</ul>
+
+<h4 id="5-3-어노테이션--표현식으로-거르기prefilter-postfilter">5-3. 어노테이션 + 표현식으로 거르기(@PreFilter, @PostFilter)</h4>
+<ul>
+  <li>앞선 두 어노테이션은 보안 규칙에 맞지 않을 경우 에러를 던지지만, <code class="highlighter-rouge">@PreFilter</code>/<code class="highlighter-rouge">@PostFilter</code>는 단순히 접근 권한을 체크</li>
+  <li>TodoList에 구현된 전체 데이터는 ADMIN만 볼 수 있고, USER는 본인의 일만 열람 가능하도록 다음처럼 <code class="highlighter-rouge">제한</code>을 둠
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoServiceImple.java</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="nd">@PostFilter</span><span class="o">(</span><span class="s">"hasAnyAuthority('ADMIN') or filterObject.owner == authentication.name"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Todo</span><span class="o">&gt;</span> <span class="nf">listTodos</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="n">todoRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+      <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p><code class="highlighter-rouge">@PreFilter</code>/<code class="highlighter-rouge">@PostFilter</code>는 매서드 입출력을 필터링하는 편리한 수단이지만,<br />
+결과가 대용량일 경우 <code class="highlighter-rouge">성능저하</code>를 심각하게 유발하므로 <code class="highlighter-rouge">주의</code><br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="6-뷰에서-보안-처리">6. 뷰에서 보안 처리</h2>
+<hr />
+<p>Spring Security가 제공하는 보안 처리용 <code class="highlighter-rouge">JSP 태그 라이브러리</code>를 사용</p>
+<blockquote>
+  <p><code class="highlighter-rouge">JSP 스크립트릿</code> (&lt;% … %&gt;)을 사용하여 Spring Security API를 호출할 수 있지만, 좋은 방법이 아니라 <code class="highlighter-rouge">비권장</code><br />
+<br /></p>
+</blockquote>
+
+<h4 id="6-1-인증-정보-표시">6-1. 인증 정보 표시</h4>
+<ul>
+  <li>뷰 페이지 헤더에 주체명과 허용 권한을 설정
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"c"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span> <span class="nt">%&gt;</span>
+  <span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"sec"</span><span class="na"> uri=</span><span class="s">"http://www.springframework.org/security/tags"</span> <span class="nt">%&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">&lt;sec:authentication&gt;</code> 태그를 이용하면, 현재 유저의 <code class="highlighter-rouge">Authentication</code> 객체를 가져올 수 있어<br />
+뷰에서 원하는 프로퍼티를 <code class="highlighter-rouge">property 속성</code>에 <code class="highlighter-rouge">명시</code>하는 방법으로 랜더링 가능
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- 유저 주체명은 name 프로퍼티로 가져와 표시가능 --&gt;</span>
+  <span class="nt">&lt;h4&gt;</span>To-dos for <span class="nt">&lt;sec:authentication </span><span class="na">property=</span><span class="s">"name"</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위와 같이 직접 가져와 랜더링해도 되지만, JSP 변수에 프로퍼티 값을 옮겨담아 <code class="highlighter-rouge">var 속성</code>에 이름을 지정 가능
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- 허용 권한 목록을 authorities 변수에 담고, </span><span class="nt">&lt;c:forEach&gt;</span><span class="c"> 태그로 하나씩 꺼내 랜더링  --&gt;</span>
+  <span class="nt">&lt;sec:authentication </span><span class="na">property=</span><span class="s">"authorities"</span><span class="na"> var=</span><span class="s">"authorities"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;c:forEach </span><span class="na">items=</span><span class="s">"</span><span class="si">${</span><span class="n">authorities</span><span class="si">}</span><span class="s">"</span><span class="na"> var=</span><span class="s">"authority"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;li&gt;</span>${authority.authority}<span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;/c:forEach&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="6-2-뷰-콘텐트를-조건부-랜더링">6-2. 뷰 콘텐트를 조건부 랜더링</h4>
+<ul>
+  <li><code class="highlighter-rouge">&lt;sec:authorize&gt;</code> 태그를 이용해 유저 권한에 따라 뷰 콘텐트를 다음 세 방법으로 조건부 표시 가능</li>
+</ul>
+
+<ol>
+  <li><code class="highlighter-rouge">전부</code> 지니는 경우
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- ROLE_ADMIN, ROLE_USER 권한을 모두 지녔을 경우만 태그로 감싼 부분을 랜더링 --&gt;</span>
+ <span class="nt">&lt;td&gt;</span>
+     <span class="nt">&lt;sec:authorize </span><span class="na">access=</span><span class="s">"hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')"</span><span class="nt">&gt;</span>
+         ${todo.owner}
+     <span class="nt">&lt;/sec:authorize&gt;</span>
+ <span class="nt">&lt;/td&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">하나만</code> 지녀도 되는 경우
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- 두 권한 중 하나만 가져도 랜더링하려면 다음처럼 hasAnyRole 사용 --&gt;</span>
+ <span class="nt">&lt;td&gt;</span>
+     <span class="nt">&lt;sec:authorize </span><span class="na">access=</span><span class="s">"hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"</span><span class="nt">&gt;</span>
+         ${todo.owner}
+     <span class="nt">&lt;/sec:authorize&gt;</span>
+ <span class="nt">&lt;/td&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>지니지 <code class="highlighter-rouge">않을</code> 경우
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- 주어진 권한을 모두 갖고 있지 않은 유저에게만 보이게 하는 경우 --&gt;</span>
+ <span class="nt">&lt;td&gt;</span>
+     <span class="nt">&lt;sec:authorize </span><span class="na">access=</span><span class="s">"!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER')"</span><span class="nt">&gt;</span>
+         ${todo.owner}
+     <span class="nt">&lt;/sec:authorize&gt;</span>
+ <span class="nt">&lt;/td&gt;</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ol>
+
+<h2 id="7-도메인-객체-보안-처리">7. 도메인 객체 보안 처리</h2>
+<hr />
+<p>Spring Security는 자체로 <code class="highlighter-rouge">ACL</code>(Access Control List, 접근 통제 목록)을 설정하는 <code class="highlighter-rouge">전용 모듈</code>을 지원하며,<br />
+ACL에는 도메인 객체와 연결하는 ID를 비롯해 여러 개의 <code class="highlighter-rouge">ACE</code>(Access Control Entry, 접근 통제 엔트리)가 포함되며 ACE는 다음처럼 구성</p>
+
+<ol>
+  <li><code class="highlighter-rouge">퍼미션</code>(Permission, 인가받은 권한): 각 비트 값은 특정 퍼미션을 의미하는 <code class="highlighter-rouge">비트 마스크</code>이며 각 비트는<br />
+(READ: 0 or 1) (WRITE: 1 or 2) (CREATE: 2 or 4) (DELETE: 3 or 8) (ADMINISTRATION: 4 or 16)으로 구성
+    <blockquote>
+      <p>다섯 가지 <code class="highlighter-rouge">기본 퍼미션</code>과 해당하는 <code class="highlighter-rouge">비트</code>의 쌍으로 표현<br />
+이 중 안쓰는 나머지 비트를 이용해 퍼미션을 <code class="highlighter-rouge">임의</code>로 지정 가능</p>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">보안 식별자</code>(SID, Security Identity): 각 ACE는 <code class="highlighter-rouge">특정 SID</code>에 대한 퍼미션을 지님<br />
+<br /></li>
+</ol>
+
+<h4 id="7-1-acl-서비스-설정">7-1. ACL 서비스 설정</h4>
+<ul>
+  <li>Spring은 <code class="highlighter-rouge">JDBC</code>로 RDBMS에 접속하여 <code class="highlighter-rouge">ACL 데이터</code>를 <code class="highlighter-rouge">저장/조회</code>하는 기능을 기본 지원</li>
+  <li>Spring Security는 테이블에 저장된 ACL 데이터에 접근할 수 있는 고성능 <code class="highlighter-rouge">JDBC 구현체</code> 및 <code class="highlighter-rouge">API</code>를 지원하며,<br />
+ACL은 도메인 객체마다 별도로 둘 수 있어 ACL 객체를 <code class="highlighter-rouge">캐싱</code>하는 기능을 제공
+    <ul>
+      <li>Class path root에 있는 ehcache.xml 파일에 설정
+        <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- ehcache.xml --&gt;</span>
+  ...
+  <span class="nt">&lt;cache</span> <span class="na">name=</span><span class="s">"aclCache"</span>
+      <span class="na">maxElementsInMemory=</span><span class="s">"1000"</span>
+      <span class="na">eternal=</span><span class="s">"false"</span>
+      <span class="na">timeToIdleSeconds=</span><span class="s">"600"</span>
+      <span class="na">timeToLiveSeconds=</span><span class="s">"3600"</span>
+      <span class="na">overflowToDisk=</span><span class="s">"true"</span>
+          <span class="nt">/&gt;</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>어플리케이션에서 사용할 <code class="highlighter-rouge">ACL 모듈</code>은 Java로 구성이 <code class="highlighter-rouge">안되므로</code>, <code class="highlighter-rouge">Bean</code> 그룹으로 구성후 등록해야 하므로 <code class="highlighter-rouge">설정 파일</code>을 작성하고 위치 등록
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoSecurityInitializer</span> <span class="kd">extends</span> <span class="nc">AbstractSecurityWebApplicationInitializer</span> <span class="o">{</span>
+
+      <span class="kd">public</span> <span class="nf">TodoSecurityInitializer</span><span class="o">()</span> <span class="o">{</span>
+          <span class="kd">super</span><span class="o">(</span><span class="nc">TodoSecurityConfig</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="nc">TodoAclConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">// TodoAclConfig 파일 위치 등록</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Spring Security에서 ACL 서비스 작업은 <code class="highlighter-rouge">AclService</code>, <code class="highlighter-rouge">MutableAclService</code> 두 <code class="highlighter-rouge">인터페이스로</code> 정의</li>
+  <li>
+    <p>AclService는 <code class="highlighter-rouge">읽기</code> 작업을, 그 하위 인터페이스 MutableAcleService는 <code class="highlighter-rouge">나머지</code>(생성, 수정, 삭제)를 각각 기술</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoAclConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoAclConfig</span> <span class="o">{</span>
+
+      <span class="kd">private</span> <span class="kd">final</span> <span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">;</span>
+
+      <span class="kd">public</span> <span class="nf">TodoAclConfig</span><span class="o">(</span><span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclEntryVoter</span> <span class="nf">aclEntryVoter</span><span class="o">(</span><span class="nc">AclService</span> <span class="n">aclService</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">AclEntryVoter</span><span class="o">(</span><span class="n">aclService</span><span class="o">,</span> <span class="s">"ACL_MESSAGE_DELETE"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Permission</span><span class="o">[]{</span><span class="nc">BasePermission</span><span class="o">.</span><span class="na">ADMINISTRATION</span><span class="o">,</span> <span class="nc">BasePermission</span><span class="o">.</span><span class="na">DELETE</span><span class="o">});</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">EhCacheCacheManager</span> <span class="nf">ehCacheManagerFactoryBean</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">EhCacheCacheManager</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AuditLogger</span> <span class="nf">auditLogger</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">ConsoleAuditLogger</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="c1">// 자신이 가지고 있는 Permission 값으로 주어진 SID에 ACL 접근을 허용할지를 결정</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">PermissionGrantingStrategy</span> <span class="nf">permissionGrantingStrategy</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">DefaultPermissionGrantingStrategy</span><span class="o">(</span><span class="n">auditLogger</span><span class="o">());</span>
+      <span class="o">}</span>
+
+  <span class="cm">/* 
+      * 각 프로퍼티 카테고리별로 필요한 권한을 지정하는 방식으로  
+      * 주체가 특정 ACL 프로퍼티를 변경할 권한을 갖고 있는지 판단  
+      * 해당 코드에서는 ADMIN 권한을 지닌 유저만 ACL 소유권, 감사 세부등 ACL/ACE 정보 수정 가능
+      */</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclAuthorizationStrategy</span> <span class="nf">aclAuthorizationStrategy</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">AclAuthorizationStrategyImpl</span><span class="o">(</span><span class="k">new</span> <span class="nc">SimpleGrantedAuthority</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">));</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclCache</span> <span class="nf">aclCache</span><span class="o">(</span><span class="nc">CacheManager</span> <span class="n">cacheManager</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">SpringCacheBasedAclCache</span><span class="o">(</span><span class="n">cacheManager</span><span class="o">.</span><span class="na">getCache</span><span class="o">(</span><span class="s">"aclCache"</span><span class="o">),</span> <span class="n">permissionGrantingStrategy</span><span class="o">(),</span> <span class="n">aclAuthorizationStrategy</span><span class="o">());</span>
+      <span class="o">}</span>
+
+  <span class="cm">/*
+      * 룩업 성능을 높이고자 고급 DB 기능을 사용하려면 
+      * 직접 LookupStrategy 인스턴스를 구현해 룩업 전략을 만들어 사용
+      */</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">LookupStrategy</span> <span class="nf">lookupStrategy</span><span class="o">(</span><span class="nc">AclCache</span> <span class="n">aclCache</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">BasicLookupStrategy</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataSource</span><span class="o">,</span> <span class="n">aclCache</span><span class="o">,</span> <span class="n">aclAuthorizationStrategy</span><span class="o">(),</span> <span class="n">permissionGrantingStrategy</span><span class="o">());</span>
+      <span class="o">}</span>
+        
+  <span class="cm">/*
+      * ACL 구성 파일의 핵심이 되는 JdbcMutableAclService 인스턴스
+      * 첫 번째 인수는 ACL 데이터를 저장할 DB에 사용하는 데이터 소스  
+      * 두 번째 인수는 표준/호환 SQL문으로 기본 룩업을 수행하는 LookupStrategy 인터페이스 구현체
+      * 세 번째 인수는 ACL에 적용할 캐시 인스턴스  
+      */</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclService</span> <span class="nf">aclService</span><span class="o">(</span><span class="nc">LookupStrategy</span> <span class="n">lookupStrategy</span><span class="o">,</span> <span class="nc">AclCache</span> <span class="n">aclCache</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">JdbcMutableAclService</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataSource</span><span class="o">,</span> <span class="n">lookupStrategy</span><span class="o">,</span> <span class="n">aclCache</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclPermissionEvaluator</span> <span class="nf">permissionEvaluator</span><span class="o">(</span><span class="nc">AclService</span> <span class="n">aclService</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">AclPermissionEvaluator</span><span class="o">(</span><span class="n">aclService</span><span class="o">);</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="7-2-도메인-객체에-대한-acl-관리">7-2. 도메인 객체에 대한 ACL 관리</h4>
+<ul>
+  <li>Back-end 서비스와 DAO에서는 <code class="highlighter-rouge">DI</code>를 이용해 앞서 정의한 ACL 서비스를 이용해 <code class="highlighter-rouge">도메인 객체용 ACL</code>을 관리
+    <blockquote>
+      <p>Todo-List에서는 할 일을 등록/삭제할 때마다 각각 ACL을 생성/삭제해야 함</p>
+    </blockquote>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoServiceImple.java</span>
+  <span class="nd">@Service</span>
+  <span class="nd">@Transactional</span>
+  <span class="kd">class</span> <span class="nc">TodoServiceImpl</span> <span class="kd">implements</span> <span class="nc">TodoService</span> <span class="o">{</span>
+      <span class="o">...</span>
+  <span class="cm">/*
+      * 유저가 할 일을 등록하면 할 일 ID와 ACL 객체의 ID를 이용해 ACL을 생성함
+      * 생성한 ACL에 대해서는 해당 USER와 ADMIN이 READ, WRITE, DELETE를 할 수 있도록 삽입
+      */</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Todo</span> <span class="n">todo</span><span class="o">)</span> <span class="o">{</span>
+
+          <span class="k">this</span><span class="o">.</span><span class="na">todoRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">todo</span><span class="o">);</span>
+
+          <span class="nc">ObjectIdentity</span> <span class="n">oid</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectIdentityImpl</span><span class="o">(</span><span class="nc">Todo</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">todo</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+          <span class="nc">MutableAcl</span> <span class="n">acl</span> <span class="o">=</span> <span class="n">mutableAclService</span><span class="o">.</span><span class="na">createAcl</span><span class="o">(</span><span class="n">oid</span><span class="o">);</span>
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="no">READ</span><span class="o">,</span> <span class="k">new</span> <span class="nc">PrincipalSid</span><span class="o">(</span><span class="n">todo</span><span class="o">.</span><span class="na">getOwner</span><span class="o">()),</span> <span class="kc">true</span><span class="o">);</span>
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="no">WRITE</span><span class="o">,</span> <span class="k">new</span> <span class="nc">PrincipalSid</span><span class="o">(</span><span class="n">todo</span><span class="o">.</span><span class="na">getOwner</span><span class="o">()),</span> <span class="kc">true</span><span class="o">);</span>
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="no">DELETE</span><span class="o">,</span> <span class="k">new</span> <span class="nc">PrincipalSid</span><span class="o">(</span><span class="n">todo</span><span class="o">.</span><span class="na">getOwner</span><span class="o">()),</span> <span class="kc">true</span><span class="o">);</span>
+
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="no">READ</span><span class="o">,</span> <span class="k">new</span> <span class="nc">GrantedAuthoritySid</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="no">WRITE</span><span class="o">,</span> <span class="k">new</span> <span class="nc">GrantedAuthoritySid</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+          <span class="n">acl</span><span class="o">.</span><span class="na">insertAce</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="no">DELETE</span><span class="o">,</span> <span class="k">new</span> <span class="nc">GrantedAuthoritySid</span><span class="o">(</span><span class="s">"ADMIN"</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+
+      <span class="o">}</span>
+
+      <span class="c1">// 유저가 등록한 할 일을 삭제하면 해당 ACL도 함께 삭제</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAnyAuthority('USER','ADMIN')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">todoRepository</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+
+          <span class="nc">ObjectIdentity</span> <span class="n">oid</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectIdentityImpl</span><span class="o">(</span><span class="nc">Todo</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+          <span class="n">mutableAclService</span><span class="o">.</span><span class="na">deleteAcl</span><span class="o">(</span><span class="n">oid</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>JdbcMutableAclService 입장에서는 호출 매서드 쪽에서 <code class="highlighter-rouge">트랜잭션</code>을 걸어놓아야 그 트랜잭션 안에서 SQL문 수행 가능
+    <blockquote>
+      <p>따라서, ACL을 관리하는 앞선 매서드의 <code class="highlighter-rouge">@Transactional</code> 어노테이션을 붙임</p>
+    </blockquote>
+  </li>
+  <li>WebMvcConfigurer 구현 클래스에서는 다음처럼 <code class="highlighter-rouge">트랜잭션 관리자</code>를 추가하고, <code class="highlighter-rouge">@EnableTransactionManagement</code>를 붙임
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Configuration</span>
+  <span class="o">...</span>
+  <span class="nd">@EnableTransactionManagement</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoWebConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">DataSourceTransactionManager</span> <span class="nf">transactionManager</span><span class="o">(</span><span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">DataSourceTransactionManager</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="7-3-표현식을-이용해-접근-통제-결정">7-3. 표현식을 이용해 접근 통제 결정</h4>
+<ul>
+  <li>도메인 객체마다 <code class="highlighter-rouge">ACL</code>을 부착했으므로, 이 객체에 속한 <code class="highlighter-rouge">매서드마다</code> 접근 통제 결정을 내리는 것이 가능
+    <blockquote>
+      <p>유저가 할 일을 삭제하려고 하면 ACL을 보고 그 유저가 정말 삭제할 <code class="highlighter-rouge">권한</code>이 있는지 체크 가능</p>
+    </blockquote>
+  </li>
+  <li>ACL을 직접 구현할 필요 없이 다음 <code class="highlighter-rouge">애너테이션</code>으로 간편하게 구현 가능
+    <ol>
+      <li><code class="highlighter-rouge">@PreAuthorize</code>/<code class="highlighter-rouge">@PreFilter</code>로 유저의 <code class="highlighter-rouge">매서드 실행</code>, 특정 매서드 <code class="highlighter-rouge">인수의 사용 권한</code>이 있는지 체크 가능</li>
+      <li><code class="highlighter-rouge">@PostAuthorize</code>/<code class="highlighter-rouge">@PostFilter</code>로 유저가 매서드 실행 결과에 <code class="highlighter-rouge">접근</code>하거나,<br />
+ACL에 따라 그 결과를 <code class="highlighter-rouge">필터링</code> 할 수 있는지 체크 가능</li>
+    </ol>
+  </li>
+  <li>이러한 애너테이션은 <code class="highlighter-rouge">@EnableGlobalMethodSecurity</code>의 <code class="highlighter-rouge">prePostEnabled</code> 속성을 <code class="highlighter-rouge">true</code>로 설정해 사용 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@EnableGlobalMethodSecurity</span><span class="o">(</span><span class="n">prePostEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">표현식</code>을 사용하여 ACL로 매서드를 보안하려면 <code class="highlighter-rouge">커스텀 퍼미션 평가기</code>를 다음처럼<br />
+전역 레벨에서 매서드 보안을 활성화하는 구성 클래스에 <code class="highlighter-rouge">반드시</code> 설정
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// TodoWebConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="o">...</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TodoWebConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">AclPermissionEvaluator</span> <span class="nf">permissionEvaluator</span><span class="o">(</span><span class="nc">AclService</span> <span class="n">aclService</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">AclPermissionEvaluator</span><span class="o">(</span><span class="n">aclService</span><span class="o">);</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>애너테이션과 표현식을 함께 사용한 최종 클래스는 다음과 같다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Service</span>
+  <span class="nd">@Transactional</span>
+  <span class="kd">class</span> <span class="nc">TodoServiceImpl</span> <span class="kd">implements</span> <span class="nc">TodoService</span> <span class="o">{</span>
+      <span class="o">...</span>
+  <span class="cm">/*
+      * @PreAuthorize는 유저가 매서드를 수행할 퍼미션을 갖고 있는지 체크  
+      * #message는 message라는 이름의 매서드 인수를 지칭  
+      * hasPermission은 Spring Security의 기본 표현식  
+      * @PostFilter는 컬렉션 중 현재 유저가 읽을 권한이 없는 원소를 제거, 표현식에 사용된 filterOject가 컬렉션의 원소  
+      * @PostAuthorize는 하나의 결과값이 사용 가능한지(유저가 그에 맞는 권한을 지니는지)를 체크, 반환값은 returnObject 키워드로 사용
+      */</span>
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="nd">@PostFilter</span><span class="o">(</span><span class="s">"hasAnyAuthority('ADMIN') or hasPermission(filterObject, 'read')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Todo</span><span class="o">&gt;</span> <span class="nf">listTodos</span><span class="o">()</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasAuthority('USER')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Todo</span> <span class="n">todo</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasPermission(#id, 'com.apress.springrecipes.board.Todo', 'write')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">complete</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PreAuthorize</span><span class="o">(</span><span class="s">"hasPermission(#id, 'com.apress.springrecipes.board.Todo', 'delete')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+
+      <span class="nd">@Override</span>
+      <span class="nd">@PostFilter</span><span class="o">(</span><span class="s">"hasPermission(filterObject, 'read')"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">Todo</span> <span class="nf">findById</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-17.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 17">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring] 첫걸음 - 12 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. &amp;lt;spring:message&amp;gt; 태그로 메세지 출력 기존 JSP에 문자열을 하드 코딩하는 방법은 다음과 같은 두 가지 문제가 존재 동일한 문자열에 대해 변경시 다국어 지원">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-12.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring] 첫걸음 - 12</h1>
+            
+            <h2 class="subheading">MVC2: 메세지, 커맨드 객체 검증</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 16:35:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   16 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-springmessage-태그로-메세지-출력">1. &lt;spring:message&gt; 태그로 메세지 출력</h2>
+<hr />
+<ul>
+  <li>기존 JSP에 문자열을 <code class="highlighter-rouge">하드 코딩</code>하는 방법은 다음과 같은 두 가지 문제가 존재
+    <ol>
+      <li>동일한 문자열에 대해 <code class="highlighter-rouge">변경</code>시</li>
+      <li><code class="highlighter-rouge">다국어</code> 지원</li>
+    </ol>
+  </li>
+  <li>이러한 문제를 해결하는 방법은 다음과 같다.
+    <ol>
+      <li>뷰 코드에서 사용할 문자열을 언어별로 <code class="highlighter-rouge">파일에 보관</code></li>
+      <li>필요시 파일에서 문자열을 <code class="highlighter-rouge">읽어와</code> 출력</li>
+    </ol>
+  </li>
+  <li>스프링은 이러한 기능을 <code class="highlighter-rouge">자체적</code>으로 제공하며, 다음과 같은 작업을 거친다.
+    <ol>
+      <li>문자열을 담은 <code class="highlighter-rouge">메세지 파일</code>을 작성</li>
+      <li>메세지 파일에서 값을 읽어오는 <code class="highlighter-rouge">MessageSource</code> 빈을 설정</li>
+      <li>JSP 코드에서 <code class="highlighter-rouge">&lt;spring:message&gt;</code> 태그를 사용해 메세지를 출력</li>
+    </ol>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MvcConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebMvc</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Bean</span>
+          <span class="c1">// Bean 등록</span>
+      <span class="kd">public</span> <span class="nc">MessageSource</span> <span class="nf">messageSource</span><span class="o">()</span> <span class="o">{</span>
+          <span class="nc">ResourceBundleMessageSource</span> <span class="n">ms</span> <span class="o">=</span> 
+                  <span class="k">new</span> <span class="nf">ResourceBundleMessageSource</span><span class="o">();</span>
+                  <span class="c1">// 읽어올 파일 등록</span>
+          <span class="n">ms</span><span class="o">.</span><span class="na">setBasenames</span><span class="o">(</span><span class="s">"message.label"</span><span class="o">);</span>
+          <span class="n">ms</span><span class="o">.</span><span class="na">setDefaultEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
+          <span class="k">return</span> <span class="n">ms</span><span class="o">;</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>설정파일에 <code class="highlighter-rouge">MessageSource Bean 객체</code>를 등록
+    <blockquote>
+      <p>이때 Bean의 아이디를 <code class="highlighter-rouge">"messageSource"</code>로 지정, 다른 이름은 동작하지 않음</p>
+    </blockquote>
+  </li>
+  <li>기본 프로퍼티 값으로 <code class="highlighter-rouge">message.label</code>을 할당
+    <ul>
+      <li>src/main/resources/message 경로에 label.properties 파일을 생성 후 아래와 같이 작성</li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// label.properties</span>
+  <span class="n">member</span><span class="o">.</span><span class="na">register</span><span class="o">=</span><span class="err">회원가입</span>
+
+  <span class="n">term</span><span class="o">=</span><span class="err">약관</span>
+  <span class="n">term</span><span class="o">.</span><span class="na">agree</span><span class="o">=</span><span class="err">약관동의</span>
+  <span class="o">...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위 설정을 이용하여 JSP 파일을 다음과 같이 변경 가능
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- step1.jsp --&gt;</span>
+  <span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=utf-8"</span> <span class="nt">%&gt;</span>
+  <span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"spring"</span><span class="na"> uri=</span><span class="s">"http://www.springframework.org/tags"</span> <span class="nt">%&gt;</span>
+  <span class="cp">&lt;!DOCTYPE html&gt;</span>
+  <span class="nt">&lt;html&gt;</span>
+  <span class="c">&lt;!-- 변경전 코드
+  &lt;head&gt;
+      &lt;title&gt;회원가입&lt;/title&gt;
+  &lt;/head&gt;
+  --&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;title&gt;&lt;spring:message </span><span class="na">code=</span><span class="s">"member.register"</span> <span class="nt">/&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  ...
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">&lt;spring:message&gt;</code> 태그는 <code class="highlighter-rouge">MessageSource</code>로부터 코드에 해당하는 메세지를 읽어옴<br />
+<br /></li>
+</ul>
+
+<h4 id="1-1-메세지-처리를-위한-messagesource와-springmessage-태그">1-1. 메세지 처리를 위한 MessageSource와 &lt;spring:message&gt; 태그</h4>
+<ul>
+  <li>스프링은 <code class="highlighter-rouge">지역(로케일)에 상관없이</code> 일괄된 방법으로 <code class="highlighter-rouge">문자열(메세지)</code>를 관리할 수 있는 <code class="highlighter-rouge">MessageSource</code> 인터페이스를 정의</li>
+  <li><code class="highlighter-rouge">특정 지역</code>에 해당하는 메세지가 필요한 코드는 MessageSource의 <code class="highlighter-rouge">getMessage()</code> 메서드를 통해 필요한 메세지를 가져와 사용</li>
+  <li>이 기능을 사용하면 <code class="highlighter-rouge">국내</code>에서 접근하면 한글로, <code class="highlighter-rouge">해외</code>에서 접근하면 영어로 보여주는 처리 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MessageSource interface</span>
+  <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageSource</span><span class="o">{</span>
+      <span class="cm">/*
+      * code 파라미터: 메세지를 구분하기 위한 코드
+      * locale 파라미터: 지역을 구분하기 위한 Locale
+      * 이 기능을 사용하면 지역에 따른 메세지 출력 가능
+      */</span>
+      <span class="nc">String</span> <span class="nf">getMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">code</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">,</span>
+          <span class="nc">Srting</span> <span class="n">defaultMessage</span><span class="o">,</span> <span class="nc">Locale</span> <span class="n">locale</span><span class="o">);</span>
+
+      <span class="nc">String</span> <span class="nf">getMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">code</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">,</span> <span class="nc">Locale</span> <span class="n">locale</span><span class="o">)</span>
+          <span class="kd">throws</span> <span class="nc">NoSuchMessageException</span><span class="o">;</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>다국어 메세지를 지원하려면 각 프로퍼티 파일 이름에 언어에 해당하는 <code class="highlighter-rouge">로케일 문자</code>를 다음과 같이 추가하며<br />
+해당하는 지역이 없을 경우, <code class="highlighter-rouge">기본값</code>인 label.properties 파일의 메세지를 사용</p>
+      <ul>
+        <li><code class="highlighter-rouge">label_ko.properties</code></li>
+        <li><code class="highlighter-rouge">label_en.properties</code></li>
+      </ul>
+    </blockquote>
+
+    <blockquote>
+      <p>브라우저는 서버에 요청을 전송할 때 Accept-Language 헤더에 언어 정보를 담아 전송</p>
+      <ul>
+        <li>한글일 경우 헤더값으로 “<code class="highlighter-rouge">ko</code>“를 전송</li>
+      </ul>
+
+      <p><code class="highlighter-rouge">Spring MVC</code>는 웹 브라우저가 전송한 <code class="highlighter-rouge">Accept-Language 헤더</code>를 이용해서 <code class="highlighter-rouge">Locale</code>을 구하고 메세지를 출력함<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="1-2-springmessage-태그의-메세지-인자-처리">1-2. &lt;spring:message&gt; 태그의 메세지 인자 처리</h4>
+<ul>
+  <li><code class="highlighter-rouge">&lt;spring:message&gt;</code> 태그를 사용할 때는 <code class="highlighter-rouge">arguments</code> 속성을 이용해 <code class="highlighter-rouge">인덱스 기반 변수</code>값을 다음과 같이 전달</li>
+  <li>properties 파일에는 다음과 같이 사용할 <code class="highlighter-rouge">인덱스</code>의 정보를 이용해 메세지를 저장
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- step3.jsp --&gt;</span>
+  <span class="nt">&lt;spring:message </span><span class="na">code=</span><span class="s">"register.done"</span><span class="na"> arguments=</span><span class="s">"</span><span class="si">${</span><span class="n">registerRequest</span><span class="o">.</span><span class="na">name</span><span class="si">}</span><span class="s">, ${registerRequest.email}"</span> <span class="nt">/&gt;</span>
+
+  <span class="c">&lt;!-- label.properties --&gt;</span>
+  register.done=<span class="nt">&lt;strong&gt;</span>{0}님 ({1})<span class="nt">&lt;/strong&gt;</span>, 회원 가입을 완료했습니다. 
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="2-커맨드-객체의-값-검증과-에러-메세지-처리">2. 커맨드 객체의 값 검증과 에러 메세지 처리</h2>
+<hr />
+<ul>
+  <li>어플리케이션을 개발할 때 놓쳐서는 안되는 다음 두 가지 문제가 존재
+    <ol>
+      <li><code class="highlighter-rouge">폼 값 검증</code> - 웹 페이지에 입력한 값에 대한 검증 필요</li>
+      <li><code class="highlighter-rouge">에러 메세지 처리</code> - 만약 잘못된 값을 입력하여 다시 페이지가 로드 된다면, 이유를 알려줌</li>
+    </ol>
+  </li>
+  <li>스프링은 이 두 가지 문제를 처리하기 위해 다음 방법을 제공
+    <ol>
+      <li>커맨드 객체를 <code class="highlighter-rouge">검증</code>하고 결과를 <code class="highlighter-rouge">에러 코드</code>로 저장</li>
+      <li>JSP에서 에러 코드로부터 <code class="highlighter-rouge">메세지 출력</code><br />
+<br /></li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="2-1-커맨드-객체-검증과-에러-코드-지정">2-1. 커맨드 객체 검증과 에러 코드 지정</h4>
+<ul>
+  <li>스프링 MVC에서 커맨드 객체 값이 올바른지 검사하려면 다음의 두 <code class="highlighter-rouge">인터페이스</code>를 사용
+    <ol>
+      <li>org.springframework.validation.Validator</li>
+      <li>org.springframework.validation.Errors</li>
+    </ol>
+  </li>
+  <li>객체를 검증할 때 사용하는 Validator 인터페이스는 다음과 같다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">validation</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Validator</span><span class="o">{</span>
+      <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="o">);</span>
+      <span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="nc">Object</span> <span class="n">target</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">);</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위 코드에서 각 매서드의 역할은 다음과 같다.
+    <ul>
+      <li><code class="highlighter-rouge">supports()</code> 매서드는 Validator가 검증할 수 있는 타입인지 검사</li>
+      <li><code class="highlighter-rouge">validate()</code> 매서드는 첫 번째 파라미터로 전달받은 객체를 검증하고 오류 결과를 Errors에 담는 기능</li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// RegisterRequesValidator.java</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RegisterRequestValidator</span> <span class="kd">implements</span> <span class="nc">Validator</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="cm">/*
+          * 파라미터로 전달받은 clazz 객체가 RegisterRequest 클래스로 타입 변환이 가능한지 확인  
+          * 스프링 MVC가 자동으로 검증 기능을 수행하도록 하려면 올바르게 다음 매서드를 구현해야 함
+          */</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="nc">RegisterRequest</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">clazz</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="cm">/*
+          * 두 개의 파라미터중 target은 검사 대상 객체, errors는 결과 에러 코드를 설정하기 위한 객체
+          * validate()는 다음과 같이 구현
+          * 1. 검사 대상 객체의 특정 프로퍼티나 상태가 올바른지 검사 
+          * 2. 올바르지 않다면 Errors의 rejectValue() 매서드를 이용해 에러 코드 저장
+          */</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="nc">Object</span> <span class="n">target</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">)</span> <span class="o">{</span>
+          <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"RegisterRequestValidator#validate(): "</span> <span class="o">+</span> <span class="k">this</span><span class="o">);</span>
+
+          <span class="c1">// 실제 타입으로 변환</span>
+          <span class="nc">RegisterRequest</span> <span class="n">regReq</span> <span class="o">=</span> <span class="o">(</span><span class="nc">RegisterRequest</span><span class="o">)</span> <span class="n">target</span><span class="o">;</span>
+            
+          <span class="cm">/*
+                  * "email" 프로퍼티 값이 유효한지 검사
+          * 유효하지 않다면(NULL이거나 빈 문자열) 에러 코드로 "required"를 추가
+          */</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">regReq</span><span class="o">.</span><span class="na">getEmail</span><span class="o">()</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">regReq</span><span class="o">.</span><span class="na">getEmail</span><span class="o">().</span><span class="na">trim</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+              <span class="n">errors</span><span class="o">.</span><span class="na">rejectValue</span><span class="o">(</span><span class="s">"email"</span><span class="o">,</span> <span class="s">"required"</span><span class="o">);</span>
+          <span class="o">}</span>
+
+          <span class="cm">/*
+                  * ValidationUtils 클래스는 객체의 값 검증 코드를 간결하게 작성할 수 있도록 도와줌
+          * 다음의 코드들은 앞선 email을 검증하는 코드와 동일
+          */</span>
+          <span class="nc">ValidationUtils</span><span class="o">.</span><span class="na">rejectIfEmptyOrWhitespace</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="s">"name"</span><span class="o">,</span> <span class="s">"required"</span><span class="o">);</span>
+          <span class="nc">ValidationUtils</span><span class="o">.</span><span class="na">rejectIfEmpty</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="s">"password"</span><span class="o">,</span> <span class="s">"required"</span><span class="o">);</span>
+          <span class="nc">ValidationUtils</span><span class="o">.</span><span class="na">rejectIfEmpty</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="s">"confirmPassword"</span><span class="o">,</span> <span class="s">"required"</span><span class="o">);</span>
+          <span class="k">if</span> <span class="o">(!</span><span class="n">regReq</span><span class="o">.</span><span class="na">getPassword</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+              <span class="k">if</span> <span class="o">(!</span><span class="n">regReq</span><span class="o">.</span><span class="na">isPasswordEqualToConfirmPassword</span><span class="o">())</span> <span class="o">{</span>
+                  <span class="n">errors</span><span class="o">.</span><span class="na">rejectValue</span><span class="o">(</span><span class="s">"confirmPassword"</span><span class="o">,</span> <span class="s">"nomatch"</span><span class="o">);</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>실제 Validator()는 다음과 같이 <code class="highlighter-rouge">필요한 부분</code>에서 호출 됨
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// RegisterController.java</span>
+  <span class="nd">@Controller</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RegisterController</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register/step3"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">String</span> <span class="nf">handleStep3</span><span class="o">(</span><span class="nc">RegisterRequest</span> <span class="n">regReq</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">new</span> <span class="nf">RegisterRequestValidator</span><span class="o">().</span><span class="na">validate</span><span class="o">(</span><span class="n">regReq</span><span class="o">,</span> <span class="n">errors</span><span class="o">);</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">errors</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">())</span>
+              <span class="k">return</span> <span class="s">"register/step2"</span><span class="o">;</span>
+          <span class="k">try</span> <span class="o">{</span>
+              <span class="n">memberRegisterService</span><span class="o">.</span><span class="na">regist</span><span class="o">(</span><span class="n">regReq</span><span class="o">);</span>
+              <span class="k">return</span> <span class="s">"register/step3"</span><span class="o">;</span>
+          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">DuplicateMemberException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">errors</span><span class="o">.</span><span class="na">rejectValue</span><span class="o">(</span><span class="s">"email"</span><span class="o">,</span> <span class="s">"duplicate"</span><span class="o">);</span>
+              <span class="k">return</span> <span class="s">"register/step2"</span><span class="o">;</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="2-2-커맨드-객체의-에러-메세지-출력">2-2. 커맨드 객체의 에러 메세지 출력</h4>
+<ul>
+  <li><code class="highlighter-rouge">에러 코드</code>는 알맞은 에러 메세지를 출력하기 위해 지정</li>
+  <li>JSP는 스프링이 제공하는 <code class="highlighter-rouge">&lt;form:errors&gt;</code> 태그를 이용해 에러에 해당하는 메세지를 출력
+    <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- step2.jsp --&gt;</span>
+  ...
+  <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h2&gt;&lt;spring:message </span><span class="na">code=</span><span class="s">"member.info"</span> <span class="nt">/&gt;&lt;/h2&gt;</span>
+      <span class="nt">&lt;form:form </span><span class="na">action=</span><span class="s">"step3"</span><span class="na"> modelAttribute=</span><span class="s">"registerRequest"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;p&gt;</span>
+          <span class="nt">&lt;label&gt;&lt;spring:message </span><span class="na">code=</span><span class="s">"email"</span> <span class="nt">/&gt;</span>:<span class="nt">&lt;br&gt;</span>
+          <span class="nt">&lt;form:input </span><span class="na">path=</span><span class="s">"email"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;form:errors </span><span class="na">path=</span><span class="s">"email"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;/p&gt;</span>
+  ...
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">&lt;form:errors&gt;</code> 태그의 path 속성은 에러 메세지를 출력할 <code class="highlighter-rouge">프로퍼티 이름</code>을 지정</li>
+  <li>메세지를 찾을 때는 앞서 서술한 <code class="highlighter-rouge">MessageSource</code>를 사용하므로 에러 코드에 해당하는 메세지를 프로퍼티 파일에 추가해야 함
+    <blockquote>
+      <p>Controller에서 에러가 발생시, <code class="highlighter-rouge">Errors 객체</code>에 추가하는 <code class="highlighter-rouge">메시지</code>를 <code class="highlighter-rouge">프로퍼티 파일</code>에 다음과 같이 추가하면 됨<br />
+…<br />
+required = 필수항목입니다.<br />
+bad.email = 이메일이 올바르지 않습니다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="3-글로벌-범위-validator와-컨트롤러-범위-validator">3. 글로벌 범위 Validator와 컨트롤러 범위 Validator</h2>
+<hr />
+<p>스프링 MVC는 다음 두 가지 Validator를 제공</p>
+<ol>
+  <li><code class="highlighter-rouge">모든</code> 컨트롤러에 적용할 수 있는 <code class="highlighter-rouge">글로벌 Validator</code></li>
+  <li><code class="highlighter-rouge">단일</code> 컨트롤러에 적용할 수 있는 <code class="highlighter-rouge">Validator</code> <br />
+<br /></li>
+</ol>
+
+<h4 id="3-1-글로벌-범위-validator-설정과-valid-어노테이션">3-1. 글로벌 범위 Validator 설정과 @Valid 어노테이션</h4>
+<ul>
+  <li><code class="highlighter-rouge">글로벌</code> 범위 Validator를 적용하려면 다음 두 가지 설정 필요
+    <ol>
+      <li>설정 클래스에서 WebMvcConfigurer 인터페이스의 getValidator() 매서드가 <code class="highlighter-rouge">Validator 구현 객체</code>를 리턴하도록 구현</li>
+      <li>글로벌 범위 Validator가 검증할 커맨드 객체에 <code class="highlighter-rouge">@Valid</code> 어노테이션 적용</li>
+    </ol>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MvcConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebMvc</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+      <span class="cm">/*
+          * WebMvcConfigurer 인터페이스의 getValidator 매서드를 다음과 같이 오버라이딩하여
+          * 우리가 원하는 검증을 하도록 설정
+          */</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="nc">Validator</span> <span class="nf">getValidator</span><span class="o">(</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">RegisterRequestValidator</span><span class="o">();</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// RegisterController.java</span>
+  <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register/step3"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">handleStep3</span><span class="o">(</span><span class="nd">@Valid</span> <span class="nc">RegisterRequest</span> <span class="n">regReq</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">){</span>
+      <span class="c1">// 기존에 객체를 검증하는 코드를 작성할 필요가 없어짐  </span>
+      <span class="c1">// new RegisterRequestValidator().validate(regReq, errors);</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">@Valid</code> 어노테이션이 붙은 파라미터는 <code class="highlighter-rouge">글로벌 범위 Validator</code>가 해당 타입을 검증할 수 있는지 확인</li>
+  <li><code class="highlighter-rouge">검증</code> 가능하면 실제 검증을 수행하고 그 결과를 <code class="highlighter-rouge">Errors</code>에 저장</li>
+  <li>이 과정은 요청 처리 매서드(handleStep3()) <code class="highlighter-rouge">실행 전</code>에 적용
+    <blockquote>
+      <p>결국 handleStep3() 매서드 안에서 RegisterRequest 객체를 검증하는 코드를 작성할 필요가 없어짐<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="3-2-initbinder-어노테이션을-이용한-컨트롤러-범위-validator">3-2. @InitBinder 어노테이션을 이용한 컨트롤러 범위 Validator</h4>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">@InitBinder</code> 어노테이션을 이용해 컨트롤러 범위 Validator를 설정 가능</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// RegisterController.java</span>
+  <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register/step3"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">handleStep3</span><span class="o">(</span><span class="nd">@Valid</span> <span class="nc">RegisterRequest</span> <span class="n">regReq</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">){</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+  <span class="o">...</span>
+
+  <span class="cm">/* 
+  * 어떤 Validator가 객체를 검증할지 다음 @InitBind 어노테이션이 붙은 매서드에서 정의
+  * 여기서는 RegisterRequest 타입을 지원하는 Validator를 컨트롤러 범위 Validator로 설정
+  */</span>
+  <span class="nd">@InitBinder</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">initBinder</span><span class="o">(</span><span class="nc">WebDataBinder</span> <span class="n">binder</span><span class="o">){</span>
+      <span class="n">binder</span><span class="o">.</span><span class="na">setValidator</span><span class="o">(</span><span class="k">new</span> <span class="nc">RegisterRequestValidator</span><span class="o">());</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>글로벌 범위 validator와 마찬가지로 validator() 매서드를 호출하는 부분이 <code class="highlighter-rouge">없음</code></li>
+  <li><code class="highlighter-rouge">@InitBind</code> 어노테이션을 적용한 매서드는 <code class="highlighter-rouge">WebDataBinder</code> 타입 파라미터를 가짐</li>
+  <li>
+    <p><code class="highlighter-rouge">setValidator()</code> 매서드를 이용해 컨트롤러 범위에 적용할 Validator 설정 가능</p>
+
+    <blockquote>
+      <p>글로벌 범위와 컨트롤러 범위 validator()가 <code class="highlighter-rouge">모두</code> 존재할 경우,<br />
+    <code class="highlighter-rouge">글로벌</code> -&gt; <code class="highlighter-rouge">컨트롤러</code> 범위 순으로 validator()가 적용됨<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="4-bean-validation을-이용한-값-검증-처리">4. Bean Validation을 이용한 값 검증 처리</h2>
+<hr />
+<p><code class="highlighter-rouge">@Valid</code> 어노테이션은 Bean Validation 스펙에 정의되어 있는데, <code class="highlighter-rouge">@NotNull</code>, <code class="highlighter-rouge">@Digits</code>, <code class="highlighter-rouge">@Size</code> 등의 어노테이션과 함께 정의되며,<br />
+Bean Validaion이 제공하는 어노테이션을 이용해 커맨드 객체의 값을 <code class="highlighter-rouge">검증</code>하는 방법은 다음과 같다.</p>
+
+<ol>
+  <li><code class="highlighter-rouge">Bean Validation</code>과 관련된 <code class="highlighter-rouge">의존</code>을 설정에 추가(Maven의 경우 pom.xml에 추가)</li>
+  <li>
+    <p>커맨드 객체에 @NotNull, @Digits 등의 어노테이션을 이용해 <code class="highlighter-rouge">검증 규칙</code>을 설정</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// RegisterRequest.java</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RegisterRequest</span> <span class="o">{</span>
+     <span class="nd">@NotNull</span>
+     <span class="nd">@Email</span>
+     <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+     <span class="nd">@Size</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="mi">6</span><span class="o">)</span>
+     <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+     <span class="nd">@NotEmpty</span>
+     <span class="kd">private</span> <span class="nc">String</span> <span class="n">confirmPassword</span><span class="o">;</span>
+     <span class="nd">@NotEmpty</span>
+     <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+ <span class="o">...</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<ul>
+  <li>위와 같은 어노테이션을 사용했다면 Bean Validation 어노테이션을 적용한 커맨드 객체를 <code class="highlighter-rouge">검증</code>할 수 있는<br />
+<code class="highlighter-rouge">OptionalValidatorFactoryBean</code> 클래스를 Bean으로 등록</li>
+  <li>설정 파일에 <code class="highlighter-rouge">@EnableWebMvc</code> 어노테이션을 사용해 <code class="highlighter-rouge">OptionalValidatorFactoryBean</code>을 <code class="highlighter-rouge">글로벌 범위</code> Validator로 등록</li>
+  <li>다음과 같이 <code class="highlighter-rouge">@Valid</code> 어노테이션을 붙여 <code class="highlighter-rouge">글로벌 범위 Validator</code>로 검증 가능</li>
+  <li>각 어노테이션의 에러 메세지는 Bean validation 프로바이더가 제공하는 <code class="highlighter-rouge">기본 에러 메세지</code>를 출력
+    <blockquote>
+      <p>@NotNull: 반드시 값이 존재하고 공백 문자를 제외한 길이가 0보다 커야 합니다.<br />
+@NotEmpty: 반드시 값이 존재하고 길이 혹은 크기가 0보다 커야 합니다.<br />
+…</p>
+    </blockquote>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@PostMapping</span><span class="o">(</span><span class="s">"/register/step3"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">handleStep3</span><span class="o">(</span><span class="nd">@Valid</span> <span class="nc">RegisterRequest</span> <span class="n">regReq</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">new</span> <span class="nf">RegisterRequestValidator</span><span class="o">().</span><span class="na">validate</span><span class="o">(</span><span class="n">regReq</span><span class="o">,</span> <span class="n">errors</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">errors</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">())</span>
+          <span class="k">return</span> <span class="s">"register/step2"</span><span class="o">;</span>
+      <span class="k">try</span> <span class="o">{</span>
+          <span class="n">memberRegisterService</span><span class="o">.</span><span class="na">regist</span><span class="o">(</span><span class="n">regReq</span><span class="o">);</span>
+          <span class="k">return</span> <span class="s">"register/step3"</span><span class="o">;</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">DuplicateMemberException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">errors</span><span class="o">.</span><span class="na">rejectValue</span><span class="o">(</span><span class="s">"email"</span><span class="o">,</span> <span class="s">"duplicate"</span><span class="o">);</span>
+          <span class="k">return</span> <span class="s">"register/step2"</span><span class="o">;</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>만약 글로벌 validator가 따로 설정되어 있다면,<br />
+ Spring은 OptionalValidatorFactoryBean를 글로벌 범위 Validator로 <code class="highlighter-rouge">사용하지 않음</code> <br />
+ 따라서 따로 설정한 글로벌 범위 validator는 <code class="highlighter-rouge">삭제</code>해 주어야 함<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="4-1-bean-validation-에러-메세지-커스터마이징">4-1. Bean Validation 에러 메세지 커스터마이징</h4>
+<ul>
+  <li>
+    <p>기본 에러 메세지 대신, 원하는 에러 메세지를 사용하기 위해 다음과 같이 <code class="highlighter-rouge">properties 파일</code>에 작성</p>
+
+    <div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="py">NotBlank</span><span class="p">=</span><span class="s">필수 항목입니다. 공백 문자는 허용하지 않습니다.</span>
+  <span class="py">NotEmpty</span><span class="p">=</span><span class="s">필수 항목입니다.</span>
+  <span class="py">Size.password</span><span class="p">=</span><span class="s">암호 길이는 6자 이상이어야 합니다.</span>
+  <span class="py">Email</span><span class="p">=</span><span class="s">올바른 이메일 주소를 입력해야 합니다.</span>
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>@NotBlank: 필수 항목입니다. 공백 문자는 허용하지 않습니다.<br />
+@NotEmpty: 필수 항목입니다.<br />
+…</p>
+    </blockquote>
+  </li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-11.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 11">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-13.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 13">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

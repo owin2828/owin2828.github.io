@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring] 첫걸음 - 7 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. Proxy, AOP, Advice">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-7.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring] 첫걸음 - 7</h1>
+            
+            <h2 class="subheading">AOP 프로그래밍</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 15:57:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   21 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-proxy-aop-advice">1. Proxy, AOP, Advice</h2>
+<hr />
+
+<h4 id="1-1-about-proxy">1-1. About proxy</h4>
+<p>프록시는 기존 코드를 수정하지 않고 코드 중복을 피할 수 있는 방법으로써 다음과 같은 특징을 지님</p>
+<ul>
+  <li>핵심 기능의 실행은 다른 객체에 위임하고 부가적인 기능을 제공하는 객체 = <code class="highlighter-rouge">프록시(proxy)</code></li>
+  <li>실제 핵심 기능을 실행하는 객체 = <code class="highlighter-rouge">대상 객체</code></li>
+  <li>프록시는 핵심 기능을 구현하지 않음</li>
+  <li>대신 여러 객체에 <code class="highlighter-rouge">공통으로 적용할 수 있는 기능</code>을 구현<br />
+<br /></li>
+</ul>
+
+<h4 id="1-2-about-aop">1-2. About AOP</h4>
+<p>AOP는 Aspect Oriented Programming의 약자로, <br />
+여러 객체에 공통으로 적용할 수 있는 기능을 분리해 <code class="highlighter-rouge">재사용성</code>을 높여주는 기법으로써 다음과 같은 특징을 지님</p>
+<ul>
+  <li>공통 기능 구현과 핵심 기능 구현의 <code class="highlighter-rouge">분리</code></li>
+  <li>핵심 기능에 <code class="highlighter-rouge">공통 기능을 삽입</code>하며 다음과 같은 방법이 존재
+    <ol>
+      <li>컴파일 시점에 코드에 공통 기능을 삽입</li>
+      <li>클래스 로딩 시점에 바이트 코드에 공통 기능을 삽입</li>
+      <li>런타임에 프록시 객체를 생성해서 공통 기능을 삽입
+        <blockquote>
+          <p>이 중, 스프링이 제공하는 AOP 방식은 <code class="highlighter-rouge">프록시</code>를 이용한 <code class="highlighter-rouge">세 번째 방식</code></p>
+        </blockquote>
+      </li>
+    </ol>
+  </li>
+  <li>스프링 AOP는 프록시 객체를 <code class="highlighter-rouge">자동으로</code> 생성해줌</li>
+  <li>AOP의 공통 기능을 <code class="highlighter-rouge">Aspect</code>라 칭하며, 아래와 같은 주요 용어가 존재
+    <ol>
+      <li><code class="highlighter-rouge">Advice</code>: 언제 공통 관심 기능을 핵심 로직에 적용할 지를 정의</li>
+      <li><code class="highlighter-rouge">Joinpoint</code>: Advice를 적용 가능한 지점을 의미<br />
+(매서드 호출, 필드 값 변경 등, 스프링은 프록시를 이용해 AOP를 구현하기 때문에 <code class="highlighter-rouge">매서드 호출</code>에 대한 Joinpoint만 지원)</li>
+      <li><code class="highlighter-rouge">Pointcut</code>: Joinpoint의 부분 집합, 실제 Advice가 적용되는 Joinpoint를 나타냄<br />
+(스프링에서는 정규 표현식 및 AspectJ의 문법을 통해 Pointcut 정의)</li>
+      <li><code class="highlighter-rouge">Weaving</code>: Advice를 핵심 로직 코드에 적용하는 것</li>
+      <li><code class="highlighter-rouge">Aspect</code>: 여러 객체에 공통으로 적용되는 기능<br />
+<br /></li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="1-3-about-advice">1-3. About Advice</h4>
+<ol>
+  <li><code class="highlighter-rouge">Before Advice</code>: 대상 객체의 매서드 호출 전에 공통 기능을 실행</li>
+  <li><code class="highlighter-rouge">After Returning Advice</code>: 대상 객체의 매서드가 익셉션 없이 실행된 이후에 공통 기능을 실행</li>
+  <li><code class="highlighter-rouge">After Throwing Advice</code>: 대상 객체의 매서드를 실행하는 도중 익셉션이 발생한 경우에 공통 기능을 실행</li>
+  <li><code class="highlighter-rouge">After Advice</code>: 익셉션 발생 여부에 상관없이 대상 객체의 매서드 실핼 후 공통 기능을 실행</li>
+  <li>
+    <p><code class="highlighter-rouge">Around Advice</code>: 대상 객체의 매서드 실행 전, 후 또는 익셉션 발생 시점에 공통 기능을 실행</p>
+
+    <blockquote>
+      <p>이 중 널리 사용되는 것은 <code class="highlighter-rouge">Around Advice</code>이며,<br />
+  그 이유는 대상 객체의 매서드를 실행하기 전/후, 익셉션 발생등 <code class="highlighter-rouge">다양한 시점</code>에 <code class="highlighter-rouge">원하는 기능</code>을 삽입할 수 있기 때문<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="2-스프링-aop-구현">2. 스프링 AOP 구현</h2>
+<hr />
+<p>스프링 AOP를 통해 공통 기능을 구현 및 적용하는 순서</p>
+<ol>
+  <li>Aspect로 사용할 클래스에 <code class="highlighter-rouge">@Aspect</code> 어노테이션을 붙임</li>
+  <li><code class="highlighter-rouge">@Pointcut</code> 어노테이션으로 공통 기능을 적용할 Pointcut을 정의</li>
+  <li>공통 기능을 구현한 매서드에 <code class="highlighter-rouge">@Around</code> 어노테이션을 적용
+    <blockquote>
+      <p>후술할 예제는 크게</p>
+      <ul>
+        <li><code class="highlighter-rouge">핵심기능</code>: Calculator(인터페이스) &lt;- RecCalculator(상속)</li>
+        <li><code class="highlighter-rouge">공통기능</code>: ExeTimeAspect(시간 측정) / CachceAspect(캐싱 기능)로 구현
+          <blockquote>
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Caculator.java </span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Calculator</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="o">(</span><span class="kt">long</span> <span class="n">num</span><span class="o">);</span>
+
+<span class="o">}</span>
+</code></pre></div>            </div>
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// RecCalculator.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RecCalculator</span> <span class="kd">implements</span> <span class="nc">Calculator</span> <span class="o">{</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="o">(</span><span class="kt">long</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+          <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+      <span class="k">else</span>
+          <span class="k">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">factorial</span><span class="o">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>            </div>
+            <p><br /></p>
+          </blockquote>
+        </li>
+      </ul>
+    </blockquote>
+  </li>
+</ol>
+
+<h4 id="2-1-aspect-pointcut-around를-통한-aop-구현">2-1. @Aspect, @Pointcut, @Around를 통한 AOP 구현</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//ExeTimeAspect</span>
+    <span class="c1">// 공통 기능을 제공하는 클래스 설정</span>
+    <span class="nd">@Aspect</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExeTimeAspect</span> <span class="o">{</span>
+
+            <span class="c1">// 공통 기능을 적용할 Pointcut 설정</span>
+        <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(public * chap07..*(..))"</span><span class="o">)</span>
+        <span class="kd">private</span> <span class="kt">void</span> <span class="nf">publicTarget</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">}</span>
+
+            <span class="c1">// 공통 기능을 구현할 매서드 설정</span>
+        <span class="nd">@Around</span><span class="o">(</span><span class="s">"publicTarget()"</span><span class="o">)</span>
+        <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">measure</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+            <span class="kt">long</span> <span class="n">start</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+            <span class="k">try</span> <span class="o">{</span>
+                            <span class="c1">// proceed() 매서드를 사용해서 실제 대상 객체의 매서드를 호출</span>
+                <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+                <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%s.%s(%s) 실행 시간 : %d ns\n"</span><span class="o">,</span>
+                <span class="o">...</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">@Aspect</code> 어노테이션을 적용한 클래스는 Advice와 Pointcut을 <code class="highlighter-rouge">함께</code> 제공</li>
+  <li><code class="highlighter-rouge">@Pointcut</code> 어노테이션은 cahp07 패키지나 그 하위 패키지에 속한 Bean 객체의 public 매서드를 설정
+    <blockquote>
+      <p>@Pointcut이 붙은 매서드는 다음의 조건을 <code class="highlighter-rouge">일반적</code>(반드시?)으로 만족해야 함</p>
+      <ul>
+        <li><code class="highlighter-rouge">void</code> 리턴 타입</li>
+        <li><code class="highlighter-rouge">비어있는</code> 매서드</li>
+        <li>어떤 throws 문도 <code class="highlighter-rouge">포함하지 않음</code></li>
+      </ul>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">@Around</code> 어노테이션은 publicTarget() 매서드에 정의한 Pointuct에 공통 기능을 적용</li>
+  <li><code class="highlighter-rouge">joinPoint.proceed()</code> 매서드를 실행시, 대상 객체의 매서드가 실행되므로 이 코드 전후로 공통 기능을 위한 코드를 위치시킴
+    <blockquote>
+      <p>결과적으로 위 코드를 실행하게 되면,<br />
+        Calculator 타입이 spring 패키지에 속하므로, <br />
+        calculator Bean에 ExeTimeAspect 클래스에 정의한 <code class="highlighter-rouge">공통 기능</code> measure()를 적용</p>
+    </blockquote>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AppCtx.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableAspectJAutoProxy</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtx</span> <span class="o">{</span>
+          <span class="c1">// exeTimeAspect 매서드가 공통 기능으로 사용될 프록시를 위한 Bean 객체를 생성하는 매서드</span>
+          <span class="c1">// 앞선 코드 ExeTimeAspect 클래스의 @Pointcut과 @Around 설정을 사용</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">ExeTimeAspect</span> <span class="nf">exeTimeAspect</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">ExeTimeAspect</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">Calculator</span> <span class="nf">calculator</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">RecCalculator</span><span class="o">();</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">@Aspect</code> 어노테이션을 붙인 클래스를 공통 기능으로 적용하려면,<br />
+<code class="highlighter-rouge">@EnableAspectJAutoProxy</code> 어노테이션을 설정 클래스에 붙여야 함</li>
+  <li>
+    <p><code class="highlighter-rouge">@Aspect</code> 어노테이션이 붙은 Bean 객체를 찾아 Bean 객체의 <code class="highlighter-rouge">@Pointcut</code> 설정과 <code class="highlighter-rouge">@Around</code> 설정을 사용</p>
+
+    <blockquote>
+      <p>위의 코드를 수행하면 결과적으로 아래와 같은 흐름으로 진행</p>
+      <ul>
+        <li>Main -&gt; Proxy -&gt; ExeTimeAspect(<code class="highlighter-rouge">공통기능</code>) -&gt; ProceedingJoinPoint -&gt; RecCalculator(<code class="highlighter-rouge">핵심기능</code>)</li>
+      </ul>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li><code class="highlighter-rouge">@Before</code> 어노테이션의 사용 예는 다음과 같다.
+      <blockquote>
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExeTimeAspect</span> <span class="o">{</span>
+
+	<span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(public * chap07..*(..))"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">publicTarget</span><span class="o">()</span> <span class="o">{</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Before</span><span class="o">(</span><span class="s">"publicTarget()"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">beforeMethod</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"실행전 시작!"</span><span class="o">);</span>
+	<span class="o">}</span>
+
+       <span class="nd">@Around</span><span class="o">(</span><span class="s">"publicTarget()"</span><span class="o">)</span>
+       <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">measure</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>	
+       <span class="o">...</span>
+</code></pre></div>        </div>
+      </blockquote>
+    </li>
+    <li>
+      <p><code class="highlighter-rouge">실행결과</code>는 다음과 같다.</p>
+
+      <blockquote>
+        <p>실행전 시작!<br />
+———————————————————————// 여기까지 매서드 실행전 공통기능 수행 (<code class="highlighter-rouge">@Before</code>)<br />
+RecCalculator.factorial([7]) 실행 시간 : 126851 ns<br />
+CacheAspect: Cache에 추가[7]<br />
+CacheAspect: Cache에서 구함[7]<br />
+———————————————————————// 여기까지 원하는 위치에서 공통기능 수행 (<code class="highlighter-rouge">@Around</code>)<br />
+<br /></p>
+      </blockquote>
+    </li>
+  </ul>
+</blockquote>
+
+<h4 id="2-2-proceedingjoinpoint의-매서드">2-2. ProceedingJoinPoint의 매서드</h4>
+<ul>
+  <li>
+    <p>Around Advice에서 사용할 공통 기능 매서드는 대부분 <br />
+파라미터로 전달받은 ProceedingJoinPoint의 <code class="highlighter-rouge">proceed()</code> 매서드만 호출하면 됨<br />
+(앞선 코드 ExeTimeAspect.java의 joinPoint.proceed() 부분)</p>
+  </li>
+  <li>
+    <p>이때 세부적인 정보가 필요하다면 아래와 같은 매서드를 통해 정보를 획득 가능</p>
+    <ol>
+      <li>Signature <code class="highlighter-rouge">getSignature()</code>: 호출되는 매서드의 대한 정보를 구함</li>
+      <li>Object <code class="highlighter-rouge">getTaget()</code>: 대상 객체를 구함</li>
+      <li>Object[] <code class="highlighter-rouge">getArgs()</code>: 파라미터 목록을 구함
+        <ul>
+          <li>예시: joinPoint.getTarget() 등<br />
+<br /></li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="3-프록시-생성-방식">3. 프록시 생성 방식</h2>
+<hr />
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// 수정 전 MainAspect.java</span>
+    <span class="nc">Calculator</span> <span class="n">cal</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"calculator"</span><span class="o">,</span> <span class="nc">Calculator</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+    <span class="c1">// 수정 후 MainAspect.java</span>
+    <span class="nc">RecCalculator</span> <span class="n">cal</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"calculator"</span><span class="o">,</span> <span class="nc">RecCalculator</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</code></pre></div></div>
+<ul>
+  <li>만약, 위와 같이 타입을 변경하여 Bean 객체를 가져온다고 하면,<br />
+아래와 같이 설정 파일에 <code class="highlighter-rouge">RecCalculator</code> 객체를 반환하므로 문제가 없어 보임
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AppCtx.java</span>
+  <span class="nd">@Bean</span>
+  <span class="kd">public</span> <span class="nc">Calculator</span> <span class="nf">calculator</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nf">RecCalculator</span><span class="o">();</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>하지만 getBean() 매서드에 사용한 타입이 <code class="highlighter-rouge">RecCalculator</code> 인데 반해 실제 타입은 <code class="highlighter-rouge">$Proxy17</code> 이라는 메세지와 함께, 다음과 같은 이유로 <code class="highlighter-rouge">에러</code> 발생</p>
+    </blockquote>
+  </li>
+  <li>현재 구조는 <code class="highlighter-rouge">Calculator(인터페이스)</code>를 <code class="highlighter-rouge">RecCalculator</code>와 <code class="highlighter-rouge">$Proxy17</code>가 상속받는 관계</li>
+  <li>스프링은 AOP를 위한 프록시 객체를 생성할 때 실제 생성할 Bean 객체가 인터페이스를 상속하면 <code class="highlighter-rouge">인터페이스를 이용해</code> 프록시를 구현</li>
+  <li>
+    <p>따라서 아래 코드처럼 Bean의 실제 타입이 RecCalculator 라고 해도,<br />
+“calculator”에 해당하는 Bean 객체 타입은 <code class="highlighter-rouge">Caculator 를 상속받은 프록시 타입</code>이됨</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AppCtx.java</span>
+  <span class="c1">// AOP 적용시 RecCalculator가 상속받은 Calculator 인터페이스를 이용해 프록시 생성</span>
+  <span class="nd">@Bean</span>
+  <span class="kd">public</span> <span class="nc">Calculator</span> <span class="nf">calculator</span><span class="o">(){</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nf">RecCalculator</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// MainAspect.java</span>
+  <span class="c1">// calculator Bean의 실제 타입은 Calculator를 상속한 프록시 타입이므로</span>
+  <span class="c1">// RecCalculator로 타입변환을 할 수 없기 때문에 익셉션 발생</span>
+  <span class="nc">RecCalculator</span> <span class="n">cal</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"calculator"</span><span class="o">,</span> <span class="nc">RecCalculator</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="3-1-execution-명시자-표현-방식">3-1. execution 명시자 표현 방식</h4>
+
+<p>execution 명시자는 Advice를 적용할 매서드를 지정할 때 아래와 같이 사용</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(public * cahp07..*(..))"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="kd">public</span> <span class="nf">Target</span><span class="o">(){</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Aspect를 적용할 위치를 지정하기 위한 <code class="highlighter-rouge">Pointcut</code> 설정</li>
+  <li>
+    <p>스프링 AOP는 public 매서드에만 적용할 수 있기 때문에, 사실상 <code class="highlighter-rouge">public</code>만 가능</p>
+
+    <blockquote>
+      <p>execution(수식어패턴? 리턴타입패턴 클래스이름패턴?매서드이름패턴(파라미터패턴)) 방식으로 사용</p>
+      <ul>
+        <li><code class="highlighter-rouge">수식어패턴</code>은 생략 가능하며 public, protected등이 올 수 있음</li>
+        <li><code class="highlighter-rouge">리턴타입패턴</code>은 리턴 타입을 명시</li>
+        <li><code class="highlighter-rouge">클래스이름패턴</code>, <code class="highlighter-rouge">매서드이름패턴</code>은 클래스 이름 및 매서드 이름을 패턴으로 명시</li>
+        <li><code class="highlighter-rouge">파라미터패턴</code>은 매칭될 파라미터에서 대해 명시</li>
+        <li>각 패턴에서 <code class="highlighter-rouge">'..'</code>은 0개 이상이라는 의미<br />
+<br /></li>
+      </ul>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="3-2-advice-적용-순서">3-2. Advice 적용 순서</h4>
+<p>기존의 코드에는 <code class="highlighter-rouge">ExeTimeAspect</code> 클래스만 공통기능으로 구현했지만,<br />
+이에 추가로 <code class="highlighter-rouge">CacheAspect</code> 클래스를 공통기능으로 구현해, 한 Pointcut에 <code class="highlighter-rouge">여러 Advice</code>를 적용</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//CacheAspect.java</span>
+    <span class="nd">@Aspect</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheAspect</span> <span class="o">{</span>
+
+        <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+
+        <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(public * chap07..*(long))"</span><span class="o">)</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cacheTarget</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">}</span>
+        
+        <span class="nd">@Around</span><span class="o">(</span><span class="s">"cacheTarget()"</span><span class="o">)</span>
+        <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+            <span class="nc">Long</span> <span class="n">num</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Long</span><span class="o">)</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">getArgs</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">num</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"CacheAspect: Cache에서 구함[%d]\n"</span><span class="o">,</span> <span class="n">num</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+            <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"CacheAspect: Cache에 추가[%d]\n"</span><span class="o">,</span> <span class="n">num</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+<blockquote>
+  <p>위 클래스는 캐싱의 기능을 제공하며, 키 값이 hashmap에 <code class="highlighter-rouge">존재하면</code> 그 값을 리턴하고,<br />
+<code class="highlighter-rouge">없다면</code> 프록시 대상 객체를 실행하여 그 결과를 캐시에 <code class="highlighter-rouge">추가</code>해 준 후, 그 값을 리턴</p>
+</blockquote>
+
+<blockquote>
+  <p>ExeTimeAspect 클래스와 동일하게,<br />
+ 공통기능으로 <code class="highlighter-rouge">사용할 클래스</code>에 @Aspect<br />
+ 공통기능을 <code class="highlighter-rouge">적용할 부분</code>에 @Pointcut<br />
+ 공통기능을 <code class="highlighter-rouge">구현한 매서드</code>에 @Around 어노테이션을 차례로 적용하여 구현</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">@Around</code> 값으로 cacheTarget() 매서드를 지정</li>
+  <li><code class="highlighter-rouge">@Pointcut</code> 설정은 첫 번째 인자가 long인 매서드를 대상으로 함</li>
+  <li>따라서 <code class="highlighter-rouge">execute()</code> 매서드는 앞서 작성한 Calculator의 fatoring(long) 매서드에 적용</li>
+  <li>
+    <p>새로운 Aspect를 구현했으므로 아래와 같이 두개의 Aspect를 추가하는 작업이 필요</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AppCtxWithCahce.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableAspectJAutoProxy</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithCache</span> <span class="o">{</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">CacheAspect</span> <span class="nf">cacheAspect</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">CacheAspect</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">ExeTimeAspect</span> <span class="nf">exeTimeAspect</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">ExeTimeAspect</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">Calculator</span> <span class="nf">calculator</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">RecCalculator</span><span class="o">();</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>위의 설정 클래스를 적용해 실행하는 코드는 아래와 같다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MainAspectWithCache.java</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainAspectWithCache</span> <span class="o">{</span>
+        
+      <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+          <span class="nc">AnnotationConfigApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> 
+                  <span class="k">new</span> <span class="nf">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="nc">AppCtxWithCache</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+          <span class="nc">Calculator</span> <span class="n">cal</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"calculator"</span><span class="o">,</span> <span class="nc">Calculator</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+          <span class="n">cal</span><span class="o">.</span><span class="na">factorial</span><span class="o">(</span><span class="mi">7</span><span class="o">);</span>
+          <span class="n">cal</span><span class="o">.</span><span class="na">factorial</span><span class="o">(</span><span class="mi">7</span><span class="o">);</span>
+          <span class="n">cal</span><span class="o">.</span><span class="na">factorial</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+          <span class="n">cal</span><span class="o">.</span><span class="na">factorial</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+          <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위의 코드를 실행하면 아래와 같은 결과를 출력 함
+    <blockquote>
+      <p>RecCalculator.factorial([7]) 실행 시간 : 16584 ns<br />
+CacheAspect: Cache에 추가[7] <br />
+—————————————————-  // 여기까지 처음 cal.factorial(7) 결과<br />
+CacheAspect: Cache에서 구함[7] // 두 번째 cal.factorial(7) 결과<br />
+…</p>
+    </blockquote>
+  </li>
+  <li>처음 factorial(7)을 실행할 때와 두 번째 실행할 때의 결과가 다른 것을 확인할 수 있으며,<br />
+첫 번째는 ExeTimeAspect와 CacheAspect가 <code class="highlighter-rouge">모두</code> 적용되었고<br />
+두 번째는 CacheAspect<code class="highlighter-rouge">만</code> 적용됨
+    <blockquote>
+      <p>이렇게 실행결과가 다른 이유는 Advice를 다음 순서로 적용했기 때문<br />
+<code class="highlighter-rouge">CacheAspect</code> 프록시 -&gt; <code class="highlighter-rouge">ExeTimeAspect</code> 프록시 -&gt; 실제 <code class="highlighter-rouge">대상 객체</code></p>
+    </blockquote>
+  </li>
+  <li>앞선 코드의 caculator <code class="highlighter-rouge">Bean 객체</code>는 실제로 CacheAspect <code class="highlighter-rouge">프록시 객체</code><br />
+CacheAspect 프록시 <code class="highlighter-rouge">대상 객체</code>는 ExeTimeAspect의 <code class="highlighter-rouge">프록시 객체</code><br />
+ExeTimAsepct 프록시 <code class="highlighter-rouge">대상 객체</code>는 <code class="highlighter-rouge">실제 대상 객체</code></li>
+  <li>
+    <p>실제 코드상의 흐름은 다음과 같다.</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// CacheAsepct.java</span>
+  <span class="o">...</span> 
+  <span class="k">if</span> <span class="o">(</span><span class="n">cache</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">num</span><span class="o">))</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"CacheAspect: Cache에서 구함[%d]\n"</span><span class="o">,</span> <span class="n">num</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="cm">/* 이 부분에서 해당 객체의 대상 객체를 호출
+  * 현재 CacheAspect -&gt; ExeTimeAspect -&gt; RecCalculator의 순서이므로
+  * jointPoint.proceed()를 호출하게 되면
+  * 대상 객체인 ExeTimeAspect 프록시를 호출
+  */</span>
+  <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span> <span class="c1">// 실행순서 1)</span>
+
+  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"CacheAspect: Cache에 추가[%d]\n"</span><span class="o">,</span> <span class="n">num</span><span class="o">);</span> <span class="c1">// 실행순서 5)</span>
+  <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</code></pre></div>    </div>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ExeTimeAspect.java</span>
+  <span class="o">...</span>
+  <span class="k">try</span> <span class="o">{</span>
+          <span class="c1">// 위와 마찬가지로 joinPoint.proceed()에서 해당 객체의 대상 객체를 호출</span>
+          <span class="c1">// 여기서는 실제 대상 객체 (RecCalculator)를 호출</span>
+      <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span> <span class="c1">// 실행순서 2)</span>
+      <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%s.%s(%s) 실행 시간 : %d ns\n"</span><span class="o">,</span> <span class="c1">// 실행순서 4)</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+  <span class="o">...</span>
+</code></pre></div>    </div>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// RecCalculator.java</span>
+  <span class="o">...</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="o">(</span><span class="kt">long</span> <span class="n">num</span><span class="o">){</span> <span class="c1">// 실행순서 3)</span>
+  <span class="o">...</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h4 id="3-3-order-어노테이션과-aspect-적용-순서">3-3. @Order 어노테이션과 Aspect 적용 순서</h4>
+<p>앞선 예제 코드의 흐름은 아래와 같다.</p>
+<ul>
+  <li>CacheAspect 프록시 -&gt; ExeTimeAspect 프록시 -&gt; RecCalculator (실제 대상 객체)
+    <blockquote>
+      <p>하지만 우리는 <code class="highlighter-rouge">순서</code>를 지정해준 적이 없는데, 어떤 정책에 의해 위와 같은 순서로 진행 되는가?</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>그 이유는 설정 파일에 아래와 같은 <code class="highlighter-rouge">순서</code>로 작성했기 때문</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// AppCtxWithCahce.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableAspectJAutoProxy</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppCtxWithCache</span> <span class="o">{</span>
+
+          <span class="c1">// 1번째로 적용될 Aspect</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">CacheAspect</span> <span class="nf">cacheAspect</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">CacheAspect</span><span class="o">();</span>
+      <span class="o">}</span>
+          <span class="c1">// 2번째로 적용될 Aspect</span>
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">ExeTimeAspect</span> <span class="nf">exeTimeAspect</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">ExeTimeAspect</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="nc">Calculator</span> <span class="nf">calculator</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="nf">RecCalculator</span><span class="o">();</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>실제 두 Apsect의 위치를 맞바꾸면, 실행결과가 <code class="highlighter-rouge">달라짐</code></p>
+    </blockquote>
+  </li>
+  <li>어떤 Aspect가 적용되는지 순서가 중요하다면, <code class="highlighter-rouge">직접</code> 순서를 지정해야 함</li>
+  <li>
+    <p><code class="highlighter-rouge">@Order</code> 어노테이션을 해당 클래스에 적용함으로써 그 순서를 아래와 같이 지정 가능</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">import</span> <span class="nn">org.springframework.core.annotation.Order</span><span class="o">;</span>
+
+  <span class="c1">// ExeTimeAspect.java</span>
+  <span class="nd">@Aspect</span>
+  <span class="nd">@Order</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExeTimeAspect</span><span class="o">{</span>
+  <span class="o">...</span>
+  <span class="o">}</span>
+
+  <span class="c1">// CacheAspect.java</span>
+  <span class="nd">@Aspect</span>
+  <span class="nd">@Order</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheAspect</span><span class="o">{</span>
+  <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>위의 설정대로 수행 시, 아래와 같은 순서로 실행<br />
+<code class="highlighter-rouge">ExeTimeAspect</code> 프록시 -&gt; <code class="highlighter-rouge">CacheAspect</code> 프록시 -&gt; <code class="highlighter-rouge">RecCalculator</code> 실제 대상 객체<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="3-4-around의-pointcut-설정과-pointcut의-재사용">3-4. @Around의 Pointcut 설정과 @Pointcut의 재사용</h4>
+<ul>
+  <li>
+    <p>@Pointcut 어노테이션이 아닌 <code class="highlighter-rouge">@Around</code> 어노테이션에 <code class="highlighter-rouge">execution</code> 명시자를 지접 아래와 같이 지정 가능</p>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// CacheAspect.java</span>
+  <span class="nd">@Aspect</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheAspect</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="nd">@Around</span><span class="o">(</span><span class="s">"execution(public * chap07..*(long))"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>만약 같은 Pointcut을 여러 Advice가 함께 사용한다면, 아래와 같이 <code class="highlighter-rouge">공통 Pointcut</code>을 재사용 가능</p>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// ExeTimeAspect.java</span>
+  <span class="nd">@Aspect</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExeTimeAspect</span> <span class="o">{</span>
+          <span class="c1">// 다른 Advice가 참조하기 위해 prviate -&gt; public으로 변경</span>
+      <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(public * chap07..*(..))"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">publicTarget</span><span class="o">()</span> <span class="o">{</span>
+      <span class="o">}</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Aspect</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheAspect</span> <span class="o">{</span>
+      <span class="o">...</span>
+          <span class="c1">// 앞선 코드의 Pointcut 재사용</span>
+      <span class="nd">@Around</span><span class="o">(</span><span class="s">"aspect.ExeTimeAspect.publicTarget()"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>만약 여러 Aspect에서 공통으로 사용하는 Pointcut이 있다면,<br />
+<code class="highlighter-rouge">별도 클래스</code>에 Pointcut을 정의하고,<br />
+각 Aspect 클래스에서 해당 Pointcut을 사용하도록 구성</p>
+
+      <p>이렇게 구성된 별도의 클래스는 따로 Bean에 등록할 필요 없고,<br />
+<code class="highlighter-rouge">@Around</code> 어노테이션에서 해당 클래스에 접근 가능하면 사용 가능</p>
+    </blockquote>
+  </li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-6.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 6">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-8.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 8">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

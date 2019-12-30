@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring] 첫걸음 - 10 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. 스프링 MVC 핵심 구성 요소 MVC 프레임워크의 흐름은 다음과 같다. DispatcherServlet이 모든 연결을 담당하며, 웹 브라우저로부터 요청을 받음 요청이 들어오면 DispathcerServlet는 HandlerMapping Bean 객체에게 컨트롤러 검색을 요청 ...">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-10.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring] 첫걸음 - 10</h1>
+            
+            <h2 class="subheading">스프링 MVC 동작방식</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 16:21:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-스프링-mvc-핵심-구성-요소">1. 스프링 MVC 핵심 구성 요소</h2>
+<hr />
+<p><img src="/img/spring/spring_10_1.jpg" alt="MVC2" /><br />
+MVC 프레임워크의 흐름은 다음과 같다.</p>
+<ol>
+  <li><code class="highlighter-rouge">DispatcherServlet</code>이 <code class="highlighter-rouge">모든 연결</code>을 담당하며, 웹 브라우저로부터 <code class="highlighter-rouge">요청</code>을 받음</li>
+  <li>
+    <ul>
+      <li>요청이 들어오면 DispathcerServlet는 <code class="highlighter-rouge">HandlerMapping</code> Bean 객체에게 컨트롤러 검색을 요청</li>
+      <li><code class="highlighter-rouge">HandlerMapping</code>은 클라이언트의 요청 경로를 이용해 <code class="highlighter-rouge">컨트롤러 Bean객체</code>를 DispathcerServlet에게 전달</li>
+    </ul>
+  </li>
+  <li>DispathcerServlet은 전달받은 객체를 처리할 수 있는 <code class="highlighter-rouge">HandlerAdapter</code> Bean에게 요청 처리를 위임</li>
+  <li><code class="highlighter-rouge">HandlerAdapter</code>는 컨트롤러의 알맞은 매서드를 호출해 요청을 처리</li>
+  <li>그 후, 결과를 <code class="highlighter-rouge">ModelAndView</code>라는 객체로 DispathcerServlet에게 반환</li>
+  <li>
+    <ul>
+      <li>DispathcerServlet는 전달받은 결과를 보여줄 뷰를 찾기 위해 <code class="highlighter-rouge">ViewResolver</code> Bean 객체를 사용</li>
+      <li><code class="highlighter-rouge">ViewResolver</code>는 ModelAndView 내부에 있는 뷰 이름에 해당하는 <code class="highlighter-rouge">View 객체</code>를 찾거나 생성후 리턴</li>
+    </ul>
+  </li>
+  <li>DispathcerServlet는 VeiwResolver가 리턴한 View 객체에게 <code class="highlighter-rouge">응답 결과</code> 생성을 요청<br />
+<br /></li>
+</ol>
+
+<h4 id="1-1-컨트롤러와-핸들러">1-1. 컨트롤러와 핸들러</h4>
+<ul>
+  <li>클라이언트의 요청을 실제로 처리하는 것은 <code class="highlighter-rouge">컨트롤러</code></li>
+  <li><code class="highlighter-rouge">DispathcerServlet</code>는 클라이언트의 요청을 전달받는 <code class="highlighter-rouge">창구</code> 역할</li>
+  <li><code class="highlighter-rouge">HandlerMapping</code>은 특정 요청 경로를 처리해주는 핸들러를 <code class="highlighter-rouge">찾아주는</code> 역할</li>
+  <li><code class="highlighter-rouge">HandlerAdapter</code>는 핸들러의 처리결과를 ModelAndView 객체로 <code class="highlighter-rouge">변환</code>하여 DispathcerServlet에게 <code class="highlighter-rouge">전달</code><br />
+<br /></li>
+</ul>
+
+<h2 id="2-controller를-위한-handlermapping과-handleradapter">2. @Controller를 위한 HandlerMapping과 HandlerAdapter</h2>
+<hr />
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// ControllerConfig.java</span>
+    <span class="nd">@Configuration</span>
+    <span class="nd">@EnableWebMvc</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span><span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">@EnableWebMvc</code> 어노테이션을 통해 <code class="highlighter-rouge">HandlerMapping</code>이나 <code class="highlighter-rouge">HandleAdapter</code> 설정을 <code class="highlighter-rouge">자동</code>으로 추가</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// HelloController.java</span>
+    <span class="nd">@Controller</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="o">{</span>
+
+        <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">)</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">,</span>
+                <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"name"</span><span class="o">,</span> <span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> 
+            <span class="o">{</span>
+            <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"greeting"</span><span class="o">,</span> <span class="s">"안녕하세요, "</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+            <span class="k">return</span> <span class="s">"hello"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">@EnableWebMvc</code> 어노테이션은 @Controller 타입의 핸들러 객체를 처리하기 위한 클래스를 포함</li>
+  <li>그 중 하나가 <code class="highlighter-rouge">RequestMappingHandlerMapping</code>이며, <br />
+이 어노테이션은 <code class="highlighter-rouge">@GetMapping</code> 어노테이션 값을 이용해서 웹 브라우저의 요청을 처리할 <code class="highlighter-rouge">컨트롤러 Bean</code>을 찾음
+    <blockquote>
+      <p><code class="highlighter-rouge">GET &amp; POST</code>는 <a href="../0.부록/6.-GET-&amp;-POST-방식">여기</a>를 참조</p>
+    </blockquote>
+  </li>
+  <li>앞선 코드에서 @GetMapping에서 “/hello”라는 <code class="highlighter-rouge">요청 경로</code>에 대해 hello() 매서드를 호출<br />
+이때 <code class="highlighter-rouge">Model 객체</code>를 생성해 첫 번째 파라미터로, <code class="highlighter-rouge">HTTP 요청 파라미터</code>를 두 번째 파라미터로 전달</li>
+  <li><code class="highlighter-rouge">RequestMappingHandlerAdapter</code>는 컨트롤러 매서드 결과 값이 String 타입이면,<br />
+해당값을 뷰 이름으로 갖는 <code class="highlighter-rouge">ModleAndView</code> 객체를 생성해 DispatcherServlet에 리턴
+    <blockquote>
+      <p>위의 예제에서 결국 뷰의 이름은 <code class="highlighter-rouge">hello</code>가 된다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="3-jsp를-위한-viewresolver">3. JSP를 위한 ViewResolver</h2>
+<hr />
+<ul>
+  <li>컨트롤러 처리 결과를 <code class="highlighter-rouge">JSP</code>를 이용해서 생성하기 위해 다음 설정을 사용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MvcConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebMvc</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+      <span class="o">...</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureViewResolvers</span><span class="o">(</span><span class="nc">ViewResolverRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">registry</span><span class="o">.</span><span class="na">jsp</span><span class="o">(</span><span class="s">"/WEB-INF/view/"</span><span class="o">,</span> <span class="s">".jsp"</span><span class="o">);</span> <span class="c1">// 접두사, 접미사 설정</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">WebMvcConfigurer</code> 인터페이스에 정의된,
+    <ul>
+      <li>configureViewResolvers() 매서드의 파라미터 ViewResolverRegistry의 <code class="highlighter-rouge">jsp()</code> 매서드를 이용해 ViewResolver를 설정가능</li>
+      <li>내부 클래스를 이용하여 다음과 같이 <code class="highlighter-rouge">뷰 이름</code>에 해당하는 <code class="highlighter-rouge">객체</code>를 요청
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Bean</span>
+  <span class="kd">public</span> <span class="nc">ViewResolver</span> <span class="nf">viewResolver</span><span class="o">(){</span>
+   <span class="nc">InternalResourceViewResolver</span> <span class="n">vr</span> <span class="o">=</span> 
+       <span class="k">new</span> <span class="nf">InternalResourceViewResolver</span><span class="o">();</span>
+   <span class="n">vr</span><span class="o">.</span><span class="na">setPrefix</span><span class="o">(</span><span class="s">"/WEB-INF/view/"</span><span class="o">);</span>
+   <span class="n">vr</span><span class="o">.</span><span class="na">setSurfix</span><span class="o">(</span><span class="s">".jsp"</span><span class="o">);</span>
+   <span class="k">return</span> <span class="n">vr</span><span class="o">;</span>
+  <span class="o">}</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>앞선 코드의 구성처럼, <code class="highlighter-rouge">"prefix + 뷰이름 " surfix"</code>에 해당하는 경로를 할당</li>
+  <li>DispatcherServlet이 View 생성을 요청하면 InternalResourceViewResolver는 이 <code class="highlighter-rouge">JSP</code> 코드를 실행하여 결과 생성<br />
+<br /></li>
+</ul>
+
+<h2 id="4-디폴트-핸들러와-handlermapping의-우선순위">4. 디폴트 핸들러와 HandlerMapping의 우선순위</h2>
+<hr />
+<ul>
+  <li>web.xml 파일을 참조하면, DispatcherServlet에 대한 매핑 경로가 다음과 같이 <code class="highlighter-rouge">'/'</code>로 설정
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- web.xml --&gt;</span>
+  <span class="nt">&lt;servlet-mapping&gt;</span>
+      <span class="nt">&lt;servlet-name&gt;</span>dispatcher<span class="nt">&lt;/servlet-name&gt;</span>
+      <span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+  <span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>매핑 경로가 ‘/’인경우 .jsp로 끝나는 요청을 제외한 <code class="highlighter-rouge">모든 요청</code>을 DispatcherServlet이 처리</li>
+  <li>하지만 앞선 코드에서처럼 HandlerMapping으로 @GetMapping(“/hello”) 설정을 사용하였다면, 
+/hello 경로만 처리가능하므로 “/index.html”등의 요청을 처리할 컨트롤러를 <code class="highlighter-rouge">찾을 수 없음</code></li>
+  <li>이러한 경로를 처리하기 위한 컨트롤러 객체를 직접 구현할 수도 있지만 다음과 같이, <br />
+WebMvcConfigurer의 <code class="highlighter-rouge">configureDefaultServletHandling()</code> 매서드를 사용하는 것이 편리
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MvcConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableWebMvc</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureDefaultServletHandling</span>
+          <span class="o">(</span><span class="nc">DefaultServletHandlerConfigurer</span> <span class="n">configurer</span><span class="o">)</span> 
+      <span class="o">{</span>
+          <span class="n">configurer</span><span class="o">.</span><span class="na">enable</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>위 설정에서 <code class="highlighter-rouge">enable()</code> 매서드는 다음의 두 Bean 객체를 추가
+    <ul>
+      <li><code class="highlighter-rouge">DefaultServletRequestHandler</code></li>
+      <li><code class="highlighter-rouge">SimpleUrlHandlerMapping</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">DefaultServletRequestHandler</code>는 클라이언트의 모든 요청을 WAS가 제공하는 <code class="highlighter-rouge">디폴트 서블릿</code>에 전달
+    <blockquote>
+      <p>“/index.html”에 대한 처리를 결국 <code class="highlighter-rouge">디폴트 서블릿</code>이 처리하도록 만듦</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>그리고 <code class="highlighter-rouge">SimpleUrlHandlerMapping</code>를 이용하여 모든 경로(“/**“)를 <code class="highlighter-rouge">DefaultServletHttp RequestHandler</code>를 이용해 처리하도록 함</p>
+  </li>
+  <li>@EnableWebMvc 어노테이션이 등록하는 <code class="highlighter-rouge">HandlerMapping</code>의 적용 <code class="highlighter-rouge">우선순위</code>가 enable() 매서드가 등록하는 <code class="highlighter-rouge">디폴트 핸들러</code>보다 <code class="highlighter-rouge">높음</code></li>
+  <li>따라서 다음과 같은 방식으로 요청을 처리
+    <ol>
+      <li><code class="highlighter-rouge">RequestMappingHandlerMapping</code>을 사용해 요청 처리할 핸들러 검색
+        <ul>
+          <li>존재하면 해당 컨트롤러를 이용해 요청을 처리</li>
+        </ul>
+      </li>
+      <li>존재하지 않으면 <code class="highlighter-rouge">SimpleUrlHandlerMapping</code>을 사용해 요청을 처리할 핸들러 검색
+        <ul>
+          <li>모든 경로에 대해 <code class="highlighter-rouge">DefaultServletHttpRequestHandler</code>를 리턴</li>
+          <li>DispatcherServlet은 DefaultServletHttpRequestHandler에 처리를 <code class="highlighter-rouge">요청</code></li>
+          <li>DefaultServletHttpRequestHandler는 <code class="highlighter-rouge">디폴트 서블릿</code>에 처리를 위임
+            <blockquote>
+              <p>예를 들어 “/index.html” 경로로 요청이 들어오면, 1과정에서 해당하는 경로를 <code class="highlighter-rouge">찾지 못하므로</code>,  <br />
+ 2과정을 통해 <code class="highlighter-rouge">디폴트 서블릿</code>이 /index.html 요청을 처리하게 됨</p>
+            </blockquote>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-9.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 9">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-11.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 11">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

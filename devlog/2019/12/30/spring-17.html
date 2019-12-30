@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Spring] 첫걸음 - 17 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="1. 프로필 개발 목적 설정과 실 서비스 복적의 설정을 구분해서 작성하는 방법으로 스프링이 제공하는 기능">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-17.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/spring_logo.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Spring] 첫걸음 - 17</h1>
+            
+            <h2 class="subheading">프로필과 프로퍼티 파일</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:05:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="1-프로필">1. 프로필</h2>
+<hr />
+<p>개발 목적 설정과 실 서비스 복적의 설정을 <code class="highlighter-rouge">구분</code>해서 작성하는 방법으로 스프링이 제공하는 기능<br />
+<br /></p>
+
+<h4 id="1-1-configuration-설정에서-프로필-변경하기">1-1. @Configuration 설정에서 프로필 변경하기</h4>
+<ul>
+  <li>@Configuration 어노테이션을 이용한 설정에서 <code class="highlighter-rouge">프로필</code>을 지정하려면, 다음처럼 <code class="highlighter-rouge">@Profile</code> 어노테이션을 사용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// DsDevConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@Profile</span><span class="o">(</span><span class="s">"dev"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DsDevConfig</span> <span class="o">{</span>
+
+      <span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">DataSource</span> <span class="nf">dataSource</span><span class="o">()</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// DsRealConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@Profile</span><span class="o">(</span><span class="s">"real"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DsRealConfig</span> <span class="o">{</span>
+
+      <span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="nc">DataSource</span> <span class="nf">dataSource</span><span class="o">()</span> <span class="o">{</span>
+          <span class="o">...</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>앞선 코드의 두 클래스는 모두 이름이 “dataSource()”인 Bean을 설정</li>
+  <li>두 Bean중 어떤 빈을 사용할지는 활성화한 <code class="highlighter-rouge">프로필</code>에 따라 달라짐</li>
+  <li>특정 프로필을 <code class="highlighter-rouge">선택</code>하기 위해 컨테이너 초기화전, <code class="highlighter-rouge">setActivateProfiles()</code> 매서드를 사용
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MainProfile.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainProfile</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      <span class="nc">AnnotationConfigApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AnnotationConfigApplicationContext</span><span class="o">();</span>
+              <span class="c1">// 어떤 프로필을 사용할지 선택함</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">getEnvironment</span><span class="o">().</span><span class="na">setActiveProfiles</span><span class="o">(</span><span class="s">"dev"</span><span class="o">);</span>
+      <span class="o">...</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p><code class="highlighter-rouge">두 개 이상</code>의 프로필은 다음과 같이 활성화<br />
+context.getEnvironment().setActivateProfiles(“dev”, “mysql”);</p>
+    </blockquote>
+  </li>
+  <li>위와 같은 방법을 거치지 않고도, 다음과 같은 2가지 방법에 의해 프로필 설정 가능
+    <ul>
+      <li>spring.profiles.active <code class="highlighter-rouge">시스템 프포퍼티</code>에 사용할 프로필 값 지정</li>
+      <li>OS의 spring.profiles.active <code class="highlighter-rouge">환경 변수</code>에 값을 설정
+        <blockquote>
+          <p>프로필의 <code class="highlighter-rouge">우선 순위</code>는 다음과 같다.</p>
+          <ol>
+            <li>setActiveProfiles()</li>
+            <li>자바 시스템 프로퍼티</li>
+            <li>OS 환경 변수<br />
+<br /></li>
+          </ol>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="1-2-configuration을-이용한-프로필-설정">1-2. @Configuration을 이용한 프로필 설정</h4>
+<ul>
+  <li><code class="highlighter-rouge">중첩</code> 클래스를 이용해 프로필 설정을 한 파일에 모을 수 있음
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// MemberConfigWithProfile.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="nd">@EnableTransactionManagement</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberConfigWithProfile</span> <span class="o">{</span>
+      <span class="o">...</span>
+          <span class="c1">// 같은 이름의 Bean을 등록하는 두 클래스를 다른 프로필로 설정  </span>
+      <span class="nd">@Configuration</span>
+      <span class="nd">@Profile</span><span class="o">(</span><span class="s">"dev"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">DsDevConfig</span> <span class="o">{</span>
+
+          <span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+          <span class="kd">public</span> <span class="nc">DataSource</span> <span class="nf">dataSource</span><span class="o">()</span> <span class="o">{</span>
+              <span class="o">...</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Configuration</span>
+      <span class="nd">@Profile</span><span class="o">(</span><span class="s">"real"</span><span class="o">)</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">DsRealConfig</span> <span class="o">{</span>
+
+          <span class="nd">@Bean</span><span class="o">(</span><span class="n">destroyMethod</span> <span class="o">=</span> <span class="s">"close"</span><span class="o">)</span>
+          <span class="kd">public</span> <span class="nc">DataSource</span> <span class="nf">dataSource</span><span class="o">()</span> <span class="o">{</span>
+              <span class="o">...</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>위와 같은 방법으로 중첩 클래스를 설정할 경우, 반드시 <code class="highlighter-rouge">static</code>으로 클래스를 선언해야 함<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="1-3-다수-프로필-설정">1-3. 다수 프로필 설정</h4>
+<ul>
+  <li>스프링 설정은 <code class="highlighter-rouge">두 개 이상</code>의 <code class="highlighter-rouge">프로필 이름</code>을 가질 수 있음
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Configuration</span>
+  <span class="nd">@Profile</span><span class="o">(</span><span class="s">"real,test"</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSourceJndiConfig</span><span class="o">{</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>프로필 값을 지정할 때 다음 코드처럼 <code class="highlighter-rouge">느낌표(!)</code> 사용 가능
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@Configuration</span>
+  <span class="nd">@Profile</span><span class="o">(</span><span class="s">"!real"</span><span class="o">)</span> <span class="c1">// 프로필이 "dev", "real" 두 개만 있다면 해당 코드는 @Profile("dev")와 동일한 코드</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DsDevConfig</span> <span class="o">{</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>보통 특정 프로필이 사용되지 않을 때, <code class="highlighter-rouge">기본</code>으로 사용할 설정을 지정하는 용도로 사용<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="1-4-어플리케이션에서-프로필-설정하기">1-4. 어플리케이션에서 프로필 설정하기</h4>
+<ul>
+  <li><code class="highlighter-rouge">web.xml</code>에서 다음과 같이 spring.profiles.active <code class="highlighter-rouge">초기화 파라미터</code>를 이용해 프로필을 선택 가능
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- web.xml --&gt;</span>
+  ...
+      <span class="nt">&lt;init-param&gt;</span>
+              <span class="nt">&lt;param-name&gt;</span>spring.profiles.active<span class="nt">&lt;/param-name&gt;</span>
+              <span class="nt">&lt;param-value&gt;</span>dev<span class="nt">&lt;/param-value&gt;</span>
+      <span class="nt">&lt;/init-param&gt;</span>
+  ...
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="2-프로퍼티-파일을-이용한-프로퍼티-설정">2. 프로퍼티 파일을 이용한 프로퍼티 설정</h2>
+<hr />
+<p>스프링은 <code class="highlighter-rouge">외부</code>의 프로퍼티 파일을 이용해 스프링 Bean을 설정하는 방법을 제공</p>
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c"># db.properties
+</span>    <span class="py">db.driver</span><span class="p">=</span><span class="s">com.mysql.jdbc.Driver</span>
+    <span class="py">db.url</span><span class="p">=</span><span class="s">jdbc:mysql://localhost/spring5fs?characterEncoding=utf8</span>
+    <span class="py">db.user</span><span class="p">=</span><span class="s">spring5</span>
+    <span class="py">db.password</span><span class="p">=</span><span class="s">spring5</span>
+</code></pre></div></div>
+<p>위 파일의 <code class="highlighter-rouge">프로퍼티 값</code>을 자바 설정에서 사용가능<br />
+<br /></p>
+
+<h4 id="2-1-configuration-어노티에션-이용-자바-설정에서의-프로퍼티-사용">2-1. @Configuration 어노티에션 이용 자바 설정에서의 프로퍼티 사용</h4>
+<ul>
+  <li>자바 설정에서 <code class="highlighter-rouge">프로퍼티 파일</code>을 사용하려면 다음 두 가지를 설정
+    <ul>
+      <li><code class="highlighter-rouge">PropertySourcePlacholderConfigurer</code> Bean 설정</li>
+      <li><code class="highlighter-rouge">@Value</code> 어노테이션으로 프로퍼티 값 설정</li>
+    </ul>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// PropertyConfig.java</span>
+  <span class="nd">@Configuration</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PropertyConfig</span> <span class="o">{</span>
+
+      <span class="nd">@Bean</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="nc">PropertySourcesPlaceholderConfigurer</span> <span class="nf">properties</span><span class="o">()</span> <span class="o">{</span>
+          <span class="nc">PropertySourcesPlaceholderConfigurer</span> <span class="n">configurer</span> <span class="o">=</span> 
+                      <span class="k">new</span> <span class="nf">PropertySourcesPlaceholderConfigurer</span><span class="o">();</span>
+          <span class="n">configurer</span><span class="o">.</span><span class="na">setLocations</span><span class="o">(</span>
+                  <span class="k">new</span> <span class="nf">ClassPathResource</span><span class="o">(</span><span class="s">"db.properties"</span><span class="o">),</span>
+                  <span class="k">new</span> <span class="nf">ClassPathResource</span><span class="o">(</span><span class="s">"info.properties"</span><span class="o">));</span>
+          <span class="k">return</span> <span class="n">configurer</span><span class="o">;</span>
+      <span class="o">}</span>
+
+  <span class="o">}</span>  
+</code></pre></div>    </div>
+    <blockquote>
+      <p>PropertySourcesPlaceholderConfigurer 타입의 Bean을 설정하는 매서드는 <code class="highlighter-rouge">반드시</code> <code class="highlighter-rouge">static</code>으로 선언해야 함</p>
+    </blockquote>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// DsConfigWithProp</span>
+  <span class="nd">@Configuration</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DsConfigWithProp</span> <span class="o">{</span>
+      <span class="nd">@Value</span><span class="o">(</span><span class="s">"${db.driver}"</span><span class="o">)</span>
+      <span class="kd">private</span> <span class="nc">String</span> <span class="n">driver</span><span class="o">;</span>
+      <span class="nd">@Value</span><span class="o">(</span><span class="s">"${db.url}"</span><span class="o">)</span>
+      <span class="kd">private</span> <span class="nc">String</span> <span class="n">jdbcUrl</span><span class="o">;</span>
+      <span class="nd">@Value</span><span class="o">(</span><span class="s">"${db.user}"</span><span class="o">)</span>
+      <span class="kd">private</span> <span class="nc">String</span> <span class="n">user</span><span class="o">;</span>
+      <span class="nd">@Value</span><span class="o">(</span><span class="s">"${db.password}"</span><span class="o">)</span>
+      <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+      <span class="o">...</span>
+</code></pre></div>    </div>
+  </li>
+  <li>@Value 어노테이션은 <code class="highlighter-rouge">${구분자}</code> 형식의 플레이스홀더를 값으로 가짐</li>
+  <li>이 경우, PropertySourcesPlaceholderConfigurer는 <code class="highlighter-rouge">일치</code>하는 <code class="highlighter-rouge">프로퍼티 값</code>으로 <code class="highlighter-rouge">치환</code></li>
+</ul>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-16.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 16">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-18.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 18">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2019</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

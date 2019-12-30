@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [Spring] 첫걸음 - 1 - 낮코밤코
+    [Spring] 첫걸음 - 15 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="스프링이란? 흔히 말하는 스프링 = 스프링 프레임워크">
+  <meta name="description" content="1. 간단한 웹 어플리케이션의 구성 요소 간단한 웹 어플리케이션을 개발할 때 사용하는 전형적인 구조는 다음 요소를 포함 프론트 서블릿 컨트롤러 + 뷰 서비스 DAO Dispatcher Servlet -&amp;gt; 컨트롤러 -&amp;gt; 서비스 -&amp;gt; DAO">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/26/spring-1.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2019/12/30/spring-15.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -78,13 +78,13 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[Spring] 첫걸음 - 1</h1>
+            <h1>[Spring] 첫걸음 - 15</h1>
             
-            <h2 class="subheading">스프링이란?</h2>
+            <h2 class="subheading">간단한 웹 어플리케이션의 구조</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 16:28:00 December 26, 2019 &middot; <span class="reading-time" title="Estimated read time">
+              on 16:59:00 December 30, 2019 &middot; <span class="reading-time" title="Estimated read time">
   
    1 min  read </span>
 
@@ -99,50 +99,54 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="스프링이란">스프링이란?</h2>
+        <h2 id="1-간단한-웹-어플리케이션의-구성-요소">1. 간단한 웹 어플리케이션의 구성 요소</h2>
 <hr />
-<blockquote>
-  <p>흔히 말하는 스프링 = 스프링 프레임워크</p>
-</blockquote>
-
-<p>스프링 프레임워크의 특징은 다음와 같다.</p>
+<p>간단한 웹 어플리케이션을 개발할 때 사용하는 전형적인 <code class="highlighter-rouge">구조</code>는 다음 요소를 포함</p>
 <ul>
-  <li><code class="highlighter-rouge">의존 주입(Dependency Injection: DI)</code> 지원</li>
-  <li><code class="highlighter-rouge">AOP(Aspect-Oriented Programming)</code> 지원</li>
-  <li><code class="highlighter-rouge">MVC 웹 프레임워크</code> 제공</li>
-  <li><code class="highlighter-rouge">JDBC</code>, <code class="highlighter-rouge">JPA 연동</code>, <code class="highlighter-rouge">선언적 트랜잭션 처리</code> 등 DB 연동지원</li>
-</ul>
-
-<blockquote>
-  <p>spring과 spring MVC는 <code class="highlighter-rouge">다르다</code></p>
-</blockquote>
-
-<p>스프링 프레임워크의 주요 용어는 다음과 같다.</p>
-
-<ul>
-  <li><code class="highlighter-rouge">의존 주입</code>: 객체를 직접 생성하는 것이 아닌 <code class="highlighter-rouge">외부에서 객체를 주입</code>시켜 사용하는 방식</li>
-  <li><code class="highlighter-rouge">AOP</code>: 핵심 기능과 공통 기능을 <code class="highlighter-rouge">분리</code> 시켜놓고, 공통 기능을 필요로 하는 핵심 기능들에서 사용하는 방식</li>
-  <li><code class="highlighter-rouge">JDBC</code>:  자바에서 <code class="highlighter-rouge">데이터베이스</code>에 접속할 수 있도록 하는 <code class="highlighter-rouge">자바 API</code></li>
-  <li><code class="highlighter-rouge">JPA</code>: JPA란 자바 <code class="highlighter-rouge">ORM </code>기술에 대한 API 표준 명세</li>
-  <li><code class="highlighter-rouge">ORM</code>: <code class="highlighter-rouge">객체와 DB 테이블</code>이 매핑을 이루는 것</li>
-  <li><code class="highlighter-rouge">선언적 트랜잭션</code>: <code class="highlighter-rouge">설정 파일</code>이나 <code class="highlighter-rouge">어노테이션</code>을 통해 트랜잭션의 범위, 롤백 규칙 등을 정의</li>
-</ul>
-
-<p>스프링 프레임워크외 다른 스프링 프로젝트는 아래와 같다.</p>
-<ul>
-  <li><code class="highlighter-rouge">스프링 데이터</code>: 적은 양의 코드로 데이터 연동을 처리할 수 있도록 도와주는 프레임워크. JPA, 몽고DB, 레디스등 다양한 저장소 지원</li>
-  <li><code class="highlighter-rouge">스프링 시큐리티</code>: 인증/인가와 관련된 프레임워크로서 웹 접근 제어, 객체 접근 제어, DB, 오픈 ID, LDAP 등 다양한 인증 방식, 암호화 기능 제공</li>
-  <li><code class="highlighter-rouge">스프링 배치</code>: 로깅/추적, 작업 통계, 실패 처리 등 배치 처리에 필요한 기본 기능을 제공<br />
+  <li>프론트 서블릿</li>
+  <li>컨트롤러 + 뷰</li>
+  <li>서비스</li>
+  <li>DAO
+    <blockquote>
+      <p>Dispatcher Servlet -&gt; 컨트롤러 -&gt; 서비스 -&gt; DAO</p>
+    </blockquote>
+  </li>
+  <li>컨트롤러는 실제 웹 브라우저의 <code class="highlighter-rouge">요청</code>을 처리하며, 어플리케이션이 제공하는 기능과 사용자를 연결하는 매개체<br />
+실제 기능을 위한 로직은 <code class="highlighter-rouge">서비스</code>가 담당</li>
+  <li>서비스는 기능의 로직을 <code class="highlighter-rouge">구현</code><br />
+DB 연동이 필요하다면 DAO를 사용해 데이터를 가져오거나 저장<br />
 <br /></li>
 </ul>
 
-<h2 id="개발환경">개발환경</h2>
+<h2 id="2-서비스의-구현">2. 서비스의 구현</h2>
 <hr />
 <ul>
-  <li>Spring: 5.0.2.RELEASE</li>
-  <li>Java openjdk 1.8.0_22</li>
-  <li>Apache maven 3.7</li>
-  <li>Tomcat 8.5.43</li>
+  <li>구현되는 서비스의 로직은 몇 단계의 과정을 거쳐 수행되며, <code class="highlighter-rouge">모든</code> 과정을 성공적으로 진행했을 때 완료<br />
+이런 이유로 서비스의 매서드를 <code class="highlighter-rouge">트랜잭션</code> 범위에서 주로 수행<br />
+<br /></li>
+</ul>
+
+<h2 id="3-컨트롤러에서-dao의-접근">3. 컨트롤러에서 DAO의 접근</h2>
+<hr />
+<ul>
+  <li>서비스 매서드에서 어떤 로직도 수행하지 않고 단순히 DAO의 매서드만 호출하고 끝나는 코드등은<br />
+컨트롤러에서 <code class="highlighter-rouge">직접</code> DAO에 접근가능
+    <blockquote>
+      <p>단순히 ID를 가지고 DAO에 접근하는 경우<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="4-패키지-구성">4. 패키지 구성</h2>
+<hr />
+<ul>
+  <li>패키지를 구성함에는 정답이 없지만, 같은 구성원 모두가 <code class="highlighter-rouge">동일한 규칙</code>에 따라 구성해야 시간 낭비를 방지
+    <blockquote>
+      <p>웹 어플리케이션이 복잡해지면 기존의 컨트롤러-서비스-DAO 구조 외에<br />
+<code class="highlighter-rouge">UI-서비스-도메인-인프라</code>로 영역을 구성하는 <code class="highlighter-rouge">"도메인 주도 설계"</code>를 적용</p>
+    </blockquote>
+  </li>
 </ul>
 
 
@@ -151,11 +155,11 @@
         <div class="clearfix">
 
           
-          <a class="btn btn-primary float-left" href="/devlog/2019/12/26/spring-0.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 0">&larr; Previous<span class="d-none d-md-inline">
+          <a class="btn btn-primary float-left" href="/devlog/2019/12/30/spring-14.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 14">&larr; Previous<span class="d-none d-md-inline">
               Post</span></a>
           
           
-          <a class="btn btn-primary float-right" href="/devlog/2019/12/26/spring-2.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 2">Next<span class="d-none d-md-inline">
+          <a class="btn btn-primary float-right" href="/devlog/2019/12/30/spring-16.html" data-toggle="tooltip" data-placement="top" title="[Spring] 첫걸음 - 16">Next<span class="d-none d-md-inline">
               Post</span> &rarr;</a>
           
 
