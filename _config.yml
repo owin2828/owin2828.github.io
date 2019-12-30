@@ -8,6 +8,9 @@ description:        Already done, cause will do it anyway
 author:             owin2828
 baseurl:            ""
 
+# Setting time zone
+timezone: Asia/Seoul
+
 # The unique resource location
 url:                "https://owin2828.github.io"
 
