@@ -316,13 +316,17 @@ span.pagination-selected {
 .btn-movepage {
   margin: 0 20px 0 20px;
   display: block;
+  text-align: center;
   font-size: 1.2rem;
   font-weight: 500;
   padding: 5px 0 50px 0;
   color: #212529; }
 
-.btn-movepage:hover {
+.btn-movepage > a:hover {
   text-decoration: none; }
+
+.btn-movepage > a {
+  margin: 0 10px 0 10px; }
 
 span.pagination-selected {
   display: inline-block;
