@@ -313,6 +313,21 @@ span.pagination-selected {
   display: inline-block;
   font-size: 1.7rem; }
 
+.btn-movepage {
+  margin: 0 20px 0 20px;
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 5px 0 50px 0;
+  color: #212529; }
+
+.btn-movepage:hover {
+  text-decoration: none; }
+
+span.pagination-selected {
+  display: inline-block;
+  font-size: 1.7rem; }
+
 .btn {
   font-size: 14px;
   font-weight: 800;
