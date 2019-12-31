@@ -1226,6 +1226,7 @@ pre code {
   .col-lg-8 {
     -ms-flex: 0 0 66.666667%;
     flex: 0 0 66.666667%;
+    line-height: 2.5rem;
     /* max-width: 66.666667%; */
   }
   .col-lg-9 {
