@@ -325,6 +325,9 @@ span.pagination-selected {
 .btn-movepage > a:hover {
   text-decoration: none; }
 
+.btn-movepage:hover {
+  text-decoration: none; }
+
 .btn-movepage > a {
   margin: 0 10px 0 10px; }
 
