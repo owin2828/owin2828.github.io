@@ -336,6 +336,11 @@ span.pagination-selected {
   display: inline-block;
   font-size: 1.7rem; }
 
+.search-in {
+  padding: 0px 50px 50px 50px;
+  margin: auto;
+  color: #364149; }
+
 .btn {
   font-size: 14px;
   font-weight: 800;
