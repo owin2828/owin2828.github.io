@@ -97,7 +97,7 @@
   <div class="search-in">
     <form action="/search.html" method="get">
       <i class="fa fa-search" aria-hidden="true"></i>
-      <input type="text" id="search-box" name="query" placeholder="검색어를 입력해주세요." style="width:17rem; border:none">
+      <input class="underline" type="text" id="search-box" name="query" placeholder="검색어를 입력해주세요." style="width:17rem">
       <!-- <input type="submit" value="search"> -->
     </form>
   </div>
@@ -283,6 +283,15 @@
 </script>
 <script src="/js/lunr.min.js" charset="utf-8"></script>
 <script src="/js/search.js" charset="utf-8"></script>
+
+<!-- just under line for input box -->
+<style>
+  input.underline {
+    border-style:none;
+    border-bottom:1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+</style>
 </body>
 
   <!-- Footer -->
