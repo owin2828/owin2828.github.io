@@ -7,10 +7,10 @@
   
         for (var i = 0; i < results.length; i++) {  // Iterate over the results
           var item = store[results[i].ref];
-          appendString += '<li style="line-height:700%"><article class="post-preview"><a href="' + item.url + '"><h3 class="post-title">' + item.title + '</h3>';
+          appendString += '<li style="line-height:500%"><article class="post-preview"><a href="' + item.url + '"><h3 class="post-title">' + item.title + '</h3>';
           appendString += '<h4 class="post-subtitle">' + item.subtitle + '</h4></a>';
-          appendString += '<p class="post-meta">in ' + item.categories + ' on ' + item.tags + '</p></article>';
-          appendString += '<p>' + item.content.substring(0, 150) + '...</p></li>';
+          appendString += '<p class="post-meta">in ' + item.categories + ' on ' + item.tags + '</p>';
+          appendString += '<p>' + item.content.substring(0, 150) + '...</p></article><hr></li>';
         }
   
         searchResults.innerHTML = appendString;
