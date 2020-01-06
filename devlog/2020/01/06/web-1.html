@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    Spring - 낮코밤코
+    [Web] Get VS Post - 낮코밤코
     
   </title>
 
-  <meta name="description" content="Already done, cause will do">
+  <meta name="description" content="본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다. 출처: https://bit.ly/31M2YN8">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/spring/page/3/">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/web-1.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -78,15 +78,24 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_spring.jpg')">
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Spring</h1>
+          <div class="post-heading">
+            <h1>[Web] Get VS Post</h1>
             
+            <h2 class="subheading">HTTP 프로토콜에 대한 분석</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:22:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   1 min  read </span>
+
+            </span>
           </div>
         </div>
       </div>
@@ -97,176 +106,86 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <!--  -->
+        <ul>
+  <li>본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다.</li>
+  <li>출처: <a href="https://bit.ly/31M2YN8">https://bit.ly/31M2YN8</a> <br />
+<br /></li>
+</ul>
+
+<h2 id="0-들어가기-앞서">0. 들어가기 앞서</h2>
+<ul>
+  <li>사용자는 단순히 <code class="highlighter-rouge">URL</code>을 입력하여 페이지로 이동을 하지만, 서버 내부에서는 클라이언트의 <code class="highlighter-rouge">요청</code>에 응답하기 위해 <code class="highlighter-rouge">처리</code>를 해주어야 함</li>
+  <li>이 때,  클라이언트가 서버로 요청을 보내는 방법인 <code class="highlighter-rouge">HTTP Method</code>에는 크게 다음과 같은 2가지 방법이 존재
+    <ul>
+      <li><code class="highlighter-rouge">GET</code></li>
+      <li><code class="highlighter-rouge">POST</code><br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="1-get-방식">1. GET 방식</h2>
+<p>GET은 어떤 정보를 가져와 <code class="highlighter-rouge">조회</code>하기 위해 사용하며, 간단한 데이터를 <code class="highlighter-rouge">URL</code>에 넣도록 설계된 방식으로 다음과 같은 특징을 지님</p>
+
+<h3 id="1-1-get-방식의-특징">1-1. GET 방식의 특징</h3>
+<ul>
+  <li>URL에 변수(데이터)를 <code class="highlighter-rouge">포함</code>시켜 요청</li>
+  <li>데이터를 Header에 <code class="highlighter-rouge">포함</code>하여 전송</li>
+  <li>URL에 데이터가 <code class="highlighter-rouge">노출</code></li>
+  <li>전송하는 길이에 <code class="highlighter-rouge">제한</code></li>
+  <li><code class="highlighter-rouge">캐싱</code>이 가능</li>
+  <li>형식
+    <ul>
+      <li>URL?변수명1=값1&amp;변수명2=값2&amp;변수명3=값3&amp;…</li>
+      <li>다음과 같이 직접 URI를 입력하여 요청가능
+        <blockquote>
+          <p>/hello/test.php?name1=value1&amp;name2=value2<br />
+<br /></p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-post-방식">2. POST 방식</h2>
+<p>POST 방식은 데이터를 서버로 제출하여 <code class="highlighter-rouge">추가</code> 또는 <code class="highlighter-rouge">수정</code>하기 위해서 데이터를 전송하는 방식으로 다음과 같은 특징을 지님</p>
+
+<h3 id="2-1-post-방식의-특징">2-1. POST 방식의 특징</h3>
+<ul>
+  <li>URL에 변수(데이터)를 <code class="highlighter-rouge">포함하지 않고</code>시켜 요청</li>
+  <li>데이터를 Body에 <code class="highlighter-rouge">포함</code>하여 전송</li>
+  <li>URL에 데이터가 <code class="highlighter-rouge">노출되지 않음</code></li>
+  <li>전송하는 길이에 <code class="highlighter-rouge">제한이 없음</code></li>
+  <li>캐싱이 <code class="highlighter-rouge">불가능</code></li>
+  <li>형식
+    <blockquote>
+      <p>POST /hello/test.php HTTP/1.1<br />
+    Host: jmnote.com<br />
+    name1=value1&amp;name2=value2</p>
+    </blockquote>
+  </li>
+</ul>
 
 
+        <hr>
 
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-8.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 8</h2>
-    
-    <h4 class="post-subtitle">DB 연동</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 16:05
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
+        <div class="btn-movepage">
 
-<hr>
+          
+          <a href="/devlog/2020/01/06/java-5.html" data-toggle="tooltip" data-placement="top" title="[Java] JDBC / JPA & Hibernate / Mybatis 차이"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/01/06/web-2.html" data-toggle="tooltip" data-placement="top" title="[Web] JSTL & c tag">Next >></a>
+          
 
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-7.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 7</h2>
-    
-    <h4 class="post-subtitle">AOP 프로그래밍</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 15:57
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-6.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 6</h2>
-    
-    <h4 class="post-subtitle">Bean의 라이프사이클과 범위</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-5.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 5</h2>
-    
-    <h4 class="post-subtitle">컴포넌트 스캔</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-4.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 4</h2>
-    
-    <h4 class="post-subtitle">의존 자동 주입</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:15
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<!-- Pager -->
-
-  <div class='pagination'>
-    
-      <a href="/devlog/spring/page/2/">
-        &laquo; Prev
-      </a>
-    
-
-    
-      
-        <span >
-          <a href="/devlog/spring/index.html" title="Spring">
-            1
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/2/index.html" title="Spring">
-            2
-          </a>
-        </span>
-      
-        <span  class="pagination-selected" >
-          <a href="/devlog/spring/page/3/index.html" title="Spring">
-            3
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/4/index.html" title="Spring">
-            4
-          </a>
-        </span>
-      
-    
-
-    
-      <a href="/devlog/spring/page/4/">
-        Next &raquo;
-      </a>
-    
-  </div>
-  
-</div>
-
-<!-- 다음의 코드는 assets/vendor/startbootstrap-clean-blog/scss/pagination.scss로 이동 -->
-<!-- <style lang="scss">
-  .pagination {
-    margin: auto;
-    text-align: center;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 55px 0 25px 0;
-    color: #999;
-  }
-  span.pagination-selected {
-    display: inline-block;
-    font-size: 1.7rem;
-  }
-</style> -->
+        </div>
 
       </div>
     </div>
   </div>
+
+
 
 
   <!-- Footer -->

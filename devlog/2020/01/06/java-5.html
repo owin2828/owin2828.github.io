@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Java] JDBC / JPA &amp; Hibernate / Mybatis 차이 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다. 출처: http://bitly.kr/C72t7zb">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/java-5.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_java.jpeg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Java] JDBC / JPA & Hibernate / Mybatis 차이</h1>
+            
+            <h2 class="subheading">SQL Mapper 와 ORM의 개념 및 차이점 분석</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:13:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   3 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <ul>
+  <li>본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다.</li>
+  <li>출처: <a href="http://bitly.kr/C72t7zb">http://bitly.kr/C72t7zb</a><br />
+<br /></li>
+</ul>
+
+<h2 id="0-영속성">0. 영속성</h2>
+<ul>
+  <li>데이터를 생성한 프로그램이 종료되더라도 <code class="highlighter-rouge">사라지지 않는</code> 데이터의 특성</li>
+  <li>Persistence Layer: 프로그램 아키텍쳐에서 데이터에 <code class="highlighter-rouge">영속성</code>을 부여해주는 계층</li>
+  <li>Persistence Framework: JDBC 프로그래밍의 복잡함 없이 <code class="highlighter-rouge">간단히</code> DB와 연동되는 시스템을 빠르게 개발할 수 있으며,<br />
+안정성을 보장해주는 프레임크. 그 종류는 다음과 같다.
+    <ul>
+      <li><code class="highlighter-rouge">SQL Mapper</code></li>
+      <li><code class="highlighter-rouge">ORM</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="0-1-sql-mapper">0-1. SQL Mapper</h3>
+<ul>
+  <li>SQL &lt;- 매핑 -&gt; Object 필드</li>
+  <li>SQL문으로 <code class="highlighter-rouge">직접</code> DB의 데이터를 다룸
+    <ul>
+      <li>종류: <code class="highlighter-rouge">Mybatis</code>, <code class="highlighter-rouge">JdbcTemplates</code>등</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="0-2-orm">0-2. ORM</h3>
+<ul>
+  <li>DB 데이터 &lt;- 매핑 -&gt; Object 필드</li>
+  <li>객체를 통해 <code class="highlighter-rouge">간접적</code>으로 DB의 데이터를 다룸
+    <ul>
+      <li><code class="highlighter-rouge">직관적 코드</code>(매서드)를 통해 조작 가능</li>
+      <li>객체 간의 관계를 바탕으로 SQL을 <code class="highlighter-rouge">자동 생성</code></li>
+      <li>종류: <code class="highlighter-rouge">JPA</code>, <code class="highlighter-rouge">Hibernate</code>등</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="0-3-orm의-장단점">0-3. ORM의 장,단점</h3>
+<p><strong><code class="highlighter-rouge">장점</code></strong></p>
+<ul>
+  <li>객체 지향적인 코드로 인해 더 <code class="highlighter-rouge">직관적</code>이고 비즈니스 로직에 더 집중할 수 있게 도와줌</li>
+  <li><code class="highlighter-rouge">재사용</code> 및 <code class="highlighter-rouge">유지보수</code>의 편리성이 증가함</li>
+  <li>DBMS에 대한 종속성이 <code class="highlighter-rouge">줄어듬</code></li>
+</ul>
+
+<p><strong><code class="highlighter-rouge">단점</code></strong></p>
+<ul>
+  <li>완벽한 ORM 으로만 <code class="highlighter-rouge">서비스를 구현하기가 어려움</code></li>
+  <li>잘못 구현된 경우에 <code class="highlighter-rouge">속도 저하</code> 및 심각할 경우 <code class="highlighter-rouge">일관성이 무너지는</code> 문제점 발생</li>
+  <li>프로시저가 많은 시스템에선 ORM의 <code class="highlighter-rouge">객체 지향적인 장점을 활용하기 어려움</code> <br />
+<br /></li>
+</ul>
+
+<h2 id="1-jdbcjava-database-connectivity">1. JDBC(Java Database Connectivity)</h2>
+<p><img src="/img/java/java_5_1.jpg" alt="jdbc" /></p>
+<ul>
+  <li>JDBC는 DB에 접근할 수 있도록 java에서 제공하는 <code class="highlighter-rouge">API</code></li>
+  <li>모든 Java의 Data Access 기술의 <code class="highlighter-rouge">근간</code></li>
+  <li>모든 Persistence Framework는 <code class="highlighter-rouge">내부적</code>으로 JDBC API를 사용 <br />
+<br /></li>
+</ul>
+
+<h2 id="2-jpajava-persistence-api">2. JPA(Java Persistence API)</h2>
+<p><img src="/img/java/java_5_2.jpg" alt="JPA" /></p>
+<ul>
+  <li>Java ORM 기술에 대한 <code class="highlighter-rouge">API 표준 명세</code>로 Java에서 제공하는 API</li>
+  <li>JPA의 구성요소
+    <ol>
+      <li>javax.persistence 패키지로 정의된 API</li>
+      <li>JPQL(Java Persistence Query Language)</li>
+      <li>객체/관계 메타데이터</li>
+    </ol>
+  </li>
+  <li>사용자가 원하는 <code class="highlighter-rouge">JPA 구현체</code>를 선택해 사용 가능
+    <ul>
+      <li>Hibernate, EclipseLink, DataNucleus, OpenJPA, TopLink Essentails 등</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-1-hibernate">2-1. Hibernate</h3>
+<p><img src="/img/java/java_5_3.jpg" alt="Hibernate" /></p>
+<ul>
+  <li>Hibernate는 <code class="highlighter-rouge">JPA의 구현체 중 하나</code></li>
+  <li>내부적으로 <code class="highlighter-rouge">JDBC API</code>를 사용해 SQL 구현</li>
+  <li><code class="highlighter-rouge">HQL</code>(Hibernate Query Language)라 불리는 강력한 쿼리 언어 포함</li>
+  <li>장점
+    <ul>
+      <li><code class="highlighter-rouge">빠른 개발</code> 가능</li>
+      <li>쿼리보다는 <code class="highlighter-rouge">객체</code>에 집중 가능</li>
+      <li>테이블 생성, 변경등 <code class="highlighter-rouge">관리</code>가 쉬움</li>
+    </ul>
+  </li>
+  <li>단점
+    <ul>
+      <li><code class="highlighter-rouge">어려움</code>(많은 것을 알아야 함)</li>
+      <li>오사용시 <code class="highlighter-rouge">데이터 손실</code> 및 <code class="highlighter-rouge">성능 저하</code> 유발 <br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3-mybatis">3. Mybatis</h2>
+<p><img src="/img/java/java_5_4.jpg" alt="Mybatis" /></p>
+<ul>
+  <li>개발자가 정의한 SQL을 지원하는 <code class="highlighter-rouge">SQL Mapper</code></li>
+  <li>DB의 레코드에 매핑하기 위해 <code class="highlighter-rouge">XML</code>과 <code class="highlighter-rouge">Annotaion</code> 사용 가능</li>
+  <li>장점
+    <ul>
+      <li>SQL에 대한 <code class="highlighter-rouge">모든 컨트롤</code>을 할 경우 적합</li>
+      <li>SQL <code class="highlighter-rouge">쿼리 최적화</code>가 잘 되있을 경우 유용</li>
+    </ul>
+  </li>
+  <li>단점
+    <ul>
+      <li><code class="highlighter-rouge">모든 관계</code>에 대한 조작을 하고자 할 때는 적합하지 않음</li>
+    </ul>
+  </li>
+</ul>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/06/java-4.html" data-toggle="tooltip" data-placement="top" title="[Java] 커넥션풀"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/01/06/web-1.html" data-toggle="tooltip" data-placement="top" title="[Web] Get VS Post">Next >></a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

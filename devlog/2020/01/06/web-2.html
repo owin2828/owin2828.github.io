@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Web] JSTL &amp; c tag - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다. 출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/web-2.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Web] JSTL & c tag</h1>
+            
+            <h2 class="subheading">자바 서버페이지와 c tag에 대한 분석</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:26:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   7 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <ul>
+  <li>본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다.</li>
+  <li>출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w<br />
+<br /></li>
+</ul>
+
+<h2 id="1-jstl">1. JSTL</h2>
+<p><code class="highlighter-rouge">JSTL</code>(<strong>J</strong>SP <strong>S</strong>tandard <strong>T</strong>ag <strong>L</strong>ibrary)는 JSP페이지에서 많이 사용되는<br />
+논리적인 판단, 반복처리, 포맷처리를 위한 커스텀 태그를 표준으로 만들어 정의한 <code class="highlighter-rouge">라이브러리</code></p>
+
+<h3 id="1-1-why-jstl">1-1. Why JSTL</h3>
+<ul>
+  <li>JSP는 HTML 코드와 스크립트릿, 표현식등의 스크립트 코드가 섞여 <code class="highlighter-rouge">가독성이 떨어짐</code></li>
+  <li>이를 해결하기 위해 HTML 태그와 비슷한 코드를 사용해 처리하는 것이 <code class="highlighter-rouge">JSTL</code></li>
+</ul>
+
+<h3 id="1-2-jstl-사용법">1-2. JSTL 사용법</h3>
+<ul>
+  <li>JSTL 사용법으로는 다음과 같이 두 가지 방법이 존재
+    <ol>
+      <li>pom.xml에 <code class="highlighter-rouge">maven</code> 의존 설정
+        <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c">&lt;!-- https://mvnrepository.com/artifact/javax.servlet/jstl --&gt;</span>
+   <span class="nt">&lt;dependency&gt;</span>
+       <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+       <span class="nt">&lt;artifactId&gt;</span>jstl<span class="nt">&lt;/artifactId&gt;</span>
+       <span class="nt">&lt;version&gt;</span>1.2<span class="nt">&lt;/version&gt;</span>
+   <span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>        </div>
+      </li>
+      <li><code class="highlighter-rouge">jar</code> 파일을 WEB-INF/lib 디렉토리에 복사</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="1-3-jstl이-제공하는-태그">1-3. JSTL이 제공하는 태그</h3>
+<ul>
+  <li>JSTL의 <code class="highlighter-rouge">태그</code>는 다음과 같은 종류가 존재</li>
+</ul>
+
+<ol>
+  <li><code class="highlighter-rouge">코어</code>
+    <ul>
+      <li>주요기능: 변수지원, 흐름제어, URL 처리</li>
+      <li>접두어: <code class="highlighter-rouge">c</code></li>
+      <li>관련 URL: <a href="http://java.sun.com/jsp/jstl/core">http://java.sun.com/jsp/jstl/core</a></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">XML</code>
+    <ul>
+      <li>주요기능: XML 코어, 흐름 제어, XML 변환</li>
+      <li>접두어: <code class="highlighter-rouge">x</code></li>
+      <li>관련 URL: <a href="http://java.sun.com/jsp/jstl/xml">http://java.sun.com/jsp/jstl/xml</a></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">국제화</code>
+    <ul>
+      <li>주요기능: 지역, 메시지 형식, 숫자 및 날짜 형식</li>
+      <li>접두어: <code class="highlighter-rouge">fmt</code></li>
+      <li>관련 URL: <a href="http://java.sun.com/jsp/jstl/fmt">http://java.sun.com/jsp/jstl/fmt</a></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">DataBase</code>
+    <ul>
+      <li>주요기능: SQL</li>
+      <li>접두어: <code class="highlighter-rouge">sql</code></li>
+      <li>관련 URL: <a href="http://java.sun.com/jsp/jstl/sql">http://java.sun.com/jsp/jstl/sql</a></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">함수</code>
+    <ul>
+      <li>주요기능: 컬렉션 처리, String 처리</li>
+      <li>접두어: <code class="highlighter-rouge">fn</code></li>
+      <li>관련 URL: [http://java.sun.com/jsp/jstl/functions])(http://java.sun.com/jsp/jstl/functions)</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>이 중, 제일 많이 사용되는 태그는 <code class="highlighter-rouge">c tag(코어)</code><br />
+<br /></li>
+</ul>
+
+<h2 id="2-c-tag">2. C Tag</h2>
+<p>코어 태그 라이브러리는 <code class="highlighter-rouge">변수 설정</code>이나 <code class="highlighter-rouge">논리 처리</code>에 사용되는 스크립트 코드를 대체하는 태그를 제공</p>
+
+<ul>
+  <li>변수 지원:
+    <ul>
+      <li>set, remove</li>
+    </ul>
+  </li>
+  <li>흐름 제어:
+    <ul>
+      <li>if, choose, forEach, forTokens</li>
+    </ul>
+  </li>
+  <li>URL 처리:
+    <ul>
+      <li>import, redirect, url</li>
+    </ul>
+  </li>
+  <li>기타 태그:
+    <ul>
+      <li>catch, out</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-1-set-remove-변수-설정">2-1. set, remove (변수 설정)</h3>
+<ul>
+  <li><code class="highlighter-rouge">&lt;c:set&gt;</code> 태그는 <code class="highlighter-rouge">EL 변수 값</code> 혹은 <code class="highlighter-rouge">EL 변수의 프로퍼티 값</code>을 지정하거나, <code class="highlighter-rouge">JSTL 태그</code>에서 사용할 변수의 값을 처리할 때 다음과 같이 사용
+    <ul>
+      <li><code class="highlighter-rouge">&lt;c:set var="varName" value="varValue" [scope="지정영역"] /&gt;</code></li>
+      <li><code class="highlighter-rouge">&lt;c:set target="대상" property="프로퍼티 이름" value="값" /&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- 첫번째 사용법 (jstl 변수를 생성하여 사용하는법) --&gt;</span>
+  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"test1"</span><span class="na">  value=</span><span class="s">"니나노"</span><span class="nt">/&gt;</span>
+
+  <span class="c">&lt;!-- 두번째 사용법 (빈즈활용) --&gt;</span>
+  <span class="c">&lt;!-- 자바 빈즈가 필요함. 한페이지에서 설명하기위해.. map 으로 대체 --&gt;</span>
+  <span class="nt">&lt;%</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="err">&gt;</span> <span class="n">member</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="err">&gt;</span><span class="o">();</span>
+  <span class="n">member</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"홍길동"</span><span class="o">);</span>
+  <span class="nt">%&gt;</span>
+        
+  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"member"</span><span class="na">  value=</span><span class="s">"&lt;%=member%&gt;"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>${member.name}<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;c:set </span><span class="na">target = </span><span class="s">"&lt;%=member%&gt;"</span><span class="na"> property = </span><span class="s">"name"</span><span class="na"> value = </span><span class="s">"홍길동2"</span><span class="nt">/&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+니나노<br />
+홍길동<br />
+홍길동2<br />
+홍길동2</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">&lt;c:remove&gt;</code> 태그는 <c:set> 태그로 지정한 변수를 `삭제`할 때 다음과 같이 사용
+</c:set>    <ul>
+      <li><code class="highlighter-rouge">&lt;c:remove var="varName" [scope="지정영역"] /&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"test1"</span><span class="na">  value=</span><span class="s">"니나노"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>${test1}<span class="nt">&lt;/div&gt;</span>
+  <span class="c">&lt;!-- c:remove 사용하여 c:set 변수를 삭제 --&gt;</span>
+  <span class="nt">&lt;c:remove </span><span class="na">var = </span><span class="s">"test1"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>${test1}<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+니나노<br />
+(빈 텍스트가 출력 됨)</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-2-if-choose-조건문">2-2. if, choose (조건문)</h3>
+<ul>
+  <li><code class="highlighter-rouge">&lt;c:if&gt;</code> 태그는 조건의 <code class="highlighter-rouge">참/거짓</code> 유무에 따라 분기하며 다음과 같이 사용
+    <blockquote>
+      <p>else는 따로 존재하지 않음, 따라서 <code class="highlighter-rouge">choose</code>를 사용</p>
+    </blockquote>
+    <ul>
+      <li><code class="highlighter-rouge">&lt;c:if test="조건" [var = "testResult"]/&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"test1"</span><span class="na">  value=</span><span class="s">"3"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">test1</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>1보다 크다<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/c:if&gt;</span>
+  <span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">test1</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>1보다 작다<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/c:if&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+1보다 크다</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">&lt;c:choose&gt;</code>, <code class="highlighter-rouge">&lt;c:when&gt;</code>, <code class="highlighter-rouge">&lt;c:otherwise&gt;</code> 태그를 else if, else 대신 다음과 같이 함께 사용
+    <ul>
+      <li><code class="highlighter-rouge">&lt;c:chose&gt;</code><br />
+<code class="highlighter-rouge">&lt;c:when test="조건"&gt;실행문&lt;/c:when&gt;</code><br />
+<code class="highlighter-rouge">&lt;c:otherwise&gt;실행문&lt;/c:otherwise&gt;</code><br />
+<code class="highlighter-rouge">&lt;/c:chose&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"test1"</span><span class="na">  value=</span><span class="s">"3"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:choose&gt;</span>
+      <span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">test1</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>1보다 작음<span class="nt">&lt;/div&gt;</span>
+      <span class="nt">&lt;/c:when&gt;</span>
+      <span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">test1</span> <span class="o">==</span> <span class="mi">3</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>3과 같음<span class="nt">&lt;/div&gt;</span>
+      <span class="nt">&lt;/c:when&gt;</span>
+      <span class="nt">&lt;c:otherwise&gt;</span>
+          <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>쩌리<span class="nt">&lt;/div&gt;</span>
+      <span class="nt">&lt;/c:otherwise&gt;</span>
+  <span class="nt">&lt;/c:choose&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+3과 같음</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-3-foreach-fortokens-반복문">2-3. forEach, forTokens (반복문)</h3>
+<ul>
+  <li><code class="highlighter-rouge">&lt;c:forEach&gt;</code> 태그는 자바의 <code class="highlighter-rouge">for</code>문과 동일하며, 다음과 같이 사용
+    <ul>
+      <li><code class="highlighter-rouge">&lt;c:forEach var="변수"  item = "아이템" [begin ="시작값" end="종료값" step="증가값" varStatus="현재의값"]/&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- memberList라는 구조체가 존재하며 프로퍼티 값은 name, age를 가짐 --&gt;</span>
+  <span class="nt">&lt;c:forEach </span><span class="na">var=</span><span class="s">"member"</span><span class="na"> items=</span><span class="s">"&lt;%=memberList %&gt;"</span> <span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>
+          이름 : ${member.name} 나이 : ${member.age}
+      <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/c:forEach&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+이름: 홍길동 나이: 21<br />
+이름: 김순이 나이: 23</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">&lt;c:forTokens&gt;</code> 태그는 자바의 <code class="highlighter-rouge">split</code> 기능과 유사하며, 다음과 같이 사용
+    <ul>
+      <li><code class="highlighter-rouge">&lt;c:forTokens var="변수" items="아이템" delims="자를 문구" [varStatus="status"]/&gt;</code>
+        <div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"nameGroup"</span><span class="na"> value=</span><span class="s">"철수,영미,나미,우솝,루피"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:forTokens </span><span class="na">var=</span><span class="s">"name"</span><span class="na"> items=</span><span class="s">"</span><span class="si">${</span><span class="n">nameGroup</span><span class="si">}</span><span class="s">"</span><span class="na"> delims=</span><span class="s">","</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: yellow;"</span><span class="nt">&gt;</span>
+          이름 : ${name}
+      <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/c:forTokens&gt;</span>
+</code></pre></div>        </div>
+        <blockquote>
+          <p><code class="highlighter-rouge">실행결과</code><br />
+이름: 철수<br />
+이름: 영미<br />
+이름: 나미<br />
+이름: 우솝<br />
+이름: 루피</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-4-url-imnport-redirect-url-처리">2-4. url, imnport, redirect (URL 처리)</h3>
+<ul>
+  <li>해당 태그들은 문법만 정리</li>
+  <li><code class="highlighter-rouge">&lt;c:url value = "링크"/&gt;</code></li>
+  <li><code class="highlighter-rouge">&lt;c:import url="url" [context="context"] [var="varName"]  [scope="{page|request|session|application}"] [charEncoding="charEncoding"]&gt;</code></li>
+  <li><code class="highlighter-rouge">&lt;c:redirect url="value" [context="context"]/&gt;</code></li>
+</ul>
+
+<h3 id="2-5-catch-out-기타">2-5. catch, out (기타)</h3>
+<ul>
+  <li>해당 태그들은 문법만 정리</li>
+  <li><code class="highlighter-rouge">&lt;c:catch var="명칭"&gt;&lt;/c:catch&gt;</code></li>
+  <li><code class="highlighter-rouge">&lt;c:out value="value" [escapeXml="{true|false}"] [default="value가 없을 때 표시될 문자"]  /&gt;</code></li>
+</ul>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/06/web-1.html" data-toggle="tooltip" data-placement="top" title="[Web] Get VS Post"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+
+</body>
+
+</html>

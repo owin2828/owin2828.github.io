@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    Spring - 낮코밤코
+    [Java] Abstract class VS Interface - 낮코밤코
     
   </title>
 
-  <meta name="description" content="Already done, cause will do">
+  <meta name="description" content="본 문서에서는 추상화 클래스와 인터페이스의 공통점 및 차이에 대해 알아보도록 한다. 출처: https://bit.ly/2ZwNFGa">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/spring/page/3/">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/java-2.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -78,15 +78,24 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_spring.jpg')">
+<header class="masthead" style="background-image: url('/img/background_java.jpeg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Spring</h1>
+          <div class="post-heading">
+            <h1>[Java] Abstract class VS Interface</h1>
             
+            <h2 class="subheading">추상화 클래스와 인터페이스 간의 관계</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:03:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   1 min  read </span>
+
+            </span>
           </div>
         </div>
       </div>
@@ -97,176 +106,63 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <!--  -->
+        <ul>
+  <li>본 문서에서는 추상화 클래스와 인터페이스의 공통점 및 차이에 대해 알아보도록 한다.</li>
+  <li>출처: <a href="https://bit.ly/2ZwNFGa">https://bit.ly/2ZwNFGa</a><br />
+<br /></li>
+</ul>
+
+<h3 id="1-공통점">1. 공통점</h3>
+<ul>
+  <li>abstract class(추상 클래스)와 interface(인터페이스) 는 선언만 있고 <code class="highlighter-rouge">구현 내용이 없는</code> 클래스</li>
+  <li>자기 자신이 new를 해서 객체를 생성할 수 없으며,<br />
+추상클래스를 extends 받거나, interface를 implements 한 <code class="highlighter-rouge">자식만이</code> 객체를 생성 가능</li>
+  <li>상속 받은 자식이 구현을 <code class="highlighter-rouge">반드시</code> 하도록 해야할 때 사용</li>
+  <li>선언된 type과 자식의 type이 <code class="highlighter-rouge">같아야</code> 함<br />
+<br /></li>
+</ul>
+
+<h3 id="2-차이점">2. 차이점</h3>
+<ol>
+  <li>추상화 클래스:
+    <ul>
+      <li>추상클래스의 정의는 <code class="highlighter-rouge">abstract 메서드</code>가 하나라도 존재하는 클래스를 일컫음<br />
+(일부 구현된 매서드 + 구현 안된 추상화 매서드)</li>
+      <li>추상클래스를 상속받는 클래스는 <code class="highlighter-rouge">반드시</code> 추상 매서드를 구현해야 함</li>
+      <li><code class="highlighter-rouge">extends</code>를 통해 부모 클래스를 상속</li>
+    </ul>
+  </li>
+  <li>인터페이스:
+    <ul>
+      <li>인터페이스는 <code class="highlighter-rouge">구현체 없이</code>, <code class="highlighter-rouge">매서드에 대한 명세만</code> 존재</li>
+      <li>인터페이스를 상속받는 클래스에서는 반드시 인터페이스에 있는 메소드를 <code class="highlighter-rouge">모두</code> 구현해야 함</li>
+      <li><code class="highlighter-rouge">implements</code>를 통해 <code class="highlighter-rouge">여러 개</code>의 인터페이스를 구현</li>
+      <li>추상클래스는 단일상속이지만 interface는 <code class="highlighter-rouge">다중 상속</code>이 가능(extends + implements)</li>
+    </ul>
+  </li>
+</ol>
 
 
 
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-8.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 8</h2>
-    
-    <h4 class="post-subtitle">DB 연동</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 16:05
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
+        <hr>
 
-<hr>
+        <div class="btn-movepage">
 
+          
+          <a href="/devlog/2020/01/06/java-1.html" data-toggle="tooltip" data-placement="top" title="[Java] try~catch~finally"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/01/06/java-3.html" data-toggle="tooltip" data-placement="top" title="[Java] JDBC란">Next >></a>
+          
 
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-7.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 7</h2>
-    
-    <h4 class="post-subtitle">AOP 프로그래밍</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 15:57
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-6.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 6</h2>
-    
-    <h4 class="post-subtitle">Bean의 라이프사이클과 범위</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-5.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 5</h2>
-    
-    <h4 class="post-subtitle">컴포넌트 스캔</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-4.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 4</h2>
-    
-    <h4 class="post-subtitle">의존 자동 주입</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:15
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<!-- Pager -->
-
-  <div class='pagination'>
-    
-      <a href="/devlog/spring/page/2/">
-        &laquo; Prev
-      </a>
-    
-
-    
-      
-        <span >
-          <a href="/devlog/spring/index.html" title="Spring">
-            1
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/2/index.html" title="Spring">
-            2
-          </a>
-        </span>
-      
-        <span  class="pagination-selected" >
-          <a href="/devlog/spring/page/3/index.html" title="Spring">
-            3
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/4/index.html" title="Spring">
-            4
-          </a>
-        </span>
-      
-    
-
-    
-      <a href="/devlog/spring/page/4/">
-        Next &raquo;
-      </a>
-    
-  </div>
-  
-</div>
-
-<!-- 다음의 코드는 assets/vendor/startbootstrap-clean-blog/scss/pagination.scss로 이동 -->
-<!-- <style lang="scss">
-  .pagination {
-    margin: auto;
-    text-align: center;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 55px 0 25px 0;
-    color: #999;
-  }
-  span.pagination-selected {
-    display: inline-block;
-    font-size: 1.7rem;
-  }
-</style> -->
+        </div>
 
       </div>
     </div>
   </div>
+
+
 
 
   <!-- Footer -->

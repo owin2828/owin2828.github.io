@@ -58,6 +58,7 @@
             <a class="dropdown-item" href="/devlog/java">Java</a>
             <a class="dropdown-item" href="/devlog/node">Node.js</a>
             <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
           </div>
         </li>
         <li class="nav-item">
@@ -107,6 +108,72 @@
 
 <script>
   window.store = {
+    
+      "devlog-2020-01-06-web-2-html": {
+        "title": "[Web] JSTL &amp; c tag",
+        "subtitle":"자바 서버페이지와 c tag에 대한 분석",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "web",
+        "content": "  본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다.  출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w1. JSTLJSTL(JSP Standard Tag Library)는 JSP페이지에서 많이 사용되는논리적인 판단, 반복처리, 포맷처리를 위한 커스텀 태그를 표준으로 만들어 정의한 라이브러리1-1. Why JSTL  JSP는 HTML 코드와 스크립트릿, 표현식등의 스크립트 코드가 섞여 가독성이 떨어짐  이를 해결하기 위해 HTML 태그와 비슷한 코드를 사용해 처리하는 것이 JSTL1-2. JSTL 사용법  JSTL 사용법으로는 다음과 같이 두 가지 방법이 존재          pom.xml에 maven 의존 설정           &lt;!-- https://mvnrepository.com/artifact/javax.servlet/jstl --&gt;   &lt;dependency&gt;       &lt;groupId&gt;javax.servlet&lt;/groupId&gt;       &lt;artifactId&gt;jstl&lt;/artifactId&gt;       &lt;version&gt;1.2&lt;/version&gt;   &lt;/dependency&gt;                    jar 파일을 WEB-INF/lib 디렉토리에 복사      1-3. JSTL이 제공하는 태그  JSTL의 태그는 다음과 같은 종류가 존재  코어          주요기능: 변수지원, 흐름제어, URL 처리      접두어: c      관련 URL: http://java.sun.com/jsp/jstl/core        XML          주요기능: XML 코어, 흐름 제어, XML 변환      접두어: x      관련 URL: http://java.sun.com/jsp/jstl/xml        국제화          주요기능: 지역, 메시지 형식, 숫자 및 날짜 형식      접두어: fmt      관련 URL: http://java.sun.com/jsp/jstl/fmt        DataBase          주요기능: SQL      접두어: sql      관련 URL: http://java.sun.com/jsp/jstl/sql        함수          주요기능: 컬렉션 처리, String 처리      접두어: fn      관련 URL: [http://java.sun.com/jsp/jstl/functions])(http://java.sun.com/jsp/jstl/functions)        이 중, 제일 많이 사용되는 태그는 c tag(코어)2. C Tag코어 태그 라이브러리는 변수 설정이나 논리 처리에 사용되는 스크립트 코드를 대체하는 태그를 제공  변수 지원:          set, remove        흐름 제어:          if, choose, forEach, forTokens        URL 처리:          import, redirect, url        기타 태그:          catch, out      2-1. set, remove (변수 설정)  &lt;c:set&gt; 태그는 EL 변수 값 혹은 EL 변수의 프로퍼티 값을 지정하거나, JSTL 태그에서 사용할 변수의 값을 처리할 때 다음과 같이 사용          &lt;c:set var=\"varName\" value=\"varValue\" [scope=\"지정영역\"] /&gt;      &lt;c:set target=\"대상\" property=\"프로퍼티 이름\" value=\"값\" /&gt;          &lt;!-- 첫번째 사용법 (jstl 변수를 생성하여 사용하는법) --&gt;  &lt;c:set var=\"test1\"  value=\"니나노\"/&gt;  &lt;!-- 두번째 사용법 (빈즈활용) --&gt;  &lt;!-- 자바 빈즈가 필요함. 한페이지에서 설명하기위해.. map 으로 대체 --&gt;  &lt;% Map&lt;String, String&gt; member = new HashMap&lt;String, String&gt;();  member.put(\"name\", \"홍길동\");  %&gt;          &lt;c:set var=\"member\"  value=\"&lt;%=member%&gt;\"/&gt;  &lt;div style=\"background-color: yellow;\"&gt;${member.name}&lt;/div&gt;  &lt;c:set target = \"&lt;%=member%&gt;\" property = \"name\" value = \"홍길동2\"/&gt;                          실행결과니나노홍길동홍길동2홍길동2                      &lt;c:remove&gt; 태그는  태그로 지정한 변수를 `삭제`할 때 다음과 같이 사용          &lt;c:remove var=\"varName\" [scope=\"지정영역\"] /&gt;          &lt;c:set var=\"test1\"  value=\"니나노\"/&gt;  &lt;div style=\"background-color: yellow;\"&gt;${test1}&lt;/div&gt;  &lt;!-- c:remove 사용하여 c:set 변수를 삭제 --&gt;  &lt;c:remove var = \"test1\"/&gt;  &lt;div style=\"background-color: yellow;\"&gt;${test1}&lt;/div&gt;                          실행결과니나노(빈 텍스트가 출력 됨)                    2-2. if, choose (조건문)  &lt;c:if&gt; 태그는 조건의 참/거짓 유무에 따라 분기하며 다음과 같이 사용          else는 따로 존재하지 않음, 따라서 choose를 사용              &lt;c:if test=\"조건\" [var = \"testResult\"]/&gt;          &lt;c:set var=\"test1\"  value=\"3\"/&gt;  &lt;c:if test=\"${test1 &gt; 1}\"&gt;      &lt;div style=\"background-color: yellow;\"&gt;1보다 크다&lt;/div&gt;  &lt;/c:if&gt;  &lt;c:if test=\"${test1 &lt; 1}\"&gt;      &lt;div style=\"background-color: yellow;\"&gt;1보다 작다&lt;/div&gt;  &lt;/c:if&gt;                          실행결과1보다 크다                      &lt;c:choose&gt;, &lt;c:when&gt;, &lt;c:otherwise&gt; 태그를 else if, else 대신 다음과 같이 함께 사용          &lt;c:chose&gt;&lt;c:when test=\"조건\"&gt;실행문&lt;/c:when&gt;&lt;c:otherwise&gt;실행문&lt;/c:otherwise&gt;&lt;/c:chose&gt;          &lt;c:set var=\"test1\"  value=\"3\"/&gt;  &lt;c:choose&gt;      &lt;c:when test=\"${test1 &lt; 1}\"&gt;          &lt;div style=\"background-color: yellow;\"&gt;1보다 작음&lt;/div&gt;      &lt;/c:when&gt;      &lt;c:when test=\"${test1 == 3}\"&gt;          &lt;div style=\"background-color: yellow;\"&gt;3과 같음&lt;/div&gt;      &lt;/c:when&gt;      &lt;c:otherwise&gt;          &lt;div style=\"background-color: yellow;\"&gt;쩌리&lt;/div&gt;      &lt;/c:otherwise&gt;  &lt;/c:choose&gt;                          실행결과3과 같음                    2-3. forEach, forTokens (반복문)  &lt;c:forEach&gt; 태그는 자바의 for문과 동일하며, 다음과 같이 사용          &lt;c:forEach var=\"변수\"  item = \"아이템\" [begin =\"시작값\" end=\"종료값\" step=\"증가값\" varStatus=\"현재의값\"]/&gt;          &lt;!-- memberList라는 구조체가 존재하며 프로퍼티 값은 name, age를 가짐 --&gt;  &lt;c:forEach var=\"member\" items=\"&lt;%=memberList %&gt;\" &gt;      &lt;div style=\"background-color: yellow;\"&gt;          이름 : ${member.name} 나이 : ${member.age}      &lt;/div&gt;  &lt;/c:forEach&gt;                          실행결과이름: 홍길동 나이: 21이름: 김순이 나이: 23                      &lt;c:forTokens&gt; 태그는 자바의 split 기능과 유사하며, 다음과 같이 사용          &lt;c:forTokens var=\"변수\" items=\"아이템\" delims=\"자를 문구\" [varStatus=\"status\"]/&gt;          &lt;c:set var=\"nameGroup\" value=\"철수,영미,나미,우솝,루피\"/&gt;  &lt;c:forTokens var=\"name\" items=\"${nameGroup}\" delims=\",\"&gt;      &lt;div style=\"background-color: yellow;\"&gt;          이름 : ${name}      &lt;/div&gt;  &lt;/c:forTokens&gt;                          실행결과이름: 철수이름: 영미이름: 나미이름: 우솝이름: 루피                    2-4. url, imnport, redirect (URL 처리)  해당 태그들은 문법만 정리  &lt;c:url value = \"링크\"/&gt;  &lt;c:import url=\"url\" [context=\"context\"] [var=\"varName\"]  [scope=\"{page|request|session|application}\"] [charEncoding=\"charEncoding\"]&gt;  &lt;c:redirect url=\"value\" [context=\"context\"]/&gt;2-5. catch, out (기타)  해당 태그들은 문법만 정리  &lt;c:catch var=\"명칭\"&gt;&lt;/c:catch&gt;  &lt;c:out value=\"value\" [escapeXml=\"{true|false}\"] [default=\"value가 없을 때 표시될 문자\"]  /&gt;",
+        "url": "/devlog/2020/01/06/web-2.html"
+      }
+      ,
+    
+      "devlog-2020-01-06-web-1-html": {
+        "title": "[Web] Get VS Post",
+        "subtitle":"HTTP 프로토콜에 대한 분석",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "web",
+        "content": "  본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다.  출처: https://bit.ly/31M2YN8 0. 들어가기 앞서  사용자는 단순히 URL을 입력하여 페이지로 이동을 하지만, 서버 내부에서는 클라이언트의 요청에 응답하기 위해 처리를 해주어야 함  이 때,  클라이언트가 서버로 요청을 보내는 방법인 HTTP Method에는 크게 다음과 같은 2가지 방법이 존재          GET      POST      1. GET 방식GET은 어떤 정보를 가져와 조회하기 위해 사용하며, 간단한 데이터를 URL에 넣도록 설계된 방식으로 다음과 같은 특징을 지님1-1. GET 방식의 특징  URL에 변수(데이터)를 포함시켜 요청  데이터를 Header에 포함하여 전송  URL에 데이터가 노출  전송하는 길이에 제한  캐싱이 가능  형식          URL?변수명1=값1&amp;변수명2=값2&amp;변수명3=값3&amp;…      다음과 같이 직접 URI를 입력하여 요청가능                  /hello/test.php?name1=value1&amp;name2=value2                    2. POST 방식POST 방식은 데이터를 서버로 제출하여 추가 또는 수정하기 위해서 데이터를 전송하는 방식으로 다음과 같은 특징을 지님2-1. POST 방식의 특징  URL에 변수(데이터)를 포함하지 않고시켜 요청  데이터를 Body에 포함하여 전송  URL에 데이터가 노출되지 않음  전송하는 길이에 제한이 없음  캐싱이 불가능  형식          POST /hello/test.php HTTP/1.1    Host: jmnote.com    name1=value1&amp;name2=value2      ",
+        "url": "/devlog/2020/01/06/web-1.html"
+      }
+      ,
+    
+      "devlog-2020-01-06-java-5-html": {
+        "title": "[Java] JDBC / JPA &amp; Hibernate / Mybatis 차이",
+        "subtitle":"SQL Mapper 와 ORM의 개념 및 차이점 분석",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "java",
+        "content": "  본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다.  출처: http://bitly.kr/C72t7zb0. 영속성  데이터를 생성한 프로그램이 종료되더라도 사라지지 않는 데이터의 특성  Persistence Layer: 프로그램 아키텍쳐에서 데이터에 영속성을 부여해주는 계층  Persistence Framework: JDBC 프로그래밍의 복잡함 없이 간단히 DB와 연동되는 시스템을 빠르게 개발할 수 있으며,안정성을 보장해주는 프레임크. 그 종류는 다음과 같다.          SQL Mapper      ORM      0-1. SQL Mapper  SQL &lt;- 매핑 -&gt; Object 필드  SQL문으로 직접 DB의 데이터를 다룸          종류: Mybatis, JdbcTemplates등      0-2. ORM  DB 데이터 &lt;- 매핑 -&gt; Object 필드  객체를 통해 간접적으로 DB의 데이터를 다룸          직관적 코드(매서드)를 통해 조작 가능      객체 간의 관계를 바탕으로 SQL을 자동 생성      종류: JPA, Hibernate등      0-3. ORM의 장,단점장점  객체 지향적인 코드로 인해 더 직관적이고 비즈니스 로직에 더 집중할 수 있게 도와줌  재사용 및 유지보수의 편리성이 증가함  DBMS에 대한 종속성이 줄어듬단점  완벽한 ORM 으로만 서비스를 구현하기가 어려움  잘못 구현된 경우에 속도 저하 및 심각할 경우 일관성이 무너지는 문제점 발생  프로시저가 많은 시스템에선 ORM의 객체 지향적인 장점을 활용하기 어려움 1. JDBC(Java Database Connectivity)  JDBC는 DB에 접근할 수 있도록 java에서 제공하는 API  모든 Java의 Data Access 기술의 근간  모든 Persistence Framework는 내부적으로 JDBC API를 사용 2. JPA(Java Persistence API)  Java ORM 기술에 대한 API 표준 명세로 Java에서 제공하는 API  JPA의 구성요소          javax.persistence 패키지로 정의된 API      JPQL(Java Persistence Query Language)      객체/관계 메타데이터        사용자가 원하는 JPA 구현체를 선택해 사용 가능          Hibernate, EclipseLink, DataNucleus, OpenJPA, TopLink Essentails 등      2-1. Hibernate  Hibernate는 JPA의 구현체 중 하나  내부적으로 JDBC API를 사용해 SQL 구현  HQL(Hibernate Query Language)라 불리는 강력한 쿼리 언어 포함  장점          빠른 개발 가능      쿼리보다는 객체에 집중 가능      테이블 생성, 변경등 관리가 쉬움        단점          어려움(많은 것을 알아야 함)      오사용시 데이터 손실 및 성능 저하 유발       3. Mybatis  개발자가 정의한 SQL을 지원하는 SQL Mapper  DB의 레코드에 매핑하기 위해 XML과 Annotaion 사용 가능  장점          SQL에 대한 모든 컨트롤을 할 경우 적합      SQL 쿼리 최적화가 잘 되있을 경우 유용        단점          모든 관계에 대한 조작을 하고자 할 때는 적합하지 않음      ",
+        "url": "/devlog/2020/01/06/java-5.html"
+      }
+      ,
+    
+      "devlog-2020-01-06-java-4-html": {
+        "title": "[Java] 커넥션풀",
+        "subtitle":"Java <-> DB 연결관계에 대한 해석",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "java",
+        "content": "  본 문서에서는 커넥션 풀에 대하여 알아보도록 한다.1. 커넥션 풀 등장 배경  실제 서비스 운영 환경에서는 서로 다른 장비를 이용해 자바 프로그램과 DBMS를 실행이때 자바 프로그램에서 DBMS로 커넥션을 생성하는 시간은 성능 저하의 원인이 됨  동시 사용자수가 많으면 사용자마다 DB 커넥션을 생성해 DBMS에 부하를 줌  최초 연결에 따른 응답 속도 저하와 동시 접속자가 많을 때 발생하는 부하를 줄이기 위해 등장 2. 커넥션 풀의 개념 및 특징  커넥션 풀은 일정 개수의 DB 커넥션을 미리 만들어두는 기법  커넥션이 필요하다면, 풀에서 커넥션을 가져와 사용한 뒤 다시 풀에 반납  커넥션을 미리 생성하기 때문에 커넥션을 사용하는 시점에서 생성시간 단축  동시 접속자가 많더라도 생성 부하가 적기에 더 많은 동시 접속자 처리 가능  커넥션의 개수를 조절해 DBMS의 부하를 일정하게 조절 3. 커넥션 풀의 종류DB 커넥션 풀 기능을 제공하는 대표 모듈은 다음과 같다.  Tomcat JDBC  HikariCP  DBCP  c3p0",
+        "url": "/devlog/2020/01/06/java-4.html"
+      }
+      ,
+    
+      "devlog-2020-01-06-java-3-html": {
+        "title": "[Java] JDBC란",
+        "subtitle":"Java <-> DB 연결관계에 대한 해석",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "java",
+        "content": "  본 문서에서는 JDBC에 대하여 알아보도록 한다.  출처: https://bit.ly/2knY48N1. JDBC란?  Java DataBase Connectivity  JDBC는 자바 프로그램이 DBMS에 일관된 방식으로 접근할 수 있도록 API를 제공하는 자바 클래스들의 모임으로 다음의 특징을 가진다.          JDBC는 함수 호출용 SQL 인터페이스      JDBC는 ANSI SQL-92 표준을 지원      JDBC는 공통된 SQL 인터페이스를 바탕으로 함                  결과적으로 JDBC는 DB의 종류와 독립적인 API를 제공                    2. JDBC 구성 2-1. 응용프로그램  데이터베이스에 연결을 요청  데이터베이스에 SQL 문을 전송  SQL 문의 결과를 요청  오류가 발생하는 경우 오류 처리  트랜잭션을 제어2-2. 드라이버 매니저  데이터베이스에 맞는 드라이버 검색  JDBC 초기화를 위한 작업을 수행2-3. 드라이버  데이터베이스에 연결  데이터베이스에 SQL 문을 전달  응용프로그램에 검색 결과를 전달  필요한 경우 커서를 조작  필요한 경우 트랜잭션을 시작  커서란?      오라클에서 CURSOR란 시스템 글로벌 영역의 공유 풀 내에 저장공간을 사용하여 사용자가 SQL 문을 실행시키면 결과값을 저장공간에 가지고 있다가 원하는 시기에순차적으로 fetch해 처리하여 해당 결과 셋을 프로그래밍적으로 접근할수 있게 도와주는 기능    묵시적커서(Implicit Cursor)와 명시적커서(Explicit Cursor)가 존재  2-4. DB  데이터가 저장되어 있는 장소3. JDBC 코딩의 흐름  JDBC 드라이버 로드  DB 연결  DB에 데이터를 읽거나 쓰기 (SQL문)  DB 연결 종료",
+        "url": "/devlog/2020/01/06/java-3.html"
+      }
+      ,
+    
+      "devlog-2020-01-06-java-2-html": {
+        "title": "[Java] Abstract class VS Interface",
+        "subtitle":"추상화 클래스와 인터페이스 간의 관계",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "java",
+        "content": "  본 문서에서는 추상화 클래스와 인터페이스의 공통점 및 차이에 대해 알아보도록 한다.  출처: https://bit.ly/2ZwNFGa1. 공통점  abstract class(추상 클래스)와 interface(인터페이스) 는 선언만 있고 구현 내용이 없는 클래스  자기 자신이 new를 해서 객체를 생성할 수 없으며,추상클래스를 extends 받거나, interface를 implements 한 자식만이 객체를 생성 가능  상속 받은 자식이 구현을 반드시 하도록 해야할 때 사용  선언된 type과 자식의 type이 같아야 함2. 차이점  추상화 클래스:          추상클래스의 정의는 abstract 메서드가 하나라도 존재하는 클래스를 일컫음(일부 구현된 매서드 + 구현 안된 추상화 매서드)      추상클래스를 상속받는 클래스는 반드시 추상 매서드를 구현해야 함      extends를 통해 부모 클래스를 상속        인터페이스:          인터페이스는 구현체 없이, 매서드에 대한 명세만 존재      인터페이스를 상속받는 클래스에서는 반드시 인터페이스에 있는 메소드를 모두 구현해야 함      implements를 통해 여러 개의 인터페이스를 구현      추상클래스는 단일상속이지만 interface는 다중 상속이 가능(extends + implements)      ",
+        "url": "/devlog/2020/01/06/java-2.html"
+      }
+      ,
     
       "devlog-2020-01-06-java-1-html": {
         "title": "[Java] try~catch~finally",

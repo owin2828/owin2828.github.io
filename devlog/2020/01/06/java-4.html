@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    Spring - 낮코밤코
+    [Java] 커넥션풀 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="Already done, cause will do">
+  <meta name="description" content="본 문서에서는 커넥션 풀에 대하여 알아보도록 한다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/spring/page/3/">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/java-4.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -78,15 +78,24 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_spring.jpg')">
+<header class="masthead" style="background-image: url('/img/background_java.jpeg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Spring</h1>
+          <div class="post-heading">
+            <h1>[Java] 커넥션풀</h1>
             
+            <h2 class="subheading">Java <-> DB 연결관계에 대한 해석</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 17:11:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   1 min  read </span>
+
+            </span>
           </div>
         </div>
       </div>
@@ -97,176 +106,60 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <!--  -->
+        <ul>
+  <li>본 문서에서는 커넥션 풀에 대하여 알아보도록 한다.<br />
+<br /></li>
+</ul>
+
+<h2 id="1-커넥션-풀-등장-배경">1. 커넥션 풀 등장 배경</h2>
+<ul>
+  <li>실제 서비스 운영 환경에서는 서로 다른 장비를 이용해 자바 프로그램과 DBMS를 실행<br />
+이때 자바 프로그램에서 DBMS로 커넥션을 생성하는 시간은 <code class="highlighter-rouge">성능 저하</code>의 원인이 됨</li>
+  <li><code class="highlighter-rouge">동시 사용자수</code>가 많으면 사용자마다 DB 커넥션을 생성해 DBMS에 부하를 줌</li>
+  <li><code class="highlighter-rouge">최초 연결</code>에 따른 응답 속도 저하와 <code class="highlighter-rouge">동시 접속자</code>가 많을 때 발생하는 부하를 줄이기 위해 등장 <br />
+<br /></li>
+</ul>
+
+<h2 id="2-커넥션-풀의-개념-및-특징">2. 커넥션 풀의 개념 및 특징</h2>
+<p><img src="/img/java/java_4_1.jpg" alt="커넥션풀" /></p>
+<ul>
+  <li>커넥션 풀은 일정 개수의 DB 커넥션을 <code class="highlighter-rouge">미리</code> 만들어두는 기법</li>
+  <li>커넥션이 필요하다면, 풀에서 커넥션을 <code class="highlighter-rouge">가져와</code> 사용한 뒤 다시 풀에 <code class="highlighter-rouge">반납</code></li>
+  <li>커넥션을 미리 생성하기 때문에 커넥션을 사용하는 시점에서 생성시간 <code class="highlighter-rouge">단축</code></li>
+  <li>동시 접속자가 많더라도 생성 부하가 적기에 <code class="highlighter-rouge">더 많은</code> 동시 접속자 처리 가능</li>
+  <li>커넥션의 개수를 조절해 DBMS의 부하를 <code class="highlighter-rouge">일정하게</code> 조절 <br />
+<br /></li>
+</ul>
+
+<h2 id="3-커넥션-풀의-종류">3. 커넥션 풀의 종류</h2>
+<p>DB 커넥션 풀 기능을 제공하는 대표 모듈은 다음과 같다.</p>
+<ul>
+  <li><code class="highlighter-rouge">Tomcat JDBC</code></li>
+  <li><code class="highlighter-rouge">HikariCP</code></li>
+  <li><code class="highlighter-rouge">DBCP</code></li>
+  <li><code class="highlighter-rouge">c3p0</code></li>
+</ul>
 
 
+        <hr>
 
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-8.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 8</h2>
-    
-    <h4 class="post-subtitle">DB 연동</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 16:05
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
+        <div class="btn-movepage">
 
-<hr>
+          
+          <a href="/devlog/2020/01/06/java-3.html" data-toggle="tooltip" data-placement="top" title="[Java] JDBC란"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/01/06/java-5.html" data-toggle="tooltip" data-placement="top" title="[Java] JDBC / JPA & Hibernate / Mybatis 차이">Next >></a>
+          
 
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-7.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 7</h2>
-    
-    <h4 class="post-subtitle">AOP 프로그래밍</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 15:57
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-6.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 6</h2>
-    
-    <h4 class="post-subtitle">Bean의 라이프사이클과 범위</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-5.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 5</h2>
-    
-    <h4 class="post-subtitle">컴포넌트 스캔</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:20
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2019/12/30/spring-4.html">
-    <h3 class="post-title">[Spring] 첫걸음 - 4</h2>
-    
-    <h4 class="post-subtitle">의존 자동 주입</h4>
-    
-  </a>
-  <p class="post-meta">
-    2019-12-30 11:15
-    in
-    devlog
-    on
-    spring
-  </p>
-</article>
-
-<hr>
-
-
-
-<!-- Pager -->
-
-  <div class='pagination'>
-    
-      <a href="/devlog/spring/page/2/">
-        &laquo; Prev
-      </a>
-    
-
-    
-      
-        <span >
-          <a href="/devlog/spring/index.html" title="Spring">
-            1
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/2/index.html" title="Spring">
-            2
-          </a>
-        </span>
-      
-        <span  class="pagination-selected" >
-          <a href="/devlog/spring/page/3/index.html" title="Spring">
-            3
-          </a>
-        </span>
-      
-        <span >
-          <a href="/devlog/spring/page/4/index.html" title="Spring">
-            4
-          </a>
-        </span>
-      
-    
-
-    
-      <a href="/devlog/spring/page/4/">
-        Next &raquo;
-      </a>
-    
-  </div>
-  
-</div>
-
-<!-- 다음의 코드는 assets/vendor/startbootstrap-clean-blog/scss/pagination.scss로 이동 -->
-<!-- <style lang="scss">
-  .pagination {
-    margin: auto;
-    text-align: center;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 55px 0 25px 0;
-    color: #999;
-  }
-  span.pagination-selected {
-    display: inline-block;
-    font-size: 1.7rem;
-  }
-</style> -->
+        </div>
 
       </div>
     </div>
   </div>
+
+
 
 
   <!-- Footer -->
