@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-06T15:36:15+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Spring] 첫걸음 - 18</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-18.html" rel="alternate" type="text/html" title="[Spring] 첫걸음 - 18" /><published>2019-12-30T17:08:00+09:00</published><updated>2019-12-30T17:08:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-18</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-18.html">&lt;h2 id=&quot;0-기본-보안-개념&quot;&gt;0. 기본 보안 개념&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-06T17:05:19+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Java] try~catch~finally</title><link href="https://owin2828.github.io/devlog/2020/01/06/java-1.html" rel="alternate" type="text/html" title="[Java] try~catch~finally" /><published>2020-01-06T16:59:00+09:00</published><updated>2020-01-06T16:59:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/java-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/java-1.html">&lt;h2 id=&quot;java에서-try--catch--finally-문에서-return-위치에-따른-결과&quot;&gt;java에서 try ~ catch ~ finally 문에서 return 위치에 따른 결과&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;본 문서에서는 return 문의 위치에 따라 어떤 결과가 나오는지 살펴보도록 한다.&lt;/li&gt;
+  &lt;li&gt;출처: &lt;a href=&quot;https://bit.ly/2MGVKWY&quot;&gt;https://bit.ly/2MGVKWY&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1-return이-try-문-안에-있을-경우&quot;&gt;1. return이 try 문 안에 있을 경우&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TryCatchFinallyTrick&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The output is: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am finally.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;위의 예제 코드를 보며 실행 결과를 예측해보면 대부분 &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt;이라 생각할 것이다.&lt;br /&gt;
+하지만 우리의 예상과는 달리 실행결과는 아래와 같다.
+    &lt;blockquote&gt;
+      &lt;p&gt;[실행결과] &lt;br /&gt;
+I am try  &lt;br /&gt;
+I am finally. &lt;br /&gt;
+The output is: &lt;code class=&quot;highlighter-rouge&quot;&gt;4&lt;/code&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;어째서 이런 결과가 발생할까?&lt;br /&gt;
+다른 예제를 통해 좀 더 깊게 살펴보도록 하자.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-return이-fianlly-문-안에-있을-경우&quot;&gt;2. return이 fianlly 문 안에 있을 경우&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TryCatchFinallyTrick2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The output is: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am finally.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;finally&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;또 다른 예제 코드를 보면, 위의 코드에서는 finally와 try 문 두 군데에 return이 위치함을 알 수 있다.&lt;/li&gt;
+  &lt;li&gt;위와 같은 상황에서는 과연 어떤 실행결과를 출력할 것인가?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[실행결과]&lt;br /&gt;
+I am try&lt;br /&gt;
+I am finally.&lt;br /&gt;
+The output is: &lt;code class=&quot;highlighter-rouge&quot;&gt;finally&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">java에서 try ~ catch ~ finally 문에서 return 위치에 따른 결과 본 문서에서는 return 문의 위치에 따라 어떤 결과가 나오는지 살펴보도록 한다. 출처: https://bit.ly/2MGVKWY</summary></entry><entry><title type="html">[Spring] 첫걸음 - 18</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-18.html" rel="alternate" type="text/html" title="[Spring] 첫걸음 - 18" /><published>2019-12-30T17:08:00+09:00</published><updated>2019-12-30T17:08:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-18</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-18.html">&lt;h2 id=&quot;0-기본-보안-개념&quot;&gt;0. 기본 보안 개념&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인증&lt;/code&gt;(Authentication)은 &lt;code class=&quot;highlighter-rouge&quot;&gt;주체&lt;/code&gt;(Principal)의 &lt;code class=&quot;highlighter-rouge&quot;&gt;신원&lt;/code&gt;(Identity)을 증명하는 과정&lt;/em&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -3438,281 +3513,4 @@ WebMvcConfigurer의 &lt;code class=&quot;highlighter-rouge&quot;&gt;configureDef
       &lt;/li&gt;
     &lt;/ol&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. 스프링 MVC 핵심 구성 요소 MVC 프레임워크의 흐름은 다음과 같다. DispatcherServlet이 모든 연결을 담당하며, 웹 브라우저로부터 요청을 받음 요청이 들어오면 DispathcerServlet는 HandlerMapping Bean 객체에게 컨트롤러 검색을 요청 HandlerMapping은 클라이언트의 요청 경로를 이용해 컨트롤러 Bean객체를 DispathcerServlet에게 전달 DispathcerServlet은 전달받은 객체를 처리할 수 있는 HandlerAdapter Bean에게 요청 처리를 위임 HandlerAdapter는 컨트롤러의 알맞은 매서드를 호출해 요청을 처리 그 후, 결과를 ModelAndView라는 객체로 DispathcerServlet에게 반환 DispathcerServlet는 전달받은 결과를 보여줄 뷰를 찾기 위해 ViewResolver Bean 객체를 사용 ViewResolver는 ModelAndView 내부에 있는 뷰 이름에 해당하는 View 객체를 찾거나 생성후 리턴 DispathcerServlet는 VeiwResolver가 리턴한 View 객체에게 응답 결과 생성을 요청</summary></entry><entry><title type="html">[Spring] 첫걸음 - 9</title><link href="https://owin2828.github.io/devlog/2019/12/30/spring-9.html" rel="alternate" type="text/html" title="[Spring] 첫걸음 - 9" /><published>2019-12-30T16:11:00+09:00</published><updated>2019-12-30T16:11:00+09:00</updated><id>https://owin2828.github.io/devlog/2019/12/30/spring-9</id><content type="html" xml:base="https://owin2828.github.io/devlog/2019/12/30/spring-9.html">&lt;h2 id=&quot;0-goal&quot;&gt;0. Goal&lt;/h2&gt;
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;스프링 &lt;code class=&quot;highlighter-rouge&quot;&gt;MVC&lt;/code&gt; 설정&lt;/li&gt;
-  &lt;li&gt;웹 브라우저의 요청을 처리할 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨트롤러&lt;/code&gt; 구현&lt;/li&gt;
-  &lt;li&gt;컨트롤러의 처리 결과를 보여줄 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰&lt;/code&gt; 코드 구현&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;이어지는 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장&lt;/code&gt;은 다음과 같다.&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;컨트롤러에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;서비스&lt;/code&gt;나 &lt;code class=&quot;highlighter-rouge&quot;&gt;DAO&lt;/code&gt;를 사용해 클라이언트의 요청 처리&lt;/li&gt;
-    &lt;li&gt;컨트롤러에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;요청 파라미터&lt;/code&gt;의 값을 하나의 객체로 받고 값 검증&lt;/li&gt;
-    &lt;li&gt;스프링이 제공하는 JSP 커스텀 태그를 이용해서 &lt;code class=&quot;highlighter-rouge&quot;&gt;폼&lt;/code&gt; 처리&lt;/li&gt;
-    &lt;li&gt;컨트롤러에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;세션&lt;/code&gt;이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;쿠키&lt;/code&gt;를 사용&lt;/li&gt;
-    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인터셉터&lt;/code&gt;로 컨트롤러에 대한 접근 처리&lt;/li&gt;
-    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JSON&lt;/code&gt; 응답처리&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;0-1-mvc란&quot;&gt;0-1. MVC란?&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MVC&lt;/code&gt;는 디자인 패턴중 하나로, &lt;code class=&quot;highlighter-rouge&quot;&gt;Model&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;View&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Controller&lt;/code&gt;의 약자&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;하나의 애플리케이션이나 프로젝트를 구성할 때 그 구성요소를 &lt;code class=&quot;highlighter-rouge&quot;&gt;세가지&lt;/code&gt;의 역할로 구분한 패턴&lt;/p&gt;
-
-    &lt;p&gt;&lt;img src=&quot;/img/spring/spring_9_1.jpg&quot; alt=&quot;MVC1&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;controller&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;model&lt;/code&gt;을 통해서 데이터를 가져오고, 그 정보를 바탕으로 시각적인 표현을 담당하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;view&lt;/code&gt;를 제어해서 사용자에게 전달&lt;/li&gt;
-  &lt;li&gt;각 구성요소가 지니는 &lt;code class=&quot;highlighter-rouge&quot;&gt;특징&lt;/code&gt;은 다음과 같다.
-    &lt;ol&gt;
-      &lt;li&gt;Model
-        &lt;ul&gt;
-          &lt;li&gt;사용자가 원하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; 데이터를 가지고 있어야 한다.&lt;/li&gt;
-          &lt;li&gt;뷰나 컨트롤러에 관한 정보는 &lt;code class=&quot;highlighter-rouge&quot;&gt;알 수 없다&lt;/code&gt;.&lt;/li&gt;
-          &lt;li&gt;변경이 일어나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경 통지&lt;/code&gt;에 대한 처리방법을 구현해야만 한다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;View
-        &lt;ul&gt;
-          &lt;li&gt;모델이 가지고 있는 정보를 따로 저장해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;안된다&lt;/code&gt;.&lt;/li&gt;
-          &lt;li&gt;모델이나 컨트롤러와 같이 다른 구성요소들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;알 수 없다&lt;/code&gt;.&lt;/li&gt;
-          &lt;li&gt;변경이 일어나면 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경통지&lt;/code&gt;에 대한 처리방법을 구현해야만 한다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Controller
-        &lt;ul&gt;
-          &lt;li&gt;모델이나 뷰에 대해서 &lt;code class=&quot;highlighter-rouge&quot;&gt;알고&lt;/code&gt; 있어야 한다.&lt;/li&gt;
-          &lt;li&gt;모델이나 뷰의 변경을 &lt;code class=&quot;highlighter-rouge&quot;&gt;모니터링&lt;/code&gt; 해야 한다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;MVC패턴을 사용함으로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;유지보수성&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;확장성&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;유연성&lt;/code&gt;이 증가하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;중복코딩&lt;/code&gt;은 사라지게 됨&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;0-2-스프링-mvc-주요-구성-요소-및-처리-흐름&quot;&gt;0-2. 스프링 MVC 주요 구성 요소 및 처리 흐름&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/img/spring/spring_9_2.jpg&quot; alt=&quot;MVC&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Dispatcher&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;클라이언트의 요청&lt;/code&gt;을 전달받아 요청에 맞는 컨트롤러가 리턴한 &lt;code class=&quot;highlighter-rouge&quot;&gt;결과값&lt;/code&gt;을 View에 전달하여 알맞은 응답을 생성&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;HandlerMapping&lt;/code&gt;: 클라이언트의 요청 URL을 &lt;code class=&quot;highlighter-rouge&quot;&gt;어떤 컨트롤러&lt;/code&gt;가 처리할지 결정&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Controller&lt;/code&gt;: 클라이언트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;요청을 처리&lt;/code&gt;한 뒤, 결과를 DispatcherServlet에게 리턴&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ModelAndView&lt;/code&gt;: 컨트롤러가 처리한 결과 정보 및 뷰 선택에 &lt;code class=&quot;highlighter-rouge&quot;&gt;필요한 정보&lt;/code&gt;를 담음&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ViewResolver&lt;/code&gt;: 컨트롤러의 처리 결과를 생성할 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰를 결정&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;View&lt;/code&gt;: 컨트롤러의 &lt;code class=&quot;highlighter-rouge&quot;&gt;처리 결과 화면을 생성&lt;/code&gt;, JSP 또는 Velocity 템플릿 파일 등을 뷰로 사용&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-프로젝트-설정&quot;&gt;1. 프로젝트 설정&lt;/h2&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;웹 어플리케이션 개발을 위한 메이븐 프로젝트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;디렉토리 구조&lt;/code&gt;는 다음과 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;src/main.java&lt;/li&gt;
-  &lt;li&gt;src/main/webapp&lt;/li&gt;
-  &lt;li&gt;src/main/webapp/WEB_INF&lt;/li&gt;
-  &lt;li&gt;src/main/webapp/WEB_INF/view&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;1-1-pomxml&quot;&gt;1-1. pom.xml&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;기존 pom.xml 파일에 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;dependency&lt;/code&gt;를 추가&lt;/p&gt;
-
-    &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;packaging&amp;gt;&lt;/span&gt;war&lt;span class=&quot;nt&quot;&gt;&amp;lt;/packaging&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 아래부터 dependency --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;javax.servlet&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;javax.servlet-api&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;javax.servlet.jsp&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;javax.servlet.jsp-api&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;javax.servlet&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;jstl&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-webmvc&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;1-2-tomcat-설정&quot;&gt;1-2. Tomcat 설정&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;본 프로젝트에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Tomcat 8.5.43&lt;/code&gt; 버전을 기준으로 수행&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-스프링-mvc-기본-설정&quot;&gt;2. 스프링 MVC 기본 설정&lt;/h2&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;스프링 MVC 실행을 위해 필요한 최소한의 설정은 다음과 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;스프링 MVC의 주요 설정 - &lt;code class=&quot;highlighter-rouge&quot;&gt;HandlerMapping&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ViewResolver&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;스프링의 DispatcherServlet 설정&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2-1-스프링-mvc-설정&quot;&gt;2-1. 스프링 MVC 설정&lt;/h4&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c1&quot;&gt;// MvcConfig.java  &lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@EnableWebMvc&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 스프링 MVC 설정을 활성화하는 어노테이션&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MvcConfig&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WebMvcConfigurer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-            &lt;span class=&quot;cm&quot;&gt;/*
-            * DispatcherServlet의 매핑경로를 '/'으로 주었을 때,  
-            * JSP/HTML/CSS 등을 올바르게 처리하기 위한 설정을 추가
-            */&lt;/span&gt;
-        &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configureDefaultServletHandling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
-                &lt;span class=&quot;nc&quot;&gt;DefaultServletHandlerConfigurer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;configurer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;configurer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;c1&quot;&gt;// JSP를 이용해 컨트롤러의 실행 결과를 보여주기 위한 설정 추가&lt;/span&gt;
-        &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configureViewResolvers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ViewResolverRegistry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jsp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/WEB-INF/view/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.jsp&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존의 복잡한 설정을 대체하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@EnableWebMvc&lt;/code&gt; 어노테이션을 이용시, &lt;code class=&quot;highlighter-rouge&quot;&gt;내부적&lt;/code&gt;으로 다양한 빈 설정을 추가해줌&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;WebMvcConfigurer&lt;/code&gt; 인터페이스는 스프링 &lt;code class=&quot;highlighter-rouge&quot;&gt;MVC 개별 설정&lt;/code&gt;을 조절할 때 사용&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2-2-webxml-파일에-dispatcherservlet-설정&quot;&gt;2-2. web.xml 파일에 DispatcherServlet 설정&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;스프링 MVC가 &lt;code class=&quot;highlighter-rouge&quot;&gt;웹 요청&lt;/code&gt;을 처리하려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;DispatcherServlet&lt;/code&gt;을 통해 웹 요청을 받아야 함&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;이를 위해 web.xml 파일에 DispatcherServlet을 등록&lt;/p&gt;
-
-    &lt;blockquote&gt;
-      &lt;p&gt;web.xml 파일은 src/main/webapp/WEB_INF/ 에 위치&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-코드-구현&quot;&gt;3. 코드 구현&lt;/h2&gt;
-
-&lt;p&gt;다음 두 가지 코드를 구현&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;클라이언트의 요청을 알맞게 처리할 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨트롤러&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;처리 결과를 보여줄 &lt;code class=&quot;highlighter-rouge&quot;&gt;JSP&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;3-1-컨트롤러-구현&quot;&gt;3-1. 컨트롤러 구현&lt;/h4&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c1&quot;&gt;// HelloController.java&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Controller&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 컨트롤러로 지정&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 메서드가 처리할 요청 경로를 지정, 이 경우 /hello 경로&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Model&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
-                &lt;span class=&quot;c1&quot;&gt;// name 요청 파라미터 값을 name 파라미터에 전달&lt;/span&gt;
-                &lt;span class=&quot;nd&quot;&gt;@RequestParam&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addAttribute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;greeting&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;안녕하세요, &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 컨트롤러의 처리 결과를 보여줄 뷰 이름으로 &quot;hello&quot;를 사용&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;스프링 MVC 프레임워크에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;컨트롤러&lt;/code&gt;란 웹 용청을 처리하고 그 결과를 뷰에 전당하는 스프링 Bean 객체&lt;/li&gt;
-  &lt;li&gt;컨트롤러로 사용될 클래스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;@Controller&lt;/code&gt; 어노테이션을 붙임&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@GetMapping&lt;/code&gt; 어노테이션이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;@PostMapping&lt;/code&gt; 어노테이션과 같은 요청 매핑 어노테이션을 이용해 경로 지정&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@RequestParam&lt;/code&gt; 어노테이션은 HTTP 요청 파라미터를 매서드의 파라미터로 전달
-    &lt;blockquote&gt;
-      &lt;p&gt;http://localhost:8080/sp5-chap09/hello?name=bk&lt;br /&gt;
-여기서 name의 파라미터에 해당하는 값을 전달&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addAttribute()&lt;/code&gt; 매서드는 뷰에 전달할 데이터를 지정하기 위해 사용&lt;/p&gt;
-
-    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;// ControllerConfig&lt;/span&gt;
-  &lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ControllerConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-      &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloController&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;helloController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;HelloController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;컨트롤러를 스프링의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bean&lt;/code&gt;객체로 등록&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;3-2-jsp-구현&quot;&gt;3-2. JSP 구현&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;컨트롤러가 생성한 결과를 보여줄 뷰 코드는&lt;code class=&quot;highlighter-rouge&quot;&gt;JSP&lt;/code&gt;로 구현&lt;/p&gt;
-
-    &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;&amp;lt;%-- hello.jsp --%&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;%@ page &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contentType=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/html; charset=utf-8&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;%&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Hello&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-      인사말: ${greeting}
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;HelloController()의 hello() 매서드가 리턴한 뷰 이름은 “hello”와 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일한&lt;/code&gt; 파일명&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;뷰 이름과 JSP 파일과의 &lt;code class=&quot;highlighter-rouge&quot;&gt;연결&lt;/code&gt;은 MvcConfig 설정 클래스의 다음 설정을 통해 이루어짐&lt;/p&gt;
-
-    &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;// MvcConfig.java&lt;/span&gt;
-  &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configureViewResolvers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ViewResolverRegistry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;jsp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/WEB-INF/view/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.jsp&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;다음과 같이 사용된 JSP EL(Expression Language)는 컨트롤러의 구현에서 Model에 추가한 속성의 이름과 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일&lt;/code&gt;&lt;/p&gt;
-
-    &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  인사말: ${greeting}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-주소창에 http://localhost:8080/sp5-chap09/hello?name=bk 를 입력하였을 경우 다음과 같은 화면이 출력&lt;br /&gt;
-인사말: 안녕하세요, bk&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">0. Goal</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="spring" /><summary type="html">1. 스프링 MVC 핵심 구성 요소 MVC 프레임워크의 흐름은 다음과 같다. DispatcherServlet이 모든 연결을 담당하며, 웹 브라우저로부터 요청을 받음 요청이 들어오면 DispathcerServlet는 HandlerMapping Bean 객체에게 컨트롤러 검색을 요청 HandlerMapping은 클라이언트의 요청 경로를 이용해 컨트롤러 Bean객체를 DispathcerServlet에게 전달 DispathcerServlet은 전달받은 객체를 처리할 수 있는 HandlerAdapter Bean에게 요청 처리를 위임 HandlerAdapter는 컨트롤러의 알맞은 매서드를 호출해 요청을 처리 그 후, 결과를 ModelAndView라는 객체로 DispathcerServlet에게 반환 DispathcerServlet는 전달받은 결과를 보여줄 뷰를 찾기 위해 ViewResolver Bean 객체를 사용 ViewResolver는 ModelAndView 내부에 있는 뷰 이름에 해당하는 View 객체를 찾거나 생성후 리턴 DispathcerServlet는 VeiwResolver가 리턴한 View 객체에게 응답 결과 생성을 요청</summary></entry></feed>

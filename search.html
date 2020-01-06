@@ -108,6 +108,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-01-06-java-1-html": {
+        "title": "[Java] try~catch~finally",
+        "subtitle":"return 위치에 따른 결과",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "java",
+        "content": "java에서 try ~ catch ~ finally 문에서 return 위치에 따른 결과  본 문서에서는 return 문의 위치에 따라 어떤 결과가 나오는지 살펴보도록 한다.  출처: https://bit.ly/2MGVKWY1. return이 try 문 안에 있을 경우public class TryCatchFinallyTrick {    public static void main(String[] args) {        System.out.println(\"The output is: \" + getName());    }    static int getName(){        int a = 3;        try{            System.out.println(\"I am try\");            a = 4;            return a;        } catch(Exception e){            System.out.println(\"I am catch\");            a = 5;        } finally {            System.out.println(\"I am finally.\");            a = 6;        }    }}  위의 예제 코드를 보며 실행 결과를 예측해보면 대부분 6이라 생각할 것이다.하지만 우리의 예상과는 달리 실행결과는 아래와 같다.          [실행결과] I am try  I am finally. The output is: 4        어째서 이런 결과가 발생할까?다른 예제를 통해 좀 더 깊게 살펴보도록 하자.2. return이 fianlly 문 안에 있을 경우public class TryCatchFinallyTrick2 {    public static void main(String[] args) {        System.out.println(\"The output is: \" + getName());    }    static String getName(){        String  name = \"a\";        try{            System.out.println(\"I am try\");            name = \"try\";            return name;        } catch(Exception e){            System.out.println(\"I am catch\");            name = \"catch\";        } finally {            System.out.println(\"I am finally.\");            name = \"finally\";            return name;        }    }}  또 다른 예제 코드를 보면, 위의 코드에서는 finally와 try 문 두 군데에 return이 위치함을 알 수 있다.  위와 같은 상황에서는 과연 어떤 실행결과를 출력할 것인가?  [실행결과]I am tryI am finally.The output is: finally",
+        "url": "/devlog/2020/01/06/java-1.html"
+      }
+      ,
+    
       "devlog-2019-12-30-spring-18-html": {
         "title": "[Spring] 첫걸음 - 18",
         "subtitle":"Spring Security",
