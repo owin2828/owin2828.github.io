@@ -1,4 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-07T13:53:16+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 1</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 1" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-07T18:01:51+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
+&lt;p&gt;Scrum은 그 자체로 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이자, Agile의 &lt;code class=&quot;highlighter-rouge&quot;&gt;실천 도구&lt;/code&gt; 중 하나이다. 
+이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 
+다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 
+이후  Agile 선언문이 발표되며 이러한 방법들이 &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt; 이라는 깃발 아래 모여들었고 그 중 우리에게 익숙한 것이 Scrum이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;결국 스크럼은 &lt;code class=&quot;highlighter-rouge&quot;&gt;작은&lt;/code&gt; 개발팀, &lt;code class=&quot;highlighter-rouge&quot;&gt;짧은&lt;/code&gt; 개발 주기 및 팀원들의 &lt;code class=&quot;highlighter-rouge&quot;&gt;생산성&lt;/code&gt;을 유지시켜 SW개발을 하는 대표적인 Agile 방법론이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;scrum의-특징&quot;&gt;Scrum의 특징&lt;/h2&gt;
+&lt;p&gt;다음 특징들로 Scrum을 정의할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;프로젝트 관리: &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;, 정의에 중점&lt;/li&gt;
+  &lt;li&gt;시간 설정: &lt;code class=&quot;highlighter-rouge&quot;&gt;15분&lt;/code&gt;의 Daily Meeting, 1~4주 정도의 개발주기&lt;/li&gt;
+  &lt;li&gt;관리체계: &lt;code class=&quot;highlighter-rouge&quot;&gt;요구사항(BackLog)&lt;/code&gt;관리, 업무 진행 가시화&lt;/li&gt;
+  &lt;li&gt;팀 중심: &lt;code class=&quot;highlighter-rouge&quot;&gt;5~9명&lt;/code&gt;으로 팀 구성, 본인 task보다 급한 task를 &lt;code class=&quot;highlighter-rouge&quot;&gt;우선&lt;/code&gt;시&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이러한 특성은 &lt;code class=&quot;highlighter-rouge&quot;&gt;유연하게&lt;/code&gt; 개발하기에 최적화 되어있는데, 특히 팀원의 수는 피자 한 판을 시켰을 때 나눠먹기 좋은 인원이라고 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;스크럼의-5가지-가치&quot;&gt;스크럼의 5가지 가치&lt;/h2&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_1.png&quot; alt=&quot;스크럼가치&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.scrum.org/resources/blog/5-scrum-values-take-center-stage&quot;&gt;https://www.scrum.org/resources/blog/5-scrum-values-take-center-stage&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;항상 이러한 가치를 볼 때 손과 발이 없어지는 경험을 하지만, 그래도 정의해 보도록 한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Courage(용기): &lt;code class=&quot;highlighter-rouge&quot;&gt;갈등&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;도전&lt;/code&gt;을 통해 일을 할 수 있는 용기&lt;/li&gt;
+  &lt;li&gt;Focus(집중): 모두가 스프린트동안 &lt;code class=&quot;highlighter-rouge&quot;&gt;같은&lt;/code&gt; 목표를 향해 나아가는 것&lt;/li&gt;
+  &lt;li&gt;Commitment(확약): 세운 목표를 &lt;code class=&quot;highlighter-rouge&quot;&gt;실행&lt;/code&gt;하는 것&lt;/li&gt;
+  &lt;li&gt;Respect(존중): 팀원간 다른 객체임을 인정하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;존중&lt;/code&gt;하는 것&lt;/li&gt;
+  &lt;li&gt;Openess(정직): 업무상태를 &lt;code class=&quot;highlighter-rouge&quot;&gt;공개&lt;/code&gt;하고, 일의 효율성을 높이는 것&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;일할 때 기본적으로 너무 당연한 자세 아닌가 싶지만, 실제로 스크럼을 해보면…&lt;br /&gt;
+특히 한국인의 수직적인 정서상, 팀원 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;존중&lt;/code&gt;이 가장 어려운부분인것 같다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;scrum-process&quot;&gt;Scrum Process&lt;/h2&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_2.jpg&quot; alt=&quot;스크럼프로세스&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://brainhub.eu/blog/differences-lean-agile-scrum/&quot;&gt;https://brainhub.eu/blog/differences-lean-agile-scrum/&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;각 단계별 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성요소&lt;/code&gt;는 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Product Backlog: &lt;code class=&quot;highlighter-rouge&quot;&gt;전체&lt;/code&gt; 기간동안 개발해야하는 기능, 특성 및 기술에 대한 나열. 요구사항의 &lt;code class=&quot;highlighter-rouge&quot;&gt;우선순위&lt;/code&gt; 나열 필수&lt;/li&gt;
+  &lt;li&gt;Sprint Planning Meeting: 해당 스프린트의 기간, 수행해야할 목록등 해당 스프린트 &lt;code class=&quot;highlighter-rouge&quot;&gt;계획&lt;/code&gt; 수립&lt;/li&gt;
+  &lt;li&gt;Sprint Backlog: 해당 Sprint 기간 동안 수행하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Task 목록&lt;/code&gt;. Product Backlog에서 우선순위순으로 선택&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Scrum에서는 각 구성원이 주어진 역할을 잘 해내는것이 중요한데, 구성원들은 다음의 역할 중 하나를 따르게 된다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Product Owner(PO):
+    &lt;ul&gt;
+      &lt;li&gt;고객, 관리자 및 팀원 간의 합의를 도출해 목표 설정&lt;/li&gt;
+      &lt;li&gt;요구사항 정의, Product Backlog 간의 우선순위 조정&lt;/li&gt;
+      &lt;li&gt;Product Backlog 업데이트 수행&lt;/li&gt;
+      &lt;li&gt;제품을 사용할 고객이 직접 하거나, 비지니스 요구사항을 정의할 수 있는 사람&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Scrum Master(SM):
+    &lt;ul&gt;
+      &lt;li&gt;팀원들이 Scrum을 올바르게 할 수 있도록 가이드하는 역할&lt;/li&gt;
+      &lt;li&gt;최대한 객관적인 시각에서 Scrum의 원칙이 잘 적용될 수 있도록 도움&lt;/li&gt;
+      &lt;li&gt;문제 발생시, 해결하는 역할&lt;/li&gt;
+      &lt;li&gt;일이 끝났을 때, 잘 끝났는지 확인&lt;/li&gt;
+      &lt;li&gt;직책에 상관없이 수행 가능&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Scrum Team:
+    &lt;ul&gt;
+      &lt;li&gt;Backlog에 따라 Sprint 동안 개발하는 팀원&lt;/li&gt;
+      &lt;li&gt;Cross-functional한 롤을 가진 팀원들로 구성(개발자, 디자이너, 설계자 등)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Scrum이란 Scrum은 그 자체로 하나의 방법론이자, Agile의 실천 도구 중 하나이다. 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 이후 Agile 선언문이 발표되며 이러한 방법들이 Agile 이라는 깃발 아래 모여들었고 그 중 우리에게 익숙한 것이 Scrum이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 1</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 1" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;devops-등장배경&quot;&gt;DevOps 등장배경&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -71,10 +156,90 @@
   &lt;li&gt;&lt;a href=&quot;https://www.atlassian.com/ko/devops&quot;&gt;https://www.atlassian.com/ko/devops&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/devops#?&quot;&gt;https://www.redhat.com/ko/topics/devops#?&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://devops.com/using-calms-to-assess-organizations-devops/&quot;&gt;https://devops.com/using-calms-to-assess-organizations-devops/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 2</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicid-2.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 2" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicid-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicid-2.html"></content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 0</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 0" /><published>2020-01-07T09:41:00+09:00</published><updated>2020-01-07T09:41:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html">&lt;h4 id=&quot;요즘들어&quot;&gt;요즘들어&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DevOps&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt;와 같은 이야기들이 여기저기서 들린다. 
-사실 이러한 단어와 개념들이 나온지는 꽤 되었지만, 이제서야 대중화 되면서 적용하려는 많은 시도가 이루어지는 것 같다. 
-하지만, 본인부터 각 용어에 대한 지식이 얕기에 본 시리즈를 포스팅하며 학습할 예정이다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 2</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 2" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html">&lt;h2 id=&quot;agile&quot;&gt;Agile&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Agile: 날렵한, &lt;code class=&quot;highlighter-rouge&quot;&gt;민첩한&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Agile의 사전적 의미는 위와 같다. 
+그 중, 나는 후자에 가까운 의미가 더 어울린다는 생각이 든다. 
+민첩하게 무언가를 한다는 것은 고객에게 &lt;code class=&quot;highlighter-rouge&quot;&gt;빠르게&lt;/code&gt; 가치를 전달하는 요즘 개발의 방식과 잘 맞기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;결국 &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;은 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이다. 민첩하게 개발을 하기 위한 방법론. 
+그렇다면 왜 항상 Agile은 DevOps와 함께 거론되며, 어떠한 배경이 있었기에 새로운 방법론이 나오게 되었는지 알아보도록 하자.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;기존에는-무엇이-문제였는가&quot;&gt;기존에는 무엇이 문제였는가?&lt;/h2&gt;
+&lt;p&gt;늘 새로운 것이 나오는 이유는, 기존에 존재하던 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;현 상황&lt;/code&gt;에 잘 맞지 않기 때문이라 생각한다. 
+그렇다면 이 전에 존재하던 방법론은 무엇이었길래 문제였는가?&lt;/p&gt;
+
+&lt;p&gt;답은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Waterfall&lt;/code&gt; 이라 불리는 일명 ‘폭포수모델’은 개발 생태계를 지배하던 방법론이었다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;계획수립 - 요구분석 - 설계 - 개발 - 테스트 - 배포&lt;/code&gt;의 과정을 거치는 이 방법론은 다음과 같은 장점으로 오랫동안 생태계에 군림했다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;적용사례가 풍부&lt;/li&gt;
+  &lt;li&gt;전체 /현재 과정의 이해가 쉬움&lt;/li&gt;
+  &lt;li&gt;문서의 관리가 쉬움&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이 중, 1번 장점은 생각 외로 정말 큰 &lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;이다. 
+프로젝트의 크기가 크지 않고, 새로운 방법으로 도전할 리소스가 안된다면 충분히 재고할 가치가 있는 것이다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이러한 방법은 치명적인 단점을 안고 있는데, 바로 개발이&lt;code class=&quot;highlighter-rouge&quot;&gt;병행&lt;/code&gt;되거나 &lt;code class=&quot;highlighter-rouge&quot;&gt;반대로&lt;/code&gt; 진행되지 않는다는 것이다. 
+시장의 변화속도가 매우 빠르고, 다양한 요구사항이 등장하는 현대에는 적용하기 어려운 방법이기 때문이다. 
+더이상 테스트 중에 요구사항이 변경되어 처음부터 다시 시작해야하는 방법으로는 한계에 봉착한 사람들은 새로운 방법을 몰색하였고, 
+그 결과 &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;이 등장하게 되었다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;하지만 나는 늘 무조건 새로운 것이, 트렌디한 것이 정답은 &lt;code class=&quot;highlighter-rouge&quot;&gt;아니며&lt;/code&gt;,&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;상황에 맞는&lt;/code&gt; 방법을 잘 가져다가 쓰는 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;훌륭한 선택&lt;/code&gt;이고 &lt;code class=&quot;highlighter-rouge&quot;&gt;좋은 결과&lt;/code&gt;를 도출할 확률이 높다고 생각한다.&lt;br /&gt;
+waterfall도 요구사항이 &lt;code class=&quot;highlighter-rouge&quot;&gt;단순&lt;/code&gt;하고 변경 가능성이 &lt;code class=&quot;highlighter-rouge&quot;&gt;적거나&lt;/code&gt;, 프로젝트의 규모와 난이도가 &lt;code class=&quot;highlighter-rouge&quot;&gt;낮다면&lt;/code&gt; 충분히 고려할 만한 방법이라는 뜻이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;그래서-agile은&quot;&gt;그래서 Agile은&lt;/h2&gt;
+&lt;p&gt;단어 그대로 민첩한 개발에 중점을 두고 있다. 
+큰 계획을 수립하지 않고 주어진 요구 사항을 &lt;code class=&quot;highlighter-rouge&quot;&gt;스프린트&lt;/code&gt;에 맞춰 작은 단위로 &lt;code class=&quot;highlighter-rouge&quot;&gt;유연&lt;/code&gt;하게 개발하는 방식이다. 
+인터넷을 찾다보면 여러가지 어려운 말로 Agile을 설명하지만 결국 나는 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;문화&lt;/code&gt;라고 생각한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;빠르고 유연하게 개발하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;문화&lt;/code&gt;. 이 이상으로 Agile한 것이 무엇이 있을까&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;스프린트는&quot;&gt;스프린트는&lt;/h2&gt;
+&lt;p&gt;다음과 같은 과정으로 이루어 진다.&lt;br /&gt;
+&lt;img src=&quot;/img/cicd/cicd_2_1.jpg&quot; alt=&quot;스프린트&quot; /&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;고객의 피드백&lt;/li&gt;
+  &lt;li&gt;다양한 방법(스크럼등)을 통해 스프린트 목표 설정&lt;/li&gt;
+  &lt;li&gt;스프린트 진행&lt;/li&gt;
+  &lt;li&gt;배포&lt;/li&gt;
+  &lt;li&gt;1로 복귀
+    &lt;blockquote&gt;
+      &lt;p&gt;피드백을 받으며 지속적으로 배포하는 스프린트를 여러 번 진행하여 개발하는 것이 Agile 이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;우리도-agile하게-일해봐야지&quot;&gt;우리도 Agile하게 일해봐야지&lt;/h2&gt;
+&lt;p&gt;라는 생각은 &lt;code class=&quot;highlighter-rouge&quot;&gt;충분히&lt;/code&gt; 고려를 한 후, 적용하는 것이 좋다. 
+위에서도 언급했지만, 늘 Agile이 정답은 아니다. 많은 준비를 마친 후에 비로소 걸어가야 한다고 생각한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;그래서-devops와-agile은&quot;&gt;그래서 DevOps와 Agile은&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;연장선&lt;/code&gt;상에 있다고 생각한다. Agile의 목표가 빠른 소비자 피드백을 기반하여 개발을 진행 한다면, 
+DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &amp;amp; 배포가 가능하기 때문이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.sonim1.com/238&quot;&gt;https://blog.sonim1.com/238&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.sangheum.com/149&quot;&gt;https://www.sangheum.com/149&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Agile Agile: 날렵한, 민첩한</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 0</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 0" /><published>2020-01-07T09:41:00+09:00</published><updated>2020-01-07T09:41:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html">&lt;h4 id=&quot;개발을-하다-보면&quot;&gt;개발을 하다 보면&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DevOps&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt;와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 
+사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. &lt;br /&gt;
+하지만, 각 용어에 대한 지식이 얕기에 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.&lt;/p&gt;
 
 &lt;h4 id=&quot;나는&quot;&gt;나는&lt;/h4&gt;
 &lt;p&gt;새로운 개념을 익힐 때, &lt;code class=&quot;highlighter-rouge&quot;&gt;terminology(용어)&lt;/code&gt;를 굉장히 중요하게 생각하는 편이다. 
@@ -91,7 +256,7 @@
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;여전히&quot;&gt;여전히&lt;/h4&gt;
-&lt;p&gt;부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">요즘들어 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린다. 사실 이러한 단어와 개념들이 나온지는 꽤 되었지만, 이제서야 대중화 되면서 적용하려는 많은 시도가 이루어지는 것 같다. 하지만, 본인부터 각 용어에 대한 지식이 얕기에 본 시리즈를 포스팅하며 학습할 예정이다.</summary></entry><entry><title type="html">[Web] JSTL &amp;amp; c tag</title><link href="https://owin2828.github.io/devlog/2020/01/06/web-2.html" rel="alternate" type="text/html" title="[Web] JSTL &amp; c tag" /><published>2020-01-06T17:26:00+09:00</published><updated>2020-01-06T17:26:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/web-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/web-2.html">&lt;ul&gt;
+&lt;p&gt;부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영합니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">개발을 하다 보면 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. 하지만, 각 용어에 대한 지식이 얕기에 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.</summary></entry><entry><title type="html">[Web] JSTL &amp;amp; c tag</title><link href="https://owin2828.github.io/devlog/2020/01/06/web-2.html" rel="alternate" type="text/html" title="[Web] JSTL &amp; c tag" /><published>2020-01-06T17:26:00+09:00</published><updated>2020-01-06T17:26:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/web-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/web-2.html">&lt;ul&gt;
   &lt;li&gt;본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다.&lt;/li&gt;
   &lt;li&gt;출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
@@ -673,81 +838,4 @@
       &lt;li&gt;추상클래스는 단일상속이지만 interface는 &lt;code class=&quot;highlighter-rouge&quot;&gt;다중 상속&lt;/code&gt;이 가능(extends + implements)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 추상화 클래스와 인터페이스의 공통점 및 차이에 대해 알아보도록 한다. 출처: https://bit.ly/2ZwNFGa</summary></entry><entry><title type="html">[Java] try~catch~finally</title><link href="https://owin2828.github.io/devlog/2020/01/06/java-1.html" rel="alternate" type="text/html" title="[Java] try~catch~finally" /><published>2020-01-06T16:59:00+09:00</published><updated>2020-01-06T16:59:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/java-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/java-1.html">&lt;h2 id=&quot;java에서-try--catch--finally-문에서-return-위치에-따른-결과&quot;&gt;java에서 try ~ catch ~ finally 문에서 return 위치에 따른 결과&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 return 문의 위치에 따라 어떤 결과가 나오는지 살펴보도록 한다.&lt;/li&gt;
-  &lt;li&gt;출처: &lt;a href=&quot;https://bit.ly/2MGVKWY&quot;&gt;https://bit.ly/2MGVKWY&lt;/a&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1-return이-try-문-안에-있을-경우&quot;&gt;1. return이 try 문 안에 있을 경우&lt;/h3&gt;
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TryCatchFinallyTrick&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The output is: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am finally.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;위의 예제 코드를 보며 실행 결과를 예측해보면 대부분 &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt;이라 생각할 것이다.&lt;br /&gt;
-하지만 우리의 예상과는 달리 실행결과는 아래와 같다.
-    &lt;blockquote&gt;
-      &lt;p&gt;[실행결과] &lt;br /&gt;
-I am try  &lt;br /&gt;
-I am finally. &lt;br /&gt;
-The output is: &lt;code class=&quot;highlighter-rouge&quot;&gt;4&lt;/code&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;어째서 이런 결과가 발생할까?&lt;br /&gt;
-다른 예제를 통해 좀 더 깊게 살펴보도록 하자.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-return이-fianlly-문-안에-있을-경우&quot;&gt;2. return이 fianlly 문 안에 있을 경우&lt;/h3&gt;
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TryCatchFinallyTrick2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The output is: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;try&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;catch&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I am finally.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;finally&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;또 다른 예제 코드를 보면, 위의 코드에서는 finally와 try 문 두 군데에 return이 위치함을 알 수 있다.&lt;/li&gt;
-  &lt;li&gt;위와 같은 상황에서는 과연 어떤 실행결과를 출력할 것인가?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;[실행결과]&lt;br /&gt;
-I am try&lt;br /&gt;
-I am finally.&lt;br /&gt;
-The output is: &lt;code class=&quot;highlighter-rouge&quot;&gt;finally&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">java에서 try ~ catch ~ finally 문에서 return 위치에 따른 결과 본 문서에서는 return 문의 위치에 따라 어떤 결과가 나오는지 살펴보도록 한다. 출처: https://bit.ly/2MGVKWY</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 추상화 클래스와 인터페이스의 공통점 및 차이에 대해 알아보도록 한다. 출처: https://bit.ly/2ZwNFGa</summary></entry></feed>
