@@ -55,15 +55,16 @@
             | Devlog
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
             <a class="dropdown-item" href="/devlog/java">Java</a>
-            <a class="dropdown-item" href="/devlog/node">Node.js</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
             <a class="dropdown-item" href="/devlog/spring">Spring</a>
             <a class="dropdown-item" href="/devlog/web">Web</a>
           </div>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/contact">| Contact</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" href="/search">
             <i class="fa fa-search" aria-hidden="true"></i> Search
@@ -108,6 +109,39 @@
 
 <script>
   window.store = {
+    
+      "devlog-2020-01-07-cicid-2-html": {
+        "title": "[CI/CD] DevOps Full Chain - 2",
+        "subtitle":"Agile..?",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "cicd",
+        "content": "",
+        "url": "/devlog/2020/01/07/cicid-2.html"
+      }
+      ,
+    
+      "devlog-2020-01-07-cicd-1-html": {
+        "title": "[CI/CD] DevOps Full Chain - 1",
+        "subtitle":"DevOps란 무엇인가?",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "cicd",
+        "content": "DevOps 등장배경  DevOps = Development + Operations하나의 소프트웨어를 개발하기 위해 여러 개발자가 동시에 협업하여 빠르게 개발할 수 있는 환경이 필요하며, 수많은 사용자를 상대로 서비스를 오픈하기 위해 안정적인 인프라가 필요하다. 이러한 모순되는 두 가지, 신속함과 안정성에서 개발자와 운영자간의 충돌이 발생하게 된다.이러한 배경에서 등장하게 된 것이 DevOps이다. 자동화를 핵심으로 두 역할 간의 간극을 좁히게 해주며, 업무와 정보 또한 쉽게 공유하게 해준다. 더이상 통합 빌드를 특정 시점에 진행하는 것이 아니라, 주기적으로 수행하며 오류를 사전에 방지하고 시간을 단축한다.DevOps 핵심요소DevOps의 핵심요소는 CALMS로 다음과 같은 5가지 요소로 이루어져있다.  Culture(문화)  Automation(자동화)  Lean(간소화)  Measurement(측정)  Share(공유)Culture(문화)  DevOps 문화 = 협업DevOps의 문화는 도구의 문제가 아니라, 사람 간의 문제를 해결하기 위해 등장했다.Automation(자동화)  개발, 테스트 및 배포의 핵심요소자동화를 통해 막대한 이익을 얻을 수 있으며, 이는 곧 CI(지속적인 통합)과  CD(지속적인 배포)로 구성된다.또한 개발자와 운영자가 서로 업데이트한 내용을 자동화하여 확인함으로써, 즉각적인 소통을 가능하게 한다.Lean(간소화)  낭비를 제거하고 고객에게 가치를 빠르게 전달끊임없이 문제를 찾고, 해결하고, 개선하는 사고방식을 의미한다.Measurement(측정)  여러가지를 측정하고, 측정 결과를 가시화하여 보여줌실질적인 데이터를 가시화하여 제공하므로써, 지속적인 개선을 향한 노력이 실제 개선으로 나아가는지 확인 가능하다.Share(공유)  성공 여부와 상관없이 서로의 경험을 공유서로 경험을 공유함으로써, 마찰을 줄이고 서로 간의 경계를 허무는 발판이 된다.Reference  https://www.atlassian.com/ko/devops  https://www.redhat.com/ko/topics/devops#?  https://devops.com/using-calms-to-assess-organizations-devops/",
+        "url": "/devlog/2020/01/07/cicd-1.html"
+      }
+      ,
+    
+      "devlog-2020-01-07-cicd-0-html": {
+        "title": "[CI/CD] DevOps Full Chain - 0",
+        "subtitle":"데브옵스, 에자일 그리고 CI/CD 시리즈",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "cicd",
+        "content": "요즘들어DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린다. 사실 이러한 단어와 개념들이 나온지는 꽤 되었지만, 이제서야 대중화 되면서 적용하려는 많은 시도가 이루어지는 것 같다. 하지만, 본인부터 각 용어에 대한 지식이 얕기에 본 시리즈를 포스팅하며 학습할 예정이다.나는새로운 개념을 익힐 때, terminology(용어)를 굉장히 중요하게 생각하는 편이다. 약간 꼰대같이 들릴 수도 있지만, 단어를 먼저 이해하는 것이 지식의 본질에 접근하는 가장 정직하고 빠른 길이라고 느껴지기 때문이다. 이러한 관점에서, 새로운 단어의 의미를 알기 위해서는 그 단어가 나오게 된 배경을 아는 것이 이해를 위한 첫 걸음이라 생각하며 포스팅을 시작하고자 한다.앞으로이어지게 될 CI/CD 포스팅 시리즈는 각 개념에 대해 정의와 등장배경을 포스팅하며, 크게 다음과 같은 내용을 다룰 예정이다.  DevOps  Agile  CI/CD여전히부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영이다.",
+        "url": "/devlog/2020/01/07/cicd-0.html"
+      }
+      ,
     
       "devlog-2020-01-06-web-2-html": {
         "title": "[Web] JSTL &amp; c tag",
