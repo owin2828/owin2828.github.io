@@ -63,9 +63,9 @@
             <a class="dropdown-item" href="/devlog/web">Web</a>
           </div>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/contact">| Contact</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" href="/search">
             <i class="fa fa-search" aria-hidden="true"></i> Search
@@ -79,7 +79,7 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/bg-contact.jpg')">
+<header class="masthead" style="background-image: url('/img/background_contact.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
@@ -88,7 +88,7 @@
           <div class="page-heading">
             <h1>Contact Me</h1>
             
-            <span class="subheading">Have questions? I have answers.</span>
+            <span class="subheading">궁금한 점이 있다면 언제든지 연락주세요</span>
             
           </div>
         </div>
@@ -100,40 +100,42 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
-<form name="sentMessage" id="contactForm" novalidate>
+        <p>다음 내용을 채워서 연락주시면 빠른 시일 내에 답변 드리겠습니다 :)</p>
+<form name="sentMessage" id="contactForm" novalidate action="https://formspree.io/mpzqvjkd" method="post">
+  <input type="hidden" name="_subject" value="블로그에서 새로운 연락이 왔습니다." />
+  <input type="text" name="_gotcha" style="display:none" />
   <div class="control-group">
     <div class="form-group floating-label-form-group controls">
       <label>Name</label>
-      <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+      <input type="text" class="form-control" placeholder="Name" id="name" name="name">
       <p class="help-block text-danger"></p>
     </div>
   </div>
   <div class="control-group">
     <div class="form-group floating-label-form-group controls">
       <label>Email Address</label>
-      <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
+      <input type="email" class="form-control" placeholder="Email Address" id="email" name="_replyto">
       <p class="help-block text-danger"></p>
     </div>
   </div>
-  <div class="control-group">
+  <!-- <div class="control-group">
     <div class="form-group col-xs-12 floating-label-form-group controls">
       <label>Phone Number</label>
-      <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
+      <input type="tel" class="form-control" placeholder="Phone Number" id="phone" name="phone">
       <p class="help-block text-danger"></p>
     </div>
-  </div>
+  </div> -->
   <div class="control-group">
     <div class="form-group floating-label-form-group controls">
       <label>Message</label>
-      <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+      <textarea rows="5" class="form-control" placeholder="Message" id="message" name="message"></textarea>
       <p class="help-block text-danger"></p>
     </div>
   </div>
   <br>
   <div id="success"></div>
   <div class="form-group">
-    <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+    <button type="submit" class="btn btn-movepage" id="sendMessageButton">Send</button>
   </div>
 </form>
 
@@ -183,7 +185,7 @@
 </footer>
 
 
-  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+  <!-- <script src="/assets/vendor/jquery/jquery.min.js"></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
 
@@ -267,7 +269,7 @@
     });
   </script>
 
-
+ -->
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
