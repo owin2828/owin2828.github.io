@@ -100,7 +100,8 @@ img::-moz-selection {
           color: rgba(255, 255, 255, 0.8); }
       #mainNav .navbar-nav > li.nav-item > .dropdown-menu > .dropdown-item {
         padding: 10px 20px;
-        color: #fff; }
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.8); }
         #mainNav .navbar-nav > li.nav-item > .dropdown-menu > .dropdown-item:hover {
           color: rgba(255, 255, 255, 0.8); } }
   @media only screen and (min-width: 992px) {

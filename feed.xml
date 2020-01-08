@@ -1,20 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T16:35:22+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
-&lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
-긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
-인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;ci--cd&quot;&gt;CI / CD&lt;/h2&gt;
-
-&lt;p&gt;timeout 5 bash -c ‘cat &amp;lt; /dev/null &amp;gt; /dev/tcp/10.217.65.18/8081’; echo $?&lt;/p&gt;
-
-&lt;p&gt;curl -v telnet://10.217.65.18:8081&lt;/p&gt;
-
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://needjarvis.tistory.com/317&quot;&gt;https://needjarvis.tistory.com/317&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">드디어 CI/CD까지 도착하여 포스팅을 하게 되었다. 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다. 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.</summary></entry><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T13:17:00+09:00</published><updated>2020-01-08T13:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T17:05:43+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 다음은 지극히 &lt;code class=&quot;highlighter-rouge&quot;&gt;주관적인&lt;/code&gt; 순서대로 쉬운? 방법이다.&lt;br /&gt;
@@ -85,7 +69,25 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echo $?&lt;/code&gt;는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 다음은 지극히 주관적인 순서대로 쉬운? 방법이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 다음은 지극히 주관적인 순서대로 쉬운? 방법이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
+&lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
+긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
+인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ci--cd&quot;&gt;CI / CD&lt;/h2&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_4_1.png&quot; alt=&quot;CI/CD&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;인터넷을 찾아보면 수 많은 &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt; pipe-line 관련 이미지가 나온다.&lt;br /&gt;
+그 중 위 이미지는 가장 간략하고 정확하게 CI/CD의 개요에 대해 설명하는 그림인것 같아 가져와봤다.&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">드디어 CI/CD까지 도착하여 포스팅을 하게 되었다. 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다. 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
 &lt;p&gt;Scrum은 그 자체로 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이자, Agile의 &lt;code class=&quot;highlighter-rouge&quot;&gt;실천 도구&lt;/code&gt; 중 하나이다.&lt;br /&gt;
 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다.&lt;br /&gt;
 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다.&lt;br /&gt;
