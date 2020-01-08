@@ -94,7 +94,7 @@
               <a href="#">owin2828</a>
               on 16:03:00 January 07, 2020 &middot; <span class="reading-time" title="Estimated read time">
   
-   3 mins  read </span>
+   4 mins  read </span>
 
             </span>
           </div>
@@ -158,6 +158,10 @@
 <p><img src="/img/cicd/cicd_3_2.jpg" alt="스크럼프로세스" width="85%" height="85%" /></p>
   <figcaption>출처: <a href="https://brainhub.eu/blog/differences-lean-agile-scrum/">https://brainhub.eu/blog/differences-lean-agile-scrum/</a></figcaption>
 </figure>
+<p>Scrum 진행은 Broduct Backlog에서 한 Sprint에 수행할 작업들을 <code class="highlighter-rouge">도출</code>한 뒤, 
+매일 이루어지는 <code class="highlighter-rouge">Daily scrum</code>을 통해 팀원들의 업무 진척 상황을 공유하고 필요시 <code class="highlighter-rouge">지원</code>을 하는 방식으로 이루어진다. 
+해당 Sprint가 끝나면 Sprint <code class="highlighter-rouge">리뷰</code>를 통해 다음 Sprint의 완급을 조절하며 이 과정을 <code class="highlighter-rouge">반복</code>한다.</p>
+
 <p>각 단계별 <code class="highlighter-rouge">구성요소</code>는 다음과 같다.</p>
 <ul>
   <li>Product Backlog: <code class="highlighter-rouge">전체</code> 기간동안 개발해야하는 기능, 특성 및 기술에 대한 나열. 요구사항의 <code class="highlighter-rouge">우선순위</code> 나열 필수</li>
@@ -169,30 +173,44 @@
 <ul>
   <li>Product Owner(PO):
     <ul>
-      <li>고객, 관리자 및 팀원 간의 합의를 도출해 목표 설정</li>
-      <li>요구사항 정의, Product Backlog 간의 우선순위 조정</li>
-      <li>Product Backlog 업데이트 수행</li>
-      <li>제품을 사용할 고객이 직접 하거나, 비지니스 요구사항을 정의할 수 있는 사람</li>
+      <li>고객, 관리자 및 팀원 간의 합의를 도출해 <code class="highlighter-rouge">목표</code> 설정</li>
+      <li>요구사항 정의, Product Backlog 간의 <code class="highlighter-rouge">우선순위</code> 조정</li>
+      <li>Product Backlog <code class="highlighter-rouge">업데이트</code> 수행</li>
+      <li>제품을 사용할 고객이 <code class="highlighter-rouge">직접</code> 하거나, 비지니스 요구사항을 <code class="highlighter-rouge">정의</code>할 수 있는 사람</li>
     </ul>
   </li>
   <li>Scrum Master(SM):
     <ul>
-      <li>팀원들이 Scrum을 올바르게 할 수 있도록 가이드하는 역할</li>
-      <li>최대한 객관적인 시각에서 Scrum의 원칙이 잘 적용될 수 있도록 도움</li>
-      <li>문제 발생시, 해결하는 역할</li>
+      <li>팀원들이 Scrum을 올바르게 할 수 있도록 <code class="highlighter-rouge">가이드</code>하는 역할</li>
+      <li>최대한 <code class="highlighter-rouge">객관적인</code> 시각에서 Scrum의 원칙이 잘 적용될 수 있도록 도움</li>
+      <li>문제 발생시, <code class="highlighter-rouge">해결</code>하는 역할</li>
       <li>일이 끝났을 때, 잘 끝났는지 확인</li>
-      <li>직책에 상관없이 수행 가능</li>
+      <li>직책에 <code class="highlighter-rouge">상관없이</code> 수행 가능</li>
     </ul>
   </li>
   <li>Scrum Team:
     <ul>
       <li>Backlog에 따라 Sprint 동안 개발하는 팀원</li>
-      <li>Cross-functional한 롤을 가진 팀원들로 구성(개발자, 디자이너, 설계자 등)</li>
+      <li><code class="highlighter-rouge">Cross-functional</code>한 롤을 가진 팀원들로 구성(개발자, 디자이너, 설계자 등)</li>
     </ul>
   </li>
 </ul>
 
-<p><br /></p>
+<p>그 외 산출물로써는 <code class="highlighter-rouge">Burn Down Chart</code>가 존재하며, 각 Task별로 작업량을 측정한 뒤 작업량의 총 합에서 완료한 Task들의 작업량을 빼가며 
+그래프의 하강 기울기를 통해 다음 Sprint의 진행을 조절한다.</p>
+
+<blockquote>
+  <p>기존의 <code class="highlighter-rouge">Top-Down</code>방식과는 달리 Scrum에는 PM과 같은 직책이 존재하지 않는다. 
+그저 서로간의 <code class="highlighter-rouge">존중</code>을 바탕으로 팀원간의 소통과 협업을 최대로 이끌어내며 일하는 것이 목표이며, 
+Scrum Master는 권력자나 리더가 아니라 그저 <code class="highlighter-rouge">조력자</code>에 불과한 직책으로 늘 팀원들에게 귀기울이며 의견을 들어야 한다.</p>
+</blockquote>
+
+<blockquote>
+  <p>또한, 실제로 Scrum을 하다보면 Daily meeting이 서로 간의 감시와 업무 보고의 연장선이라고 느낄 수 있다. 
+하지만 Scrum Master가 팀원들을 강압적으로 압박하지 않고, Daily meeting의 목적이 <code class="highlighter-rouge">우선순위</code>에 따라 Task를 수행하며 
+우선순위가 높은 Task에 <code class="highlighter-rouge">도움</code>이 필요하다면, 자발적으로 팀원들이 본인의 Task를 제쳐두고 도움을 주는 것임을 팀원들이 숙지하도록 <code class="highlighter-rouge">도와주는</code> 것이 중요하다.  <br />
+<br /></p>
+</blockquote>
 
 
         <hr>

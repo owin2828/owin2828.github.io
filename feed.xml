@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-07T18:01:51+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T09:03:31+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
 &lt;p&gt;Scrum은 그 자체로 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이자, Agile의 &lt;code class=&quot;highlighter-rouge&quot;&gt;실천 도구&lt;/code&gt; 중 하나이다. 
 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 
 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 
@@ -49,6 +49,10 @@
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_2.jpg&quot; alt=&quot;스크럼프로세스&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://brainhub.eu/blog/differences-lean-agile-scrum/&quot;&gt;https://brainhub.eu/blog/differences-lean-agile-scrum/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
+&lt;p&gt;Scrum 진행은 Broduct Backlog에서 한 Sprint에 수행할 작업들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;도출&lt;/code&gt;한 뒤, 
+매일 이루어지는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Daily scrum&lt;/code&gt;을 통해 팀원들의 업무 진척 상황을 공유하고 필요시 &lt;code class=&quot;highlighter-rouge&quot;&gt;지원&lt;/code&gt;을 하는 방식으로 이루어진다. 
+해당 Sprint가 끝나면 Sprint &lt;code class=&quot;highlighter-rouge&quot;&gt;리뷰&lt;/code&gt;를 통해 다음 Sprint의 완급을 조절하며 이 과정을 &lt;code class=&quot;highlighter-rouge&quot;&gt;반복&lt;/code&gt;한다.&lt;/p&gt;
+
 &lt;p&gt;각 단계별 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성요소&lt;/code&gt;는 다음과 같다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Product Backlog: &lt;code class=&quot;highlighter-rouge&quot;&gt;전체&lt;/code&gt; 기간동안 개발해야하는 기능, 특성 및 기술에 대한 나열. 요구사항의 &lt;code class=&quot;highlighter-rouge&quot;&gt;우선순위&lt;/code&gt; 나열 필수&lt;/li&gt;
@@ -60,30 +64,44 @@
 &lt;ul&gt;
   &lt;li&gt;Product Owner(PO):
     &lt;ul&gt;
-      &lt;li&gt;고객, 관리자 및 팀원 간의 합의를 도출해 목표 설정&lt;/li&gt;
-      &lt;li&gt;요구사항 정의, Product Backlog 간의 우선순위 조정&lt;/li&gt;
-      &lt;li&gt;Product Backlog 업데이트 수행&lt;/li&gt;
-      &lt;li&gt;제품을 사용할 고객이 직접 하거나, 비지니스 요구사항을 정의할 수 있는 사람&lt;/li&gt;
+      &lt;li&gt;고객, 관리자 및 팀원 간의 합의를 도출해 &lt;code class=&quot;highlighter-rouge&quot;&gt;목표&lt;/code&gt; 설정&lt;/li&gt;
+      &lt;li&gt;요구사항 정의, Product Backlog 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;우선순위&lt;/code&gt; 조정&lt;/li&gt;
+      &lt;li&gt;Product Backlog &lt;code class=&quot;highlighter-rouge&quot;&gt;업데이트&lt;/code&gt; 수행&lt;/li&gt;
+      &lt;li&gt;제품을 사용할 고객이 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt; 하거나, 비지니스 요구사항을 &lt;code class=&quot;highlighter-rouge&quot;&gt;정의&lt;/code&gt;할 수 있는 사람&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Scrum Master(SM):
     &lt;ul&gt;
-      &lt;li&gt;팀원들이 Scrum을 올바르게 할 수 있도록 가이드하는 역할&lt;/li&gt;
-      &lt;li&gt;최대한 객관적인 시각에서 Scrum의 원칙이 잘 적용될 수 있도록 도움&lt;/li&gt;
-      &lt;li&gt;문제 발생시, 해결하는 역할&lt;/li&gt;
+      &lt;li&gt;팀원들이 Scrum을 올바르게 할 수 있도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;가이드&lt;/code&gt;하는 역할&lt;/li&gt;
+      &lt;li&gt;최대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;객관적인&lt;/code&gt; 시각에서 Scrum의 원칙이 잘 적용될 수 있도록 도움&lt;/li&gt;
+      &lt;li&gt;문제 발생시, &lt;code class=&quot;highlighter-rouge&quot;&gt;해결&lt;/code&gt;하는 역할&lt;/li&gt;
       &lt;li&gt;일이 끝났을 때, 잘 끝났는지 확인&lt;/li&gt;
-      &lt;li&gt;직책에 상관없이 수행 가능&lt;/li&gt;
+      &lt;li&gt;직책에 &lt;code class=&quot;highlighter-rouge&quot;&gt;상관없이&lt;/code&gt; 수행 가능&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Scrum Team:
     &lt;ul&gt;
       &lt;li&gt;Backlog에 따라 Sprint 동안 개발하는 팀원&lt;/li&gt;
-      &lt;li&gt;Cross-functional한 롤을 가진 팀원들로 구성(개발자, 디자이너, 설계자 등)&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Cross-functional&lt;/code&gt;한 롤을 가진 팀원들로 구성(개발자, 디자이너, 설계자 등)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Scrum이란 Scrum은 그 자체로 하나의 방법론이자, Agile의 실천 도구 중 하나이다. 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 이후 Agile 선언문이 발표되며 이러한 방법들이 Agile 이라는 깃발 아래 모여들었고 그 중 우리에게 익숙한 것이 Scrum이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 1</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 1" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;그 외 산출물로써는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Burn Down Chart&lt;/code&gt;가 존재하며, 각 Task별로 작업량을 측정한 뒤 작업량의 총 합에서 완료한 Task들의 작업량을 빼가며 
+그래프의 하강 기울기를 통해 다음 Sprint의 진행을 조절한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;기존의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Top-Down&lt;/code&gt;방식과는 달리 Scrum에는 PM과 같은 직책이 존재하지 않는다. 
+그저 서로간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;존중&lt;/code&gt;을 바탕으로 팀원간의 소통과 협업을 최대로 이끌어내며 일하는 것이 목표이며, 
+Scrum Master는 권력자나 리더가 아니라 그저 &lt;code class=&quot;highlighter-rouge&quot;&gt;조력자&lt;/code&gt;에 불과한 직책으로 늘 팀원들에게 귀기울이며 의견을 들어야 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;또한, 실제로 Scrum을 하다보면 Daily meeting이 서로 간의 감시와 업무 보고의 연장선이라고 느낄 수 있다. 
+하지만 Scrum Master가 팀원들을 강압적으로 압박하지 않고, Daily meeting의 목적이 &lt;code class=&quot;highlighter-rouge&quot;&gt;우선순위&lt;/code&gt;에 따라 Task를 수행하며 
+우선순위가 높은 Task에 &lt;code class=&quot;highlighter-rouge&quot;&gt;도움&lt;/code&gt;이 필요하다면, 자발적으로 팀원들이 본인의 Task를 제쳐두고 도움을 주는 것임을 팀원들이 숙지하도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;도와주는&lt;/code&gt; 것이 중요하다.  &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Scrum이란 Scrum은 그 자체로 하나의 방법론이자, Agile의 실천 도구 중 하나이다. 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 이후 Agile 선언문이 발표되며 이러한 방법들이 Agile 이라는 깃발 아래 모여들었고 그 중 우리에게 익숙한 것이 Scrum이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 1</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 1" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;devops-등장배경&quot;&gt;DevOps 등장배경&lt;/h2&gt;
 &lt;blockquote&gt;
