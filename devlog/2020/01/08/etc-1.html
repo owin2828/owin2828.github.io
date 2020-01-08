@@ -122,29 +122,29 @@
 즉, ping으로는 port 확인이 <code class="highlighter-rouge">불가능</code>하다.</p>
 </blockquote>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>ping <span class="o">[</span>IP]
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping <span class="o">[</span>IP]
 
-    // 예시
-    <span class="nv">$ </span>ping 8.8.8.8
+// 예시
+<span class="nv">$ </span>ping 8.8.8.8
 </code></pre></div></div>
 <p><br /></p>
 
 <h4 id="2-telnet">2. Telnet</h4>
 <p>특정 port를 확인해야 할 경우</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>telnet <span class="o">[</span>IP] <span class="o">[</span>PORT]  
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>telnet <span class="o">[</span>IP] <span class="o">[</span>PORT]  
 
-    // 예시
-    <span class="nv">$ </span>telnet 100.1.1.1 8080
+// 예시
+<span class="nv">$ </span>telnet 100.1.1.1 8080
 </code></pre></div></div>
 <p><br /></p>
 
 <h4 id="3-ncnetcat">3. nc(NetCat)</h4>
 <p>일반적으로 UNIX의 <code class="highlighter-rouge">cat</code>명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.<br />
 포트 확인 기능 말고도 다양한 기능으로 사용이 된다.</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>nc <span class="nt">-z</span> <span class="o">[</span>IP] <span class="o">[</span>PORT]
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nc <span class="nt">-z</span> <span class="o">[</span>IP] <span class="o">[</span>PORT]
 
-    // 예시
-    <span class="nv">$ </span>nc <span class="nt">-z</span> 100.1.1.1 8080
+// 예시
+<span class="nv">$ </span>nc <span class="nt">-z</span> 100.1.1.1 8080
 </code></pre></div></div>
 <p><br /></p>
 
@@ -155,10 +155,10 @@
   <p>따라서 <code class="highlighter-rouge">curl</code>의 parameter중 URL telnet 스키마를 사용</p>
 </blockquote>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>curl <span class="nt">-v</span> telnet://[IP]:PORT  
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-v</span> telnet://[IP]:PORT  
 
-    // 예시
-    <span class="nv">$ </span>curl <span class="nt">-v</span> telnet://100.1.1.1:8080
+// 예시
+<span class="nv">$ </span>curl <span class="nt">-v</span> telnet://100.1.1.1:8080
 </code></pre></div></div>
 <p><br /></p>
 
@@ -167,14 +167,14 @@
 <code class="highlighter-rouge">shell</code>에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.<br />
 TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $ timeout 5 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/[IP]/[PORT]'; echo $?
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">timeout </span>5 bash <span class="nt">-c</span> <span class="s1">'cat &lt; /dev/null &gt; /dev/tcp/[IP]/[PORT]'</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
 
-    // 예시
-    $ timeout 5 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/100.1.1.1/8080'; echo $?
-    // 결과
-    $ 0   // 성공 
-    $ 1   // 실패 연결 전 에러(hostname not known등 오류)
-    $ 124 // 실패 Timeout 에러
+// 예시
+<span class="nv">$ </span><span class="nb">timeout </span>5 bash <span class="nt">-c</span> <span class="s1">'cat &lt; /dev/null &gt; /dev/tcp/100.1.1.1/8080'</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
+// 결과
+<span class="nv">$ </span>0   // 성공 
+<span class="nv">$ </span>1   // 실패 연결 전 에러<span class="o">(</span><span class="nb">hostname </span>not known등 오류<span class="o">)</span>
+<span class="nv">$ </span>124 // 실패 Timeout 에러
 </code></pre></div></div>
 
 <blockquote>

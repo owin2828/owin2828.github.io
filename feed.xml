@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T16:00:36+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T16:35:22+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
 &lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
@@ -28,29 +28,29 @@
 즉, ping으로는 port 확인이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP]
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP]
 
-    // 예시
-    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping 8.8.8.8
+// 예시
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping 8.8.8.8
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;2-telnet&quot;&gt;2. Telnet&lt;/h4&gt;
 &lt;p&gt;특정 port를 확인해야 할 경우&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]  
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]  
 
-    // 예시
-    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet 100.1.1.1 8080
+// 예시
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet 100.1.1.1 8080
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;3-ncnetcat&quot;&gt;3. nc(NetCat)&lt;/h4&gt;
 &lt;p&gt;일반적으로 UNIX의 &lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.&lt;br /&gt;
 포트 확인 기능 말고도 다양한 기능으로 사용이 된다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]
 
-    // 예시
-    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; 100.1.1.1 8080
+// 예시
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; 100.1.1.1 8080
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -61,10 +61,10 @@
   &lt;p&gt;따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;의 parameter중 URL telnet 스키마를 사용&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://[IP]:PORT  
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://[IP]:PORT  
 
-    // 예시
-    &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://100.1.1.1:8080
+// 예시
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://100.1.1.1:8080
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -73,14 +73,14 @@
 &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt;에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.&lt;br /&gt;
 TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    $ timeout 5 bash -c 'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/[IP]/[PORT]'; echo $?
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;timeout &lt;/span&gt;5 bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/[IP]/[PORT]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
 
-    // 예시
-    $ timeout 5 bash -c 'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/100.1.1.1/8080'; echo $?
-    // 결과
-    $ 0   // 성공 
-    $ 1   // 실패 연결 전 에러(hostname not known등 오류)
-    $ 124 // 실패 Timeout 에러
+// 예시
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;timeout &lt;/span&gt;5 bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/100.1.1.1/8080'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+// 결과
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;0   // 성공 
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;1   // 실패 연결 전 에러&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hostname &lt;/span&gt;not known등 오류&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;124 // 실패 Timeout 에러
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;blockquote&gt;
