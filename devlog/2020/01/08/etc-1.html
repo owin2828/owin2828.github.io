@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [Web] Get VS Post - 낮코밤코
+    기본 설정으로 포트 확인하기 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다. 출처: https://bit.ly/31M2YN8">
+  <meta name="description" content="외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 다음은 지극히 주관적인 순서대로 쉬운? 방법이다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/06/web-1.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -80,22 +80,22 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+<header class="masthead" style="background-image: url('/img/background_etc.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[Web] Get VS Post</h1>
+            <h1>기본 설정으로 포트 확인하기</h1>
             
-            <h2 class="subheading">HTTP 프로토콜에 대한 분석</h2>
+            <h2 class="subheading">ping, telnet, nc, curl, bash</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 17:22:00 January 06, 2020 &middot; <span class="reading-time" title="Estimated read time">
+              on 13:17:00 January 08, 2020 &middot; <span class="reading-time" title="Estimated read time">
   
-   1 min  read </span>
+   2 mins  read </span>
 
             </span>
           </div>
@@ -108,65 +108,78 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <ul>
-  <li>본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다.</li>
-  <li>출처: <a href="https://bit.ly/31M2YN8">https://bit.ly/31M2YN8</a> <br />
-<br /></li>
-</ul>
-
-<h2 id="0-들어가기-앞서">0. 들어가기 앞서</h2>
-<ul>
-  <li>사용자는 단순히 <code class="highlighter-rouge">URL</code>을 입력하여 페이지로 이동을 하지만, 서버 내부에서는 클라이언트의 <code class="highlighter-rouge">요청</code>에 응답하기 위해 <code class="highlighter-rouge">처리</code>를 해주어야 함</li>
-  <li>이 때,  클라이언트가 서버로 요청을 보내는 방법인 <code class="highlighter-rouge">HTTP Method</code>에는 크게 다음과 같은 2가지 방법이 존재
-    <ul>
-      <li><code class="highlighter-rouge">GET</code></li>
-      <li><code class="highlighter-rouge">POST</code><br />
-<br /></li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="1-get-방식">1. GET 방식</h2>
-<p>GET은 어떤 정보를 가져와 <code class="highlighter-rouge">조회</code>하기 위해 사용하며, 간단한 데이터를 <code class="highlighter-rouge">URL</code>에 넣도록 설계된 방식으로 다음과 같은 특징을 지님</p>
-
-<h3 id="1-1-get-방식의-특징">1-1. GET 방식의 특징</h3>
-<ul>
-  <li>URL에 변수(데이터)를 <code class="highlighter-rouge">포함</code>시켜 요청</li>
-  <li>데이터를 Header에 <code class="highlighter-rouge">포함</code>하여 전송</li>
-  <li>URL에 데이터가 <code class="highlighter-rouge">노출</code></li>
-  <li>전송하는 길이에 <code class="highlighter-rouge">제한</code></li>
-  <li><code class="highlighter-rouge">캐싱</code>이 가능</li>
-  <li>형식
-    <ul>
-      <li>URL?변수명1=값1&amp;변수명2=값2&amp;변수명3=값3&amp;…</li>
-      <li>다음과 같이 직접 URI를 입력하여 요청가능
-        <blockquote>
-          <p>/hello/test.php?name1=value1&amp;name2=value2<br />
+        <h2 id="외부-서버의-포트가-살아있는지-open여부를-점검하기">외부 서버의 포트가 살아있는지 open여부를 점검하기</h2>
+<p>이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.<br />
+나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.<br />
+다음은 지극히 <code class="highlighter-rouge">주관적인</code> 순서대로 쉬운? 방법이다.<br />
 <br /></p>
-        </blockquote>
-      </li>
-    </ul>
-  </li>
-</ul>
 
-<h2 id="2-post-방식">2. POST 방식</h2>
-<p>POST 방식은 데이터를 서버로 제출하여 <code class="highlighter-rouge">추가</code> 또는 <code class="highlighter-rouge">수정</code>하기 위해서 데이터를 전송하는 방식으로 다음과 같은 특징을 지님</p>
+<h4 id="1-ping">1. Ping</h4>
+<p>포트고 뭐고 필요 없을 때</p>
+<blockquote>
+  <p><code class="highlighter-rouge">ping</code>은 port를 <code class="highlighter-rouge">사용하지 않는다</code>.<br />
+이유는 TCP/IP 계층에서 사용되고, port가 사용되는 상위 계층인 TCP/UDP 와는 상관이 없기 때문이다.<br />
+즉, ping으로는 port 확인이 <code class="highlighter-rouge">불가능</code>하다.</p>
+</blockquote>
 
-<h3 id="2-1-post-방식의-특징">2-1. POST 방식의 특징</h3>
-<ul>
-  <li>URL에 변수(데이터)를 <code class="highlighter-rouge">포함하지 않고</code>시켜 요청</li>
-  <li>데이터를 Body에 <code class="highlighter-rouge">포함</code>하여 전송</li>
-  <li>URL에 데이터가 <code class="highlighter-rouge">노출되지 않음</code></li>
-  <li>전송하는 길이에 <code class="highlighter-rouge">제한이 없음</code></li>
-  <li>캐싱이 <code class="highlighter-rouge">불가능</code></li>
-  <li>형식
-    <blockquote>
-      <p>POST /hello/test.php HTTP/1.1<br />
-    Host: jmnote.com<br />
-    name1=value1&amp;name2=value2</p>
-    </blockquote>
-  </li>
-</ul>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>ping <span class="o">[</span>IP]
+
+    // 예시
+    <span class="nv">$ </span>ping 8.8.8.8
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="2-telnet">2. Telnet</h4>
+<p>특정 port를 확인해야 할 경우</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>telnet <span class="o">[</span>IP] <span class="o">[</span>PORT]  
+
+    // 예시
+    <span class="nv">$ </span>telnet 100.1.1.1 8080
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="3-ncnetcat">3. nc(NetCat)</h4>
+<p>일반적으로 UNIX의 <code class="highlighter-rouge">cat</code>명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.<br />
+포트 확인 기능 말고도 다양한 기능으로 사용이 된다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>nc <span class="nt">-z</span> <span class="o">[</span>IP] <span class="o">[</span>PORT]
+
+    // 예시
+    <span class="nv">$ </span>nc <span class="nt">-z</span> 100.1.1.1 8080
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="4-curl">4. curl</h4>
+<p>대부분 서버는 telnet이 설치되어 있지만, <code class="highlighter-rouge">보안</code>이슈나 <code class="highlighter-rouge">최소 설치</code>를 한 경우에 사용한다.<br />
+아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.</p>
+<blockquote>
+  <p>따라서 <code class="highlighter-rouge">curl</code>의 parameter중 URL telnet 스키마를 사용</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>curl <span class="nt">-v</span> telnet://[IP]:PORT  
+
+    // 예시
+    <span class="nv">$ </span>curl <span class="nt">-v</span> telnet://100.1.1.1:8080
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="5-bash">5. bash</h4>
+<p>약간 하드한 방법이다. 
+<code class="highlighter-rouge">shell</code>에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.<br />
+TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $ timeout 5 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/[IP]/[PORT]'; echo $?
+
+    // 예시
+    $ timeout 5 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/100.1.1.1/8080'; echo $?
+    // 결과
+    $ 0   // 성공 
+    $ 1   // 실패 연결 전 에러(hostname not known등 오류)
+    $ 124 // 실패 Timeout 에러
+</code></pre></div></div>
+
+<blockquote>
+  <p><code class="highlighter-rouge">echo $?</code>는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.</p>
+</blockquote>
 
 
         <hr>
@@ -174,11 +187,11 @@
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/01/06/java-5.html" data-toggle="tooltip" data-placement="top" title="[Java] JDBC / JPA & Hibernate / Mybatis 차이"> << Previous</a>
+          <a href="/devlog/2020/01/07/cicd-3.html" data-toggle="tooltip" data-placement="top" title="[CI/CD] DevOps Full Chain - 3"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
           
-          <a href="/devlog/2020/01/06/web-2.html" data-toggle="tooltip" data-placement="top" title="[Web] JSTL & c tag">Next >></a>
+          <a href="/devlog/2020/01/08/cicd-4.html" data-toggle="tooltip" data-placement="top" title="[CI/CD] DevOps Full Chain - 4">Next >></a>
           
 
         </div>
@@ -193,8 +206,8 @@
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'https://owin2828blog/devlog/2020/01/06/web-1.html';
-this.page.identifier = '/devlog/2020/01/06/web-1';
+this.page.url = 'https://owin2828blog/devlog/2020/01/08/etc-1.html';
+this.page.identifier = '/devlog/2020/01/08/etc-1';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
