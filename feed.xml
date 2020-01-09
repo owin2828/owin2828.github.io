@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T11:41:07+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 5</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 5" /><published>2020-01-09T10:18:00+09:00</published><updated>2020-01-09T10:18:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html">&lt;p&gt;이것은 시간 테스느&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">이것은 시간 테스느</summary></entry><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T14:34:40+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html"></content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">Etc 2</title><link href="https://owin2828.github.io/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="Etc 2" /><published>2020-01-09T00:00:00+09:00</published><updated>2020-01-09T00:00:00+09:00</updated><id>https://owin2828.github.io/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/2020/01/09/etc-2.html"></content><author><name>owin2828</name></author><summary type="html"></summary></entry><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
@@ -70,7 +70,7 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echo $?&lt;/code&gt;는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다. 다음은 지극히 주관적인 (쉬운?) 순서대로 방법이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다. 다음은 지극히 주관적인 (쉬운?) 순서대로 방법이다.</summary></entry><entry><title type="html">[CI/CD] 그래서 CI/CD가 뭔데?</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] 그래서 CI/CD가 뭔데?" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
 &lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
@@ -156,7 +156,7 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 어떤 프로세스를 언제 어떻게 적용하고, 결과는 어떤 방법으로 처리할지 등이 고려되어야 한다.&lt;/p&gt;
 
 &lt;p&gt;바닥부터 구축하라고하면 차라리 안하는게 나을수도 있지만, 역시 누군가가 만들어놓은 솔루션이 있다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CircleCI&lt;/code&gt; 등이 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CircleCI&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitLabCI&lt;/code&gt; 등의 CI 서버가 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
@@ -164,7 +164,7 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
   &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&quot;&gt;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://itholic.github.io/qa-cicd/&quot;&gt;https://itholic.github.io/qa-cicd/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">드디어 CI/CD까지 도착하여 포스팅을 하게 되었다. 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다. 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">드디어 CI/CD까지 도착하여 포스팅을 하게 되었다. 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다. 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.</summary></entry><entry><title type="html">[CI/CD] Scrum? Agile?</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] Scrum? Agile?" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
 &lt;p&gt;Scrum은 그 자체로 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이자, Agile의 &lt;code class=&quot;highlighter-rouge&quot;&gt;실천 도구&lt;/code&gt; 중 하나이다.&lt;br /&gt;
 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다.&lt;br /&gt;
 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다.&lt;br /&gt;
@@ -273,7 +273,7 @@ Scrum Master는 권력자나 리더가 아니라 그저 &lt;code class=&quot;hig
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://brunch.co.kr/@insuk/13&quot;&gt;https://brunch.co.kr/@insuk/13&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://needjarvis.tistory.com/317&quot;&gt;https://needjarvis.tistory.com/317&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Scrum이란 Scrum은 그 자체로 하나의 방법론이자, Agile의 실천 도구 중 하나이다. 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 이후 Agile 선언문이 발표되며 이러한 방법들이 Agile 이라는 깃발 아래 모여들었고, 그 중 우리에게 익숙한 것이 Scrum이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 1</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 1" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Scrum이란 Scrum은 그 자체로 하나의 방법론이자, Agile의 실천 도구 중 하나이다. 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다. 다른 실천 도구들(칸반, XP - extreme programming, 린SW개발)등은 Agile이라는 용어 정의 전에 이미 여러 형태로 존재하였다. 이후 Agile 선언문이 발표되며 이러한 방법들이 Agile 이라는 깃발 아래 모여들었고, 그 중 우리에게 익숙한 것이 Scrum이다.</summary></entry><entry><title type="html">[CI/CD] DevOps란 무엇인가?</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] DevOps란 무엇인가?" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-1.html">&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_1_1.png&quot; alt=&quot;DevOps&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;devops-등장배경&quot;&gt;DevOps 등장배경&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -346,7 +346,7 @@ Scrum Master는 권력자나 리더가 아니라 그저 &lt;code class=&quot;hig
   &lt;li&gt;&lt;a href=&quot;https://www.atlassian.com/ko/devops&quot;&gt;https://www.atlassian.com/ko/devops&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/devops#?&quot;&gt;https://www.redhat.com/ko/topics/devops#?&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://devops.com/using-calms-to-assess-organizations-devops/&quot;&gt;https://devops.com/using-calms-to-assess-organizations-devops/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 2</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 2" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html">&lt;h2 id=&quot;agile&quot;&gt;Agile&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[CI/CD] Agile..?</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] Agile..?" /><published>2020-01-07T10:31:00+09:00</published><updated>2020-01-07T10:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html">&lt;h2 id=&quot;agile&quot;&gt;Agile&lt;/h2&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Agile: 날렵한, &lt;code class=&quot;highlighter-rouge&quot;&gt;민첩한&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -428,7 +428,7 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://blog.sonim1.com/238&quot;&gt;https://blog.sonim1.com/238&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.sangheum.com/149&quot;&gt;https://www.sangheum.com/149&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Agile Agile: 날렵한, 민첩한</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 0</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 0" /><published>2020-01-07T09:41:00+09:00</published><updated>2020-01-07T09:41:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html">&lt;h4 id=&quot;개발을-하다-보면&quot;&gt;개발을 하다 보면&lt;/h4&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Agile Agile: 날렵한, 민첩한</summary></entry><entry><title type="html">[CI/CD] 데브옵스, 에자일 그리고 CI/CD 시리즈</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html" rel="alternate" type="text/html" title="[CI/CD] 데브옵스, 에자일 그리고 CI/CD 시리즈" /><published>2020-01-07T09:41:00+09:00</published><updated>2020-01-07T09:41:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html">&lt;h4 id=&quot;개발을-하다-보면&quot;&gt;개발을 하다 보면&lt;/h4&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DevOps&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt;와 같은 이야기들이 여기저기서 들린지 꽤 되었다.&lt;br /&gt;
 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다.&lt;br /&gt;
 들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.&lt;/p&gt;
@@ -769,126 +769,4 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
     name1=value1&amp;amp;name2=value2&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다. 출처: https://bit.ly/31M2YN8</summary></entry><entry><title type="html">[Java] JDBC / JPA &amp;amp; Hibernate / Mybatis 차이</title><link href="https://owin2828.github.io/devlog/2020/01/06/java-5.html" rel="alternate" type="text/html" title="[Java] JDBC / JPA &amp; Hibernate / Mybatis 차이" /><published>2020-01-06T17:13:00+09:00</published><updated>2020-01-06T17:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/java-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/java-5.html">&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다.&lt;/li&gt;
-  &lt;li&gt;출처: &lt;a href=&quot;http://bitly.kr/C72t7zb&quot;&gt;http://bitly.kr/C72t7zb&lt;/a&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;0-영속성&quot;&gt;0. 영속성&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;데이터를 생성한 프로그램이 종료되더라도 &lt;code class=&quot;highlighter-rouge&quot;&gt;사라지지 않는&lt;/code&gt; 데이터의 특성&lt;/li&gt;
-  &lt;li&gt;Persistence Layer: 프로그램 아키텍쳐에서 데이터에 &lt;code class=&quot;highlighter-rouge&quot;&gt;영속성&lt;/code&gt;을 부여해주는 계층&lt;/li&gt;
-  &lt;li&gt;Persistence Framework: JDBC 프로그래밍의 복잡함 없이 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단히&lt;/code&gt; DB와 연동되는 시스템을 빠르게 개발할 수 있으며,&lt;br /&gt;
-안정성을 보장해주는 프레임크. 그 종류는 다음과 같다.
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SQL Mapper&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ORM&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;0-1-sql-mapper&quot;&gt;0-1. SQL Mapper&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;SQL &amp;lt;- 매핑 -&amp;gt; Object 필드&lt;/li&gt;
-  &lt;li&gt;SQL문으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt; DB의 데이터를 다룸
-    &lt;ul&gt;
-      &lt;li&gt;종류: &lt;code class=&quot;highlighter-rouge&quot;&gt;Mybatis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;JdbcTemplates&lt;/code&gt;등&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;0-2-orm&quot;&gt;0-2. ORM&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;DB 데이터 &amp;lt;- 매핑 -&amp;gt; Object 필드&lt;/li&gt;
-  &lt;li&gt;객체를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;간접적&lt;/code&gt;으로 DB의 데이터를 다룸
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;직관적 코드&lt;/code&gt;(매서드)를 통해 조작 가능&lt;/li&gt;
-      &lt;li&gt;객체 간의 관계를 바탕으로 SQL을 &lt;code class=&quot;highlighter-rouge&quot;&gt;자동 생성&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;종류: &lt;code class=&quot;highlighter-rouge&quot;&gt;JPA&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Hibernate&lt;/code&gt;등&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;0-3-orm의-장단점&quot;&gt;0-3. ORM의 장,단점&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;객체 지향적인 코드로 인해 더 &lt;code class=&quot;highlighter-rouge&quot;&gt;직관적&lt;/code&gt;이고 비즈니스 로직에 더 집중할 수 있게 도와줌&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;재사용&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;유지보수&lt;/code&gt;의 편리성이 증가함&lt;/li&gt;
-  &lt;li&gt;DBMS에 대한 종속성이 &lt;code class=&quot;highlighter-rouge&quot;&gt;줄어듬&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;단점&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;완벽한 ORM 으로만 &lt;code class=&quot;highlighter-rouge&quot;&gt;서비스를 구현하기가 어려움&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;잘못 구현된 경우에 &lt;code class=&quot;highlighter-rouge&quot;&gt;속도 저하&lt;/code&gt; 및 심각할 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;일관성이 무너지는&lt;/code&gt; 문제점 발생&lt;/li&gt;
-  &lt;li&gt;프로시저가 많은 시스템에선 ORM의 &lt;code class=&quot;highlighter-rouge&quot;&gt;객체 지향적인 장점을 활용하기 어려움&lt;/code&gt; &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-jdbcjava-database-connectivity&quot;&gt;1. JDBC(Java Database Connectivity)&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/java/java_5_1.jpg&quot; alt=&quot;jdbc&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;JDBC는 DB에 접근할 수 있도록 java에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;API&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;모든 Java의 Data Access 기술의 &lt;code class=&quot;highlighter-rouge&quot;&gt;근간&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;모든 Persistence Framework는 &lt;code class=&quot;highlighter-rouge&quot;&gt;내부적&lt;/code&gt;으로 JDBC API를 사용 &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-jpajava-persistence-api&quot;&gt;2. JPA(Java Persistence API)&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/java/java_5_2.jpg&quot; alt=&quot;JPA&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Java ORM 기술에 대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;API 표준 명세&lt;/code&gt;로 Java에서 제공하는 API&lt;/li&gt;
-  &lt;li&gt;JPA의 구성요소
-    &lt;ol&gt;
-      &lt;li&gt;javax.persistence 패키지로 정의된 API&lt;/li&gt;
-      &lt;li&gt;JPQL(Java Persistence Query Language)&lt;/li&gt;
-      &lt;li&gt;객체/관계 메타데이터&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;사용자가 원하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;JPA 구현체&lt;/code&gt;를 선택해 사용 가능
-    &lt;ul&gt;
-      &lt;li&gt;Hibernate, EclipseLink, DataNucleus, OpenJPA, TopLink Essentails 등&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-1-hibernate&quot;&gt;2-1. Hibernate&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/img/java/java_5_3.jpg&quot; alt=&quot;Hibernate&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Hibernate는 &lt;code class=&quot;highlighter-rouge&quot;&gt;JPA의 구현체 중 하나&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;내부적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;JDBC API&lt;/code&gt;를 사용해 SQL 구현&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;HQL&lt;/code&gt;(Hibernate Query Language)라 불리는 강력한 쿼리 언어 포함&lt;/li&gt;
-  &lt;li&gt;장점
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;빠른 개발&lt;/code&gt; 가능&lt;/li&gt;
-      &lt;li&gt;쿼리보다는 &lt;code class=&quot;highlighter-rouge&quot;&gt;객체&lt;/code&gt;에 집중 가능&lt;/li&gt;
-      &lt;li&gt;테이블 생성, 변경등 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리&lt;/code&gt;가 쉬움&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;단점
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;어려움&lt;/code&gt;(많은 것을 알아야 함)&lt;/li&gt;
-      &lt;li&gt;오사용시 &lt;code class=&quot;highlighter-rouge&quot;&gt;데이터 손실&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;성능 저하&lt;/code&gt; 유발 &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-mybatis&quot;&gt;3. Mybatis&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/java/java_5_4.jpg&quot; alt=&quot;Mybatis&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;개발자가 정의한 SQL을 지원하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL Mapper&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;DB의 레코드에 매핑하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;XML&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;Annotaion&lt;/code&gt; 사용 가능&lt;/li&gt;
-  &lt;li&gt;장점
-    &lt;ul&gt;
-      &lt;li&gt;SQL에 대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든 컨트롤&lt;/code&gt;을 할 경우 적합&lt;/li&gt;
-      &lt;li&gt;SQL &lt;code class=&quot;highlighter-rouge&quot;&gt;쿼리 최적화&lt;/code&gt;가 잘 되있을 경우 유용&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;단점
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;모든 관계&lt;/code&gt;에 대한 조작을 하고자 할 때는 적합하지 않음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다. 출처: http://bitly.kr/C72t7zb</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다. 출처: https://bit.ly/31M2YN8</summary></entry></feed>
