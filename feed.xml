@@ -1,4 +1,125 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T14:55:45+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html"></content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">Etc 2</title><link href="https://owin2828.github.io/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="Etc 2" /><published>2020-01-09T00:00:00+09:00</published><updated>2020-01-09T00:00:00+09:00</updated><id>https://owin2828.github.io/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/2020/01/09/etc-2.html"></content><author><name>owin2828</name></author><summary type="html"></summary></entry><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T17:23:30+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
+&lt;p&gt;주로 게시판 등에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일 업로드&lt;/code&gt; 기능을 악용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 권한&lt;/code&gt;을 획득할 수 있는 취약점을 의미한다.&lt;br /&gt;
+나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;악성 스크립트&lt;/code&gt;가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 &lt;code class=&quot;highlighter-rouge&quot;&gt;장악&lt;/code&gt;할 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;즉, 흔히 말하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;웹쉘&lt;/code&gt;의 업로드를 통해 시스템의 권한을 장악한다는 이야기이다.&lt;br /&gt;
+그렇다면 어떤 파일들이 웹에서 구동되는가? 웹 서버에서 실행 가능한 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장자&lt;/code&gt;는 다음과 같다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;언어&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;확장자&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;asp, aspx&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;asp, aspx, htm, html, asa&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;php&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;phtml, php, php3, php4, php5, inc, htm, html&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;jsp, java&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;jsp, jspx, jsw, jsv, jspf, htm, html&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;perl&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;pl, pm, cgi, lib, htm, html&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;coldfusion&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;cfm, cfml, cfc, dbm, htm, html&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;이러한 악성 파일이 업로드 된다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;접근권한&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;정보유출&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;악성코드 배포&lt;/code&gt; 등의 문제를 야기할 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-공격방법&quot;&gt;2. 공격방법&lt;/h2&gt;
+&lt;p&gt;이러한 취약점을 찾아 공격하는 방법은 크게 4가지 정도이다.&lt;/p&gt;
+
+&lt;h5 id=&quot;1_-취약점-점검&quot;&gt;1_ 취약점 점검&lt;/h5&gt;
+&lt;p&gt;가장 간단한 방법으로 다음과 같은 과정을 거친다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;파일 업로드시에 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장자 제한&lt;/code&gt;이 없는지 확인하고,&lt;/li&gt;
+  &lt;li&gt;업로드된 파일에 &lt;code class=&quot;highlighter-rouge&quot;&gt;접근&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;실행&lt;/code&gt;이 가능한지 확인하여 공격하는 것이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&quot;2_-proxy-툴을-이용해-확장자-검사-우회-파일-업로드&quot;&gt;2_ Proxy 툴을 이용해 확장자 검사 우회 파일 업로드&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;파일타입 변조&lt;/code&gt;등의 우회공격을 통해 확장자 검사를 피하는 것을 의미한다.&lt;br /&gt;
+업로드 시 파일의유형 정보를 알려주는 헤더 중, &lt;code class=&quot;highlighter-rouge&quot;&gt;Content-type&lt;/code&gt; 속성을 프록시를 이용해 우회하여 공격할 수 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;자세한 사항은 다음 링크를 참조하시기를..&lt;br /&gt;
+&lt;a href=&quot;https://bit.ly/2tIJ21w&quot;&gt;https://bit.ly/2tIJ21w&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;3_-null을-이용한-파일-업로드&quot;&gt;3_ Null을 이용한 파일 업로드&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;널(%00)&lt;/code&gt;문자가 문자의 끝을 의미하기 때문에 특정 확장자를 &lt;code class=&quot;highlighter-rouge&quot;&gt;숨기기&lt;/code&gt; 위한 목적으로 사용될 수 있다.&lt;br /&gt;
+해당 부분의 취약점은 내부 API를 호출할 때 발생될 가능성이 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;널바이트(%00)와 .jpeg확장자를 함께 접목하여 업로드하면 %00 다음의 문자열은 무시하게 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;언어&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;우회패턴&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;처리패턴&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;php&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.php%00.jpeg&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.php&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;asp&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.asp%00.jpeg&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.asp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;jsp&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.jsp%00.jpeg&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;test.jsp&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;4_-sql-injection을-이용한-파일-업로드&quot;&gt;4_ SQL Injection을 이용한 파일 업로드&lt;/h5&gt;
+&lt;p&gt;2가지 정도의 방법이 존재하는데, 다음과 같다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;MySQL&lt;/code&gt;의 &lt;code class=&quot;highlighter-rouge&quot;&gt;into outfile()&lt;/code&gt; 함수를 이용하여 웹서버에 파일을 생성할 수 있다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;MSSQL&lt;/code&gt;의 저장 프로시저(&lt;code class=&quot;highlighter-rouge&quot;&gt;xp_cmdshell&lt;/code&gt;)을 이용하여 echo와 » (파이프) 명령어를 통해 특정 파일에 삽입할 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-방어방법&quot;&gt;3. 방어방법&lt;/h2&gt;
+&lt;p&gt;모든 부분을 전부 작성할 수는 없지만, 대략적으로 다음과 같은 방법을 통하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;기초&lt;/code&gt;적인 방어를 할 수 있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;확장자 검사&lt;/li&gt;
+  &lt;li&gt;대소문자 구분하지 않고 확장자 비교&lt;/li&gt;
+  &lt;li&gt;특수문자가 포함된 경우 업로드 금지&lt;/li&gt;
+  &lt;li&gt;업로드된 파일명, 확장자를 난수화하여 변경&lt;/li&gt;
+  &lt;li&gt;업로드된 파일을 url 요청으로 직접 접근이 불가능한 위치에 저장&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://4rgos.tistory.com/4&quot;&gt;https://4rgos.tistory.com/4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html"></content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
