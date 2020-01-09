@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-08T17:05:43+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T09:20:50+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
-다음은 지극히 &lt;code class=&quot;highlighter-rouge&quot;&gt;주관적인&lt;/code&gt; 순서대로 쉬운? 방법이다.&lt;br /&gt;
+이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
+다음은 지극히 &lt;code class=&quot;highlighter-rouge&quot;&gt;주관적인&lt;/code&gt; (쉬운?) 순서대로 방법이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;1-ping&quot;&gt;1. Ping&lt;/h4&gt;
@@ -20,7 +21,7 @@
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;2-telnet&quot;&gt;2. Telnet&lt;/h4&gt;
-&lt;p&gt;특정 port를 확인해야 할 경우&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정&lt;/code&gt; port를 확인해야 할 경우&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]  
 
 // 예시
@@ -39,10 +40,10 @@
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;4-curl&quot;&gt;4. curl&lt;/h4&gt;
-&lt;p&gt;대부분 서버는 telnet이 설치되어 있지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안&lt;/code&gt;이슈나 &lt;code class=&quot;highlighter-rouge&quot;&gt;최소 설치&lt;/code&gt;를 한 경우에 사용한다.&lt;br /&gt;
-아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.&lt;/p&gt;
+&lt;p&gt;대부분 서버는 telnet이 설치되어 있지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안&lt;/code&gt;이슈나 &lt;code class=&quot;highlighter-rouge&quot;&gt;최소 설치&lt;/code&gt;를 한 경우 사용이 불가능한 경우가 있다.&lt;br /&gt;
+그런 경우 다음의 명령을 사용하자. 아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.&lt;/p&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;의 parameter중 URL telnet 스키마를 사용&lt;/p&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;의 parameter중 URL telnet 스키마를 사용하여 서버 통신 확인&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://[IP]:PORT  
@@ -69,7 +70,7 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echo $?&lt;/code&gt;는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 다음은 지극히 주관적인 순서대로 쉬운? 방법이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다. 다음은 지극히 주관적인 (쉬운?) 순서대로 방법이다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 4</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 4" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
 &lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;

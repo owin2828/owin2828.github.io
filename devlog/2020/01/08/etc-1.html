@@ -12,7 +12,7 @@
     
   </title>
 
-  <meta name="description" content="외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 다음은 지극히 주관적인 순서대로 쉬운? 방법이다.">
+  <meta name="description" content="외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인...">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -111,7 +111,8 @@
         <h2 id="외부-서버의-포트가-살아있는지-open여부를-점검하기">외부 서버의 포트가 살아있는지 open여부를 점검하기</h2>
 <p>이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.<br />
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.<br />
-다음은 지극히 <code class="highlighter-rouge">주관적인</code> 순서대로 쉬운? 방법이다.<br />
+이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.<br />
+다음은 지극히 <code class="highlighter-rouge">주관적인</code> (쉬운?) 순서대로 방법이다.<br />
 <br /></p>
 
 <h4 id="1-ping">1. Ping</h4>
@@ -130,7 +131,7 @@
 <p><br /></p>
 
 <h4 id="2-telnet">2. Telnet</h4>
-<p>특정 port를 확인해야 할 경우</p>
+<p><code class="highlighter-rouge">특정</code> port를 확인해야 할 경우</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>telnet <span class="o">[</span>IP] <span class="o">[</span>PORT]  
 
 // 예시
@@ -149,10 +150,10 @@
 <p><br /></p>
 
 <h4 id="4-curl">4. curl</h4>
-<p>대부분 서버는 telnet이 설치되어 있지만, <code class="highlighter-rouge">보안</code>이슈나 <code class="highlighter-rouge">최소 설치</code>를 한 경우에 사용한다.<br />
-아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.</p>
+<p>대부분 서버는 telnet이 설치되어 있지만, <code class="highlighter-rouge">보안</code>이슈나 <code class="highlighter-rouge">최소 설치</code>를 한 경우 사용이 불가능한 경우가 있다.<br />
+그런 경우 다음의 명령을 사용하자. 아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.</p>
 <blockquote>
-  <p>따라서 <code class="highlighter-rouge">curl</code>의 parameter중 URL telnet 스키마를 사용</p>
+  <p><code class="highlighter-rouge">curl</code>의 parameter중 URL telnet 스키마를 사용하여 서버 통신 확인</p>
 </blockquote>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-v</span> telnet://[IP]:PORT  
