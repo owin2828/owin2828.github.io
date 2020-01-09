@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T09:20:50+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T10:53:47+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] DevOps Full Chain - 5</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 5" /><published>2020-01-09T10:18:00+09:00</published><updated>2020-01-09T10:18:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html">&lt;p&gt;이것은 시간 테스느&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">이것은 시간 테스느</summary></entry><entry><title type="html">기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
@@ -76,6 +76,17 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;CI/CD라는 단어를 사용하기 전에 우리는 &lt;code class=&quot;highlighter-rouge&quot;&gt;왜&lt;/code&gt; CI/CD를 적용해야 하는가를 생각해야 한다.&lt;br /&gt;
+앞선 글 &lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/07/cicd-1.html&quot;&gt;DevOps란 무엇인가?&lt;/a&gt;에서 설명했듯이,&lt;br /&gt;
+고객에게 가치를 빠르고 안정적으로 전달하는 것이 DevOps의 목적이고, 이를 위해 CI/CD를 활용하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;더 상세한 설명을 하기 전에,&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;CI&lt;/code&gt; = &lt;code class=&quot;highlighter-rouge&quot;&gt;지속적인 통합&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;자동화&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;CD&lt;/code&gt; = &lt;code class=&quot;highlighter-rouge&quot;&gt;지속적인 배포&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;자동화&lt;/code&gt;&lt;br /&gt;
+개발 -&amp;gt; CI -&amp;gt; CD 순으로 Flow가 진행됨을 먼저 알고가면 좋을 것 같다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;ci--cd&quot;&gt;CI / CD&lt;/h2&gt;
 &lt;figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_4_1.png&quot; alt=&quot;CI/CD&quot; /&gt;&lt;/p&gt;
@@ -85,9 +96,74 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 &lt;p&gt;인터넷을 찾아보면 수 많은 &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt; pipe-line 관련 이미지가 나온다.&lt;br /&gt;
 그 중 위 이미지는 가장 간략하고 정확하게 CI/CD의 개요에 대해 설명하는 그림인것 같아 가져와봤다.&lt;/p&gt;
 
+&lt;p&gt;이 중, 개발자가 &lt;code class=&quot;highlighter-rouge&quot;&gt;혼자서&lt;/code&gt; 진행하는 부분은 CI, CD 파이프라인 중 어디에도 속하지 않는다.&lt;br /&gt;
+다시 말해서 CI/CD의 파이프라인을 태운다는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;협업&lt;/code&gt;을 기반으로 한다는 의미이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;물론 규모가 작아 혼자서도 CI/CD 파이프 라인을 구축할 수도 있다.&lt;br /&gt;
+하지만 CI/CD 파이프라인의 극적인 효율은 협업을 할 때 나오게 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;ci--continuous-integration&quot;&gt;CI = Continuous Integration&lt;/h5&gt;
+&lt;p&gt;CI는 개발자들의 코드를 지속적, 자동적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;빌드&lt;/code&gt;하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;단위테스트&lt;/code&gt;를 거치며, &lt;code class=&quot;highlighter-rouge&quot;&gt;통합테스트&lt;/code&gt;를 하는 과정이다.&lt;br /&gt;
+CI의 파이프라인이 구축되어 있지 않은 극적인 상황을 생각해 보자.&lt;/p&gt;
+
+&lt;p&gt;10명의 개발자가 &lt;code class=&quot;highlighter-rouge&quot;&gt;각자&lt;/code&gt; 빌드 후, 유닛테스트를 하고 통합테스트를 진행한다.&lt;br /&gt;
+문제는 &lt;code class=&quot;highlighter-rouge&quot;&gt;단위테스트&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;통합테스트&lt;/code&gt;를 하는 시점이 모두에게 동일하고 명확하게 정의되기가 어렵다는 점이다.&lt;br /&gt;
+만약, 10명의 개발자가 각자 개발 후 통합테스트를 한 번에 진행한다면…?&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;상상은 각자의 몫이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이제 &lt;code class=&quot;highlighter-rouge&quot;&gt;CI&lt;/code&gt;를 적용해서 각 개발자들 간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ground Rule&lt;/code&gt;을 다음과 같이 세웠다고 생각해보자.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;모든 개발자들은 퇴근 전 각자의 코드를 Main 코드와 통합한다.&lt;/li&gt;
+  &lt;li&gt;각자의 코드가 잘 동작하는지 테스트한다.&lt;/li&gt;
+  &lt;li&gt;통합테스트를 진행한다.&lt;/li&gt;
+  &lt;li&gt;버그가 발견된다면, To-Do 목록에 작성하고 다음 날 업무를 수행한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;CI를 적용하기 전 상황보다는 효율적이고 소스코드의 관리도 훨씬 잘 될 것이다.&lt;br /&gt;
+하지만 글을 쓰면서도 위의 모든 과정이 너무나도 &lt;code class=&quot;highlighter-rouge&quot;&gt;귀찮다&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;당신이 개발자라면 위와 같은 과정을 &lt;code class=&quot;highlighter-rouge&quot;&gt;수작업&lt;/code&gt;으로 하겠는가?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;누군가가 나 대신 빌드와 테스트들을 해주고 버그를 기록해준다면 얼마나 좋을까.&lt;br /&gt;
+그래서 CI/CD 파이프라인에는 필연적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;자동화&lt;/code&gt;가 포함이 된다.&lt;br /&gt;
+자동화가 적용된 위의 WorkFlow는 다음과 같이 간소화 된다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;퇴근 전 각자의 코드를 Main 코드와 통합한다.&lt;/li&gt;
+  &lt;li&gt;다음날 출근 후, 버그 리포팅을 기반으로 코드를 수정한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;개발자들이 &lt;code class=&quot;highlighter-rouge&quot;&gt;게을러야&lt;/code&gt; 하는 이유가 단적으로 드러나지 않는가?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;cd--continuous-deploydelivery&quot;&gt;CD = Continuous Deploy/Delivery&lt;/h5&gt;
+&lt;p&gt;CD는 개발된 SW가 배포되는 시점에 신뢰할 수 있는 수준을 유지하도록 지속적으로 관리하는 것이다.&lt;br /&gt;
+CI의 &lt;code class=&quot;highlighter-rouge&quot;&gt;연장선&lt;/code&gt;상에 있으며, 이상적으로는 CI가 지속적/자동적으로 이루어진다면,&lt;br /&gt;
+CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;실제로 CI/CD 파이프 라인을 구축해서 배포를 해본다면, 얼마나 효율적인지 알 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;이론은&quot;&gt;이론은&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;별거없다&lt;/code&gt;. CI/CD의 등장배경과 특징 및 장점을 살펴보았지만, 이해하기 어려운 개념은 아니다.&lt;br /&gt;
+하지만 실제로 CI/CD 자동화 파이프라인을 구축하기 위해서는 많은 &lt;code class=&quot;highlighter-rouge&quot;&gt;삽질&lt;/code&gt;이 필요하다.&lt;br /&gt;
+어떤 프로세스를 언제 어떻게 적용하고, 결과는 어떤 방법으로 처리할지 등이 고려되어야 한다.&lt;/p&gt;
+
+&lt;p&gt;바닥부터 구축하라고하면 차라리 안하는게 나을수도 있지만, 역시 누군가가 만들어놓은 솔루션이 있다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CircleCI&lt;/code&gt; 등이 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&quot;&gt;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://itholic.github.io/qa-cicd/&quot;&gt;https://itholic.github.io/qa-cicd/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">드디어 CI/CD까지 도착하여 포스팅을 하게 되었다. 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다. 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.</summary></entry><entry><title type="html">[CI/CD] DevOps Full Chain - 3</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html" rel="alternate" type="text/html" title="[CI/CD] DevOps Full Chain - 3" /><published>2020-01-07T16:03:00+09:00</published><updated>2020-01-07T16:03:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-3.html">&lt;h2 id=&quot;scrum이란&quot;&gt;Scrum이란&lt;/h2&gt;
 &lt;p&gt;Scrum은 그 자체로 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;방법론&lt;/code&gt;이자, Agile의 &lt;code class=&quot;highlighter-rouge&quot;&gt;실천 도구&lt;/code&gt; 중 하나이다.&lt;br /&gt;
 이 말은, Agile로부터 Scrum이 등장한 것이 아니라는 이야기이다.&lt;br /&gt;
@@ -815,36 +891,4 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
       &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;모든 관계&lt;/code&gt;에 대한 조작을 하고자 할 때는 적합하지 않음&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다. 출처: http://bitly.kr/C72t7zb</summary></entry><entry><title type="html">[Java] 커넥션풀</title><link href="https://owin2828.github.io/devlog/2020/01/06/java-4.html" rel="alternate" type="text/html" title="[Java] 커넥션풀" /><published>2020-01-06T17:11:00+09:00</published><updated>2020-01-06T17:11:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/java-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/java-4.html">&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 커넥션 풀에 대하여 알아보도록 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-커넥션-풀-등장-배경&quot;&gt;1. 커넥션 풀 등장 배경&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;실제 서비스 운영 환경에서는 서로 다른 장비를 이용해 자바 프로그램과 DBMS를 실행&lt;br /&gt;
-이때 자바 프로그램에서 DBMS로 커넥션을 생성하는 시간은 &lt;code class=&quot;highlighter-rouge&quot;&gt;성능 저하&lt;/code&gt;의 원인이 됨&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;동시 사용자수&lt;/code&gt;가 많으면 사용자마다 DB 커넥션을 생성해 DBMS에 부하를 줌&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;최초 연결&lt;/code&gt;에 따른 응답 속도 저하와 &lt;code class=&quot;highlighter-rouge&quot;&gt;동시 접속자&lt;/code&gt;가 많을 때 발생하는 부하를 줄이기 위해 등장 &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-커넥션-풀의-개념-및-특징&quot;&gt;2. 커넥션 풀의 개념 및 특징&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/java/java_4_1.jpg&quot; alt=&quot;커넥션풀&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;커넥션 풀은 일정 개수의 DB 커넥션을 &lt;code class=&quot;highlighter-rouge&quot;&gt;미리&lt;/code&gt; 만들어두는 기법&lt;/li&gt;
-  &lt;li&gt;커넥션이 필요하다면, 풀에서 커넥션을 &lt;code class=&quot;highlighter-rouge&quot;&gt;가져와&lt;/code&gt; 사용한 뒤 다시 풀에 &lt;code class=&quot;highlighter-rouge&quot;&gt;반납&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;커넥션을 미리 생성하기 때문에 커넥션을 사용하는 시점에서 생성시간 &lt;code class=&quot;highlighter-rouge&quot;&gt;단축&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;동시 접속자가 많더라도 생성 부하가 적기에 &lt;code class=&quot;highlighter-rouge&quot;&gt;더 많은&lt;/code&gt; 동시 접속자 처리 가능&lt;/li&gt;
-  &lt;li&gt;커넥션의 개수를 조절해 DBMS의 부하를 &lt;code class=&quot;highlighter-rouge&quot;&gt;일정하게&lt;/code&gt; 조절 &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-커넥션-풀의-종류&quot;&gt;3. 커넥션 풀의 종류&lt;/h2&gt;
-&lt;p&gt;DB 커넥션 풀 기능을 제공하는 대표 모듈은 다음과 같다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Tomcat JDBC&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;HikariCP&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DBCP&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;c3p0&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 커넥션 풀에 대하여 알아보도록 한다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="java" /><summary type="html">본 문서에서는 JDBC, JPA/Hybernate, Mybatis에 대하여 알아보도록 한다. 출처: http://bitly.kr/C72t7zb</summary></entry></feed>
