@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T11:31:15+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T11:42:53+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
 &lt;p&gt;이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다.&lt;br /&gt;
 그만큼 &lt;code class=&quot;highlighter-rouge&quot;&gt;클라우드&lt;/code&gt;가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데,&lt;br /&gt;
 이번 시리즈에서 클라우드의 기본 개념과 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;의 기초개념 및 실습을 포스팅 하고자 한다.&lt;br /&gt;
@@ -17,10 +17,18 @@
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;private-cloud&quot;&gt;Private Cloud&lt;/h2&gt;
-&lt;p&gt;하나의 조직에 전용 클라우드 환경을 제공하는 모델을 &lt;code class=&quot;highlighter-rouge&quot;&gt;프라이빗&lt;/code&gt; 클라우드라 한다.&lt;br /&gt;
+&lt;p&gt;하나의 조직에 전용 클라우드 환경을 제공하는 모델을 &lt;code class=&quot;highlighter-rouge&quot;&gt;프라이빗&lt;/code&gt; 클라우드라 한다.(VMware, OpenStack등)&lt;br /&gt;
 사내 전용 클라우드로써, 각 조직이 더 효율적으로 관리할 수 있으나, 퍼블릭 클라우드에 비해 비용이 많이든다.&lt;br /&gt;
-각 조직에 &lt;code class=&quot;highlighter-rouge&quot;&gt;on-premise&lt;/code&gt; 방식으로 적용될 수도 있고, 퍼블릭 클라우드 제공업체에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;off-premise&lt;/code&gt;로 호스팅 될 수도 있다.
+각 조직에 &lt;code class=&quot;highlighter-rouge&quot;&gt;on-premise&lt;/code&gt; 방식으로 적용될 수도 있고, 퍼블릭 클라우드 제공업체에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;off-premise&lt;/code&gt;로 호스팅 될 수도 있다.&lt;/p&gt;
+
+&lt;p&gt;조달된 하드웨어와 가상화된 레이어 위에서 동작하기 때문에 시간이 절약되는 이점이 존재하지만,&lt;br /&gt;
+HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구성으로 인해 &lt;code class=&quot;highlighter-rouge&quot;&gt;하이퍼바이저&lt;/code&gt;의 관리가 또다른 &lt;code class=&quot;highlighter-rouge&quot;&gt;비용발생&lt;/code&gt;으로 다가올 수 있다.&lt;br /&gt;
+또한 각 OS별로 라이센스를 일일히 구매해야 하므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;추가적인 비용&lt;/code&gt;이 발생할 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;개인적인 의견으로는 일반 사기업이 하기에는 어렵지 않나 싶다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&quot;hybrid-cloud&quot;&gt;Hybrid Cloud&lt;/h2&gt;
 &lt;p&gt;VPN등의 보안연결을 통해서 하나 이상의 퍼블릭 클라우드 + 프라이빗 클라우드 환경을 결합하는 방식이다.&lt;br /&gt;
@@ -33,8 +41,7 @@
 &lt;h2 id=&quot;앞으로&quot;&gt;앞으로&lt;/h2&gt;
 &lt;p&gt;진행하게될 포스팅은 위에 언급한 것 중, 당연히 퍼블릭 클라우드인 &lt;code class=&quot;highlighter-rouge&quot;&gt;aws&lt;/code&gt;를 이용하여 진행할 예정이다.&lt;/p&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;로 사용해 볼 수 있고, 가장 대중적이며 개인이 작은 규모로 해보기에 가장 좋기 때문이다.&lt;br /&gt;
-늘 이야기하지만, 정답은 없으므로 조직에 클라우드를 적용하기를 고려중이라면, 다른 클라우드도 고민할 가치가 있다.&lt;/p&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;로 사용해 볼 수 있고, 가장 대중적이며 개인이 작은 규모로 해보기에 가장 좋기 때문이다.&lt;/p&gt;
 &lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">클라우드 이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다. 그만큼 클라우드가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데, 이번 시리즈에서 클라우드의 기본 개념과 AWS의 기초개념 및 실습을 포스팅 하고자 한다. 시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.</summary></entry><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
 &lt;p&gt;주로 게시판 등에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일 업로드&lt;/code&gt; 기능을 악용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 권한&lt;/code&gt;을 획득할 수 있는 취약점을 의미한다.&lt;br /&gt;
 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다.&lt;/p&gt;
