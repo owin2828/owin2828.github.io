@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AWS] Region, AZ, VPC, Subnet등 구성 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AWS] Region, AZ, VPC, Subnet등 구성</h1>
+            
+            <h2 class="subheading">AWS 기초 - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-10 14:15 &middot; <span class="reading-time" title="Estimated read time">
+  
+   8 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p>기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.</p>
+
+<p>퍼블릭 클라우드가 그러하듯이, aws 또한 모든것이 <code class="highlighter-rouge">가상화</code> 되어있다.<br />
+이 말은 내가 신경쓰고 관리해야할 것이 <code class="highlighter-rouge">전혀 없다</code>는 말이고 모든 것을 aws가 알아서 해주는 것이다.<br />
+하지만 이러한 이유로 <code class="highlighter-rouge">하드웨어적 장애</code>가 생겼을 때, 반대로 내가 할 수 있는 것은 전혀 없다.</p>
+
+<p>무슨 말이냐면, 하드웨어적 결함으로 어떤 에러가 발생하였을 때<br />
+그게 내 문제인지, aws의 문제인지 <code class="highlighter-rouge">알지 못할</code> 수도 있다는 의미이다.<br />
+생각보다 이러한 이유가 굉장히 <code class="highlighter-rouge">스트레스</code> 받는 일이 된다고 우리팀의 시니어분께서 말씀해 주셨다.</p>
+<blockquote>
+  <p>실제로 어떤 기업의 세미나에서 aws 기반 서비스를 개발하던 중, 이런 <code class="highlighter-rouge">장애</code>를 만나서 고생한 이야기를 들었다.<br />
+장애의 원인이 본인들의 문제인지, aws의 결함인지 알지 못하여 문의로 해결을 받기까지 고생한 이야기인데,<br />
+알 수 없는 에러와 싸우며 몇날 몇일을 고생했다고 하셨다..</p>
+</blockquote>
+
+<blockquote>
+  <p>하지만 이런 단점에 비해 얻는 장점이 월등히 많으므로 전세계가 aws에 열광하는 것이 아닐까</p>
+</blockquote>
+
+<p>각설하고 본격적으로 aws의 기초 구성에 대해 알아보도록 하자.<br />
+<br /></p>
+
+<h2 id="aws-public-cloud의-구성">AWS Public Cloud의 구성</h2>
+<figure>
+<p><img src="/img/aws/aws_2_1.jpg" alt="region,AZ" width="100%" height="100%" /></p>
+  <figcaption>출처: <a href="https://blog.leedoing.com/46">https://blog.leedoing.com/46</a></figcaption>
+</figure>
+
+<p>AWS의 기본적인 <code class="highlighter-rouge">구성요소</code>의 단위는 다음과 같다.</p>
+<ul>
+  <li>region</li>
+  <li>AZ(Availability Zone)</li>
+  <li>VPC(Virtual Private Cloud)<br />
+<br /></li>
+</ul>
+
+<h4 id="1-region">1. region</h4>
+<p>구성요소 중 가장 큰 단위이며, 논리적인 단계이다.<br />
+<br /></p>
+
+<h4 id="2-azavailability-zone">2. AZ(Availability Zone)</h4>
+<p>실제 IDC 단위로써, aws 정책에 따라 하나의 region안에는 반드시 <code class="highlighter-rouge">2개 이상</code>의 AZ가 존재한다고 한다.<br />
+(그림에서도 2개의 AZ가 존재한다.)<br />
+시스템을 구성할 때 <code class="highlighter-rouge">single AZ</code>로 할 것인지, <code class="highlighter-rouge">multi AZ</code>로 할 것인지는 사용자의 선택사항이다.</p>
+<blockquote>
+  <p>multi AZ로 구성하여 data들을 이원화하여 안전하게 보관하는 것도 하나의 방법이고,<br />
+Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하는 것도 하나의 방법이다.<br />
+<br /></p>
+</blockquote>
+
+<h4 id="3-vpcvirtual-private-cloud">3. VPC(Virtual Private Cloud)</h4>
+<p>AZ 밑의 단위로써, <code class="highlighter-rouge">논리적인 구조</code>로 하나의 IDC 처럼 동작한다.</p>
+<blockquote>
+  <p>약간 웃긴것이 분명 public 서비스인데, <code class="highlighter-rouge">private</code>가 붙었다.<br />
+그 이유는 논리적인 하나의 IDC를 만들어서 개인이 사용할 수 있기 때문이라고 한다.</p>
+</blockquote>
+
+<p>모든 리소스는 <code class="highlighter-rouge">VPC</code>에 저장되며 한 region에 5개까지 VPC를 생성할 수 있다.(필요시 제한용량 해제 신청)<br />
+물론 VPC 없이도 서버를 생성할 수 있지만, 권장되지 않는다고 한다.</p>
+
+<p>계정을 생성하면 <code class="highlighter-rouge">기본 VPC</code>가 생성되고 그 안에 기본적인 구성요소들이 생성된다.</p>
+<blockquote>
+  <p>이 기본 VPC는 건들지 말자. 어떤 <code class="highlighter-rouge">에러</code>들이 발생한다고 한다.</p>
+</blockquote>
+
+<figure>
+<p><img src="/img/aws/aws_2_2.png" alt="VPC" width="130%" height="130%" /></p>
+  <figcaption>출처: <a href="https://cloudaffaire.com/create-a-vpc-interface-endpoint/">https://cloudaffaire.com/create-a-vpc-interface-endpoint/</a></figcaption>
+</figure>
+
+<p>위 그림에서도 볼 수 있듯이, VPC의 구성은 다음과 같이 이루어진다.</p>
+<ul>
+  <li><code class="highlighter-rouge">IGW</code>(Internet Gate Way): 외부로 연결되는 인터넷 게이트웨이</li>
+  <li><code class="highlighter-rouge">Subnet</code>: VPC의 가장 <code class="highlighter-rouge">기본</code>적인 하나의 단위로써, 각 서브넷은 public, private 중 설정이 가능<br />
+private은 외부에서 접속할 수도, 외부로 나갈 수도 없음</li>
+  <li><code class="highlighter-rouge">ACL</code>: 서브넷의 설정을 위한 <code class="highlighter-rouge">방화벽</code></li>
+  <li><code class="highlighter-rouge">Security Group</code>: 서브넷 하나의 <code class="highlighter-rouge">보안</code>을 설정, 주로 ACL은 두고, SG를 설정하여 보안관리</li>
+  <li><code class="highlighter-rouge">ELB</code>(Elastic Load Balancing): 로드밸런싱과 보안 설정을 해줌<br />
+private 서브넷을 만들경우, 외부와 통신이 안되는데 이때 ELB를 사용해서 외부에서 접근하도록 설정<br />
+(<code class="highlighter-rouge">로드밸런싱</code>과 <code class="highlighter-rouge">허용된 매서드</code>만 접근이 가능해진다고 함)<br />
+ELB의 종류는 다음과 같이 3가지 존재
+    <ul>
+      <li><code class="highlighter-rouge">Classic</code>: 예전 방식</li>
+      <li><code class="highlighter-rouge">Application</code>: 도메인 하위 레벨(/users 등)에 따라 다르게 웹 서버에 구성하고 이를 밸런싱</li>
+      <li><code class="highlighter-rouge">Network</code>: 모든 프로토콜(http(s) + 커스터마이징 프로토콜)에 대해 밸런싱<br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="3-1-subnet과-ec2-인스턴스">3-1. Subnet과 EC2 인스턴스</h5>
+<p>하나의 VPC에는 <code class="highlighter-rouge">여러개</code>의 서브넷을 생성할 수 있다.(10.1.10.100 / 10.1.10.110 등..)<br />
+이때 ip를 구분하여 용도에 맞게 할당해 내부적으로 영역을 <code class="highlighter-rouge">구분</code>한다.<br />
+(x.x.x.100대 이상은 외부통신, 미만은 내부통신 같은 방식)</p>
+
+<p>이렇게 만들어진 서브넷 하나에 만드는 서버를 우리가 아는 <code class="highlighter-rouge">EC2</code>라고 한다.<br />
+오브젝트를 만들고 메모리에 올려 사용하는 것을 <code class="highlighter-rouge">인스턴스</code>라 칭하므로,<br />
+가상화된 환경에 올려 사용자가 사용할 수 있도록 한 것을 <code class="highlighter-rouge">EC2 인스턴스</code>라 부른다.<br />
+<br /></p>
+
+<h5 id="3-2-bastion">3-2. Bastion</h5>
+<figure>
+<p><img src="/img/aws/aws_2_3.jpg" alt="VPC" width="80%" height="80%" /></p>
+  <figcaption>출처: <a href="https://www.youtube.com/watch?v=edi1kyxznE0">https://www.youtube.com/watch?v=edi1kyxznE0</a></figcaption>
+</figure>
+<p>VPC를 구성할 때, 내부 서브넷들을 <code class="highlighter-rouge">전부 private</code>으로 설정하고 <code class="highlighter-rouge">하나만</code> 관리용 <code class="highlighter-rouge">public</code> 서브넷으로 설정한다.<br />
+이 public 서브넷으로 다른 private 서브넷들을 관리하며, 이러한 관리자를 <code class="highlighter-rouge">bastion</code>이라 한다.<br />
+이런 방법을 사용하려면 <code class="highlighter-rouge">SG</code>(Security Group)을 설정해 <code class="highlighter-rouge">한정된 IP</code>만 bastion에 접근하도록 허용해야 한다.</p>
+<blockquote>
+  <p>만약 전부 public으로 서브넷을 만든다면, 관리자 중 한 명만 퇴사해도 <code class="highlighter-rouge">모든</code> 서브넷의 key를 갱신해야 한다.<br />
+매 번 이렇게 서브넷을 업데이트 할 수 없으므로, <code class="highlighter-rouge">전부</code> private으로 설정한다.<br />
+<br /></p>
+</blockquote>
+
+<h5 id="3-3-nat">3-3. NAT</h5>
+<p>하지만 문제는 여전히 존재한다. 전부 private으로 만들어 버렸으니, 각 서브넷의 외부와 통신이 안된다.<br />
+그럼 각 서브넷의 <code class="highlighter-rouge">OS 업데이트</code>는 어떻게 하는가?</p>
+
+<figure>
+<p><img src="/img/aws/aws_2_4.png" alt="VPC" width="100%" height="100%" /></p>
+  <figcaption>출처: <a href="https://blog.2dal.com/2017/09/12/aws-vpc-basic/">https://blog.2dal.com/2017/09/12/aws-vpc-basic/</a></figcaption>
+</figure>
+
+<p>정답은 하나의 서브넷을 public으로 설정 후 <code class="highlighter-rouge">outbound</code>는 <code class="highlighter-rouge">가능</code>하게, <code class="highlighter-rouge">inbound</code>는 <code class="highlighter-rouge">불가능</code>하게 만들면 된다.<br />
+이런 역할을 <code class="highlighter-rouge">NAT</code>이라 부르며 하나의 서브넷에 bastion과 NAT을 둘다 포함시킬 수도 있다.</p>
+<blockquote>
+  <p>이전에는 NAT 인스턴스를 생성해야 했으나, <code class="highlighter-rouge">NAT gateway</code>를 생성하여 서브넷 안에 포함시키면 작동하도록 변경되었다.<br />
+<br /></p>
+</blockquote>
+
+<h5 id="3-4-dev-manage-product-vpc">3-4. Dev, Manage, Product VPC</h5>
+<p><code class="highlighter-rouge">실제</code> 개발 및 배포를 진행할 때는 <code class="highlighter-rouge">VPC 구성</code>을 어떻게 해야할까?<br />
+여러가지 방법이 있겠지만, aws는 <code class="highlighter-rouge">각 단계별</code>로 VPC를 따로 구성하는 것을 추천한다.</p>
+<figure>
+<p><img src="/img/aws/aws_2_5.png" alt="VPC" width="100%" height="100%" /></p>
+  <figcaption>출처: <a href="https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/">https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/</a></figcaption>
+</figure>
+
+<p>위의 그림은 aws 공식 홈페이지에서 가져온 것인데, <code class="highlighter-rouge">Dev</code>/<code class="highlighter-rouge">Managemnet</code>/<code class="highlighter-rouge">Production</code> 총 3단계로 구성되있다.<br />
+이렇게 Stage 별로 VPC를 따로 구성해서 관리하는 것이 복잡한 서브넷간 설정을 <code class="highlighter-rouge">피할 수 있기</code> 때문이다.</p>
+<blockquote>
+  <p>물론 하나의 VPC 안에서 서브넷을 나눠 그룹별로 관리할 수도 있으나, 규모가 커졌을 때 서브넷간의 복잡한 설정으로 <code class="highlighter-rouge">어려움</code>이 따르게 된다.<br />
+<br /></p>
+</blockquote>
+
+<h4 id="4-s3simple-storgae-service">4. S3(Simple Storgae Service)</h4>
+<figure>
+<p><img src="/img/aws/aws_2_6.jpg" alt="VPC" width="100%" height="100%" /></p>
+  <figcaption>출처: <a href="https://www.megazone.com/techblog_191113_aws-privatelink/">https://www.megazone.com/techblog_191113_aws-privatelink/</a></figcaption>
+</figure>
+
+<p>S3는 단순하게는 하나의 <code class="highlighter-rouge">저장소</code>이다.<br />
+하지만 활용법에 따라 <code class="highlighter-rouge">효율적인</code> 정보의 전달이 가능한데, 이는 S3가 <code class="highlighter-rouge">웹서버</code> 역할을 제공하기 때문이다.<br />
+이는 다음의 과정을 거쳐 이루어지게 된다.</p>
+
+<p>S3는 기본적으로 VPC 밖에 구성된 하나의 웹서버로써 이곳에 <code class="highlighter-rouge">html</code> 같은 <code class="highlighter-rouge">정적인 파일</code>을 주로 배치한다.<br />
+End-user에게는 이곳을 보도록 설정하고, user가 원하는 요청을 수행하도록 그 파일에 <code class="highlighter-rouge">스크립트</code>로 짜놓는다.<br />
+User가 해당 요청을 하게되면 스크립트가 <code class="highlighter-rouge">브라우저</code>에서 실행되어, VPC를 거쳐 EC2까지 요청을 전송한다.<br />
+이러한 과정을 통해 User는 VPC를 신경쓸 필요없이 S3의 html로 <code class="highlighter-rouge">결과</code>를 받을 수 있게 된다.</p>
+
+<p>이러한 방식은 사실상 업계의 <code class="highlighter-rouge">표준</code>이라고 하며, 다른 오브젝트들이 이러한 S3호환 프로토콜을 제공한다.<br />
+<br /></p>
+
+<h4 id="5-rdsrelation-db-service">5. RDS(Relation DB Service)</h4>
+<p>하나의 서브넷을 구현하고, 그 안에 DB 서버를 구축하여 운영하는 것이 기존의 방식이었다면,<br />
+aws에서 제공하는 <code class="highlighter-rouge">Paas</code>의 일종인 <code class="highlighter-rouge">RDS</code>를 이용하여 더 효율적인 관리를 할 수 있다.</p>
+
+<p>이는 aws가 DB의 업데이트, 설치, 운영 그리고 관리까지 지원하기 때문이며, 지원하는 엔진은 다음과 같다.<br />
+<code class="highlighter-rouge">MySQL</code>/<code class="highlighter-rouge">Oracle</code>/<code class="highlighter-rouge">SQL Server</code>/<code class="highlighter-rouge">PostgreSQL</code>/<code class="highlighter-rouge">MariaDB</code>/<code class="highlighter-rouge">Aurora(MySQL과 호환)</code></p>
+
+<p>또한 RDS에서 <code class="highlighter-rouge">Multi-AZ</code> 옵션을 설정하면, 다른 AZ에 복제된 DB를 바로 사용할 수 있다.<br />
+주로 data를 백업하여 이원화하는 용도로 많이 쓰이게 된다.</p>
+
+<blockquote>
+  <p>Aurora는 aws에서 제공하는 <code class="highlighter-rouge">자체 DB</code>로써 장애발생 및 AZ를 이용한 자체복구등 추가 기능을 지원한다고 한다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>aws의 기초에 대해 <code class="highlighter-rouge">유능하신 어떤 분</code>께 배운 내용을 토대로 작성된 글이다.<br />
+인터넷을 찾아보면 훨씬 전문적이고 깊은 이해를 돕는 글들이 있지만,<br />
+이 포스팅의 목적은 최대한 <code class="highlighter-rouge">간단</code>하게, <code class="highlighter-rouge">이해</code>가 되도록 작성하는 것이었다.</p>
+
+<p>너무 긴 글이라 두개로 분리할까 고민했는데, 혹시 지치신 분들이 있다면 위로가 있기를…<br />
+다음에는 간단하게 AWS VPC를 구성하는 <code class="highlighter-rouge">실습</code>을 진행해 볼 예정이다.</p>
+
+<blockquote>
+  <p>이번 포스팅에는 사진에 달려있는 출처들이 reference 역할을 하기 때문에 따로 참조를 달지 않았다.</p>
+</blockquote>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/10/aws-1.html" data-toggle="tooltip" data-placement="top" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/10/aws-2.html';
+this.page.identifier = '/devlog/2020/01/10/aws-2';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

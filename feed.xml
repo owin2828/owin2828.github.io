@@ -1,4 +1,193 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T11:42:53+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T16:58:15+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] Region, AZ, VPC, Subnet등 구성</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html" rel="alternate" type="text/html" title="[AWS] Region, AZ, VPC, Subnet등 구성" /><published>2020-01-10T14:15:00+09:00</published><updated>2020-01-10T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.&lt;/p&gt;
+
+&lt;p&gt;퍼블릭 클라우드가 그러하듯이, aws 또한 모든것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;가상화&lt;/code&gt; 되어있다.&lt;br /&gt;
+이 말은 내가 신경쓰고 관리해야할 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;전혀 없다&lt;/code&gt;는 말이고 모든 것을 aws가 알아서 해주는 것이다.&lt;br /&gt;
+하지만 이러한 이유로 &lt;code class=&quot;highlighter-rouge&quot;&gt;하드웨어적 장애&lt;/code&gt;가 생겼을 때, 반대로 내가 할 수 있는 것은 전혀 없다.&lt;/p&gt;
+
+&lt;p&gt;무슨 말이냐면, 하드웨어적 결함으로 어떤 에러가 발생하였을 때&lt;br /&gt;
+그게 내 문제인지, aws의 문제인지 &lt;code class=&quot;highlighter-rouge&quot;&gt;알지 못할&lt;/code&gt; 수도 있다는 의미이다.&lt;br /&gt;
+생각보다 이러한 이유가 굉장히 &lt;code class=&quot;highlighter-rouge&quot;&gt;스트레스&lt;/code&gt; 받는 일이 된다고 우리팀의 시니어분께서 말씀해 주셨다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;실제로 어떤 기업의 세미나에서 aws 기반 서비스를 개발하던 중, 이런 &lt;code class=&quot;highlighter-rouge&quot;&gt;장애&lt;/code&gt;를 만나서 고생한 이야기를 들었다.&lt;br /&gt;
+장애의 원인이 본인들의 문제인지, aws의 결함인지 알지 못하여 문의로 해결을 받기까지 고생한 이야기인데,&lt;br /&gt;
+알 수 없는 에러와 싸우며 몇날 몇일을 고생했다고 하셨다..&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;하지만 이런 단점에 비해 얻는 장점이 월등히 많으므로 전세계가 aws에 열광하는 것이 아닐까&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;각설하고 본격적으로 aws의 기초 구성에 대해 알아보도록 하자.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;aws-public-cloud의-구성&quot;&gt;AWS Public Cloud의 구성&lt;/h2&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_1.jpg&quot; alt=&quot;region,AZ&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://blog.leedoing.com/46&quot;&gt;https://blog.leedoing.com/46&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;AWS의 기본적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성요소&lt;/code&gt;의 단위는 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;region&lt;/li&gt;
+  &lt;li&gt;AZ(Availability Zone)&lt;/li&gt;
+  &lt;li&gt;VPC(Virtual Private Cloud)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-region&quot;&gt;1. region&lt;/h4&gt;
+&lt;p&gt;구성요소 중 가장 큰 단위이며, 논리적인 단계이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-azavailability-zone&quot;&gt;2. AZ(Availability Zone)&lt;/h4&gt;
+&lt;p&gt;실제 IDC 단위로써, aws 정책에 따라 하나의 region안에는 반드시 &lt;code class=&quot;highlighter-rouge&quot;&gt;2개 이상&lt;/code&gt;의 AZ가 존재한다고 한다.&lt;br /&gt;
+(그림에서도 2개의 AZ가 존재한다.)&lt;br /&gt;
+시스템을 구성할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;single AZ&lt;/code&gt;로 할 것인지, &lt;code class=&quot;highlighter-rouge&quot;&gt;multi AZ&lt;/code&gt;로 할 것인지는 사용자의 선택사항이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;multi AZ로 구성하여 data들을 이원화하여 안전하게 보관하는 것도 하나의 방법이고,&lt;br /&gt;
+Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하는 것도 하나의 방법이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;3-vpcvirtual-private-cloud&quot;&gt;3. VPC(Virtual Private Cloud)&lt;/h4&gt;
+&lt;p&gt;AZ 밑의 단위로써, &lt;code class=&quot;highlighter-rouge&quot;&gt;논리적인 구조&lt;/code&gt;로 하나의 IDC 처럼 동작한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;약간 웃긴것이 분명 public 서비스인데, &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt;가 붙었다.&lt;br /&gt;
+그 이유는 논리적인 하나의 IDC를 만들어서 개인이 사용할 수 있기 때문이라고 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;모든 리소스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;에 저장되며 한 region에 5개까지 VPC를 생성할 수 있다.(필요시 제한용량 해제 신청)&lt;br /&gt;
+물론 VPC 없이도 서버를 생성할 수 있지만, 권장되지 않는다고 한다.&lt;/p&gt;
+
+&lt;p&gt;계정을 생성하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본 VPC&lt;/code&gt;가 생성되고 그 안에 기본적인 구성요소들이 생성된다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;이 기본 VPC는 건들지 말자. 어떤 &lt;code class=&quot;highlighter-rouge&quot;&gt;에러&lt;/code&gt;들이 발생한다고 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_2.png&quot; alt=&quot;VPC&quot; width=&quot;130%&quot; height=&quot;130%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&quot;&gt;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;위 그림에서도 볼 수 있듯이, VPC의 구성은 다음과 같이 이루어진다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IGW&lt;/code&gt;(Internet Gate Way): 외부로 연결되는 인터넷 게이트웨이&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Subnet&lt;/code&gt;: VPC의 가장 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본&lt;/code&gt;적인 하나의 단위로써, 각 서브넷은 public, private 중 설정이 가능&lt;br /&gt;
+private은 외부에서 접속할 수도, 외부로 나갈 수도 없음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ACL&lt;/code&gt;: 서브넷의 설정을 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;방화벽&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Security Group&lt;/code&gt;: 서브넷 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;보안&lt;/code&gt;을 설정, 주로 ACL은 두고, SG를 설정하여 보안관리&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ELB&lt;/code&gt;(Elastic Load Balancing): 로드밸런싱과 보안 설정을 해줌&lt;br /&gt;
+private 서브넷을 만들경우, 외부와 통신이 안되는데 이때 ELB를 사용해서 외부에서 접근하도록 설정&lt;br /&gt;
+(&lt;code class=&quot;highlighter-rouge&quot;&gt;로드밸런싱&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;허용된 매서드&lt;/code&gt;만 접근이 가능해진다고 함)&lt;br /&gt;
+ELB의 종류는 다음과 같이 3가지 존재
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Classic&lt;/code&gt;: 예전 방식&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt;: 도메인 하위 레벨(/users 등)에 따라 다르게 웹 서버에 구성하고 이를 밸런싱&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Network&lt;/code&gt;: 모든 프로토콜(http(s) + 커스터마이징 프로토콜)에 대해 밸런싱&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;3-1-subnet과-ec2-인스턴스&quot;&gt;3-1. Subnet과 EC2 인스턴스&lt;/h5&gt;
+&lt;p&gt;하나의 VPC에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;여러개&lt;/code&gt;의 서브넷을 생성할 수 있다.(10.1.10.100 / 10.1.10.110 등..)&lt;br /&gt;
+이때 ip를 구분하여 용도에 맞게 할당해 내부적으로 영역을 &lt;code class=&quot;highlighter-rouge&quot;&gt;구분&lt;/code&gt;한다.&lt;br /&gt;
+(x.x.x.100대 이상은 외부통신, 미만은 내부통신 같은 방식)&lt;/p&gt;
+
+&lt;p&gt;이렇게 만들어진 서브넷 하나에 만드는 서버를 우리가 아는 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;라고 한다.&lt;br /&gt;
+오브젝트를 만들고 메모리에 올려 사용하는 것을 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;라 칭하므로,&lt;br /&gt;
+가상화된 환경에 올려 사용자가 사용할 수 있도록 한 것을 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2 인스턴스&lt;/code&gt;라 부른다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;3-2-bastion&quot;&gt;3-2. Bastion&lt;/h5&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_3.jpg&quot; alt=&quot;VPC&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.youtube.com/watch?v=edi1kyxznE0&quot;&gt;https://www.youtube.com/watch?v=edi1kyxznE0&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;VPC를 구성할 때, 내부 서브넷들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;전부 private&lt;/code&gt;으로 설정하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나만&lt;/code&gt; 관리용 &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; 서브넷으로 설정한다.&lt;br /&gt;
+이 public 서브넷으로 다른 private 서브넷들을 관리하며, 이러한 관리자를 &lt;code class=&quot;highlighter-rouge&quot;&gt;bastion&lt;/code&gt;이라 한다.&lt;br /&gt;
+이런 방법을 사용하려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;SG&lt;/code&gt;(Security Group)을 설정해 &lt;code class=&quot;highlighter-rouge&quot;&gt;한정된 IP&lt;/code&gt;만 bastion에 접근하도록 허용해야 한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;만약 전부 public으로 서브넷을 만든다면, 관리자 중 한 명만 퇴사해도 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; 서브넷의 key를 갱신해야 한다.&lt;br /&gt;
+매 번 이렇게 서브넷을 업데이트 할 수 없으므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;전부&lt;/code&gt; private으로 설정한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;3-3-nat&quot;&gt;3-3. NAT&lt;/h5&gt;
+&lt;p&gt;하지만 문제는 여전히 존재한다. 전부 private으로 만들어 버렸으니, 각 서브넷의 외부와 통신이 안된다.&lt;br /&gt;
+그럼 각 서브넷의 &lt;code class=&quot;highlighter-rouge&quot;&gt;OS 업데이트&lt;/code&gt;는 어떻게 하는가?&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_4.png&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://blog.2dal.com/2017/09/12/aws-vpc-basic/&quot;&gt;https://blog.2dal.com/2017/09/12/aws-vpc-basic/&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;정답은 하나의 서브넷을 public으로 설정 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;outbound&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;가능&lt;/code&gt;하게, &lt;code class=&quot;highlighter-rouge&quot;&gt;inbound&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하게 만들면 된다.&lt;br /&gt;
+이런 역할을 &lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;이라 부르며 하나의 서브넷에 bastion과 NAT을 둘다 포함시킬 수도 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;이전에는 NAT 인스턴스를 생성해야 했으나, &lt;code class=&quot;highlighter-rouge&quot;&gt;NAT gateway&lt;/code&gt;를 생성하여 서브넷 안에 포함시키면 작동하도록 변경되었다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;3-4-dev-manage-product-vpc&quot;&gt;3-4. Dev, Manage, Product VPC&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실제&lt;/code&gt; 개발 및 배포를 진행할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC 구성&lt;/code&gt;을 어떻게 해야할까?&lt;br /&gt;
+여러가지 방법이 있겠지만, aws는 &lt;code class=&quot;highlighter-rouge&quot;&gt;각 단계별&lt;/code&gt;로 VPC를 따로 구성하는 것을 추천한다.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_5.png&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/&quot;&gt;https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;위의 그림은 aws 공식 홈페이지에서 가져온 것인데, &lt;code class=&quot;highlighter-rouge&quot;&gt;Dev&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;Managemnet&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;Production&lt;/code&gt; 총 3단계로 구성되있다.&lt;br /&gt;
+이렇게 Stage 별로 VPC를 따로 구성해서 관리하는 것이 복잡한 서브넷간 설정을 &lt;code class=&quot;highlighter-rouge&quot;&gt;피할 수 있기&lt;/code&gt; 때문이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;물론 하나의 VPC 안에서 서브넷을 나눠 그룹별로 관리할 수도 있으나, 규모가 커졌을 때 서브넷간의 복잡한 설정으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;어려움&lt;/code&gt;이 따르게 된다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;4-s3simple-storgae-service&quot;&gt;4. S3(Simple Storgae Service)&lt;/h4&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_6.jpg&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.megazone.com/techblog_191113_aws-privatelink/&quot;&gt;https://www.megazone.com/techblog_191113_aws-privatelink/&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;S3는 단순하게는 하나의 &lt;code class=&quot;highlighter-rouge&quot;&gt;저장소&lt;/code&gt;이다.&lt;br /&gt;
+하지만 활용법에 따라 &lt;code class=&quot;highlighter-rouge&quot;&gt;효율적인&lt;/code&gt; 정보의 전달이 가능한데, 이는 S3가 &lt;code class=&quot;highlighter-rouge&quot;&gt;웹서버&lt;/code&gt; 역할을 제공하기 때문이다.&lt;br /&gt;
+이는 다음의 과정을 거쳐 이루어지게 된다.&lt;/p&gt;
+
+&lt;p&gt;S3는 기본적으로 VPC 밖에 구성된 하나의 웹서버로써 이곳에 &lt;code class=&quot;highlighter-rouge&quot;&gt;html&lt;/code&gt; 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;정적인 파일&lt;/code&gt;을 주로 배치한다.&lt;br /&gt;
+End-user에게는 이곳을 보도록 설정하고, user가 원하는 요청을 수행하도록 그 파일에 &lt;code class=&quot;highlighter-rouge&quot;&gt;스크립트&lt;/code&gt;로 짜놓는다.&lt;br /&gt;
+User가 해당 요청을 하게되면 스크립트가 &lt;code class=&quot;highlighter-rouge&quot;&gt;브라우저&lt;/code&gt;에서 실행되어, VPC를 거쳐 EC2까지 요청을 전송한다.&lt;br /&gt;
+이러한 과정을 통해 User는 VPC를 신경쓸 필요없이 S3의 html로 &lt;code class=&quot;highlighter-rouge&quot;&gt;결과&lt;/code&gt;를 받을 수 있게 된다.&lt;/p&gt;
+
+&lt;p&gt;이러한 방식은 사실상 업계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;표준&lt;/code&gt;이라고 하며, 다른 오브젝트들이 이러한 S3호환 프로토콜을 제공한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;5-rdsrelation-db-service&quot;&gt;5. RDS(Relation DB Service)&lt;/h4&gt;
+&lt;p&gt;하나의 서브넷을 구현하고, 그 안에 DB 서버를 구축하여 운영하는 것이 기존의 방식이었다면,&lt;br /&gt;
+aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Paas&lt;/code&gt;의 일종인 &lt;code class=&quot;highlighter-rouge&quot;&gt;RDS&lt;/code&gt;를 이용하여 더 효율적인 관리를 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이는 aws가 DB의 업데이트, 설치, 운영 그리고 관리까지 지원하기 때문이며, 지원하는 엔진은 다음과 같다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;MySQL&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;Oracle&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;SQL Server&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;PostgreSQL&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;MariaDB&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;Aurora(MySQL과 호환)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;또한 RDS에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Multi-AZ&lt;/code&gt; 옵션을 설정하면, 다른 AZ에 복제된 DB를 바로 사용할 수 있다.&lt;br /&gt;
+주로 data를 백업하여 이원화하는 용도로 많이 쓰이게 된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Aurora는 aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;자체 DB&lt;/code&gt;로써 장애발생 및 AZ를 이용한 자체복구등 추가 기능을 지원한다고 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;aws의 기초에 대해 &lt;code class=&quot;highlighter-rouge&quot;&gt;유능하신 어떤 분&lt;/code&gt;께 배운 내용을 토대로 작성된 글이다.&lt;br /&gt;
+인터넷을 찾아보면 훨씬 전문적이고 깊은 이해를 돕는 글들이 있지만,&lt;br /&gt;
+이 포스팅의 목적은 최대한 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단&lt;/code&gt;하게, &lt;code class=&quot;highlighter-rouge&quot;&gt;이해&lt;/code&gt;가 되도록 작성하는 것이었다.&lt;/p&gt;
+
+&lt;p&gt;너무 긴 글이라 두개로 분리할까 고민했는데, 혹시 지치신 분들이 있다면 위로가 있기를…&lt;br /&gt;
+다음에는 간단하게 AWS VPC를 구성하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;실습&lt;/code&gt;을 진행해 볼 예정이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이번 포스팅에는 사진에 달려있는 출처들이 reference 역할을 하기 때문에 따로 참조를 달지 않았다.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.</summary></entry><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
 &lt;p&gt;이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다.&lt;br /&gt;
 그만큼 &lt;code class=&quot;highlighter-rouge&quot;&gt;클라우드&lt;/code&gt;가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데,&lt;br /&gt;
 이번 시리즈에서 클라우드의 기본 개념과 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;의 기초개념 및 실습을 포스팅 하고자 한다.&lt;br /&gt;
@@ -718,267 +907,4 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;여전히&quot;&gt;여전히&lt;/h4&gt;
-&lt;p&gt;부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영합니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">개발을 하다 보면 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. 들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.</summary></entry><entry><title type="html">[Web] JSTL &amp;amp; c tag</title><link href="https://owin2828.github.io/devlog/2020/01/06/web-2.html" rel="alternate" type="text/html" title="[Web] JSTL &amp; c tag" /><published>2020-01-06T17:26:00+09:00</published><updated>2020-01-06T17:26:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/web-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/web-2.html">&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다.&lt;/li&gt;
-  &lt;li&gt;출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-jstl&quot;&gt;1. JSTL&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JSTL&lt;/code&gt;(&lt;strong&gt;J&lt;/strong&gt;SP &lt;strong&gt;S&lt;/strong&gt;tandard &lt;strong&gt;T&lt;/strong&gt;ag &lt;strong&gt;L&lt;/strong&gt;ibrary)는 JSP페이지에서 많이 사용되는&lt;br /&gt;
-논리적인 판단, 반복처리, 포맷처리를 위한 커스텀 태그를 표준으로 만들어 정의한 &lt;code class=&quot;highlighter-rouge&quot;&gt;라이브러리&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-why-jstl&quot;&gt;1-1. Why JSTL&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;JSP는 HTML 코드와 스크립트릿, 표현식등의 스크립트 코드가 섞여 &lt;code class=&quot;highlighter-rouge&quot;&gt;가독성이 떨어짐&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;이를 해결하기 위해 HTML 태그와 비슷한 코드를 사용해 처리하는 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;JSTL&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1-2-jstl-사용법&quot;&gt;1-2. JSTL 사용법&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;JSTL 사용법으로는 다음과 같이 두 가지 방법이 존재
-    &lt;ol&gt;
-      &lt;li&gt;pom.xml에 &lt;code class=&quot;highlighter-rouge&quot;&gt;maven&lt;/code&gt; 의존 설정
-        &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- https://mvnrepository.com/artifact/javax.servlet/jstl --&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-       &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;javax.servlet&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-       &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;jstl&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-       &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jar&lt;/code&gt; 파일을 WEB-INF/lib 디렉토리에 복사&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1-3-jstl이-제공하는-태그&quot;&gt;1-3. JSTL이 제공하는 태그&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;JSTL의 &lt;code class=&quot;highlighter-rouge&quot;&gt;태그&lt;/code&gt;는 다음과 같은 종류가 존재&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;코어&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;주요기능: 변수지원, 흐름제어, URL 처리&lt;/li&gt;
-      &lt;li&gt;접두어: &lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;관련 URL: &lt;a href=&quot;http://java.sun.com/jsp/jstl/core&quot;&gt;http://java.sun.com/jsp/jstl/core&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;XML&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;주요기능: XML 코어, 흐름 제어, XML 변환&lt;/li&gt;
-      &lt;li&gt;접두어: &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;관련 URL: &lt;a href=&quot;http://java.sun.com/jsp/jstl/xml&quot;&gt;http://java.sun.com/jsp/jstl/xml&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;국제화&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;주요기능: 지역, 메시지 형식, 숫자 및 날짜 형식&lt;/li&gt;
-      &lt;li&gt;접두어: &lt;code class=&quot;highlighter-rouge&quot;&gt;fmt&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;관련 URL: &lt;a href=&quot;http://java.sun.com/jsp/jstl/fmt&quot;&gt;http://java.sun.com/jsp/jstl/fmt&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DataBase&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;주요기능: SQL&lt;/li&gt;
-      &lt;li&gt;접두어: &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;관련 URL: &lt;a href=&quot;http://java.sun.com/jsp/jstl/sql&quot;&gt;http://java.sun.com/jsp/jstl/sql&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;함수&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;주요기능: 컬렉션 처리, String 처리&lt;/li&gt;
-      &lt;li&gt;접두어: &lt;code class=&quot;highlighter-rouge&quot;&gt;fn&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;관련 URL: [http://java.sun.com/jsp/jstl/functions])(http://java.sun.com/jsp/jstl/functions)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이 중, 제일 많이 사용되는 태그는 &lt;code class=&quot;highlighter-rouge&quot;&gt;c tag(코어)&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-c-tag&quot;&gt;2. C Tag&lt;/h2&gt;
-&lt;p&gt;코어 태그 라이브러리는 &lt;code class=&quot;highlighter-rouge&quot;&gt;변수 설정&lt;/code&gt;이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;논리 처리&lt;/code&gt;에 사용되는 스크립트 코드를 대체하는 태그를 제공&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;변수 지원:
-    &lt;ul&gt;
-      &lt;li&gt;set, remove&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;흐름 제어:
-    &lt;ul&gt;
-      &lt;li&gt;if, choose, forEach, forTokens&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;URL 처리:
-    &lt;ul&gt;
-      &lt;li&gt;import, redirect, url&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;기타 태그:
-    &lt;ul&gt;
-      &lt;li&gt;catch, out&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-1-set-remove-변수-설정&quot;&gt;2-1. set, remove (변수 설정)&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:set&amp;gt;&lt;/code&gt; 태그는 &lt;code class=&quot;highlighter-rouge&quot;&gt;EL 변수 값&lt;/code&gt; 혹은 &lt;code class=&quot;highlighter-rouge&quot;&gt;EL 변수의 프로퍼티 값&lt;/code&gt;을 지정하거나, &lt;code class=&quot;highlighter-rouge&quot;&gt;JSTL 태그&lt;/code&gt;에서 사용할 변수의 값을 처리할 때 다음과 같이 사용
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:set var=&quot;varName&quot; value=&quot;varValue&quot; [scope=&quot;지정영역&quot;] /&amp;gt;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:set target=&quot;대상&quot; property=&quot;프로퍼티 이름&quot; value=&quot;값&quot; /&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 첫번째 사용법 (jstl 변수를 생성하여 사용하는법) --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test1&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;니나노&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 두번째 사용법 (빈즈활용) --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 자바 빈즈가 필요함. 한페이지에서 설명하기위해.. map 으로 대체 --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;member&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;member&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;홍길동&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;%&amp;gt;&lt;/span&gt;
-        
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;member&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;%=member%&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;${member.name}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;target = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;%=member%&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; property = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; value = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;홍길동2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-니나노&lt;br /&gt;
-홍길동&lt;br /&gt;
-홍길동2&lt;br /&gt;
-홍길동2&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:remove&amp;gt;&lt;/code&gt; 태그는 &lt;c:set&gt; 태그로 지정한 변수를 `삭제`할 때 다음과 같이 사용
-&lt;/c:set&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:remove var=&quot;varName&quot; [scope=&quot;지정영역&quot;] /&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test1&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;니나노&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;${test1}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- c:remove 사용하여 c:set 변수를 삭제 --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:remove &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;${test1}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-니나노&lt;br /&gt;
-(빈 텍스트가 출력 됨)&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-2-if-choose-조건문&quot;&gt;2-2. if, choose (조건문)&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:if&amp;gt;&lt;/code&gt; 태그는 조건의 &lt;code class=&quot;highlighter-rouge&quot;&gt;참/거짓&lt;/code&gt; 유무에 따라 분기하며 다음과 같이 사용
-    &lt;blockquote&gt;
-      &lt;p&gt;else는 따로 존재하지 않음, 따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;choose&lt;/code&gt;를 사용&lt;/p&gt;
-    &lt;/blockquote&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:if test=&quot;조건&quot; [var = &quot;testResult&quot;]/&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test1&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:if &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;1보다 크다&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:if&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:if &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;1보다 작다&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:if&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-1보다 크다&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:choose&amp;gt;&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:when&amp;gt;&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:otherwise&amp;gt;&lt;/code&gt; 태그를 else if, else 대신 다음과 같이 함께 사용
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:chose&amp;gt;&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:when test=&quot;조건&quot;&amp;gt;실행문&amp;lt;/c:when&amp;gt;&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:otherwise&amp;gt;실행문&amp;lt;/c:otherwise&amp;gt;&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/c:chose&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test1&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:choose&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:when &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-          &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;1보다 작음&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:when&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:when &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-          &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;3과 같음&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:when&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:otherwise&amp;gt;&lt;/span&gt;
-          &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;쩌리&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:otherwise&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:choose&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-3과 같음&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-3-foreach-fortokens-반복문&quot;&gt;2-3. forEach, forTokens (반복문)&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:forEach&amp;gt;&lt;/code&gt; 태그는 자바의 &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt;문과 동일하며, 다음과 같이 사용
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:forEach var=&quot;변수&quot;  item = &quot;아이템&quot; [begin =&quot;시작값&quot; end=&quot;종료값&quot; step=&quot;증가값&quot; varStatus=&quot;현재의값&quot;]/&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- memberList라는 구조체가 존재하며 프로퍼티 값은 name, age를 가짐 --&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:forEach &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;member&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; items=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;%=memberList %&amp;gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-          이름 : ${member.name} 나이 : ${member.age}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:forEach&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-이름: 홍길동 나이: 21&lt;br /&gt;
-이름: 김순이 나이: 23&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:forTokens&amp;gt;&lt;/code&gt; 태그는 자바의 &lt;code class=&quot;highlighter-rouge&quot;&gt;split&lt;/code&gt; 기능과 유사하며, 다음과 같이 사용
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:forTokens var=&quot;변수&quot; items=&quot;아이템&quot; delims=&quot;자를 문구&quot; [varStatus=&quot;status&quot;]/&amp;gt;&lt;/code&gt;
-        &lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;nameGroup&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;철수,영미,나미,우솝,루피&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:forTokens &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; items=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nameGroup&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; delims=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;,&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-color: yellow;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-          이름 : ${name}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:forTokens&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실행결과&lt;/code&gt;&lt;br /&gt;
-이름: 철수&lt;br /&gt;
-이름: 영미&lt;br /&gt;
-이름: 나미&lt;br /&gt;
-이름: 우솝&lt;br /&gt;
-이름: 루피&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-4-url-imnport-redirect-url-처리&quot;&gt;2-4. url, imnport, redirect (URL 처리)&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;해당 태그들은 문법만 정리&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:url value = &quot;링크&quot;/&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:import url=&quot;url&quot; [context=&quot;context&quot;] [var=&quot;varName&quot;]  [scope=&quot;{page|request|session|application}&quot;] [charEncoding=&quot;charEncoding&quot;]&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:redirect url=&quot;value&quot; [context=&quot;context&quot;]/&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-5-catch-out-기타&quot;&gt;2-5. catch, out (기타)&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;해당 태그들은 문법만 정리&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:catch var=&quot;명칭&quot;&amp;gt;&amp;lt;/c:catch&amp;gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:out value=&quot;value&quot; [escapeXml=&quot;{true|false}&quot;] [default=&quot;value가 없을 때 표시될 문자&quot;]  /&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다. 출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w</summary></entry></feed>
+&lt;p&gt;부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영합니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">개발을 하다 보면 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. 들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.</summary></entry></feed>
