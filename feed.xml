@@ -1,4 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T10:26:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T11:31:15+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
+&lt;p&gt;이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다.&lt;br /&gt;
+그만큼 &lt;code class=&quot;highlighter-rouge&quot;&gt;클라우드&lt;/code&gt;가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데,&lt;br /&gt;
+이번 시리즈에서 클라우드의 기본 개념과 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;의 기초개념 및 실습을 포스팅 하고자 한다.&lt;br /&gt;
+시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;클라우드의 기본 개념과 기존에 정리가 잘 된 많은 글들이 있으니,&lt;br /&gt;
+혹시 궁금한 것이 있다면 다른 글을 찾아보는 것을 추천합니다.
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;public-cloud&quot;&gt;Public Cloud&lt;/h2&gt;
+&lt;p&gt;나같은 일반 개발자나, 기업을 대상으로 서비스를 제공하는 클라우드 인프라를 &lt;code class=&quot;highlighter-rouge&quot;&gt;퍼블릭&lt;/code&gt; 클라우드라 한다.&lt;br /&gt;
+클라우드 서비스를 제공하는 다양한 업체들(AWS, Google, MS, Alibaba, Naver)등은 가상환경 내의 서버를 임대해 준다.&lt;br /&gt;
+이러한 클라우드 서비스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pay-as-you-go&lt;/code&gt;으로 사용한 만큼 과금하는 방식을 채택하며 별도의 하드웨어가 필요하지 않다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;private-cloud&quot;&gt;Private Cloud&lt;/h2&gt;
+&lt;p&gt;하나의 조직에 전용 클라우드 환경을 제공하는 모델을 &lt;code class=&quot;highlighter-rouge&quot;&gt;프라이빗&lt;/code&gt; 클라우드라 한다.&lt;br /&gt;
+사내 전용 클라우드로써, 각 조직이 더 효율적으로 관리할 수 있으나, 퍼블릭 클라우드에 비해 비용이 많이든다.&lt;br /&gt;
+각 조직에 &lt;code class=&quot;highlighter-rouge&quot;&gt;on-premise&lt;/code&gt; 방식으로 적용될 수도 있고, 퍼블릭 클라우드 제공업체에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;off-premise&lt;/code&gt;로 호스팅 될 수도 있다.
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;hybrid-cloud&quot;&gt;Hybrid Cloud&lt;/h2&gt;
+&lt;p&gt;VPN등의 보안연결을 통해서 하나 이상의 퍼블릭 클라우드 + 프라이빗 클라우드 환경을 결합하는 방식이다.&lt;br /&gt;
+두 개의 클라우드 간의 트래픽은 유동적으로 조정이 가능하여 유연한 대처가 가능하다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;프라이빗 클라우드에 많은 트래픽이 몰릴경우, 퍼블릭 클라우드로 &lt;code class=&quot;highlighter-rouge&quot;&gt;버스팅&lt;/code&gt;하여 유동적인 대처가 가능하다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;앞으로&quot;&gt;앞으로&lt;/h2&gt;
+&lt;p&gt;진행하게될 포스팅은 위에 언급한 것 중, 당연히 퍼블릭 클라우드인 &lt;code class=&quot;highlighter-rouge&quot;&gt;aws&lt;/code&gt;를 이용하여 진행할 예정이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;로 사용해 볼 수 있고, 가장 대중적이며 개인이 작은 규모로 해보기에 가장 좋기 때문이다.&lt;br /&gt;
+늘 이야기하지만, 정답은 없으므로 조직에 클라우드를 적용하기를 고려중이라면, 다른 클라우드도 고민할 가치가 있다.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">클라우드 이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다. 그만큼 클라우드가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데, 이번 시리즈에서 클라우드의 기본 개념과 AWS의 기초개념 및 실습을 포스팅 하고자 한다. 시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.</summary></entry><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
 &lt;p&gt;주로 게시판 등에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일 업로드&lt;/code&gt; 기능을 악용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 권한&lt;/code&gt;을 획득할 수 있는 취약점을 의미한다.&lt;br /&gt;
 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -937,62 +974,4 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
   &lt;li&gt;해당 태그들은 문법만 정리&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:catch var=&quot;명칭&quot;&amp;gt;&amp;lt;/c:catch&amp;gt;&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;c:out value=&quot;value&quot; [escapeXml=&quot;{true|false}&quot;] [default=&quot;value가 없을 때 표시될 문자&quot;]  /&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다. 출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w</summary></entry><entry><title type="html">[Web] Get VS Post</title><link href="https://owin2828.github.io/devlog/2020/01/06/web-1.html" rel="alternate" type="text/html" title="[Web] Get VS Post" /><published>2020-01-06T17:22:00+09:00</published><updated>2020-01-06T17:22:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/06/web-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/06/web-1.html">&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다.&lt;/li&gt;
-  &lt;li&gt;출처: &lt;a href=&quot;https://bit.ly/31M2YN8&quot;&gt;https://bit.ly/31M2YN8&lt;/a&gt; &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;0-들어가기-앞서&quot;&gt;0. 들어가기 앞서&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;사용자는 단순히 &lt;code class=&quot;highlighter-rouge&quot;&gt;URL&lt;/code&gt;을 입력하여 페이지로 이동을 하지만, 서버 내부에서는 클라이언트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;요청&lt;/code&gt;에 응답하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;처리&lt;/code&gt;를 해주어야 함&lt;/li&gt;
-  &lt;li&gt;이 때,  클라이언트가 서버로 요청을 보내는 방법인 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP Method&lt;/code&gt;에는 크게 다음과 같은 2가지 방법이 존재
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;POST&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-get-방식&quot;&gt;1. GET 방식&lt;/h2&gt;
-&lt;p&gt;GET은 어떤 정보를 가져와 &lt;code class=&quot;highlighter-rouge&quot;&gt;조회&lt;/code&gt;하기 위해 사용하며, 간단한 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;URL&lt;/code&gt;에 넣도록 설계된 방식으로 다음과 같은 특징을 지님&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-get-방식의-특징&quot;&gt;1-1. GET 방식의 특징&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;URL에 변수(데이터)를 &lt;code class=&quot;highlighter-rouge&quot;&gt;포함&lt;/code&gt;시켜 요청&lt;/li&gt;
-  &lt;li&gt;데이터를 Header에 &lt;code class=&quot;highlighter-rouge&quot;&gt;포함&lt;/code&gt;하여 전송&lt;/li&gt;
-  &lt;li&gt;URL에 데이터가 &lt;code class=&quot;highlighter-rouge&quot;&gt;노출&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;전송하는 길이에 &lt;code class=&quot;highlighter-rouge&quot;&gt;제한&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;캐싱&lt;/code&gt;이 가능&lt;/li&gt;
-  &lt;li&gt;형식
-    &lt;ul&gt;
-      &lt;li&gt;URL?변수명1=값1&amp;amp;변수명2=값2&amp;amp;변수명3=값3&amp;amp;…&lt;/li&gt;
-      &lt;li&gt;다음과 같이 직접 URI를 입력하여 요청가능
-        &lt;blockquote&gt;
-          &lt;p&gt;/hello/test.php?name1=value1&amp;amp;name2=value2&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-post-방식&quot;&gt;2. POST 방식&lt;/h2&gt;
-&lt;p&gt;POST 방식은 데이터를 서버로 제출하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;추가&lt;/code&gt; 또는 &lt;code class=&quot;highlighter-rouge&quot;&gt;수정&lt;/code&gt;하기 위해서 데이터를 전송하는 방식으로 다음과 같은 특징을 지님&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-post-방식의-특징&quot;&gt;2-1. POST 방식의 특징&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;URL에 변수(데이터)를 &lt;code class=&quot;highlighter-rouge&quot;&gt;포함하지 않고&lt;/code&gt;시켜 요청&lt;/li&gt;
-  &lt;li&gt;데이터를 Body에 &lt;code class=&quot;highlighter-rouge&quot;&gt;포함&lt;/code&gt;하여 전송&lt;/li&gt;
-  &lt;li&gt;URL에 데이터가 &lt;code class=&quot;highlighter-rouge&quot;&gt;노출되지 않음&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;전송하는 길이에 &lt;code class=&quot;highlighter-rouge&quot;&gt;제한이 없음&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;캐싱이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;형식
-    &lt;blockquote&gt;
-      &lt;p&gt;POST /hello/test.php HTTP/1.1&lt;br /&gt;
-    Host: jmnote.com&lt;br /&gt;
-    name1=value1&amp;amp;name2=value2&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 GET / POST 방식에 대하여 알아보도록 한다. 출처: https://bit.ly/31M2YN8</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="web" /><summary type="html">본 문서에서는 JSTL 및 c tag에 대하여 알아보도록 한다. 출처: https://bit.ly/2OpbwWJ, https://bit.ly/2oboH2w</summary></entry></feed>

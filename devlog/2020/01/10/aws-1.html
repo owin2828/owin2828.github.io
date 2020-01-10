@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    Posts - 낮코밤코
+    [AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="Already done, cause will do">
+  <meta name="description" content="클라우드 이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다. 그만큼 클라우드가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데, 이번 시리즈에서 클라우드의 기본 개념과 AWS의 기초개념 및 실습을 포스팅 하고자 한다. 시리즈의 시작으로 ...">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/posts/">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -107,15 +107,24 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_allpost.jpg')">
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Posts</h1>
+          <div class="post-heading">
+            <h1>[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</h1>
             
+            <h2 class="subheading">AWS 기초 - 1</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-10 10:55 &middot; <span class="reading-time" title="Estimated read time">
+  
+   1 min  read </span>
+
+            </span>
           </div>
         </div>
       </div>
@@ -126,172 +135,91 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
+        <h2 id="클라우드">클라우드</h2>
+<p>이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다.<br />
+그만큼 <code class="highlighter-rouge">클라우드</code>가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데,<br />
+이번 시리즈에서 클라우드의 기본 개념과 <code class="highlighter-rouge">AWS</code>의 기초개념 및 실습을 포스팅 하고자 한다.<br />
+시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.</p>
+
+<blockquote>
+  <p>클라우드의 기본 개념과 기존에 정리가 잘 된 많은 글들이 있으니,<br />
+혹시 궁금한 것이 있다면 다른 글을 찾아보는 것을 추천합니다.
+<br /></p>
+</blockquote>
+
+<h2 id="public-cloud">Public Cloud</h2>
+<p>나같은 일반 개발자나, 기업을 대상으로 서비스를 제공하는 클라우드 인프라를 <code class="highlighter-rouge">퍼블릭</code> 클라우드라 한다.<br />
+클라우드 서비스를 제공하는 다양한 업체들(AWS, Google, MS, Alibaba, Naver)등은 가상환경 내의 서버를 임대해 준다.<br />
+이러한 클라우드 서비스는 <code class="highlighter-rouge">Pay-as-you-go</code>으로 사용한 만큼 과금하는 방식을 채택하며 별도의 하드웨어가 필요하지 않다.<br />
+<br /></p>
+
+<h2 id="private-cloud">Private Cloud</h2>
+<p>하나의 조직에 전용 클라우드 환경을 제공하는 모델을 <code class="highlighter-rouge">프라이빗</code> 클라우드라 한다.<br />
+사내 전용 클라우드로써, 각 조직이 더 효율적으로 관리할 수 있으나, 퍼블릭 클라우드에 비해 비용이 많이든다.<br />
+각 조직에 <code class="highlighter-rouge">on-premise</code> 방식으로 적용될 수도 있고, 퍼블릭 클라우드 제공업체에서 <code class="highlighter-rouge">off-premise</code>로 호스팅 될 수도 있다.
+<br /></p>
+
+<h2 id="hybrid-cloud">Hybrid Cloud</h2>
+<p>VPN등의 보안연결을 통해서 하나 이상의 퍼블릭 클라우드 + 프라이빗 클라우드 환경을 결합하는 방식이다.<br />
+두 개의 클라우드 간의 트래픽은 유동적으로 조정이 가능하여 유연한 대처가 가능하다.</p>
+<blockquote>
+  <p>프라이빗 클라우드에 많은 트래픽이 몰릴경우, 퍼블릭 클라우드로 <code class="highlighter-rouge">버스팅</code>하여 유동적인 대처가 가능하다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="앞으로">앞으로</h2>
+<p>진행하게될 포스팅은 위에 언급한 것 중, 당연히 퍼블릭 클라우드인 <code class="highlighter-rouge">aws</code>를 이용하여 진행할 예정이다.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">무료</code>로 사용해 볼 수 있고, 가장 대중적이며 개인이 작은 규모로 해보기에 가장 좋기 때문이다.<br />
+늘 이야기하지만, 정답은 없으므로 조직에 클라우드를 적용하기를 고려중이라면, 다른 클라우드도 고민할 가치가 있다.</p>
+</blockquote>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/09/etc-2.html" data-toggle="tooltip" data-placement="top" title="[보안] 파일 업로드 취약점"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
         
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
 
-<article class="post-preview">
-  <a href="/devlog/2020/01/10/aws-1.html">
-    <h2 class="post-title">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</h2>
-    
-    <h3 class="post-subtitle">AWS 기초 - 1</h3>
-    
-  </a>
-  <p class="post-meta">
-    2020-01-10 10:55
-    in
-    devlog
-    on
-    aws
-</article>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
-<hr>
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/10/aws-1.html';
+this.page.identifier = '/devlog/2020/01/10/aws-1';
+};
 
-
-
-<article class="post-preview">
-  <a href="/devlog/2020/01/09/etc-2.html">
-    <h2 class="post-title">[보안] 파일 업로드 취약점</h2>
-    
-    <h3 class="post-subtitle">파일 업로드의 취약점과 공격,방어 방법</h3>
-    
-  </a>
-  <p class="post-meta">
-    2020-01-09 14:56
-    in
-    devlog
-    on
-    etc
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2020/01/09/cicd-5.html">
-    <h2 class="post-title">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</h2>
-    
-    <h3 class="post-subtitle">DevOps Full Chain - 5</h3>
-    
-  </a>
-  <p class="post-meta">
-    2020-01-09 13:13
-    in
-    devlog
-    on
-    cicd
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2020/01/08/etc-1.html">
-    <h2 class="post-title">[Linux] 기본 설정으로 포트 확인하기</h2>
-    
-    <h3 class="post-subtitle">ping, telnet, nc, curl, bash</h3>
-    
-  </a>
-  <p class="post-meta">
-    2020-01-08 15:17
-    in
-    devlog
-    on
-    etc
-</article>
-
-<hr>
-
-
-
-<article class="post-preview">
-  <a href="/devlog/2020/01/08/cicd-4.html">
-    <h2 class="post-title">[CI/CD] 그래서 CI/CD가 뭔데?</h2>
-    
-    <h3 class="post-subtitle">DevOps Full Chain - 4</h3>
-    
-  </a>
-  <p class="post-meta">
-    2020-01-08 14:12
-    in
-    devlog
-    on
-    cicd
-</article>
-
-<hr>
-
-
-
-
-  <div class='pagination'>
-    
-      <span>&laquo; Prev</span>
-    
-
-    
-      
-        <span  class="pagination-selected" >
-          <a href="/posts/index.html" title="Posts">
-            1
-          </a>
-        </span>
-      
-        <span >
-          <a href="/posts/page/2/index.html" title="Posts">
-            2
-          </a>
-        </span>
-      
-        <span >
-          <a href="/posts/page/3/index.html" title="Posts">
-            3
-          </a>
-        </span>
-      
-        <span >
-          <a href="/posts/page/4/index.html" title="Posts">
-            4
-          </a>
-        </span>
-      
-        <span >
-          <a href="/posts/page/5/index.html" title="Posts">
-            5
-          </a>
-        </span>
-      
-    
-
-    
-      <a href="/posts/page/2/">
-        Next &raquo;
-      </a>
-    
-  </div>
-  
-</div>
-
-<!-- 다음의 코드는 assets/vendor/startbootstrap-clean-blog/scss/pagination.scss로 이동 -->
-<!-- <style lang="scss">
-  .pagination {
-    margin: auto;
-    text-align: center;
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 55px 0 25px 0;
-    color: #999;
-  }
-  span.pagination-selected {
-    display: inline-block;
-    font-size: 1.7rem;
-  }
-</style> -->
-
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
       </div>
     </div>
   </div>
+
+
+
+
 
 
   <!-- Footer -->
