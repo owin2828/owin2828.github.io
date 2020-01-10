@@ -12,7 +12,7 @@
     
   </title>
 
-  <meta name="description" content="">
+  <meta name="description" content="이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -38,6 +38,16 @@
     })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
     <!-- End Google Tag Manager -->
   
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
 
 </head>
 
@@ -111,7 +121,7 @@
               <a href="#">owin2828</a>
               on 2020-01-09 13:13 &middot; <span class="reading-time" title="Estimated read time">
   
-   1 min  read </span>
+   3 mins  read </span>
 
             </span>
           </div>
@@ -124,7 +134,112 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        
+        <h2 id="이번-글에서는">이번 글에서는</h2>
+<p>CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,<br />
+다음과 같은 솔루션들의 장단점을 분석하고자 한다.</p>
+<ul>
+  <li>Travis</li>
+  <li>GitLab CI</li>
+  <li>Jenkins<br />
+<br /></li>
+</ul>
+
+<h2 id="1-trvais">1. Trvais</h2>
+<p><img src="/img/cicd/cicd_5_1.jpg" alt="travis" width="70%" height="70%" /><br />
+별도의 회사였으나, <code class="highlighter-rouge">GitHub</code>에서 인수하였다.(GitHub는 MS가 인수함)<br />
+오픈소스용 <code class="highlighter-rouge">무료</code> travis.org와 <code class="highlighter-rouge">Private Repo</code>를 위한 <code class="highlighter-rouge">유료</code> travis.com을 별도로 운영하고 있고, 내용은 동일하다.</p>
+
+<h5 id="장점">장점</h5>
+<ul>
+  <li><code class="highlighter-rouge">GitHub</code>와의 연동(그냥 깃허브 계정으로 로그인하며 된다.)</li>
+  <li><code class="highlighter-rouge">YML</code> 파일을 통한 쉬운 설정</li>
+  <li><code class="highlighter-rouge">다양한</code> 래퍼런스</li>
+  <li>직접 서버를 운영할 필요 없이, Travis에서 <code class="highlighter-rouge">알아서</code> VM으로 호스팅해 줌</li>
+  <li>모든 job이 <code class="highlighter-rouge">독립</code>적(서로 간의 영향을 받지 않음)</li>
+</ul>
+
+<h5 id="단점">단점</h5>
+<ul>
+  <li>Jenkins에 비해 플러그인의 종류가 <code class="highlighter-rouge">적음</code></li>
+  <li>유료 서비스를 사용할 경우, 가격이 꽤 <code class="highlighter-rouge">비쌈</code>(기본: 69$/month, 일반: 129$/month)<br />
+<br /></li>
+</ul>
+
+<h2 id="2-gitlab-ci">2. GitLab CI</h2>
+<p><img src="/img/cicd/cicd_5_2.png" alt="travis" width="30%" height="30%" /><br />
+GitLab 서비스에 내장되어 있다.<br />
+<code class="highlighter-rouge">On-Premise</code> 방식으로 설치하여 사용할 수도 있고, <code class="highlighter-rouge">웹</code> 서비스로 사용할 수도 있다.<br />
+GitLab CI만 <code class="highlighter-rouge">Runner</code>를 직접 호스팅하여 사용할 수 있는데, 이를 통해 고성능 혹은 서비스에 트고하된 환경에서 실행할 수 있다.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">Runner</code>: repo로부터 소스코드를 받아 해당 스크립트를 돌리는 작업을 수행<br />
+GitLab의 경우<code class="highlighter-rouge">shared runner</code>를 사용해서 계획적으로 돌릴 수 있다.<br />
+On-Premise 방식에서는 당연히 지원하고,<br />
+GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 <code class="highlighter-rouge">따로</code> 운용할 수 있다.</p>
+</blockquote>
+
+<h5 id="장점-1">장점</h5>
+<ul>
+  <li><code class="highlighter-rouge">GitLab</code>과의 손쉬운 연동</li>
+  <li>Runner가 <code class="highlighter-rouge">Docker</code> 컨테이너 기반이라, Docker 친화적임(Docker Repo 무료 제공)</li>
+  <li>UI가 쉽고 <code class="highlighter-rouge">간편함</code></li>
+  <li>모든 job이 <code class="highlighter-rouge">독립적</code></li>
+</ul>
+
+<h5 id="단점-1">단점</h5>
+<ul>
+  <li>역시나 Jenkins에 비해 플러그인의 종류가 <code class="highlighter-rouge">적음</code></li>
+  <li><code class="highlighter-rouge">모든</code> job에 대해 artifact를 정의 및 업로드/다운로드를 해야함<br />
+<br /></li>
+</ul>
+
+<h2 id="3-jenkins">3. Jenkins</h2>
+<p><img src="/img/cicd/cicd_5_3.png" alt="Jenkins" width="50%" height="50%" /><br />
+<code class="highlighter-rouge">Java</code> 기반의 오픈소스로 구성되어 있으며, CI계의 <code class="highlighter-rouge">아버지</code>라 불린다.<br />
+제일 오래된 만큼 다양한 플러그인을 지원하며, 사용자도 관련 문서도 많이 존재한다.</p>
+
+<h5 id="장점-2">장점</h5>
+<ul>
+  <li><code class="highlighter-rouge">무료</code></li>
+  <li>다양한 IDE를 지원하며, 커스터마이징이 다양</li>
+  <li><code class="highlighter-rouge">많은</code> 사용자들을 보유하고 있고, 관련 문서가 <code class="highlighter-rouge">다양</code></li>
+  <li>호스팅을 <code class="highlighter-rouge">직접</code>해야하기 때문에 관련된 모든 부분을 관리할 수 있음</li>
+</ul>
+
+<h5 id="단점-2">단점</h5>
+<ul>
+  <li>다양한 플러그인 -&gt; 플러그인 지옥</li>
+  <li>규모가 <code class="highlighter-rouge">작은</code> 프로젝트의 경우, 설정하는데 리소스 <code class="highlighter-rouge">낭비</code>가 발생할 수 있음</li>
+  <li>호스팅을 <code class="highlighter-rouge">직접</code>해야하기 때문에 서버 운영 및 관리 <code class="highlighter-rouge">비용</code>이 발생<br />
+<br /></li>
+</ul>
+
+<h2 id="개인적인-견해로는">개인적인 견해로는</h2>
+<p>CI/CD를 적용해야 한다는 생각에 제일 유명한 <code class="highlighter-rouge">Jenkins</code>를 사용하려는 사람들이 많은것 같다.<br />
+하지만, Jenkins는 오래된 만큼 장단점이 확실한 솔루션임을 알고 사용했으면 좋겠다.</p>
+
+<p>특히 Build Server를 직접 구매 및 운영해야 하기 때문에 발생하는 <code class="highlighter-rouge">단점</code>이 생각보다 크게 다가오게 된다.<br />
+하나부터 열까지 전부 환경설정을 구축해야하며, 서버를 관리하는데 발생하는 비용이 <code class="highlighter-rouge">낭비</code>가 될 수 있기 때문이다.</p>
+<blockquote>
+  <p>Jenkins를 사용할 때, 각종 <code class="highlighter-rouge">방화벽</code> 작업이나 서버의 <code class="highlighter-rouge">관리</code> 및 <code class="highlighter-rouge">운용</code>등은 생각보다 많은 리소스를 요구한다.</p>
+</blockquote>
+
+<p>따라서 규모가 크지않은 프로젝트거나, 외부 클라우드 서비스를 이용하는 상황등이라면 Jenkins말고 <code class="highlighter-rouge">다른</code> 서비스도 고려해볼 가치가 있다고 생각한다.<br />
+내가 글을 작성하는 이 블로그 또한 <code class="highlighter-rouge">Travis</code>를 사용하여 간단한 CI/CD 형태로 빌드 및 배포하게 되어있다.</p>
+
+<p>개발을 하면서 느끼는 거지만, 모든 일에 <code class="highlighter-rouge">정답</code>은 없다.<br />
+상황에 맞게 <code class="highlighter-rouge">최선</code>의 방법을 채택하여 가장 높은 <code class="highlighter-rouge">효율</code>을 낼 수 있는 방안을 선택하는 것도 <code class="highlighter-rouge">일류</code> 개발자의 자질이 아닐까.</p>
+<blockquote>
+  <p>이 글에서는 언급하지 않았지만, <code class="highlighter-rouge">AWS</code>, <code class="highlighter-rouge">CircleCI</code>등 수많은 다른 방법도 존재한다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="reference">Reference</h2>
+<ul>
+  <li><a href="https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html">https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html</a></li>
+  <li><a href="https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5">https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5</a></li>
+  <li><a href="https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/">https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/</a></li>
+  <li><a href="https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd">https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd</a></li>
+</ul>
 
 
         <hr>
@@ -221,18 +336,6 @@ s.setAttribute('data-timestamp', +new Date());
 
 <script src="/assets/scripts.js"></script>
 
-
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-154694140-1');
-</script>
 
 
 

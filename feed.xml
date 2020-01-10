@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-09T17:23:30+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-10T10:26:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
 &lt;p&gt;주로 게시판 등에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일 업로드&lt;/code&gt; 기능을 악용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 권한&lt;/code&gt;을 획득할 수 있는 취약점을 의미한다.&lt;br /&gt;
 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -119,7 +119,112 @@
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://4rgos.tistory.com/4&quot;&gt;https://4rgos.tistory.com/4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html"></content><author><name>owin2828</name></author><category term="cicd" /><summary type="html"></summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Travis vs CircleCI vs Jenkins vs GitLabCI" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html">&lt;h2 id=&quot;이번-글에서는&quot;&gt;이번 글에서는&lt;/h2&gt;
+&lt;p&gt;CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,&lt;br /&gt;
+다음과 같은 솔루션들의 장단점을 분석하고자 한다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Travis&lt;/li&gt;
+  &lt;li&gt;GitLab CI&lt;/li&gt;
+  &lt;li&gt;Jenkins&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-trvais&quot;&gt;1. Trvais&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_1.jpg&quot; alt=&quot;travis&quot; width=&quot;70%&quot; height=&quot;70%&quot; /&gt;&lt;br /&gt;
+별도의 회사였으나, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;에서 인수하였다.(GitHub는 MS가 인수함)&lt;br /&gt;
+오픈소스용 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt; travis.org와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private Repo&lt;/code&gt;를 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;유료&lt;/code&gt; travis.com을 별도로 운영하고 있고, 내용은 동일하다.&lt;/p&gt;
+
+&lt;h5 id=&quot;장점&quot;&gt;장점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;와의 연동(그냥 깃허브 계정으로 로그인하며 된다.)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;YML&lt;/code&gt; 파일을 통한 쉬운 설정&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;다양한&lt;/code&gt; 래퍼런스&lt;/li&gt;
+  &lt;li&gt;직접 서버를 운영할 필요 없이, Travis에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;알아서&lt;/code&gt; VM으로 호스팅해 줌&lt;/li&gt;
+  &lt;li&gt;모든 job이 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립&lt;/code&gt;적(서로 간의 영향을 받지 않음)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;단점&quot;&gt;단점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;Jenkins에 비해 플러그인의 종류가 &lt;code class=&quot;highlighter-rouge&quot;&gt;적음&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;유료 서비스를 사용할 경우, 가격이 꽤 &lt;code class=&quot;highlighter-rouge&quot;&gt;비쌈&lt;/code&gt;(기본: 69$/month, 일반: 129$/month)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-gitlab-ci&quot;&gt;2. GitLab CI&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_2.png&quot; alt=&quot;travis&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;br /&gt;
+GitLab 서비스에 내장되어 있다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;On-Premise&lt;/code&gt; 방식으로 설치하여 사용할 수도 있고, &lt;code class=&quot;highlighter-rouge&quot;&gt;웹&lt;/code&gt; 서비스로 사용할 수도 있다.&lt;br /&gt;
+GitLab CI만 &lt;code class=&quot;highlighter-rouge&quot;&gt;Runner&lt;/code&gt;를 직접 호스팅하여 사용할 수 있는데, 이를 통해 고성능 혹은 서비스에 트고하된 환경에서 실행할 수 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Runner&lt;/code&gt;: repo로부터 소스코드를 받아 해당 스크립트를 돌리는 작업을 수행&lt;br /&gt;
+GitLab의 경우&lt;code class=&quot;highlighter-rouge&quot;&gt;shared runner&lt;/code&gt;를 사용해서 계획적으로 돌릴 수 있다.&lt;br /&gt;
+On-Premise 방식에서는 당연히 지원하고,&lt;br /&gt;
+GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;code class=&quot;highlighter-rouge&quot;&gt;따로&lt;/code&gt; 운용할 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;장점-1&quot;&gt;장점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GitLab&lt;/code&gt;과의 손쉬운 연동&lt;/li&gt;
+  &lt;li&gt;Runner가 &lt;code class=&quot;highlighter-rouge&quot;&gt;Docker&lt;/code&gt; 컨테이너 기반이라, Docker 친화적임(Docker Repo 무료 제공)&lt;/li&gt;
+  &lt;li&gt;UI가 쉽고 &lt;code class=&quot;highlighter-rouge&quot;&gt;간편함&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;모든 job이 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립적&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;단점-1&quot;&gt;단점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;역시나 Jenkins에 비해 플러그인의 종류가 &lt;code class=&quot;highlighter-rouge&quot;&gt;적음&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; job에 대해 artifact를 정의 및 업로드/다운로드를 해야함&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-jenkins&quot;&gt;3. Jenkins&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_3.png&quot; alt=&quot;Jenkins&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt; 기반의 오픈소스로 구성되어 있으며, CI계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;아버지&lt;/code&gt;라 불린다.&lt;br /&gt;
+제일 오래된 만큼 다양한 플러그인을 지원하며, 사용자도 관련 문서도 많이 존재한다.&lt;/p&gt;
+
+&lt;h5 id=&quot;장점-2&quot;&gt;장점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;다양한 IDE를 지원하며, 커스터마이징이 다양&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;많은&lt;/code&gt; 사용자들을 보유하고 있고, 관련 문서가 &lt;code class=&quot;highlighter-rouge&quot;&gt;다양&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;호스팅을 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt;해야하기 때문에 관련된 모든 부분을 관리할 수 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;단점-2&quot;&gt;단점&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;다양한 플러그인 -&amp;gt; 플러그인 지옥&lt;/li&gt;
+  &lt;li&gt;규모가 &lt;code class=&quot;highlighter-rouge&quot;&gt;작은&lt;/code&gt; 프로젝트의 경우, 설정하는데 리소스 &lt;code class=&quot;highlighter-rouge&quot;&gt;낭비&lt;/code&gt;가 발생할 수 있음&lt;/li&gt;
+  &lt;li&gt;호스팅을 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt;해야하기 때문에 서버 운영 및 관리 &lt;code class=&quot;highlighter-rouge&quot;&gt;비용&lt;/code&gt;이 발생&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;개인적인-견해로는&quot;&gt;개인적인 견해로는&lt;/h2&gt;
+&lt;p&gt;CI/CD를 적용해야 한다는 생각에 제일 유명한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;를 사용하려는 사람들이 많은것 같다.&lt;br /&gt;
+하지만, Jenkins는 오래된 만큼 장단점이 확실한 솔루션임을 알고 사용했으면 좋겠다.&lt;/p&gt;
+
+&lt;p&gt;특히 Build Server를 직접 구매 및 운영해야 하기 때문에 발생하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;단점&lt;/code&gt;이 생각보다 크게 다가오게 된다.&lt;br /&gt;
+하나부터 열까지 전부 환경설정을 구축해야하며, 서버를 관리하는데 발생하는 비용이 &lt;code class=&quot;highlighter-rouge&quot;&gt;낭비&lt;/code&gt;가 될 수 있기 때문이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Jenkins를 사용할 때, 각종 &lt;code class=&quot;highlighter-rouge&quot;&gt;방화벽&lt;/code&gt; 작업이나 서버의 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;운용&lt;/code&gt;등은 생각보다 많은 리소스를 요구한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;따라서 규모가 크지않은 프로젝트거나, 외부 클라우드 서비스를 이용하는 상황등이라면 Jenkins말고 &lt;code class=&quot;highlighter-rouge&quot;&gt;다른&lt;/code&gt; 서비스도 고려해볼 가치가 있다고 생각한다.&lt;br /&gt;
+내가 글을 작성하는 이 블로그 또한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;를 사용하여 간단한 CI/CD 형태로 빌드 및 배포하게 되어있다.&lt;/p&gt;
+
+&lt;p&gt;개발을 하면서 느끼는 거지만, 모든 일에 &lt;code class=&quot;highlighter-rouge&quot;&gt;정답&lt;/code&gt;은 없다.&lt;br /&gt;
+상황에 맞게 &lt;code class=&quot;highlighter-rouge&quot;&gt;최선&lt;/code&gt;의 방법을 채택하여 가장 높은 &lt;code class=&quot;highlighter-rouge&quot;&gt;효율&lt;/code&gt;을 낼 수 있는 방안을 선택하는 것도 &lt;code class=&quot;highlighter-rouge&quot;&gt;일류&lt;/code&gt; 개발자의 자질이 아닐까.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;이 글에서는 언급하지 않았지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CircleCI&lt;/code&gt;등 수많은 다른 방법도 존재한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html&quot;&gt;https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&quot;&gt;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&quot;&gt;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&quot;&gt;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins</summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
@@ -277,7 +382,7 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 어떤 프로세스를 언제 어떻게 적용하고, 결과는 어떤 방법으로 처리할지 등이 고려되어야 한다.&lt;/p&gt;
 
 &lt;p&gt;바닥부터 구축하라고하면 차라리 안하는게 나을수도 있지만, 역시 누군가가 만들어놓은 솔루션이 있다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CircleCI&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitLabCI&lt;/code&gt; 등의 CI 서버가 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitLabCI&lt;/code&gt; 등의 CI 서버가 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
