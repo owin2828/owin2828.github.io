@@ -1,4 +1,251 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-13T10:10:50+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] Region, AZ, VPC, Subnet등 구성</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html" rel="alternate" type="text/html" title="[AWS] Region, AZ, VPC, Subnet등 구성" /><published>2020-01-10T14:15:00+09:00</published><updated>2020-01-10T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-13T18:05:49+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] VPC 만들어보기(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/13/aws-temp2.html" rel="alternate" type="text/html" title="[AWS] VPC 만들어보기(실습)" /><published>2020-01-13T14:31:00+09:00</published><updated>2020-01-13T14:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/13/aws-temp2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/13/aws-temp2.html">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;본 문서는 버전 업그레이드를 통해 다시 작성될 예정입니다.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;AWS 기초&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;모든 것이 가상화&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;하드웨어 관리 비용이 0&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;하드웨어적 장애가 생겼을 때, 우리가 할 수 있는 것이 없고 AWS가 해결해 주기를 기다려야..&lt;/p&gt;
+
+        &lt;blockquote&gt;
+          &lt;p&gt;생각보다 이 문제가 굉장히 스트레스를 받는 문제가 됨&lt;/p&gt;
+        &lt;/blockquote&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;프라이빗 클라우드&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;하드웨어 위에 가상화 레이어, 그 위에 게스트 서버를 생성해서 사용&lt;/li&gt;
+      &lt;li&gt;vmware가 제일 유명, 오픈스택도 존재&lt;/li&gt;
+      &lt;li&gt;하드웨어관리자  — 하이퍼바이저 — 소프트웨어관리자(시스템엔지니어) 이렇게 되는데, 하이퍼바이저를 누가 관리할 것인지가 또 다른 비용의 발생&lt;/li&gt;
+      &lt;li&gt;OS 라이센스는 전혀 줄어들지 않음: 각 OS별로 라이센스를 사야함 - &amp;gt; 기존 환경과 차이가 없음&lt;/li&gt;
+      &lt;li&gt;부장님 개인적인 의견으로는 프라이빗 클라우드는 하지 않는 것이,,, -&amp;gt; 일반 사기업이 하기에는 비용절감 효과가 크게 없고, 일만 복잡해짐.&lt;/li&gt;
+      &lt;li&gt;조달된 하드웨어와 가상화된 레이어 위에서 돌기 때문에 시간의 절약은 있지만, 실제 하드웨어를 추가하고 관리하는 비용은 같음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;퍼블릭 클라우드&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;AWS의 가장 큰 단위는 region(논리적인 단계), 그 밑에 AZ(Availability Zone, 가용성 범위)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;AZ가 IDC단위&lt;/li&gt;
+          &lt;li&gt;AWS 정책은 하나의 region에 2개 이상의 AZ가 반드시 존재&lt;/li&gt;
+          &lt;li&gt;이것을 싱글AZ로 할건지, 멀티 AZ로 할건지는 사용자가 설정&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;VPC(Virtual Private Cloud)가 AZ 밑의 단위(논리적 구조, IDC 같은 것)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;프라이빗이 붙은 이유는 논리적인 하나의 IDC를 만들어서 개인이 사용할 수 있기 때문&lt;/li&gt;
+          &lt;li&gt;우리가 작업하는 모든 리소스는 여기, VPC에 저장&lt;/li&gt;
+          &lt;li&gt;한 region에 5개까지 만들 수 있고, 더 만들고 싶으면 제한용량 해제 시청을 따로 하면 가능&lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;VPC 없이도 서버를 생성할 수는 있지만, 권장하지 않음(옛날 방식)&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;게이트웨이, 라우터, NAT, 서버, 방화벽등으로 구성 (IDC 구성하는 방식으로 구성 가능)&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;계정을 생성하면 기본 VPC가 생성되고, 그 안에 기본 적인 구성요소들이 생성&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;이러한 기본 VPC는 건들지도 말고 수정하지도 말자(어떤 오류가 생길 수 있음)&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;내부적으로 원하는 양만큼 네트워크 설정이 가능&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;VPC 하나에 여러개 서브넷 생성가능(10.1.10.100 10.1.10.110 등..)&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;10.1.100 이상은 외부로 나가는거, 100 아래는 내부 통신용 처럼 서브넷을 구분하여 설정할 수 있음&lt;/li&gt;
+              &lt;li&gt;서브넷의 설정이 내부적으로 영역을 구분하는 방법&lt;/li&gt;
+              &lt;li&gt;서브넷끼리도 어떻게 연결할지 설정가능&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;부장님은 VPC별로 개발용, staging용, product용 3개의 VPC를 만드심&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;아니면 하나의 VPC 안에서 서브넷을 나눠서 그룹별로 분리&lt;/p&gt;
+
+                &lt;blockquote&gt;
+                  &lt;p&gt;이러한 설정은 나중에 커졌을 때, 서브넷간의 설정이 너무 복잡해져서 VPC를 따로 만드는 것을 추천&lt;/p&gt;
+                &lt;/blockquote&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;아니면 부서별로 VPC를 주는 방법도 존재&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;어떤 설계든 최대한 VPC를 사용하는 것을 추천&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;VPC(10.1.10) 의 구성&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;ACL(방화벽): 서브넷의 설정을 위한 방화벽&lt;/li&gt;
+              &lt;li&gt;서브넷(10.1.10.100, 10.1.10.101등..)
+                &lt;ul&gt;
+                  &lt;li&gt;SG(Security Group): 서브넷 하나의 보안을 설정&lt;/li&gt;
+                  &lt;li&gt;퍼블릭인지 프라이빗인지를 설정가능&lt;/li&gt;
+                  &lt;li&gt;프라이빗 서브넷은 외부에서 들어갈수도, 나갈수도 없음&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+              &lt;li&gt;구성할 때는 전부 다 프라이빗으로 만들고, 하나만 관리용 퍼블릭 서브넷을 구성
+                &lt;ul&gt;
+                  &lt;li&gt;퍼블릭으로 한다면, 서브넷을 하나 만들때마다, key를 만들고 설정이 필요한데, 관리자가 n명일 경우 한명만 퇴사해도 모든 서브넷의 키를 바꿔줘여함
+                    &lt;ul&gt;
+                      &lt;li&gt;따라서 이러한 문제를 방지하기 위해, 퍼블릭을 하나만 만들고 이 퍼블릭으로 ssh로 붙어서 내부적인 프라이빗 서브넷들을 관리&lt;/li&gt;
+                      &lt;li&gt;이렇게 하나의 퍼블릭 서브넷을 바스천 서브넷이라하며, ACL과 SG를 설정해서(ACL은 주로 안건드리므로 SG를 조정) 한정된 IP만 이 서브넷에 접근하도록 설정&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                  &lt;li&gt;이렇게 만들어진 서브넷 하나에 만드는 서버를 EC2라고 함(우리가 구성하는 가상 서버, EC2 인스턴스)
+                    &lt;ul&gt;
+                      &lt;li&gt;오브젝트를 만들고 메모리에 올려서 사용할 수 있는 것을 인스턴스라 하므로, 가상화된 환경에 올려서 사용자가 사용할 수 있도록 하므로, EC2 인스턴스라 함&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                  &lt;li&gt;서브넷 안의 OS등의 업데이트를 위한 퍼블릿 서브넷을 하나 만들고, 이 퍼블릭은 outbound만 가능하게, inbound는 불가능하게 만들고, 외부에서 업데이트를 받아옴
+                    &lt;ul&gt;
+                      &lt;li&gt;이때 내부 서브넷의 Inbound는 방금 만든 퍼블릭과 붙히고, outbound는 불가능하게, 이러면 OS업데이트를 받아올 수 있음&lt;/li&gt;
+                      &lt;li&gt;이렇게 만드는 퍼블릭 서브넷을 NAT라고 함&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+              &lt;li&gt;ELB: 로드밸런싱과 보안 설정을 해줌
+                &lt;ul&gt;
+                  &lt;li&gt;프라이빗 서브넷을 만들어서 그 안에 웹서버를 두개 만들면, 얘네 들은 외부로 연결이 안됨&lt;/li&gt;
+                  &lt;li&gt;이때, ELB를 태워서 외부에서 접근하면 로드밸런싱과 허용된 메서드만 접근가능&lt;/li&gt;
+                  &lt;li&gt;ELB의 종류는 3개
+                    &lt;ul&gt;
+                      &lt;li&gt;Classic: 옛날 방식&lt;/li&gt;
+                      &lt;li&gt;Application: 도메인 하위 레벨, 즉 루트 뒤에 /users, /payment 등 다르게 어플리케이션을 웹서버에 구성하고 이에 따라서 밸런싱을 함&lt;/li&gt;
+                      &lt;li&gt;Nextwork: https, http말고 모든 프로토콜에 대하여 밸런싱을 함
+                        &lt;ul&gt;
+                          &lt;li&gt;게임은 프로토콜을 각자 커스터마이징해서 사용하므로, Http종류 이외의 프로토콜을 사용하는 경우에 밸런싱하기 편함&lt;/li&gt;
+                        &lt;/ul&gt;
+                      &lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;S3(Simple Storage Service)&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;VPC 밖에 구성된 하나의 웹서버&lt;/li&gt;
+          &lt;li&gt;여기에 .html 같은 정적인 페이지를 두고 앤드 유저가 이곳을 보도록 설정&lt;/li&gt;
+          &lt;li&gt;여기서 브라우저, 클라이언트 단에서 JS로 해당 URL을 호출하도록 설정&lt;/li&gt;
+          &lt;li&gt;이렇게되면, 앤드유저는 VPC를 전혀 신경쓸 필요 없이 그냥 S3의 html만 보면 그것을 보고 쭉 VPC안에 웹어플리케이션 서버까지 접속해서 정보를 들고 올 수 있음&lt;/li&gt;
+          &lt;li&gt;사실상 업계의 표준, 다른 오프젝트들이 이러한 S3와 호환되는 프로토콜을 제공&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;DB&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;서브넷을 설치하고 그 안에 DB 서버를 구축할 수도 있지만, 그렇게 하지 않고 AWS에서 제공하는 Paas중의 이용&lt;/li&gt;
+          &lt;li&gt;이를 RDS(Relation DB Service)라 하며 이렇게 구성하면 속도도 더 빠름&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;AWS 실습&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;콘솔로그인&lt;/li&gt;
+  &lt;li&gt;지역을 서울로 선택&lt;/li&gt;
+  &lt;li&gt;서비스 검색에서 VPC 검색&lt;/li&gt;
+  &lt;li&gt;VPC가 default 1개가 존재, VPC 클릭&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226143320081.png&quot; alt=&quot;image-20191226143320081&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;VPC 생성 클릭, 이름 생성 규칙부터 잘 정해야 함
+    &lt;ul&gt;
+      &lt;li&gt;object이름/region-code/age-code/ 이런식&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226143515940.png&quot; alt=&quot;image-20191226143515940&quot; /&gt;&lt;/li&gt;
+      &lt;li&gt;IOS등을 사용하게되면 IPV6설정을 해주어야 함(나중에 변경이 불가)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;VPC ID가 나오고, ID를 클릭&lt;/li&gt;
+  &lt;li&gt;생성한 VPC의 정보가 하단에 노출 됨&lt;/li&gt;
+  &lt;li&gt;왼쪽 메뉴에서 ACL을 클릭
+    &lt;ul&gt;
+      &lt;li&gt;방금 생성한 ACL과 기본ACL(서브넷3개짜리)이 존재함을 확인&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;왼쪽 메뉴에서 인터넷 게이트웨이를 클릭하여 생성된 게이트웨이 확인
+    &lt;ul&gt;
+      &lt;li&gt;이때 Name을 설정해주면서 아까 이름규칙을 적용&lt;/li&gt;
+      &lt;li&gt;igw-AP-NE2-TEST 등&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;왼쪽 메뉴에서 서브넷을 클릭
+    &lt;ul&gt;
+      &lt;li&gt;기본 3개는 두고 새로 생성&lt;/li&gt;
+      &lt;li&gt;이름은 VPC 생성과 같은 규칙&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226144359085.png&quot; alt=&quot;image-20191226144359085&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;ACL메뉴를 클릭하여 다음처럼 서브넷이 연결된것을 확인
+    &lt;ul&gt;
+      &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226144646509.png&quot; alt=&quot;image-20191226144646509&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;왼쪽메뉴에서 보안그룹 생성을 클릭하여 보안그룹을 생성
+    &lt;ul&gt;
+      &lt;li&gt;인바운드 규칙에서 규칙을 추가해서 HTTP를 선택하고, 위치는 내 IP를 설정&lt;/li&gt;
+      &lt;li&gt;인바운드 규칙에서 추가 후, SSH를 선택하고, 위치는 내 IP를 설정&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;라우팅 테이블 메뉴를 클릭하여 서브넷 연결을 클릭
+    &lt;ul&gt;
+      &lt;li&gt;연결 편집을 클릭하여, 생성한 서브넷을 연결&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;메인에서 EC2를 검색하여 새로 시작을 클릭
+    &lt;ul&gt;
+      &lt;li&gt;왼쪽메뉴에서 프리티어 클릭해서 보기&lt;/li&gt;
+      &lt;li&gt;Amazone 인스턴스2 선택&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226145317678.png&quot; alt=&quot;image-20191226145317678&quot; /&gt;&lt;/li&gt;
+      &lt;li&gt;인스턴스 세부구성에서 네트워크랑 서브넷 설정&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;/home/owin/.config/Typora/typora-user-images/image-20191226145424278.png&quot; alt=&quot;image-20191226145424278&quot; /&gt;&lt;/li&gt;
+      &lt;li&gt;스토리지와 태그를 추가한 후, 보안그룹에서 생성한 보안그룹을 선택 후 시작&lt;/li&gt;
+      &lt;li&gt;다음 화면에서는 Keypair를 생성하라는 화면이 나오는데,  이때 생성하는 키페어는 단 한 번만 로컬PC에 저장할 기회를 주므로 주의
+        &lt;ul&gt;
+          &lt;li&gt;만약 잃어버린다면, 새로 생성해야 함&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;왼쪽 메뉴에서 인스턴스를 클릭 후, 작업에서 연결하기를 눌러 SSH로 접속&lt;/li&gt;
+      &lt;li&gt;서비스 검색에서 S3를 검색 후, 버킷 만들기 클릭&lt;/li&gt;
+      &lt;li&gt;다른 부분은 기본값으로 설정하고, 권한설정에서 퍼블릭 차단을 해제 후 생성
+        &lt;ul&gt;
+          &lt;li&gt;만들어진 s3에는 드래그&amp;amp;드롭으로 파일 업로드 가능&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">본 문서는 버전 업그레이드를 통해 다시 작성될 예정입니다.</summary></entry><entry><title type="html">[AWS] Region, AZ, VPC, Subnet등 구성</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html" rel="alternate" type="text/html" title="[AWS] Region, AZ, VPC, Subnet등 구성" /><published>2020-01-10T14:15:00+09:00</published><updated>2020-01-10T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.&lt;/p&gt;
 
 &lt;p&gt;퍼블릭 클라우드가 그러하듯이, aws 또한 모든것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;가상화&lt;/code&gt; 되어있다.&lt;br /&gt;
@@ -23,7 +270,7 @@
 
 &lt;h2 id=&quot;aws-public-cloud의-구성&quot;&gt;AWS Public Cloud의 구성&lt;/h2&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_1.jpg&quot; alt=&quot;region,AZ&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_1.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://blog.leedoing.com/46&quot;&gt;https://blog.leedoing.com/46&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -65,7 +312,7 @@ Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하�
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_2.png&quot; alt=&quot;VPC&quot; width=&quot;130%&quot; height=&quot;130%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_2.png&quot; alt=&quot;&quot; width=&quot;130%&quot; height=&quot;130%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&quot;&gt;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -101,7 +348,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 
 &lt;h5 id=&quot;3-2-bastion&quot;&gt;3-2. Bastion&lt;/h5&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_3.jpg&quot; alt=&quot;VPC&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_3.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.youtube.com/watch?v=edi1kyxznE0&quot;&gt;https://www.youtube.com/watch?v=edi1kyxznE0&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;VPC를 구성할 때, 내부 서브넷들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;전부 private&lt;/code&gt;으로 설정하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나만&lt;/code&gt; 관리용 &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; 서브넷으로 설정한다.&lt;br /&gt;
@@ -118,7 +365,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 그럼 각 서브넷의 &lt;code class=&quot;highlighter-rouge&quot;&gt;OS 업데이트&lt;/code&gt;는 어떻게 하는가?&lt;/p&gt;
 
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_4.png&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_4.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://blog.2dal.com/2017/09/12/aws-vpc-basic/&quot;&gt;https://blog.2dal.com/2017/09/12/aws-vpc-basic/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -133,7 +380,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실제&lt;/code&gt; 개발 및 배포를 진행할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC 구성&lt;/code&gt;을 어떻게 해야할까?&lt;br /&gt;
 여러가지 방법이 있겠지만, aws는 &lt;code class=&quot;highlighter-rouge&quot;&gt;각 단계별&lt;/code&gt;로 VPC를 따로 구성하는 것을 추천한다.&lt;/p&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_5.png&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_5.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/&quot;&gt;https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -146,7 +393,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 
 &lt;h4 id=&quot;4-s3simple-storgae-service&quot;&gt;4. S3(Simple Storgae Service)&lt;/h4&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_6.jpg&quot; alt=&quot;VPC&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_6.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.megazone.com/techblog_191113_aws-privatelink/&quot;&gt;https://www.megazone.com/techblog_191113_aws-privatelink/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -363,7 +610,7 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;1-trvais&quot;&gt;1. Trvais&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_1.jpg&quot; alt=&quot;travis&quot; width=&quot;70%&quot; height=&quot;70%&quot; /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_1.jpg&quot; alt=&quot;Travis 로고&quot; width=&quot;70%&quot; height=&quot;70%&quot; /&gt;&lt;br /&gt;
 별도의 회사였으나, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;에서 인수하였다.(GitHub는 MS가 인수함)&lt;br /&gt;
 오픈소스용 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt; travis.org와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private Repo&lt;/code&gt;를 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;유료&lt;/code&gt; travis.com을 별도로 운영하고 있고, 내용은 동일하다.&lt;/p&gt;
 
@@ -384,7 +631,7 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;2-gitlab-ci&quot;&gt;2. GitLab CI&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_2.png&quot; alt=&quot;travis&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_2.png&quot; alt=&quot;Gitlab CI 로고&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;br /&gt;
 GitLab 서비스에 내장되어 있다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;On-Premise&lt;/code&gt; 방식으로 설치하여 사용할 수도 있고, &lt;code class=&quot;highlighter-rouge&quot;&gt;웹&lt;/code&gt; 서비스로 사용할 수도 있다.&lt;br /&gt;
 GitLab CI만 &lt;code class=&quot;highlighter-rouge&quot;&gt;Runner&lt;/code&gt;를 직접 호스팅하여 사용할 수 있는데, 이를 통해 고성능 혹은 서비스에 트고하된 환경에서 실행할 수 있다.&lt;/p&gt;
@@ -411,7 +658,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;3-jenkins&quot;&gt;3. Jenkins&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_3.png&quot; alt=&quot;Jenkins&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_3.png&quot; alt=&quot;Jenkins 로고&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt; 기반의 오픈소스로 구성되어 있으며, CI계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;아버지&lt;/code&gt;라 불린다.&lt;br /&gt;
 제일 오래된 만큼 다양한 플러그인을 지원하며, 사용자도 관련 문서도 많이 존재한다.&lt;/p&gt;
 
@@ -548,7 +795,7 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 
 &lt;h2 id=&quot;ci--cd&quot;&gt;CI / CD&lt;/h2&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_4_1.png&quot; alt=&quot;CI/CD&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_4_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -650,7 +897,7 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 
 &lt;h2 id=&quot;스크럼의-5가지-가치&quot;&gt;스크럼의 5가지 가치&lt;/h2&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_1.png&quot; alt=&quot;스크럼가치&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_1.png&quot; alt=&quot;&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://www.scrum.org/resources/blog/5-scrum-values-take-center-stage&quot;&gt;https://www.scrum.org/resources/blog/5-scrum-values-take-center-stage&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -671,7 +918,7 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 
 &lt;h2 id=&quot;scrum-process&quot;&gt;Scrum Process&lt;/h2&gt;
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_2.jpg&quot; alt=&quot;스크럼프로세스&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_3_2.jpg&quot; alt=&quot;&quot; width=&quot;85%&quot; height=&quot;85%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://brainhub.eu/blog/differences-lean-agile-scrum/&quot;&gt;https://brainhub.eu/blog/differences-lean-agile-scrum/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;Scrum 진행은 Broduct Backlog에서 한 Sprint에 수행할 작업들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;도출&lt;/code&gt;한 뒤, 
@@ -857,7 +1104,7 @@ waterfall도 요구사항이 &lt;code class=&quot;highlighter-rouge&quot;&gt;단
 
 &lt;h2 id=&quot;스프린트는&quot;&gt;스프린트는&lt;/h2&gt;
 &lt;p&gt;다음과 같은 과정으로 이루어 진다.&lt;br /&gt;
-&lt;img src=&quot;/img/cicd/cicd_2_1.jpg&quot; alt=&quot;스프린트&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/img/cicd/cicd_2_1.jpg&quot; alt=&quot;Agile 스프린트&quot; /&gt;&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;고객의 피드백&lt;/li&gt;
   &lt;li&gt;다양한 방법(스크럼등)을 통해 스프린트 목표 설정&lt;/li&gt;
@@ -887,24 +1134,4 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://blog.sonim1.com/238&quot;&gt;https://blog.sonim1.com/238&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.sangheum.com/149&quot;&gt;https://www.sangheum.com/149&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Agile Agile: 날렵한, 민첩한</summary></entry><entry><title type="html">[CI/CD] 데브옵스, 에자일 그리고 CI/CD 시리즈</title><link href="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html" rel="alternate" type="text/html" title="[CI/CD] 데브옵스, 에자일 그리고 CI/CD 시리즈" /><published>2020-01-07T09:41:00+09:00</published><updated>2020-01-07T09:41:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/07/cicd-0</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/07/cicd-0.html">&lt;h4 id=&quot;개발을-하다-보면&quot;&gt;개발을 하다 보면&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DevOps&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Agile&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt;와 같은 이야기들이 여기저기서 들린지 꽤 되었다.&lt;br /&gt;
-사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다.&lt;br /&gt;
-들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;나는&quot;&gt;나는&lt;/h4&gt;
-&lt;p&gt;새로운 개념을 익힐 때, &lt;code class=&quot;highlighter-rouge&quot;&gt;terminology(용어)&lt;/code&gt;를 굉장히 중요하게 생각하는 편이다.&lt;br /&gt;
-약간 꼰대같이 들릴 수도 있지만, 단어를 먼저 이해하는 것이 지식의 본질에 접근하는 가장 &lt;code class=&quot;highlighter-rouge&quot;&gt;정직&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;빠른&lt;/code&gt; 길이라고 느껴지기 때문이다.&lt;br /&gt;
-이러한 관점에서, 새로운 단어의 의미를 알기 위해서는 그 단어가 나오게 된 &lt;code class=&quot;highlighter-rouge&quot;&gt;배경&lt;/code&gt;을 아는 것이 이해를 위한 첫 걸음이라 생각하며 포스팅을 시작하고자 한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;앞으로&quot;&gt;앞으로&lt;/h4&gt;
-&lt;p&gt;이어지게 될 CI/CD 포스팅 시리즈는 각 개념에 대해 &lt;code class=&quot;highlighter-rouge&quot;&gt;정의&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;등장배경&lt;/code&gt;을 포스팅하며, 크게 다음과 같은 내용을 다룰 예정이다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;DevOps&lt;/li&gt;
-  &lt;li&gt;Agile&lt;/li&gt;
-  &lt;li&gt;CI/CD와 각 stage별 플랫폼&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;여전히&quot;&gt;여전히&lt;/h4&gt;
-&lt;p&gt;부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영합니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">개발을 하다 보면 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. 들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">Agile Agile: 날렵한, 민첩한</summary></entry></feed>

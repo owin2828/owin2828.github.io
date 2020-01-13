@@ -160,7 +160,7 @@
 
 <h2 id="aws-public-cloud의-구성">AWS Public Cloud의 구성</h2>
 <figure>
-<p><img src="/img/aws/aws_2_1.jpg" alt="region,AZ" width="100%" height="100%" /></p>
+<p><img src="/img/aws/aws_2_1.jpg" alt="" width="100%" height="100%" /></p>
   <figcaption>출처: <a href="https://blog.leedoing.com/46">https://blog.leedoing.com/46</a></figcaption>
 </figure>
 
@@ -202,7 +202,7 @@ Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하�
 </blockquote>
 
 <figure>
-<p><img src="/img/aws/aws_2_2.png" alt="VPC" width="130%" height="130%" /></p>
+<p><img src="/img/aws/aws_2_2.png" alt="" width="130%" height="130%" /></p>
   <figcaption>출처: <a href="https://cloudaffaire.com/create-a-vpc-interface-endpoint/">https://cloudaffaire.com/create-a-vpc-interface-endpoint/</a></figcaption>
 </figure>
 
@@ -238,7 +238,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 
 <h5 id="3-2-bastion">3-2. Bastion</h5>
 <figure>
-<p><img src="/img/aws/aws_2_3.jpg" alt="VPC" width="80%" height="80%" /></p>
+<p><img src="/img/aws/aws_2_3.jpg" alt="" width="80%" height="80%" /></p>
   <figcaption>출처: <a href="https://www.youtube.com/watch?v=edi1kyxznE0">https://www.youtube.com/watch?v=edi1kyxznE0</a></figcaption>
 </figure>
 <p>VPC를 구성할 때, 내부 서브넷들을 <code class="highlighter-rouge">전부 private</code>으로 설정하고 <code class="highlighter-rouge">하나만</code> 관리용 <code class="highlighter-rouge">public</code> 서브넷으로 설정한다.<br />
@@ -255,7 +255,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 그럼 각 서브넷의 <code class="highlighter-rouge">OS 업데이트</code>는 어떻게 하는가?</p>
 
 <figure>
-<p><img src="/img/aws/aws_2_4.png" alt="VPC" width="100%" height="100%" /></p>
+<p><img src="/img/aws/aws_2_4.png" alt="" width="100%" height="100%" /></p>
   <figcaption>출처: <a href="https://blog.2dal.com/2017/09/12/aws-vpc-basic/">https://blog.2dal.com/2017/09/12/aws-vpc-basic/</a></figcaption>
 </figure>
 
@@ -270,7 +270,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 <p><code class="highlighter-rouge">실제</code> 개발 및 배포를 진행할 때는 <code class="highlighter-rouge">VPC 구성</code>을 어떻게 해야할까?<br />
 여러가지 방법이 있겠지만, aws는 <code class="highlighter-rouge">각 단계별</code>로 VPC를 따로 구성하는 것을 추천한다.</p>
 <figure>
-<p><img src="/img/aws/aws_2_5.png" alt="VPC" width="100%" height="100%" /></p>
+<p><img src="/img/aws/aws_2_5.png" alt="" width="100%" height="100%" /></p>
   <figcaption>출처: <a href="https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/">https://aws.amazon.com/ko/quickstart/architecture/compliance-uk-official/</a></figcaption>
 </figure>
 
@@ -283,7 +283,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 
 <h4 id="4-s3simple-storgae-service">4. S3(Simple Storgae Service)</h4>
 <figure>
-<p><img src="/img/aws/aws_2_6.jpg" alt="VPC" width="100%" height="100%" /></p>
+<p><img src="/img/aws/aws_2_6.jpg" alt="" width="100%" height="100%" /></p>
   <figcaption>출처: <a href="https://www.megazone.com/techblog_191113_aws-privatelink/">https://www.megazone.com/techblog_191113_aws-privatelink/</a></figcaption>
 </figure>
 
@@ -336,6 +336,8 @@ aws에서 제공하는 <code class="highlighter-rouge">Paas</code>의 일종인 
           <a href="/devlog/2020/01/10/aws-1.html" data-toggle="tooltip" data-placement="top" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
+          
+          <a href="/devlog/2020/01/13/aws-temp2.html" data-toggle="tooltip" data-placement="top" title="[AWS] VPC 만들어보기(실습)">Next >></a>
           
 
         </div>
@@ -417,6 +419,11 @@ s.setAttribute('data-timestamp', +new Date());
   <script src="/assets/vendor/jquery/jquery.min.js"></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
 
 <script src="/assets/scripts.js"></script>
 
