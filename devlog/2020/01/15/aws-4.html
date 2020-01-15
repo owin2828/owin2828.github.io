@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AWS] 서브넷, 인스턴스, 인터넷 게이트웨이(실습) - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 이전 포스팅에 이어서 AWS에서 VPC를 구성 후, 다음의 구성 요소들을 생성하거나 설정하는 방법에 대해 포스팅할 예정이다. Internet Gateway Subnet ACL Security Group Routing Table EC2 S3(VPC 내부 구성은 아님)">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/15/aws-4.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AWS] 서브넷, 인스턴스, 인터넷 게이트웨이(실습)</h1>
+            
+            <h2 class="subheading">AWS 기초 - 4</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-15 09:31 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>이전 포스팅에 이어서 AWS에서 VPC를 구성 후,<br />
+다음의 구성 요소들을 <code class="highlighter-rouge">생성</code>하거나 <code class="highlighter-rouge">설정</code>하는 방법에 대해 포스팅할 예정이다.</p>
+<ul>
+  <li>Internet Gateway</li>
+  <li>Subnet</li>
+  <li>ACL</li>
+  <li>Security Group</li>
+  <li>Routing Table</li>
+  <li>EC2</li>
+  <li>S3(VPC 내부 구성은 아님)<br />
+<br /></li>
+</ul>
+
+<h2 id="1-인터넷-게이트웨이-생성-및-설정">1. 인터넷 게이트웨이 생성 및 설정</h2>
+<hr />
+<p><img src="/img/aws/aws_4_1.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>좌측의 인터넷 게이트웨이 생성 버튼을 눌러<br />
+기본 인터넷 게이트 웨이는 두고 <code class="highlighter-rouge">생성</code>을 진행한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_2.png" alt="" width="80%" height="80%" /></p>
+<ul>
+  <li>생성하는 인터넷 게이트웨이는 <code class="highlighter-rouge">Naming Rule</code>을 따라 사진처럼 명명한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_3.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>성공적으로 생성하게되면, 사진처럼 우리가 지정한 ID의 정보를 보여주며 상태는 <code class="highlighter-rouge">detached</code>가 된다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_19.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>이때, 마우스 우클릭을 하여 <code class="highlighter-rouge">VCP에 연결</code>을 누른다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_20.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>우리가 생성한 <code class="highlighter-rouge">VPC</code>를 클릭한 후 <code class="highlighter-rouge">연결</code>을 누른다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_21.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>다시 상태를 확인해 보면, <code class="highlighter-rouge">attached</code>로 변경되었음을 확인할 수 있다.<br />
+<br /></li>
+</ul>
+
+<h2 id="2-서브넷-생성-및-설정">2. 서브넷 생성 및 설정</h2>
+<hr />
+<p><img src="/img/aws/aws_4_4.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>마찬가지 방법으로 서브넷을 클릭 후,<br />
+기본 VPC에 할당된 3개의 서브넷은 그대로 두고 <code class="highlighter-rouge">서브넷 생성</code>을 눌러준다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_5.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>
+    <p>이름은 규칙에 따라 <code class="highlighter-rouge">subnet-apne2-dev-ssh</code>라 입력한다.<br />
+추후, 이 서브넷은 ssh로 접속하는 <code class="highlighter-rouge">bastion</code>으로 사용할 것이다.</p>
+  </li>
+  <li>
+    <p>VPC는 드롭박스를 클릭하면 사진처럼 뜨게 되는데,<br />
+그 중 전 포스팅에서 만든 VPC를 클릭해 주면된다.</p>
+  </li>
+  <li>
+    <p>CIDR 블록은 VPC CIDR 블록 <code class="highlighter-rouge">범위 내</code>에서 생성하면 된다.<br />
+<code class="highlighter-rouge">VPC</code>: 10.0.0.0/16<br />
+<code class="highlighter-rouge">서브넷</code>: 10.0.1.0./24<br />
+같은 방식으로 VPC내부에 존재하도록 지정하며,<br />
+3번째 숫자가 적어질수록 <code class="highlighter-rouge">security</code>가 높아지게 cidr블록을 설정한다.</p>
+    <blockquote>
+      <p>현재 사진에서는 편의상 1로 지정했지만, 실제로 생성할 때는 다음같은 나름의 <code class="highlighter-rouge">규칙</code>을 적용하자.  <br />
+10.0.1.0/16 ~10.0.99.0/16 : <code class="highlighter-rouge">내부</code> 통신<br />
+10.0.100.0/16 ~10.0.199.0/16: <code class="highlighter-rouge">외부</code> 통신<br />
+같이 설정하여, IP만 보고도 <code class="highlighter-rouge">security</code> 정도를 알 수 있도록 한다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_4_6.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>성공적으로 <code class="highlighter-rouge">생성</code>하였다면, 사진의 빨간 사각형처럼 우리가 명명한 이름으로 등록되며,<br />
+우리가 생성한 <code class="highlighter-rouge">VPC</code>에 할당되었음을 확인할 수 있다.<br />
+<br /></li>
+</ul>
+
+<h2 id="3-acl-확인">3. ACL 확인</h2>
+<hr />
+<p><img src="/img/aws/aws_4_7.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>서브넷까지 생성한 후, 좌측 메뉴에서 <code class="highlighter-rouge">ACL</code>을 클릭하면 사진과 같이 새로 추가 되었음이 확인된다.<br />
+빨간 사각형 부분을 보면, 우리가 생성한 <code class="highlighter-rouge">서브넷</code>과 <code class="highlighter-rouge">VPC</code>에 적용됨을 알 수 있다.
+    <blockquote>
+      <p>ACL 설정은 변경할 것도, 추가할 것도 없으므로 <code class="highlighter-rouge">확인</code>만 하자.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="3-보안그룹-생성-및-설정">3. 보안그룹 생성 및 설정</h2>
+<hr />
+<p><img src="/img/aws/aws_4_8.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>좌측 메뉴에서 <code class="highlighter-rouge">보안그룹</code>을 클릭하면, 사진처럼 2가지가 존재한다.<br />
+하나는 기본 VPC용, 다른 하나는 우리가 만든 VPC용이다.
+    <blockquote>
+      <p>우리는 서브넷별로 다른 보안그룹을 할당할 것이므로 새로 <code class="highlighter-rouge">생성</code>을 하자.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_4_9.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>사진처럼 규칙에 따라 <code class="highlighter-rouge">sg_apne2_dev_ssh</code>로 이름을 작성한다.
+    <blockquote>
+      <p>이때 이름에 하이픈’<code class="highlighter-rouge">-</code>‘이 존재하면 생성이 되지 않으므로 <code class="highlighter-rouge">주의</code>하자.<br />
+(이유는 모르겠다.. 연산자라 그런지도)<br />
+여태는 다 하이픈을 사용했으나.. 이번에만 언더바’<code class="highlighter-rouge">_</code>‘를 사용하도록 한다.</p>
+    </blockquote>
+  </li>
+  <li>설명에는 본인이 알아볼 수 있도록 작성하면 된다.
+    <blockquote>
+      <p>위와 비슷한 이유로 설명에 <code class="highlighter-rouge">한글</code>이 들어가면 안된다고 발광을 하니 <code class="highlighter-rouge">주의</code>하자.<br />
+사실 설명 없이도 한 눈에 알아볼 수 있는 이름이 <code class="highlighter-rouge">중요</code>하다.</p>
+    </blockquote>
+  </li>
+  <li>마지막으로 <code class="highlighter-rouge">VPC</code>는 우리가 생성한 VPC를 선택하여 준다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_10.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>
+    <p>성공적으로 생성했다면, 사진처럼 우리가 정한 <code class="highlighter-rouge">이름</code>으로 생성한 <code class="highlighter-rouge">VPC</code>에<br />
+알맞은 <code class="highlighter-rouge">설명</code>으로 생성됨이 확인된다.</p>
+  </li>
+  <li>
+    <p>이때, 방금 작성한 보안그룹을 클릭 후 사진처럼 <code class="highlighter-rouge">인바운드 규칙</code>을 누른 후,<br />
+<code class="highlighter-rouge">규칙 편집</code>을 클릭한다.<br />
+<br /></p>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_4_11.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">규칙 추가</code>를 눌러 사진처럼 <code class="highlighter-rouge">HTTP</code>와 <code class="highlighter-rouge">SSH</code>를 추가해준다.</li>
+  <li>이때 <code class="highlighter-rouge">소스</code>는 특별한 경우가 아니면 <code class="highlighter-rouge">내 IP</code>로 지정한다.<br />
+(혹은 직접 <code class="highlighter-rouge">지정</code>하여 선택할 수도 있다.)
+    <blockquote>
+      <p><code class="highlighter-rouge">위치 무관</code>으로 지정하는 순간 엄청난 <code class="highlighter-rouge">공격</code>을 받게 될 것이다.<br />
+실제 내 지인 또한 이 설정을 하지 않아 <code class="highlighter-rouge">과금</code>된 사례가 있었다.<br />
+이러한 경우 AWS에 문의하면 로그를 확인하고, 과금을 <code class="highlighter-rouge">취소</code>해준다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_4_12.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>규칙을 추가한다면, 사진처럼 두 가지 프로토콜에 대한 <code class="highlighter-rouge">인바운드</code> 규칙이 생긴다.<br />
+<br /></li>
+</ul>
+
+<h2 id="5-라우팅-테이블-생성-및-설정">5. 라우팅 테이블 생성 및 설정</h2>
+<hr />
+<p><img src="/img/aws/aws_4_13.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>좌측 메뉴에서 <code class="highlighter-rouge">라우팅 테이블</code>을 클릭한 후, <code class="highlighter-rouge">라우팅 테이블 생성</code>을 클릭한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_14.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>규칙에 따라 <code class="highlighter-rouge">rt-apne2-dev-ssh</code> 이름을 선택 후,<br />
+우리가 생성한 VPC를 선택하여 <code class="highlighter-rouge">생성</code>한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_15.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>생성한 라우팅 테이블을 선택하고, <code class="highlighter-rouge">서브넷 연결</code>을 누르고 <code class="highlighter-rouge">서브넷 연결 편집</code>을 클릭한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_16.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>목록에서 우리가 만든 <code class="highlighter-rouge">서브넷</code>을 선택 후, <code class="highlighter-rouge">저장</code>을 누른다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_17.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>명시적으로 우리가 만든 <code class="highlighter-rouge">서브넷</code>과 연결되었다는 정보를 확인할 수 있고,<br />
+하단에도 정보가 노출된다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_18.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>다음으로 <code class="highlighter-rouge">라우팅</code>의 <code class="highlighter-rouge">라우팅 편집</code>을 눌러준다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_22.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">라우팅 추가</code>를 누른 후, 왼쪽 대상에는 <code class="highlighter-rouge">0.0.0.0/0</code>을 입력하고, <br />
+오른쪽 대상에는 <code class="highlighter-rouge">Internet Gateway</code>를 눌러준다.<br />
+그 후 왼쪽 검은 사각형처럼 정보가 노출되고, 우리가 만든 <code class="highlighter-rouge">인터넷 게이트웨이</code>를 클릭하고 <code class="highlighter-rouge">저장</code>한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_4_23.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>등록 후, 사진처럼 연결한 <code class="highlighter-rouge">인터넷 게이트웨이</code>가 표시된다.
+    <blockquote>
+      <p>이로써 <code class="highlighter-rouge">외부</code>로 인터넷 게이트웨이를 통하여 통신할 준비가 완료 되었다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="6-인스턴스ec2-생성-및-설정">6. 인스턴스(EC2) 생성 및 설정</h2>
+<hr />
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/15/aws-3.html" data-toggle="tooltip" data-placement="top" title="[AWS] VPC 만들어보기(실습)"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/15/aws-4.html';
+this.page.identifier = '/devlog/2020/01/15/aws-4';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

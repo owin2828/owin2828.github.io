@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AWS] VPC 만들어보기(실습) - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 이번 포스팅은 aws에서 VPC를 구축해보는 실습(?)에 관련된 포스팅이다. 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/15/aws-3.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AWS] VPC 만들어보기(실습)</h1>
+            
+            <h2 class="subheading">AWS 기초 - 3</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-15 09:31 &middot; <span class="reading-time" title="Estimated read time">
+  
+   5 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>이번 포스팅은 aws에서 <code class="highlighter-rouge">VPC</code>를 구축해보는 <code class="highlighter-rouge">실습(?)</code>에 관련된 포스팅이다.<br />
+깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.</p>
+
+<blockquote>
+  <p>앞으로 이어질 모든 실습 내용에서 <code class="highlighter-rouge">이름</code> 만큼은 <code class="highlighter-rouge">직관적</code>이고 <code class="highlighter-rouge">확실</code>하게 지어주자<br />
+이름만 보고도, 해당 객체가 어떤 일을 수행하는지 알 수 있어야 실수를 방지한다.</p>
+</blockquote>
+
+<p>진행되는 모든 <code class="highlighter-rouge">Naming Rule</code>은 다음을 따른다.</p>
+<ul>
+  <li><code class="highlighter-rouge">Object 이름</code> / <code class="highlighter-rouge">Region-code</code> / <code class="highlighter-rouge">AZ-code</code> / <code class="highlighter-rouge">서비스 약칭(dev, stg, prod)</code></li>
+</ul>
+
+<p>본 예제에서는 <code class="highlighter-rouge">Single AZ</code>만을 사용하므로, 중간 AZ-code가 <code class="highlighter-rouge">생략</code>될 예정이다.</p>
+
+<blockquote>
+  <p>마지막으로, 모든 사진은 클릭 시, <code class="highlighter-rouge">확대</code>기능을 제공한다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-aws-계정-생성">1. AWS 계정 생성</h2>
+<hr />
+<p>다음의 링크로 접속하여 aws 홈페이지에 들어가보자.<br />
+<a href="https://aws.amazon.com/ko/">https://aws.amazon.com/ko/</a><br />
+우측 상단에 aws 계정생성 버튼을 눌러 가입을 진행하면 된다.</p>
+
+<blockquote>
+  <p>가입할 때, 신용카드 정보를 입력을 하게 되는데 갑자기 <code class="highlighter-rouge">결제</code>가 되었다고 놀라지 말자.<br />
+aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제했다가 <code class="highlighter-rouge">취소</code>하는 것이다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="2-콘솔-로그인">2. 콘솔 로그인</h2>
+<hr />
+<p><img src="/img/aws/aws_3_1.png" alt="" width="60%" height="60%" /></p>
+
+<ul>
+  <li>우측 상단의 <code class="highlighter-rouge">AWS Management Console</code>을 클릭하여 로그인을 진행하자.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_2.png" alt="" width="50%" height="50%" /></p>
+
+<ul>
+  <li>지역은 <code class="highlighter-rouge">서울</code>로 선택한다. <br />
+<br /></li>
+</ul>
+
+<h2 id="3-vpc-생성">3. VPC 생성</h2>
+<hr />
+<p><img src="/img/aws/aws_3_3.png" alt="" width="80%" height="80%" /></p>
+
+<ul>
+  <li>서비스에서 <code class="highlighter-rouge">VPC</code>를 검색후 클릭한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_4.png" alt="" width="100%" height="100%" /></p>
+
+<ul>
+  <li>로그인에 성공하면 AWS Management Console 화면이 나타나고, <code class="highlighter-rouge">VPC</code>를 검색하여 클릭한다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_5.png" alt="" width="100%" height="100%" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">기본 VPC</code>가 1개 있음을 볼 수 있고, 해당 VCP에 관한 정보가 하단에 공개된다.<br />
+이제 좌측 상단의 VPC 생성을 클릭하여 새로운 VPC를 만든다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_6.png" alt="" width="100%" height="100%" /></p>
+
+<ul>
+  <li>
+    <p>VPC를 생성할 때는, 앞서 설명한 <code class="highlighter-rouge">Naming Rule</code>을 따라 <code class="highlighter-rouge">vpc-apne2-dev-test</code>로 작성한다.<br />
+CIDR블록은 특별한 경우가 아니면, 가이드대로 <code class="highlighter-rouge">10.0.0.0/16</code>으로 한다.</p>
+  </li>
+  <li>
+    <p>2016년 6월 1일부터 <code class="highlighter-rouge">App Store</code>에 배포되는 모든 앱은 <code class="highlighter-rouge">IPv6</code> 네트워크를 지원해야 한다. <br />
+IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크를 한다.<br />
+<br /></p>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_3_7.png" alt="" width="100%" height="100%" /></p>
+
+<ul>
+  <li>방금 우리가 작성한 이름을 가진 이름으로 <code class="highlighter-rouge">VPC</code>가 하나 생성되었음을 확인 할 수 있다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_8.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>마지막으로 방금 생성한 VPC를 <code class="highlighter-rouge">우클릭</code> 후, 사진처럼 <code class="highlighter-rouge">DNS 호스트 이름 편집</code>을 눌러준다.<br />
+<br /></li>
+</ul>
+
+<p><img src="/img/aws/aws_3_9.png" alt="" width="70%" height="70%" /></p>
+<ul>
+  <li>기본 값은 비활성화지만, DNS 호스트 이름을 <code class="highlighter-rouge">활성화</code>하여 이름을 주도록 한다.</li>
+</ul>
+
+<p>여기까지 진행 함으로써, 기본적인 <code class="highlighter-rouge">VPC</code>구성은 완료되었다.<br />
+다음으로 구성된 VPC에 대해 기본요소들을 살펴보자.<br />
+<br /></p>
+
+<h2 id="4-기본구성-살펴보기">4. 기본구성 살펴보기</h2>
+<hr />
+
+<h4 id="4-1-서브넷">4-1. 서브넷</h4>
+<hr />
+<p><img src="/img/aws/aws_3_10.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>좌측에서 <code class="highlighter-rouge">서브넷</code>을 클릭하면, 사진처럼 기본적으로 구성되어있는 총 3개의 서브넷이 확인 가능하다.<br />
+이때 각 서브넷은 서울 지역에 존재하는 AZ3개(a,b,c)에 하나씩 꾸려진 모습이다.
+    <blockquote>
+      <p>이 서브넷은 우리가 구성한 VPC가 아니라 <code class="highlighter-rouge">기본 VPC</code>에 존재하는 것으로 수정하지 말자.<br />
+아직 우리는 어떠한 서브넷도 생성하지 않았다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="4-2-라우팅-테이블">4-2. 라우팅 테이블</h4>
+<hr />
+<p><img src="/img/aws/aws_3_11.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li>다음으로 <code class="highlighter-rouge">라우팅 테이블</code>을 클릭하면,<br />
+사진에서 보이는 바와 같이 방금 생성한 VPC에 할당된 라우팅 테이블이 <code class="highlighter-rouge">생성</code>되었음을 알 수 있다.<br />
+(사진속 빨간 사각형 안에 우리가 정한 이름으로된 VPC에 할당되어있다.)<br />
+앞으로는 이 VPC의 라우팅 테이블에 규칙을 추가하며 각종 <code class="highlighter-rouge">네트워크 규칙</code>을 설정할 것이다.<br />
+<br /></li>
+</ul>
+
+<h4 id="4-3-인터넷-게이트웨이">4-3. 인터넷 게이트웨이</h4>
+<hr />
+<p><img src="/img/aws/aws_3_12.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">인터넷 게이트웨이</code> 또한 아직 생성된 것이 없어 기본 VPC에 부착된것만 보인다.<br />
+인터넷 게이트웨이는 기본적으로 VPC 내부 요소들이 <code class="highlighter-rouge">외부</code>와 통신하는 징검다리 역할을 한다.
+    <blockquote>
+      <p>이 인터넷 게이트웨이를 생성하여 우리가 생성한 VPC에 붙여줘야 비로소 <code class="highlighter-rouge">통신</code>이 가능해지는 것이다.<br />
+다음 글에서는 이러한 게이트웨이 생성 및 설정법을 다룰 것이다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="4-4-acl">4-4. ACL</h4>
+<hr />
+<p><img src="/img/aws/aws_3_13.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">ACL</code>을 눌러보면 사진처럼 우리가 생성한 VPC에 할당된 ACL을 확인할 수 있다.
+    <blockquote>
+      <p>아직은 어떠한 서브넷을 생성하지 않아, 연결된 서브넷이 <code class="highlighter-rouge">없음</code>이 확인된다.<br />
+주로 ACL의 설정은 건드리지 않으며, 더 세밀한 설정이 되는 <code class="highlighter-rouge">보안그룹</code>의 설정을 변경한다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="4-5-보안그룹">4-5. 보안그룹</h4>
+<hr />
+<p><img src="/img/aws/aws_3_14.png" alt="" width="100%" height="100%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">보안그룹</code>을 확인해보면, 사진의 빨간 사각형 부분에 방금 만든 VPC ID로 설정되었음이 확인된다.
+    <blockquote>
+      <p>이 보안그룹의 <code class="highlighter-rouge">인바운드</code> 설정을 변경하여 앞으로 진행할 것이다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="끝마치며">끝마치며</h2>
+<hr />
+<p>여태 진행한 과정을 통해 <code class="highlighter-rouge">VPC</code>를 하나 설정하고 기본요소들에 대하여 살펴보았다.<br />
+이는 서울 Region 내에 나만의 <code class="highlighter-rouge">IDC</code>가 하나 생긴것과 마찬가지이다.</p>
+
+<p>다음 포스팅에서는 각 기본요소들을 <code class="highlighter-rouge">설정</code>하는 방법 및 서브넷 &amp; 인스턴스 <code class="highlighter-rouge">생성</code>과<br />
+실제로 우리가 생성한 서브넷의 인스턴스에 접속하는 방법을 설명하겠다.</p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/10/aws-2.html" data-toggle="tooltip" data-placement="top" title="[AWS] Region, AZ, VPC, Subnet등 구성"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/01/15/aws-4.html" data-toggle="tooltip" data-placement="top" title="[AWS] 서브넷, 인스턴스, 인터넷 게이트웨이(실습)">Next >></a>
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/15/aws-3.html';
+this.page.identifier = '/devlog/2020/01/15/aws-3';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>
