@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [AWS] 서브넷, 인스턴스, 인터넷 게이트웨이(실습) - 낮코밤코
+    [AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습) - 낮코밤코
     
   </title>
 
-  <meta name="description" content="들어가기 앞서 이전 포스팅에 이어서 AWS에서 VPC를 구성 후, 다음의 구성 요소들을 생성하거나 설정하는 방법에 대해 포스팅할 예정이다. Internet Gateway Subnet ACL Security Group Routing Table EC2 S3(VPC 내부 구성은 아님)">
+  <meta name="description" content="들어가기 앞서 이전 포스팅에 이어서 AWS에서 VPC를 구성 후, 다음의 구성 요소들을 생성하거나 설정하는 방법에 대해 포스팅할 예정이다. Internet Gateway Subnet ACL Security Group Routing Table">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -114,7 +114,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[AWS] 서브넷, 인스턴스, 인터넷 게이트웨이(실습)</h1>
+            <h1>[AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습)</h1>
             
             <h2 class="subheading">AWS 기초 - 4</h2>
             
@@ -122,7 +122,7 @@
               <a href="#">owin2828</a>
               on 2020-01-15 09:31 &middot; <span class="reading-time" title="Estimated read time">
   
-   6 mins  read </span>
+   7 mins  read </span>
 
             </span>
           </div>
@@ -144,9 +144,7 @@
   <li>Subnet</li>
   <li>ACL</li>
   <li>Security Group</li>
-  <li>Routing Table</li>
-  <li>EC2</li>
-  <li>S3(VPC 내부 구성은 아님)<br />
+  <li>Routing Table<br />
 <br /></li>
 </ul>
 
@@ -359,16 +357,27 @@
 
 <p><img src="/img/aws/aws_4_23.png" alt="" width="100%" height="100%" /></p>
 <ul>
-  <li>등록 후, 사진처럼 연결한 <code class="highlighter-rouge">인터넷 게이트웨이</code>가 표시된다.
+  <li>등록 후, 사진처럼 연결한 <code class="highlighter-rouge">인터넷 게이트웨이</code>가 표시된다.</li>
+  <li><code class="highlighter-rouge">라우팅 테이블</code>의 <code class="highlighter-rouge">인터넷 게이트웨이</code> 포함 유무로 <code class="highlighter-rouge">public</code>과 <code class="highlighter-rouge">private</code>로 구분한다.
     <blockquote>
-      <p>이로써 <code class="highlighter-rouge">외부</code>로 인터넷 게이트웨이를 통하여 통신할 준비가 완료 되었다.<br />
-<br /></p>
+      <p>특정 서브넷을 라우팅 테이블에 추가하여 인터넷 게이트웨이를 붙히지 않으면<br />
+<code class="highlighter-rouge">private</code>이 되는 것이다.</p>
     </blockquote>
   </li>
 </ul>
 
-<h2 id="6-인스턴스ec2-생성-및-설정">6. 인스턴스(EC2) 생성 및 설정</h2>
+<blockquote>
+  <p>이로써 <code class="highlighter-rouge">외부</code>로 인터넷 게이트웨이를 통하여 통신할 준비가 완료 되었다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="끝마치며">끝마치며</h2>
 <hr />
+<p>이번 포스팅을 통해 <code class="highlighter-rouge">Internet Gateway</code>, <code class="highlighter-rouge">Subnet</code>, <code class="highlighter-rouge">ACL</code>,<br />
+<code class="highlighter-rouge">Security Group</code>, <code class="highlighter-rouge">Routing Table</code>등을 생성하고 설정하였다.</p>
+
+<p>어이지는 포스팅에서는 <code class="highlighter-rouge">EC2 인스턴스</code>를 생성하고,<br />
+VPC내부에 구성을 해보도록 하겠다.</p>
 
 
         <hr>
@@ -379,6 +388,8 @@
           <a href="/devlog/2020/01/15/aws-3.html" data-toggle="tooltip" data-placement="top" title="[AWS] VPC 만들어보기(실습)"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
+          
+          <a href="/devlog/2020/01/16/aws-5.html" data-toggle="tooltip" data-placement="top" title="[AWS] EC2 인스턴스(실습)">Next >></a>
           
 
         </div>

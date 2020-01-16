@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습) - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</h1>
+            
+            <h2 class="subheading">AWS 기초 - 6</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-16 17:12 &middot; <span class="reading-time" title="Estimated read time">
+  
+   5 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.</p>
+<ul>
+  <li><code class="highlighter-rouge">Private Subnet</code>을 구성하는 방법</li>
+  <li>Bastion Host를 통해 <code class="highlighter-rouge">Private Subnet</code>에 접근하는 방법</li>
+  <li><code class="highlighter-rouge">NAT</code></li>
+  <li><code class="highlighter-rouge">ELB</code></li>
+  <li><code class="highlighter-rouge">Elastic IP</code></li>
+  <li><code class="highlighter-rouge">S3</code><br />
+<br /></li>
+</ul>
+
+<h2 id="1-private-subnet-구성-및-접근">1. Private Subnet 구성 및 접근</h2>
+<hr />
+<p>우선 구성하는 방법은 <code class="highlighter-rouge">간단</code>하다. 그냥 라우팅 테이블을 하나 만들고,<br />
+인터넷 게이트웨이를 설정하지 않으면 그만이다.</p>
+
+<p>접근 또한 마찬가지로 어렵지 않은데, 우선 <code class="highlighter-rouge">Bastion Host</code>로 접속 후<br />
+다시 <code class="highlighter-rouge">내부</code>적으로 접속을 진행하면된다.</p>
+<blockquote>
+  <p>대략적으로 그려보면 다음과 같다.<br />
+외부 접속 –&gt; Bastion Host –&gt; Private Subnet</p>
+</blockquote>
+
+<p>약간의 <code class="highlighter-rouge">문제</code>가 있다하면 ssh 접속을 위한 <code class="highlighter-rouge">키 페어 관리</code>인데,<br />
+내부 private subnet에 접속하기 위해 Bastion Host는 각 서브넷의<br />
+키 페어를 <code class="highlighter-rouge">가지고</code> 있어야 한다.</p>
+
+<p>이런 경우, 관리자들이 적절한 <code class="highlighter-rouge">보안 규칙</code>을 세워 키 페어 관리를 해야한다.<br />
+그렇지 않으면 Bastion Host에 접속하여 <code class="highlighter-rouge">모든</code> private subnet에 접근이 <code class="highlighter-rouge">가능</code>해,<br />
+그냥 <code class="highlighter-rouge">모두 public</code>으로 만든 것이랑 별반 다름이 없을 수 있기 때문이다.<br />
+<br /></p>
+
+<h2 id="2-natnetwork-access-translation">2. NAT(Network Access Translation)</h2>
+<hr />
+<p><code class="highlighter-rouge">NAT</code>는 설명했듯이, 인터넷 게이트웨이를 통해 <code class="highlighter-rouge">outbound</code>만 허용한다.<br />
+이는 AWS의 정책으로 외부에서 접근이 불가하다.</p>
+
+<p>설정하는 방법은 다음과 같이 두 가지 방법이 존재한다.</p>
+<ol>
+  <li><code class="highlighter-rouge">인스턴스</code>를 생성하여 설정</li>
+  <li><code class="highlighter-rouge">게이트웨이</code>로 생성하여 설정</li>
+</ol>
+
+<p>또한 <code class="highlighter-rouge">Elastic IP</code>를 설정하며 <code class="highlighter-rouge">유료</code> 서비스다.</p>
+<blockquote>
+  <p>Elastic IP를 사용하는 경우, 서버 재부팅 시에도 IP가 고정된다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="3-elbelastic-load-balancer">3. ELB(Elastic Load Balancer)</h2>
+<hr />
+<p><img src="/img/aws/aws_5_19.png" alt="" width="100%" height="100%" /><br />
+<code class="highlighter-rouge">생성</code>은 서비스에서 <code class="highlighter-rouge">EC2</code>를 검색 후, 좌측 메뉴에서 <code class="highlighter-rouge">로드밸런서</code>에서 할 수 있다.<br />
+생성 시, 3개 중 하나를 고르라고 하는데 기본적으로 <code class="highlighter-rouge">Classic</code>을 선택하면 된다.</p>
+
+<p>그 후 다음의 대략 단계에 따라서 구성한다.</p>
+<ol>
+  <li>본인의 VPC와 서브넷을 잘 선택</li>
+  <li>보안그룹 할당: <code class="highlighter-rouge">기존</code>그룹에서 생성한 그룹 선택</li>
+  <li>EC2 인스턴스 추가: 이 단계에서 우리의 <code class="highlighter-rouge">public</code> 인스턴스를 추가한다.</li>
+</ol>
+
+<p>위와 같은 설정의 이점은 EC2에 ELB를 거치치 않고 들어오는 경우를 막는 것이다.<br />
+즉, prviate EC2에 웹 프로토콜로 접속 시, <code class="highlighter-rouge">ELB</code>를 통해서 접근해야 한다. <br />
+이를 통해 다음과 같은 흐름으로 <code class="highlighter-rouge">Inbound</code>를 설정할 수 있다.</p>
+<blockquote>
+  <p>ACL –&gt; ELB –&gt; EC2<br />
+<code class="highlighter-rouge">ELB</code>와 <code class="highlighter-rouge">Bastion Host</code>를 제외한 나머지 subnet은 <code class="highlighter-rouge">private</code> 설정을 해야한다.</p>
+</blockquote>
+
+<p>또한 EC2는 다음과 같은 3가지 방법으로 구분이 되는데,</p>
+<ol>
+  <li>private IP</li>
+  <li>Public IP + address</li>
+  <li>Unique ID(Instance ID)</li>
+</ol>
+
+<p>이 중, 3번째 방법인 <code class="highlighter-rouge">유니크</code>한 ID가 ELB에 제공되어야 밸런싱을 잘 해준다고 한다.<br />
+<br /></p>
+
+<h2 id="4-elastic-ip탄력적-ip">4. Elastic IP(탄력적 IP)</h2>
+<hr />
+<p>AWS에서 Elastic IP를 가지고 있지 않은 리소스의 경우,<br />
+재부팅 시 IP의 <code class="highlighter-rouge">변경</code>이 일어난다.<br />
+이러한 현상을 막기 위해 <code class="highlighter-rouge">Elastic IP</code>를 설정하면 IP가 <code class="highlighter-rouge">고정</code>된다.</p>
+
+<p>이러한 서비스는 <code class="highlighter-rouge">Floating</code>되어 있다고 한다.<br />
+무슨 말이나면, 특정 객체에 묶여있는 것이 아니라<br />
+상황에 따라 이리 붙었다 저리 붙었다가 가능하다는 뜻이다.</p>
+
+<p>이러한 특징 때문에 특정 서비스가 <code class="highlighter-rouge">다운</code>되면 Elastic IP를<br />
+다른쪽으로 붙여서 트래픽을 그 쪽으로 유도해 <code class="highlighter-rouge">장애</code>에 대처할 수 있게 된다.</p>
+<blockquote>
+  <p>End-User에게 보여지는 IP는 <code class="highlighter-rouge">고정</code>된 IP이기 때문이다.</p>
+</blockquote>
+
+<p>혹은 서비스를 이관할 때도 이 서비스를 이용하여<br />
+<code class="highlighter-rouge">유동적</code>으로 트래픽을 처리할 수 있게 된다.<br />
+<br /></p>
+
+<h2 id="5-s3simple-storage-service">5. S3(Simple Storage Service)</h2>
+<hr />
+<p><img src="/img/aws/aws_6_1.png" alt="" width="100%" height="100%" /><br />
+S3는 VPC <code class="highlighter-rouge">외부</code>에 존재하는 서비스로써 <code class="highlighter-rouge">Bucket</code> 단위로 구분하며,<br />
+AWS에서 S3 서비스를 검색하여 시작할 수 있으며 다음과 같은 특징이 있다.</p>
+
+<ol>
+  <li>
+    <p>S3는 내부적으로 2군데 더 <code class="highlighter-rouge">미러링</code>을 한다.<br />
+현재 내 region에 1개 + 가장 가까운 region에 1개에 구성함으로써,<br />
+어떤식으로 장애가 나더라도 <code class="highlighter-rouge">대응</code> 할 수 있는 구조이다.</p>
+  </li>
+  <li>
+    <p>S3는 외부에 보여지지 않으므로, <code class="highlighter-rouge">버킷레벨</code>로 권한을 설정하거나<br />
+<code class="highlighter-rouge">파일레벨</code>로 권한을 설정할 수 있다.</p>
+  </li>
+  <li>
+    <p>S3는 <code class="highlighter-rouge">스토리지</code> 서비스 이므로, <code class="highlighter-rouge">DB</code>와의 연동은 <code class="highlighter-rouge">안된다</code>.<br />
+즉 S3에는 <code class="highlighter-rouge">Static Data</code>만 저장할 수 있다.<br />
+이러한 특징으로 인해, 서버사이드 언어를 저장하고 돌려도 <code class="highlighter-rouge">작동하지 않는다</code>.</p>
+  </li>
+  <li>
+    <p>S3는 <code class="highlighter-rouge">AZ</code> 밖에 존재하게 되므로,<br />
+VPC 안에 있는 객체들과의 통신은 <code class="highlighter-rouge">과금</code>을 유발하게 된다.<br />
+이 문제를 피하기 위해, S3에서 <code class="highlighter-rouge">인증토큰</code>을 이용하여 <code class="highlighter-rouge">허용된</code> REST API만 받아주면 된다고 한다.</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h2 id="6-끝마치며">6. 끝마치며</h2>
+<hr />
+<p>AWS에 대해서 배워볼까? 로 시작했던 시리즈의 포스팅이 끝났다.<br />
+단순하고 짧게 쓰려고 했지만, 쓰다보니 점점 길어지게 되었다.</p>
+
+<p>AWS는 늘 t2.micro 인스턴스 하나만 띡 만들어서 대충 써봤던게 전부였는데,<br />
+이번 기회로 새로운 눈이 뜨여지게 된 것 같다.</p>
+
+<p>배웠으니 앞으로 어딘가에 적용하기를 기대하고,<br />
+누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.</p>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/16/aws-5.html" data-toggle="tooltip" data-placement="top" title="[AWS] EC2 인스턴스(실습)"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/16/aws-6.html';
+this.page.identifier = '/devlog/2020/01/16/aws-6';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

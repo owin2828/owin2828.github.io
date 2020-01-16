@@ -8,8 +8,6 @@ body {
 p {
   line-height: 1.8;
   margin: 30px 0; }
-  p a {
-    text-decoration: underline; }
 
 h1,
 h2,
@@ -21,7 +19,6 @@ h6 {
   font-family: 'NanumSquare', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 a {
-  color: #212529;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   transition: all 0.2s; }
@@ -301,15 +298,23 @@ footer {
     font-size: 14px;
     margin-bottom: 0;
     text-align: center; }
+  footer a {
+    color: #212529; }
 
 .pagination {
   margin: auto;
   text-align: center;
   display: block;
   font-size: 1.2rem;
-  font-weight: bold;
   padding: 55px 0 25px 0;
   color: #999; }
+
+.pagination > a {
+  padding: 0.4rem;
+  color: #212529; }
+
+span > a {
+  color: #212529; }
 
 span.pagination-selected {
   display: inline-block;
@@ -331,6 +336,7 @@ span.pagination-selected {
   text-decoration: none; }
 
 .btn-movepage > a {
+  color: #212529;
   margin: 0 10px 0 10px; }
 
 span.pagination-selected {
