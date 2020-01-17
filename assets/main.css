@@ -312,6 +312,8 @@ footer {
 .pagination > a {
   padding: 0.4rem;
   color: #212529; }
+  .pagination > a:hover, .pagination > a:focus {
+    color: #0085A1; }
 
 span > a {
   color: #212529; }
@@ -330,10 +332,12 @@ span.pagination-selected {
   color: #212529; }
 
 .btn-movepage > a:hover {
-  text-decoration: none; }
+  text-decoration: none;
+  color: #0085A1; }
 
 .btn-movepage:hover {
-  text-decoration: none; }
+  text-decoration: none;
+  color: #0085A1; }
 
 .btn-movepage > a {
   color: #212529;
@@ -712,6 +716,99 @@ button::-moz-focus-inner {
   cursor: pointer; }
 
 /*# sourceMappingURL=popup.css.map */
+.sidebar {
+  color: #212529;
+  text-align: left;
+  /* Sidebar links */ }
+  .sidebar::before {
+    /* make sidebar slightly darker to increase text readability (when using a background image) */
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; }
+  .sidebar a {
+    color: #212529;
+    border-bottom-color: rgba(255, 255, 255, 0.2); }
+    .sidebar a:hover, .sidebar a:focus {
+      color: #0085A1; }
+
+#SideNav {
+  position: relative; }
+  @media screen {
+    #SideNav {
+      min-height: 640px;
+      min-height: 100vh; } }
+  @media screen and (min-width: 992px) {
+    #SideNav {
+      width: 18rem;
+      margin-left: auto; } }
+
+.sidebar-bg {
+  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent; }
+
+.sidebar-box {
+  display: flex;
+  justify-content: center; }
+
+.sidebar-sticky {
+  position: relative;
+  z-index: 3; }
+  @media screen {
+    .sidebar-sticky {
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+      height: 100%;
+      overflow: auto;
+      position: absolute;
+      padding: 3rem 0rem;
+      right: 2.5rem;
+      left: 2.5rem; } }
+  @media screen and (min-width: 992px) {
+    .sidebar-sticky.is-fixed {
+      position: fixed;
+      top: 7%;
+      left: 8%;
+      max-width: 208px; } }
+
+.sidebar-sticky::-webkit-scrollbar {
+  display: none; }
+
+/* About section */
+.sidebar-about > h5 {
+  color: #212529;
+  font-size: 1.4rem;
+  margin-bottom: 2rem; }
+
+.sidebar-nav > ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: .5rem; }
+
+a.sidebar-nav-item {
+  width: 100%;
+  font-weight: normal;
+  display: block;
+  line-height: 1.75;
+  padding: .25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+
+a.sidebar-nav-subitem {
+  font-weight: normal;
+  display: block;
+  line-height: 1.75;
+  padding: .25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+
 .btn {
   font-size: 14px;
   font-weight: 800;

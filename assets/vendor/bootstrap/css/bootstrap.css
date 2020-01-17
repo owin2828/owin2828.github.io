@@ -158,7 +158,7 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: #0085A1;
   text-decoration: none;
   background-color: transparent;
 }
@@ -578,6 +578,15 @@ pre code {
 }
 
 .container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* 다음의 태그는 본문의 넓이 조정 및 사이드바 삽입을 위해 새로 생성 */
+.container-content {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
