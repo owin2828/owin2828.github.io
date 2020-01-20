@@ -139,13 +139,64 @@
       <header class="sidebar-sticky" role="banner">
         <br/>
         <div class="sidebar-about">
-          <h5>목차</h5>
+          
+            <h5><a href="/devlog/etc/">글 목록으로</a></h5>
+          
         </div>
-
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
       <nav class="sidebar-nav heading" role="navigation">
         <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
 <span class="sr-only">Navigation:</span>
 <ul>
+  
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id0">외부 서버의 포트가 살아있는지 open여부를 점검하기</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id1">1. Ping</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id2">2. Telnet</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id3">3. nc(NetCat)</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id4">4. curl</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/08/etc-1.html#id5">5. bash</a>
+      
+    </li>
+
+  
   
 </ul>
       </nav>
@@ -154,14 +205,15 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="외부-서버의-포트가-살아있는지-open여부를-점검하기">외부 서버의 포트가 살아있는지 open여부를 점검하기</h2>
+        <h2 id="id0">외부 서버의 포트가 살아있는지 open여부를 점검하기</h2>
+<hr />
 <p>이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.<br />
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.<br />
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.<br />
 다음은 지극히 <code class="highlighter-rouge">주관적인</code> (쉬운?) 순서대로 방법이다.<br />
 <br /></p>
 
-<h4 id="1-ping">1. Ping</h4>
+<h4 id="id1">1. Ping</h4>
 <p>포트고 뭐고 필요 없을 때</p>
 <blockquote>
   <p><code class="highlighter-rouge">ping</code>은 port를 <code class="highlighter-rouge">사용하지 않는다</code>.<br />
@@ -176,7 +228,7 @@
 </code></pre></div></div>
 <p><br /></p>
 
-<h4 id="2-telnet">2. Telnet</h4>
+<h4 id="id2">2. Telnet</h4>
 <p><code class="highlighter-rouge">특정</code> port를 확인해야 할 경우</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>telnet <span class="o">[</span>IP] <span class="o">[</span>PORT]  
 
@@ -185,7 +237,7 @@
 </code></pre></div></div>
 <p><br /></p>
 
-<h4 id="3-ncnetcat">3. nc(NetCat)</h4>
+<h4 id="id3">3. nc(NetCat)</h4>
 <p>일반적으로 UNIX의 <code class="highlighter-rouge">cat</code>명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.<br />
 포트 확인 기능 말고도 다양한 기능으로 사용이 된다.</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nc <span class="nt">-z</span> <span class="o">[</span>IP] <span class="o">[</span>PORT]
@@ -195,7 +247,7 @@
 </code></pre></div></div>
 <p><br /></p>
 
-<h4 id="4-curl">4. curl</h4>
+<h4 id="id4">4. curl</h4>
 <p>대부분 서버는 telnet이 설치되어 있지만, <code class="highlighter-rouge">보안</code>이슈나 <code class="highlighter-rouge">최소 설치</code>를 한 경우 사용이 불가능한 경우가 있다.<br />
 그런 경우 다음의 명령을 사용하자. 아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.</p>
 <blockquote>
@@ -209,7 +261,7 @@
 </code></pre></div></div>
 <p><br /></p>
 
-<h4 id="5-bash">5. bash</h4>
+<h4 id="id5">5. bash</h4>
 <p>약간 하드한 방법이다. 
 <code class="highlighter-rouge">shell</code>에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.<br />
 TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.</p>

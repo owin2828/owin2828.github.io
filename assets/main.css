@@ -741,10 +741,9 @@ button::-moz-focus-inner {
     #SideNav {
       min-height: 640px;
       min-height: 100vh; } }
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1230px) {
     #SideNav {
-      width: 18rem;
-      margin-left: auto; } }
+      width: 18rem; } }
 
 .sidebar-bg {
   position: absolute;
@@ -773,11 +772,11 @@ button::-moz-focus-inner {
       padding: 3rem 0rem;
       right: 2.5rem;
       left: 2.5rem; } }
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1230px) {
     .sidebar-sticky.is-fixed {
       position: fixed;
-      top: 7%;
-      left: 8%;
+      top: 0rem;
+      left: 2.5rem;
       max-width: 208px; } }
 
 .sidebar-sticky::-webkit-scrollbar {
@@ -803,9 +802,12 @@ a.sidebar-nav-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
 
 a.sidebar-nav-subitem {
+  width: 100%;
+  font-size: 90%;
   font-weight: normal;
+  color: rgba(0, 0, 0, 0.7);
   display: block;
-  line-height: 1.75;
+  line-height: 1.25;
   padding: .25rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
 

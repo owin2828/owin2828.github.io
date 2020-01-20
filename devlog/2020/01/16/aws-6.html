@@ -139,9 +139,16 @@
       <header class="sidebar-sticky" role="banner">
         <br/>
         <div class="sidebar-about">
-          <h5>목차</h5>
+          
+            <h5><a href="/devlog/aws/">글 목록으로</a></h5>
+          
         </div>
-
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
       <nav class="sidebar-nav heading" role="navigation">
         <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
 <span class="sr-only">Navigation:</span>
@@ -150,13 +157,50 @@
   
   
     <li>      
-      <a class="sidebar-nav-item" href="/">들어가기 앞서</a>
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id0">들어가기 앞서</a>
+      
     </li>
 
   
   
     <li>      
-      <a class="sidebar-nav-item" href="/">1. Private Subnet 구성 및 접근</a>
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id1">1. Private Subnet 구성 및 접근</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id2">2. NAT(Network Access Translation)</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id3">3. ELB(Elastic Load Balancer)</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id4">4. Elastic IP(탄력적 IP)</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id5">5. S3(Simple Storage Service)</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-6.html#id6">6. 끝마치며</a>
+      
     </li>
 
   
@@ -168,7 +212,7 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+        <h2 id="id0">들어가기 앞서</h2>
 <hr />
 <p>본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.</p>
 <ul>
@@ -181,7 +225,7 @@
 <br /></li>
 </ul>
 
-<h2 id="1-private-subnet-구성-및-접근">1. Private Subnet 구성 및 접근</h2>
+<h2 id="id1">1. Private Subnet 구성 및 접근</h2>
 <hr />
 <p>우선 구성하는 방법은 <code class="highlighter-rouge">간단</code>하다. 그냥 라우팅 테이블을 하나 만들고,<br />
 인터넷 게이트웨이를 설정하지 않으면 그만이다.</p>
@@ -202,7 +246,7 @@
 그냥 <code class="highlighter-rouge">모두 public</code>으로 만든 것이랑 별반 다름이 없을 수 있기 때문이다.<br />
 <br /></p>
 
-<h2 id="2-natnetwork-access-translation">2. NAT(Network Access Translation)</h2>
+<h2 id="id2">2. NAT(Network Access Translation)</h2>
 <hr />
 <p><code class="highlighter-rouge">NAT</code>는 설명했듯이, 인터넷 게이트웨이를 통해 <code class="highlighter-rouge">outbound</code>만 허용한다.<br />
 이는 AWS의 정책으로 외부에서 접근이 불가하다.</p>
@@ -219,7 +263,7 @@
 <br /></p>
 </blockquote>
 
-<h2 id="3-elbelastic-load-balancer">3. ELB(Elastic Load Balancer)</h2>
+<h2 id="id3">3. ELB(Elastic Load Balancer)</h2>
 <hr />
 <p><img src="/img/aws/aws_5_19.png" alt="" width="100%" height="100%" /><br />
 <code class="highlighter-rouge">생성</code>은 서비스에서 <code class="highlighter-rouge">EC2</code>를 검색 후, 좌측 메뉴에서 <code class="highlighter-rouge">로드밸런서</code>에서 할 수 있다.<br />
@@ -250,7 +294,7 @@
 <p>이 중, 3번째 방법인 <code class="highlighter-rouge">유니크</code>한 ID가 ELB에 제공되어야 밸런싱을 잘 해준다고 한다.<br />
 <br /></p>
 
-<h2 id="4-elastic-ip탄력적-ip">4. Elastic IP(탄력적 IP)</h2>
+<h2 id="id4">4. Elastic IP(탄력적 IP)</h2>
 <hr />
 <p>AWS에서 Elastic IP를 가지고 있지 않은 리소스의 경우,<br />
 재부팅 시 IP의 <code class="highlighter-rouge">변경</code>이 일어난다.<br />
@@ -270,7 +314,7 @@
 <code class="highlighter-rouge">유동적</code>으로 트래픽을 처리할 수 있게 된다.<br />
 <br /></p>
 
-<h2 id="5-s3simple-storage-service">5. S3(Simple Storage Service)</h2>
+<h2 id="id5">5. S3(Simple Storage Service)</h2>
 <hr />
 <p><img src="/img/aws/aws_6_1.png" alt="" width="100%" height="100%" /><br />
 S3는 VPC <code class="highlighter-rouge">외부</code>에 존재하는 서비스로써 <code class="highlighter-rouge">Bucket</code> 단위로 구분하며,<br />
@@ -300,7 +344,7 @@ VPC 안에 있는 객체들과의 통신은 <code class="highlighter-rouge">과�
 
 <p><br /></p>
 
-<h2 id="6-끝마치며">6. 끝마치며</h2>
+<h2 id="id6">6. 끝마치며</h2>
 <hr />
 <p>AWS에 대해서 배워볼까? 로 시작했던 시리즈의 포스팅이 끝났다.<br />
 단순하고 짧게 쓰려고 했지만, 쓰다보니 점점 길어지게 되었다.</p>

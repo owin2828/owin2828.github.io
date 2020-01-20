@@ -139,13 +139,96 @@
       <header class="sidebar-sticky" role="banner">
         <br/>
         <div class="sidebar-about">
-          <h5>목차</h5>
+          
+            <h5><a href="/devlog/aws/">글 목록으로</a></h5>
+          
         </div>
-
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
       <nav class="sidebar-nav heading" role="navigation">
         <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
 <span class="sr-only">Navigation:</span>
 <ul>
+  
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id0">들어가기 앞서</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id1">1. AWS 계정 생성</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id2">2. 콘솔 로그인</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id3">3. VPC 생성</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id4">4. 기본구성 살펴보기</a>
+      
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/15/aws-3.html#id4-1">4-1. 서브넷</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/15/aws-3.html#id4-2">4-2. 라우팅 테이블</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/15/aws-3.html#id4-3">4-3. 인터넷 게이트웨이</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/15/aws-3.html#id4-4">4-4. ACL</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/15/aws-3.html#id4-5">4-5. 보안그룹</a>
+        </li>
+      </ul>
+      
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/15/aws-3.html#id5">5. 끝마치며</a>
+      
+    </li>
+
+  
   
 </ul>
       </nav>
@@ -154,7 +237,7 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+        <h2 id="id0">들어가기 앞서</h2>
 <hr />
 <p>이번 포스팅은 aws에서 <code class="highlighter-rouge">VPC</code>를 구축해보는 <code class="highlighter-rouge">실습(?)</code>에 관련된 포스팅이다.<br />
 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.</p>
@@ -176,7 +259,7 @@
 <br /></p>
 </blockquote>
 
-<h2 id="1-aws-계정-생성">1. AWS 계정 생성</h2>
+<h2 id="id1">1. AWS 계정 생성</h2>
 <hr />
 <p>다음의 링크로 접속하여 aws 홈페이지에 들어가보자.<br />
 <a href="https://aws.amazon.com/ko/">https://aws.amazon.com/ko/</a><br />
@@ -188,7 +271,7 @@ aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제�
 <br /></p>
 </blockquote>
 
-<h2 id="2-콘솔-로그인">2. 콘솔 로그인</h2>
+<h2 id="id2">2. 콘솔 로그인</h2>
 <hr />
 <p><img src="/img/aws/aws_3_1.png" alt="" width="60%" height="60%" /></p>
 
@@ -204,7 +287,7 @@ aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제�
 <br /></li>
 </ul>
 
-<h2 id="3-vpc-생성">3. VPC 생성</h2>
+<h2 id="id3">3. VPC 생성</h2>
 <hr />
 <p><img src="/img/aws/aws_3_3.png" alt="" width="80%" height="80%" /></p>
 
@@ -264,10 +347,10 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 다음으로 구성된 VPC에 대해 기본요소들을 살펴보자.<br />
 <br /></p>
 
-<h2 id="4-기본구성-살펴보기">4. 기본구성 살펴보기</h2>
+<h2 id="id4">4. 기본구성 살펴보기</h2>
 <hr />
 
-<h4 id="4-1-서브넷">4-1. 서브넷</h4>
+<h4 id="id4-1">4-1. 서브넷</h4>
 <hr />
 <p><img src="/img/aws/aws_3_10.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -281,7 +364,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   </li>
 </ul>
 
-<h4 id="4-2-라우팅-테이블">4-2. 라우팅 테이블</h4>
+<h4 id="id4-2">4-2. 라우팅 테이블</h4>
 <hr />
 <p><img src="/img/aws/aws_3_11.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -292,7 +375,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 <br /></li>
 </ul>
 
-<h4 id="4-3-인터넷-게이트웨이">4-3. 인터넷 게이트웨이</h4>
+<h4 id="id4-3">4-3. 인터넷 게이트웨이</h4>
 <hr />
 <p><img src="/img/aws/aws_3_12.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -306,7 +389,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   </li>
 </ul>
 
-<h4 id="4-4-acl">4-4. ACL</h4>
+<h4 id="id4-4">4-4. ACL</h4>
 <hr />
 <p><img src="/img/aws/aws_3_13.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -319,7 +402,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   </li>
 </ul>
 
-<h4 id="4-5-보안그룹">4-5. 보안그룹</h4>
+<h4 id="id4-5">4-5. 보안그룹</h4>
 <hr />
 <p><img src="/img/aws/aws_3_14.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -331,7 +414,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   </li>
 </ul>
 
-<h2 id="끝마치며">끝마치며</h2>
+<h2 id="id5">끝마치며</h2>
 <hr />
 <p>여태 진행한 과정을 통해 <code class="highlighter-rouge">VPC</code>를 하나 설정하고 기본요소들에 대하여 살펴보았다.<br />
 이는 서울 Region 내에 나만의 <code class="highlighter-rouge">IDC</code>가 하나 생긴것과 마찬가지이다.</p>

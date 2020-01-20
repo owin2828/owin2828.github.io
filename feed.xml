@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-17T17:14:46+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-20T18:04:22+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.&lt;/p&gt;
 &lt;ul&gt;
@@ -11,7 +11,7 @@
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;1-private-subnet-구성-및-접근&quot;&gt;1. Private Subnet 구성 및 접근&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. Private Subnet 구성 및 접근&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;우선 구성하는 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단&lt;/code&gt;하다. 그냥 라우팅 테이블을 하나 만들고,&lt;br /&gt;
 인터넷 게이트웨이를 설정하지 않으면 그만이다.&lt;/p&gt;
@@ -32,7 +32,7 @@
 그냥 &lt;code class=&quot;highlighter-rouge&quot;&gt;모두 public&lt;/code&gt;으로 만든 것이랑 별반 다름이 없을 수 있기 때문이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-natnetwork-access-translation&quot;&gt;2. NAT(Network Access Translation)&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. NAT(Network Access Translation)&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;는 설명했듯이, 인터넷 게이트웨이를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;outbound&lt;/code&gt;만 허용한다.&lt;br /&gt;
 이는 AWS의 정책으로 외부에서 접근이 불가하다.&lt;/p&gt;
@@ -49,7 +49,7 @@
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;3-elbelastic-load-balancer&quot;&gt;3. ELB(Elastic Load Balancer)&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. ELB(Elastic Load Balancer)&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_19.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;은 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 검색 후, 좌측 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;로드밸런서&lt;/code&gt;에서 할 수 있다.&lt;br /&gt;
@@ -80,7 +80,7 @@
 &lt;p&gt;이 중, 3번째 방법인 &lt;code class=&quot;highlighter-rouge&quot;&gt;유니크&lt;/code&gt;한 ID가 ELB에 제공되어야 밸런싱을 잘 해준다고 한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-elastic-ip탄력적-ip&quot;&gt;4. Elastic IP(탄력적 IP)&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;4. Elastic IP(탄력적 IP)&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;AWS에서 Elastic IP를 가지고 있지 않은 리소스의 경우,&lt;br /&gt;
 재부팅 시 IP의 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경&lt;/code&gt;이 일어난다.&lt;br /&gt;
@@ -100,7 +100,7 @@
 &lt;code class=&quot;highlighter-rouge&quot;&gt;유동적&lt;/code&gt;으로 트래픽을 처리할 수 있게 된다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;5-s3simple-storage-service&quot;&gt;5. S3(Simple Storage Service)&lt;/h2&gt;
+&lt;h2 id=&quot;id5&quot;&gt;5. S3(Simple Storage Service)&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_6_1.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;br /&gt;
 S3는 VPC &lt;code class=&quot;highlighter-rouge&quot;&gt;외부&lt;/code&gt;에 존재하는 서비스로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bucket&lt;/code&gt; 단위로 구분하며,&lt;br /&gt;
@@ -130,7 +130,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;6-끝마치며&quot;&gt;6. 끝마치며&lt;/h2&gt;
+&lt;h2 id=&quot;id6&quot;&gt;6. 끝마치며&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;AWS에 대해서 배워볼까? 로 시작했던 시리즈의 포스팅이 끝났다.&lt;br /&gt;
 단순하고 짧게 쓰려고 했지만, 쓰다보니 점점 길어지게 되었다.&lt;/p&gt;
@@ -139,7 +139,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 이번 기회로 새로운 눈이 뜨여지게 된 것 같다.&lt;/p&gt;
 
 &lt;p&gt;배웠으니 앞으로 어딘가에 적용하기를 기대하고,&lt;br /&gt;
-누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3</summary></entry><entry><title type="html">[AWS] EC2 인스턴스(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-5.html" rel="alternate" type="text/html" title="[AWS] EC2 인스턴스(실습)" /><published>2020-01-16T09:20:00+09:00</published><updated>2020-01-16T09:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3</summary></entry><entry><title type="html">[AWS] EC2 인스턴스(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-5.html" rel="alternate" type="text/html" title="[AWS] EC2 인스턴스(실습)" /><published>2020-01-16T09:20:00+09:00</published><updated>2020-01-16T09:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-5.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다.&lt;br /&gt;
 본 편에서는 다음의 요소를 구성하고 설정할 예정이다.&lt;/p&gt;
@@ -148,7 +148,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;1-키-페어-생성&quot;&gt;1. 키 페어 생성&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. 키 페어 생성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_1.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -183,7 +183,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;2-인스턴스ec2-생성&quot;&gt;2. 인스턴스(EC2) 생성&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. 인스턴스(EC2) 생성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_5.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -191,7 +191,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-1-ami-선택&quot;&gt;2-1. AMI 선택&lt;/h4&gt;
+&lt;h4 id=&quot;id2-1&quot;&gt;2-1. AMI 선택&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_6.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;사진처럼 맨 위의 &lt;code class=&quot;highlighter-rouge&quot;&gt;AMI&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;선택&lt;/code&gt;한다.
@@ -204,7 +204,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-2-인스턴스-유형-선택&quot;&gt;2-2. 인스턴스 유형 선택&lt;/h4&gt;
+&lt;h4 id=&quot;id2-2&quot;&gt;2-2. 인스턴스 유형 선택&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_7.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;우리는 &lt;code class=&quot;highlighter-rouge&quot;&gt;프리티어&lt;/code&gt;를 사용하므로, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;녹색&lt;/code&gt;으로 표시된 &lt;code class=&quot;highlighter-rouge&quot;&gt;t2.micro&lt;/code&gt;를 선택한다.
@@ -222,7 +222,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-3-인스턴스-구성&quot;&gt;2-3. 인스턴스 구성&lt;/h4&gt;
+&lt;h4 id=&quot;id2-3&quot;&gt;2-3. 인스턴스 구성&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_8.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;사진의 첫 번째 빨간 사각형에서 다음과 같은 설정을 진행한다.
@@ -248,13 +248,13 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-4-스토리지--추가&quot;&gt;2-4. 스토리지 &amp;amp; 추가&lt;/h4&gt;
+&lt;h4 id=&quot;id2-4&quot;&gt;2-4. 스토리지 &amp;amp; 추가&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;딱히 수정할 사항은 &lt;code class=&quot;highlighter-rouge&quot;&gt;없으므로&lt;/code&gt; 다음을 눌러 진행한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-5-보안-그룹-구성&quot;&gt;2-5. 보안 그룹 구성&lt;/h4&gt;
+&lt;h4 id=&quot;id2-5&quot;&gt;2-5. 보안 그룹 구성&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_10.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;보안그룹은 &lt;code class=&quot;highlighter-rouge&quot;&gt;이름&lt;/code&gt;을 참조하여 기존에 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성한&lt;/code&gt; 그룹을 선택한다.&lt;br /&gt;
@@ -262,7 +262,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;2-6-검토&quot;&gt;2-6. 검토&lt;/h4&gt;
+&lt;h4 id=&quot;id2-6&quot;&gt;2-6. 검토&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_11.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;화면에 표시되는 정보들을 확인하여 제대로 설정되었는지 검토 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;시작하기&lt;/code&gt;를 누르면&lt;br /&gt;
@@ -271,7 +271,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;확인&quot;&gt;확인&lt;/h4&gt;
+&lt;h4 id=&quot;id2-7&quot;&gt;2-7. 확인&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_12.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;제대로 설정이 되었는지 확인하기 위해 빨간 사각형들을 살펴본다.
@@ -289,7 +289,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;3-인스턴스ec2-ssh-접속&quot;&gt;3. 인스턴스(EC2) SSH 접속&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. 인스턴스(EC2) SSH 접속&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_13.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -297,7 +297,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;3-1-mac--linux&quot;&gt;3-1. Mac &amp;amp; Linux&lt;/h4&gt;
+&lt;h4 id=&quot;id3-1&quot;&gt;3-1. Mac &amp;amp; Linux&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_14.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;다운로드 받은 키 페어가 있는 디렉토리로 이동한다.
@@ -356,7 +356,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&quot;3-2-window&quot;&gt;3-2. Window&lt;/h4&gt;
+&lt;h4 id=&quot;id3-2&quot;&gt;3-2. Window&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_16.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;윈도우&lt;/code&gt;의 경우 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/putty.html&quot;&gt;여기&lt;/a&gt;를 확인하여 진행한다.&lt;/li&gt;
@@ -381,7 +381,7 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&gt; 서브넷들을 관리하는 역할을 한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-public-subnet을-통한-apache-서버-구축&quot;&gt;4. Public subnet을 통한 Apache 서버 구축&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;4. Public subnet을 통한 Apache 서버 구축&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt;도 생성하였으니, 이번에는 간단한 &lt;code class=&quot;highlighter-rouge&quot;&gt;웹 서버&lt;/code&gt; 역할을 하는 인스턴스를 생성한다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일한 방식&lt;/code&gt;으로 다음 조건의 서브넷과 인스턴스를 하나 더 생성한다.&lt;/p&gt;
@@ -430,7 +430,7 @@ VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&g
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_18.png&quot; alt=&quot;아파치 웹서버를 구축한 모습&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;h2 id=&quot;id5&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt; 구성부터 시작해 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;의 구성까지 길었던 과정이 끝났다.&lt;/p&gt;
 
@@ -446,7 +446,7 @@ VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&g
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다. 본 편에서는 다음의 요소를 구성하고 설정할 예정이다. EC2</summary></entry><entry><title type="html">[AWS] VPC 만들어보기(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/15/aws-3.html" rel="alternate" type="text/html" title="[AWS] VPC 만들어보기(실습)" /><published>2020-01-15T09:31:00+09:00</published><updated>2020-01-15T09:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/15/aws-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/15/aws-3.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다. 본 편에서는 다음의 요소를 구성하고 설정할 예정이다. EC2</summary></entry><entry><title type="html">[AWS] VPC 만들어보기(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/15/aws-3.html" rel="alternate" type="text/html" title="[AWS] VPC 만들어보기(실습)" /><published>2020-01-15T09:31:00+09:00</published><updated>2020-01-15T09:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/15/aws-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/15/aws-3.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이번 포스팅은 aws에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 구축해보는 &lt;code class=&quot;highlighter-rouge&quot;&gt;실습(?)&lt;/code&gt;에 관련된 포스팅이다.&lt;br /&gt;
 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.&lt;/p&gt;
@@ -468,7 +468,7 @@ VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&g
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;1-aws-계정-생성&quot;&gt;1. AWS 계정 생성&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. AWS 계정 생성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;다음의 링크로 접속하여 aws 홈페이지에 들어가보자.&lt;br /&gt;
 &lt;a href=&quot;https://aws.amazon.com/ko/&quot;&gt;https://aws.amazon.com/ko/&lt;/a&gt;&lt;br /&gt;
@@ -480,7 +480,7 @@ aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제�
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;2-콘솔-로그인&quot;&gt;2. 콘솔 로그인&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. 콘솔 로그인&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_1.png&quot; alt=&quot;&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;/p&gt;
 
@@ -496,7 +496,7 @@ aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제�
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;3-vpc-생성&quot;&gt;3. VPC 생성&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. VPC 생성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_3.png&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
 
@@ -556,10 +556,10 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 다음으로 구성된 VPC에 대해 기본요소들을 살펴보자.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-기본구성-살펴보기&quot;&gt;4. 기본구성 살펴보기&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;4. 기본구성 살펴보기&lt;/h2&gt;
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;4-1-서브넷&quot;&gt;4-1. 서브넷&lt;/h4&gt;
+&lt;h4 id=&quot;id4-1&quot;&gt;4-1. 서브넷&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_10.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -573,7 +573,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;4-2-라우팅-테이블&quot;&gt;4-2. 라우팅 테이블&lt;/h4&gt;
+&lt;h4 id=&quot;id4-2&quot;&gt;4-2. 라우팅 테이블&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_11.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -584,7 +584,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;4-3-인터넷-게이트웨이&quot;&gt;4-3. 인터넷 게이트웨이&lt;/h4&gt;
+&lt;h4 id=&quot;id4-3&quot;&gt;4-3. 인터넷 게이트웨이&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_12.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -598,7 +598,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;4-4-acl&quot;&gt;4-4. ACL&lt;/h4&gt;
+&lt;h4 id=&quot;id4-4&quot;&gt;4-4. ACL&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_13.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -611,7 +611,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;4-5-보안그룹&quot;&gt;4-5. 보안그룹&lt;/h4&gt;
+&lt;h4 id=&quot;id4-5&quot;&gt;4-5. 보안그룹&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_14.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -623,13 +623,13 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;h2 id=&quot;id5&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;여태 진행한 과정을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 하나 설정하고 기본요소들에 대하여 살펴보았다.&lt;br /&gt;
 이는 서울 Region 내에 나만의 &lt;code class=&quot;highlighter-rouge&quot;&gt;IDC&lt;/code&gt;가 하나 생긴것과 마찬가지이다.&lt;/p&gt;
 
 &lt;p&gt;다음 포스팅에서는 각 기본요소들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;설정&lt;/code&gt;하는 방법 및 서브넷 &amp;amp; 인스턴스 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;과&lt;br /&gt;
-실제로 우리가 생성한 서브넷의 인스턴스에 접속하는 방법을 설명하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이번 포스팅은 aws에서 VPC를 구축해보는 실습(?)에 관련된 포스팅이다. 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.</summary></entry><entry><title type="html">[AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/15/aws-4.html" rel="alternate" type="text/html" title="[AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습)" /><published>2020-01-15T09:31:00+09:00</published><updated>2020-01-15T09:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/15/aws-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/15/aws-4.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+실제로 우리가 생성한 서브넷의 인스턴스에 접속하는 방법을 설명하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이번 포스팅은 aws에서 VPC를 구축해보는 실습(?)에 관련된 포스팅이다. 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.</summary></entry><entry><title type="html">[AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/15/aws-4.html" rel="alternate" type="text/html" title="[AWS] 서브넷, 라우팅 테이블, 보안그룹, 인터넷 게이트웨이(실습)" /><published>2020-01-15T09:31:00+09:00</published><updated>2020-01-15T09:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/15/aws-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/15/aws-4.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이전 포스팅에 이어서 AWS에서 VPC를 구성 후,&lt;br /&gt;
 다음의 구성 요소들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;하거나 &lt;code class=&quot;highlighter-rouge&quot;&gt;설정&lt;/code&gt;하는 방법에 대해 포스팅할 예정이다.&lt;/p&gt;
@@ -642,7 +642,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;1-인터넷-게이트웨이-생성-및-설정&quot;&gt;1. 인터넷 게이트웨이 생성 및 설정&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. 인터넷 게이트웨이 생성 및 설정&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_4_1.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -681,7 +681,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;2-서브넷-생성-및-설정&quot;&gt;2. 서브넷 생성 및 설정&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. 서브넷 생성 및 설정&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_4_4.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -723,7 +723,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;3-acl-확인&quot;&gt;3. ACL 확인&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. ACL 확인&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_4_7.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -736,7 +736,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;3-보안그룹-생성-및-설정&quot;&gt;3. 보안그룹 생성 및 설정&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;4. 보안그룹 생성 및 설정&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_4_8.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -801,7 +801,7 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;5-라우팅-테이블-생성-및-설정&quot;&gt;5. 라우팅 테이블 생성 및 설정&lt;/h2&gt;
+&lt;h2 id=&quot;id5&quot;&gt;5. 라우팅 테이블 생성 및 설정&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_4_13.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -865,13 +865,13 @@ IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;h2 id=&quot;id6&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이번 포스팅을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Internet Gateway&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Subnet&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ACL&lt;/code&gt;,&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Security Group&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Routing Table&lt;/code&gt;등을 생성하고 설정하였다.&lt;/p&gt;
 
 &lt;p&gt;어이지는 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2 인스턴스&lt;/code&gt;를 생성하고,&lt;br /&gt;
-VPC내부에 구성을 해보도록 하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에 이어서 AWS에서 VPC를 구성 후, 다음의 구성 요소들을 생성하거나 설정하는 방법에 대해 포스팅할 예정이다. Internet Gateway Subnet ACL Security Group Routing Table</summary></entry><entry><title type="html">[AWS] Region, AZ, VPC, Subnet등 구성</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html" rel="alternate" type="text/html" title="[AWS] Region, AZ, VPC, Subnet등 구성" /><published>2020-01-10T14:15:00+09:00</published><updated>2020-01-10T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+VPC내부에 구성을 해보도록 하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에 이어서 AWS에서 VPC를 구성 후, 다음의 구성 요소들을 생성하거나 설정하는 방법에 대해 포스팅할 예정이다. Internet Gateway Subnet ACL Security Group Routing Table</summary></entry><entry><title type="html">[AWS] Region, AZ, VPC, Subnet등 구성</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-2.html" rel="alternate" type="text/html" title="[AWS] Region, AZ, VPC, Subnet등 구성" /><published>2020-01-10T14:15:00+09:00</published><updated>2020-01-10T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-2.html">&lt;h2 id=&quot;id0-1&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.&lt;/p&gt;
 
@@ -895,7 +895,7 @@ VPC내부에 구성을 해보도록 하겠다.&lt;/p&gt;</content><author><name>
 &lt;p&gt;각설하고 본격적으로 aws의 기초 구성에 대해 알아보도록 하자.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;aws-public-cloud의-구성&quot;&gt;AWS Public Cloud의 구성&lt;/h2&gt;
+&lt;h2 id=&quot;id0-2&quot;&gt;AWS Public Cloud의 구성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_1.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
@@ -910,12 +910,12 @@ VPC내부에 구성을 해보도록 하겠다.&lt;/p&gt;</content><author><name>
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;1-region&quot;&gt;1. region&lt;/h4&gt;
+&lt;h4 id=&quot;id1&quot;&gt;1. region&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;구성요소 중 가장 큰 단위이며, 논리적인 단계이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;2-azavailability-zone&quot;&gt;2. AZ(Availability Zone)&lt;/h4&gt;
+&lt;h4 id=&quot;id2&quot;&gt;2. AZ(Availability Zone)&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;실제 IDC 단위로써, aws 정책에 따라 하나의 region안에는 반드시 &lt;code class=&quot;highlighter-rouge&quot;&gt;2개 이상&lt;/code&gt;의 AZ가 존재한다고 한다.&lt;br /&gt;
 (그림에서도 2개의 AZ가 존재한다.)&lt;br /&gt;
@@ -926,7 +926,7 @@ Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하�
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&quot;3-vpcvirtual-private-cloud&quot;&gt;3. VPC(Virtual Private Cloud)&lt;/h4&gt;
+&lt;h4 id=&quot;id3&quot;&gt;3. VPC(Virtual Private Cloud)&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;AZ 밑의 단위로써, &lt;code class=&quot;highlighter-rouge&quot;&gt;논리적인 구조&lt;/code&gt;로 하나의 IDC 처럼 동작한다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -967,7 +967,7 @@ ELB의 종류는 다음과 같이 3가지 존재
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;3-1-subnet과-ec2-인스턴스&quot;&gt;3-1. Subnet과 EC2 인스턴스&lt;/h5&gt;
+&lt;h5 id=&quot;id3-1&quot;&gt;3-1. Subnet과 EC2 인스턴스&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;p&gt;하나의 VPC에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;여러개&lt;/code&gt;의 서브넷을 생성할 수 있다.(10.1.10.100 / 10.1.10.110 등..)&lt;br /&gt;
 이때 ip를 구분하여 용도에 맞게 할당해 내부적으로 영역을 &lt;code class=&quot;highlighter-rouge&quot;&gt;구분&lt;/code&gt;한다.&lt;br /&gt;
@@ -978,7 +978,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 가상화된 환경에 올려 사용자가 사용할 수 있도록 한 것을 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2 인스턴스&lt;/code&gt;라 부른다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h5 id=&quot;3-2-bastion&quot;&gt;3-2. Bastion&lt;/h5&gt;
+&lt;h5 id=&quot;id3-2&quot;&gt;3-2. Bastion&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_3.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
@@ -993,7 +993,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;3-3-nat&quot;&gt;3-3. NAT&lt;/h5&gt;
+&lt;h5 id=&quot;id3-3&quot;&gt;3-3. NAT&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;p&gt;하지만 문제는 여전히 존재한다. 전부 private으로 만들어 버렸으니, 각 서브넷의 외부와 통신이 안된다.&lt;br /&gt;
 그럼 각 서브넷의 &lt;code class=&quot;highlighter-rouge&quot;&gt;OS 업데이트&lt;/code&gt;는 어떻게 하는가?&lt;/p&gt;
@@ -1010,7 +1010,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;3-4-dev-manage-product-vpc&quot;&gt;3-4. Dev, Manage, Product VPC&lt;/h5&gt;
+&lt;h5 id=&quot;id3-4&quot;&gt;3-4. Dev, Manage, Product VPC&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;실제&lt;/code&gt; 개발 및 배포를 진행할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC 구성&lt;/code&gt;을 어떻게 해야할까?&lt;br /&gt;
 여러가지 방법이 있겠지만, aws는 &lt;code class=&quot;highlighter-rouge&quot;&gt;각 단계별&lt;/code&gt;로 VPC를 따로 구성하는 것을 추천한다.&lt;/p&gt;
@@ -1026,7 +1026,7 @@ ELB의 종류는 다음과 같이 3가지 존재
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&quot;4-s3simple-storgae-service&quot;&gt;4. S3(Simple Storgae Service)&lt;/h4&gt;
+&lt;h4 id=&quot;id4&quot;&gt;4. S3(Simple Storgae Service)&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_6.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
@@ -1045,7 +1045,7 @@ User가 해당 요청을 하게되면 스크립트가 &lt;code class=&quot;highl
 &lt;p&gt;이러한 방식은 사실상 업계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;표준&lt;/code&gt;이라고 하며, 다른 오브젝트들이 이러한 S3호환 프로토콜을 제공한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;5-rdsrelation-db-service&quot;&gt;5. RDS(Relation DB Service)&lt;/h4&gt;
+&lt;h4 id=&quot;id5&quot;&gt;5. RDS(Relation DB Service)&lt;/h4&gt;
 &lt;hr /&gt;
 &lt;p&gt;하나의 서브넷을 구현하고, 그 안에 DB 서버를 구축하여 운영하는 것이 기존의 방식이었다면,&lt;br /&gt;
 aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Paas&lt;/code&gt;의 일종인 &lt;code class=&quot;highlighter-rouge&quot;&gt;RDS&lt;/code&gt;를 이용하여 더 효율적인 관리를 할 수 있다.&lt;/p&gt;
@@ -1061,7 +1061,7 @@ aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Paas&lt;/
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;h2 id=&quot;id6&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;aws의 기초에 대해 &lt;code class=&quot;highlighter-rouge&quot;&gt;유능하신 어떤 분&lt;/code&gt;께 배운 내용을 토대로 작성된 글이다.&lt;br /&gt;
 인터넷을 찾아보면 훨씬 전문적이고 깊은 이해를 돕는 글들이 있지만,&lt;br /&gt;
@@ -1072,7 +1072,7 @@ aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Paas&lt;/
 
 &lt;blockquote&gt;
   &lt;p&gt;이번 포스팅에는 사진에 달려있는 출처들이 reference 역할을 하기 때문에 따로 참조를 달지 않았다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.</summary></entry><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;클라우드&quot;&gt;클라우드&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 기초적인 내용을 들어가기 전에 여담으로 aws 사용에 대한 이야기를 잠깐 하고 가겠다.</summary></entry><entry><title type="html">[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드</title><link href="https://owin2828.github.io/devlog/2020/01/10/aws-1.html" rel="alternate" type="text/html" title="[AWS] 퍼블릭 클라우드 vs 프라이빗 클라우드" /><published>2020-01-10T10:55:00+09:00</published><updated>2020-01-10T10:55:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/10/aws-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/10/aws-1.html">&lt;h2 id=&quot;id0&quot;&gt;클라우드&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다.&lt;br /&gt;
 그만큼 &lt;code class=&quot;highlighter-rouge&quot;&gt;클라우드&lt;/code&gt;가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데,&lt;br /&gt;
@@ -1085,14 +1085,14 @@ aws에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Paas&lt;/
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;public-cloud&quot;&gt;Public Cloud&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;Public Cloud&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;나같은 일반 개발자나, 기업을 대상으로 서비스를 제공하는 클라우드 인프라를 &lt;code class=&quot;highlighter-rouge&quot;&gt;퍼블릭&lt;/code&gt; 클라우드라 한다.&lt;br /&gt;
 클라우드 서비스를 제공하는 다양한 업체들(AWS, Google, MS, Alibaba, Naver)등은 가상환경 내의 서버를 임대해 준다.&lt;br /&gt;
 이러한 클라우드 서비스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pay-as-you-go&lt;/code&gt;으로 사용한 만큼 과금하는 방식을 채택하며 별도의 하드웨어가 필요하지 않다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;private-cloud&quot;&gt;Private Cloud&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;Private Cloud&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;하나의 조직에 전용 클라우드 환경을 제공하는 모델을 &lt;code class=&quot;highlighter-rouge&quot;&gt;프라이빗&lt;/code&gt; 클라우드라 한다.(VMware, OpenStack등)&lt;br /&gt;
 사내 전용 클라우드로써, 각 조직이 더 효율적으로 관리할 수 있으나, 퍼블릭 클라우드에 비해 비용이 많이든다.&lt;br /&gt;
@@ -1107,7 +1107,7 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;hybrid-cloud&quot;&gt;Hybrid Cloud&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;Hybrid Cloud&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;VPN등의 보안연결을 통해서 하나 이상의 퍼블릭 클라우드 + 프라이빗 클라우드 환경을 결합하는 방식이다.&lt;br /&gt;
 두 개의 클라우드 간의 트래픽은 유동적으로 조정이 가능하여 유연한 대처가 가능하다.&lt;/p&gt;
@@ -1116,12 +1116,13 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;앞으로&quot;&gt;앞으로&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;앞으로&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;진행하게될 포스팅은 위에 언급한 것 중, 당연히 퍼블릭 클라우드인 &lt;code class=&quot;highlighter-rouge&quot;&gt;aws&lt;/code&gt;를 이용하여 진행할 예정이다.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;로 사용해 볼 수 있고, 가장 대중적이며 개인이 작은 규모로 해보기에 가장 좋기 때문이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">클라우드 이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다. 그만큼 클라우드가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데, 이번 시리즈에서 클라우드의 기본 개념과 AWS의 기초개념 및 실습을 포스팅 하고자 한다. 시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.</summary></entry><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;1-파일-업로드-취약점이란&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">클라우드 이제는 이 단어가 개발자가 아닌 주변 내 지인들에게도 전혀 낯설지 않은 단어가 되었다. 그만큼 클라우드가 우리 일상에 가져오는 영향은 굉장히 크다고 할 수 있는데, 이번 시리즈에서 클라우드의 기본 개념과 AWS의 기초개념 및 실습을 포스팅 하고자 한다. 시리즈의 시작으로 각 클라우드의 장단점 및 고려사항부터 써보고자 한다.</summary></entry><entry><title type="html">[보안] 파일 업로드 취약점</title><link href="https://owin2828.github.io/devlog/2020/01/09/etc-2.html" rel="alternate" type="text/html" title="[보안] 파일 업로드 취약점" /><published>2020-01-09T14:56:00+09:00</published><updated>2020-01-09T14:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/etc-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/etc-2.html">&lt;h2 id=&quot;id1&quot;&gt;1. 파일 업로드 취약점이란&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;주로 게시판 등에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일 업로드&lt;/code&gt; 기능을 악용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;시스템 권한&lt;/code&gt;을 획득할 수 있는 취약점을 의미한다.&lt;br /&gt;
 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1165,10 +1166,11 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;p&gt;이러한 악성 파일이 업로드 된다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;접근권한&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;정보유출&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;악성코드 배포&lt;/code&gt; 등의 문제를 야기할 수 있다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-공격방법&quot;&gt;2. 공격방법&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. 공격방법&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;이러한 취약점을 찾아 공격하는 방법은 크게 4가지 정도이다.&lt;/p&gt;
 
-&lt;h5 id=&quot;1_-취약점-점검&quot;&gt;1_ 취약점 점검&lt;/h5&gt;
+&lt;h5 id=&quot;id2-1&quot;&gt;2-1. 취약점 점검&lt;/h5&gt;
 &lt;p&gt;가장 간단한 방법으로 다음과 같은 과정을 거친다.&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;파일 업로드시에 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장자 제한&lt;/code&gt;이 없는지 확인하고,&lt;/li&gt;
@@ -1176,7 +1178,7 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h5 id=&quot;2_-proxy-툴을-이용해-확장자-검사-우회-파일-업로드&quot;&gt;2_ Proxy 툴을 이용해 확장자 검사 우회 파일 업로드&lt;/h5&gt;
+&lt;h5 id=&quot;id2-2&quot;&gt;2-2. Proxy 툴을 이용해 확장자 검사 우회 파일 업로드&lt;/h5&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;파일타입 변조&lt;/code&gt;등의 우회공격을 통해 확장자 검사를 피하는 것을 의미한다.&lt;br /&gt;
 업로드 시 파일의유형 정보를 알려주는 헤더 중, &lt;code class=&quot;highlighter-rouge&quot;&gt;Content-type&lt;/code&gt; 속성을 프록시를 이용해 우회하여 공격할 수 있다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1185,7 +1187,7 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;3_-null을-이용한-파일-업로드&quot;&gt;3_ Null을 이용한 파일 업로드&lt;/h5&gt;
+&lt;h5 id=&quot;id2-3&quot;&gt;2-3. Null을 이용한 파일 업로드&lt;/h5&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;널(%00)&lt;/code&gt;문자가 문자의 끝을 의미하기 때문에 특정 확장자를 &lt;code class=&quot;highlighter-rouge&quot;&gt;숨기기&lt;/code&gt; 위한 목적으로 사용될 수 있다.&lt;br /&gt;
 해당 부분의 취약점은 내부 API를 호출할 때 발생될 가능성이 있다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1221,13 +1223,14 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h5 id=&quot;4_-sql-injection을-이용한-파일-업로드&quot;&gt;4_ SQL Injection을 이용한 파일 업로드&lt;/h5&gt;
+&lt;h5 id=&quot;id2-4&quot;&gt;2-4. SQL Injection을 이용한 파일 업로드&lt;/h5&gt;
 &lt;p&gt;2가지 정도의 방법이 존재하는데, 다음과 같다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;MySQL&lt;/code&gt;의 &lt;code class=&quot;highlighter-rouge&quot;&gt;into outfile()&lt;/code&gt; 함수를 이용하여 웹서버에 파일을 생성할 수 있다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;MSSQL&lt;/code&gt;의 저장 프로시저(&lt;code class=&quot;highlighter-rouge&quot;&gt;xp_cmdshell&lt;/code&gt;)을 이용하여 echo와 » (파이프) 명령어를 통해 특정 파일에 삽입할 수 있다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;3-방어방법&quot;&gt;3. 방어방법&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. 방어방법&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;모든 부분을 전부 작성할 수는 없지만, 대략적으로 다음과 같은 방법을 통하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;기초&lt;/code&gt;적인 방어를 할 수 있다.&lt;/p&gt;
 
 &lt;ol&gt;
@@ -1239,10 +1242,11 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://4rgos.tistory.com/4&quot;&gt;https://4rgos.tistory.com/4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Jenkins vs GitLabCI vs Travis</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Jenkins vs GitLabCI vs Travis" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html">&lt;h2 id=&quot;이번-글에서는&quot;&gt;이번 글에서는&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Jenkins vs GitLabCI vs Travis</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html" rel="alternate" type="text/html" title="[CI/CD] Jenkins vs GitLabCI vs Travis" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-5.html">&lt;h2 id=&quot;id0&quot;&gt;이번 글에서는&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,&lt;br /&gt;
 다음과 같은 솔루션들의 장단점을 분석하고자 한다.&lt;/p&gt;
 &lt;ul&gt;
@@ -1252,12 +1256,13 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;1-trvais&quot;&gt;1. Trvais&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. Trvais&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_1.jpg&quot; alt=&quot;Travis 로고&quot; width=&quot;70%&quot; height=&quot;70%&quot; /&gt;&lt;br /&gt;
 별도의 회사였으나, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;에서 인수하였다.(GitHub는 MS가 인수함)&lt;br /&gt;
 오픈소스용 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt; travis.org와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private Repo&lt;/code&gt;를 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;유료&lt;/code&gt; travis.com을 별도로 운영하고 있고, 내용은 동일하다.&lt;/p&gt;
 
-&lt;h5 id=&quot;장점&quot;&gt;장점&lt;/h5&gt;
+&lt;h5 id=&quot;id1-1&quot;&gt;장점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;와의 연동(그냥 깃허브 계정으로 로그인하며 된다.)&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;YML&lt;/code&gt; 파일을 통한 쉬운 설정&lt;/li&gt;
@@ -1266,14 +1271,15 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
   &lt;li&gt;모든 job이 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립&lt;/code&gt;적(서로 간의 영향을 받지 않음)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;단점&quot;&gt;단점&lt;/h5&gt;
+&lt;h5 id=&quot;id1-2&quot;&gt;단점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;Jenkins에 비해 플러그인의 종류가 &lt;code class=&quot;highlighter-rouge&quot;&gt;적음&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;유료 서비스를 사용할 경우, 가격이 꽤 &lt;code class=&quot;highlighter-rouge&quot;&gt;비쌈&lt;/code&gt;(기본: 69$/month, 일반: 129$/month)&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;2-gitlab-ci&quot;&gt;2. GitLab CI&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;2. GitLab CI&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_2.png&quot; alt=&quot;Gitlab CI 로고&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;br /&gt;
 GitLab 서비스에 내장되어 있다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;On-Premise&lt;/code&gt; 방식으로 설치하여 사용할 수도 있고, &lt;code class=&quot;highlighter-rouge&quot;&gt;웹&lt;/code&gt; 서비스로 사용할 수도 있다.&lt;br /&gt;
@@ -1285,7 +1291,7 @@ On-Premise 방식에서는 당연히 지원하고,&lt;br /&gt;
 GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;code class=&quot;highlighter-rouge&quot;&gt;따로&lt;/code&gt; 운용할 수 있다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;장점-1&quot;&gt;장점&lt;/h5&gt;
+&lt;h5 id=&quot;id2-1&quot;&gt;장점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GitLab&lt;/code&gt;과의 손쉬운 연동&lt;/li&gt;
   &lt;li&gt;Runner가 &lt;code class=&quot;highlighter-rouge&quot;&gt;Docker&lt;/code&gt; 컨테이너 기반이라, Docker 친화적임(Docker Repo 무료 제공)&lt;/li&gt;
@@ -1293,19 +1299,20 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
   &lt;li&gt;모든 job이 &lt;code class=&quot;highlighter-rouge&quot;&gt;독립적&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;단점-1&quot;&gt;단점&lt;/h5&gt;
+&lt;h5 id=&quot;id2-2&quot;&gt;단점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;역시나 Jenkins에 비해 플러그인의 종류가 &lt;code class=&quot;highlighter-rouge&quot;&gt;적음&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; job에 대해 artifact를 정의 및 업로드/다운로드를 해야함&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;3-jenkins&quot;&gt;3. Jenkins&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;3. Jenkins&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_5_3.png&quot; alt=&quot;Jenkins 로고&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt; 기반의 오픈소스로 구성되어 있으며, CI계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;아버지&lt;/code&gt;라 불린다.&lt;br /&gt;
 제일 오래된 만큼 다양한 플러그인을 지원하며, 사용자도 관련 문서도 많이 존재한다.&lt;/p&gt;
 
-&lt;h5 id=&quot;장점-2&quot;&gt;장점&lt;/h5&gt;
+&lt;h5 id=&quot;id3-1&quot;&gt;장점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;다양한 IDE를 지원하며, 커스터마이징이 다양&lt;/li&gt;
@@ -1313,7 +1320,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
   &lt;li&gt;호스팅을 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt;해야하기 때문에 관련된 모든 부분을 관리할 수 있음&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;단점-2&quot;&gt;단점&lt;/h5&gt;
+&lt;h5 id=&quot;id3-2&quot;&gt;단점&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;다양한 플러그인 -&amp;gt; 플러그인 지옥&lt;/li&gt;
   &lt;li&gt;규모가 &lt;code class=&quot;highlighter-rouge&quot;&gt;작은&lt;/code&gt; 프로젝트의 경우, 설정하는데 리소스 &lt;code class=&quot;highlighter-rouge&quot;&gt;낭비&lt;/code&gt;가 발생할 수 있음&lt;/li&gt;
@@ -1321,7 +1328,8 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;개인적인-견해로는&quot;&gt;개인적인 견해로는&lt;/h2&gt;
+&lt;h2 id=&quot;id4&quot;&gt;개인적인 견해로는&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;CI/CD를 적용해야 한다는 생각에 제일 유명한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;를 사용하려는 사람들이 많은것 같다.&lt;br /&gt;
 하지만, Jenkins는 오래된 만큼 장단점이 확실한 솔루션임을 알고 사용했으면 좋겠다.&lt;/p&gt;
 
@@ -1341,20 +1349,22 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;h2 id=&quot;id5&quot;&gt;Reference&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html&quot;&gt;https://about.gitlab.com/devops-tools/jenkins-vs-gitlab.html&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&quot;&gt;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&quot;&gt;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&quot;&gt;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins</summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;외부-서버의-포트가-살아있는지-open여부를-점검하기&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="cicd" /><summary type="html">이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins</summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;id0&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
 다음은 지극히 &lt;code class=&quot;highlighter-rouge&quot;&gt;주관적인&lt;/code&gt; (쉬운?) 순서대로 방법이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;1-ping&quot;&gt;1. Ping&lt;/h4&gt;
+&lt;h4 id=&quot;id1&quot;&gt;1. Ping&lt;/h4&gt;
 &lt;p&gt;포트고 뭐고 필요 없을 때&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;은 port를 &lt;code class=&quot;highlighter-rouge&quot;&gt;사용하지 않는다&lt;/code&gt;.&lt;br /&gt;
@@ -1369,7 +1379,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;2-telnet&quot;&gt;2. Telnet&lt;/h4&gt;
+&lt;h4 id=&quot;id2&quot;&gt;2. Telnet&lt;/h4&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정&lt;/code&gt; port를 확인해야 할 경우&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]  
 
@@ -1378,7 +1388,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;3-ncnetcat&quot;&gt;3. nc(NetCat)&lt;/h4&gt;
+&lt;h4 id=&quot;id3&quot;&gt;3. nc(NetCat)&lt;/h4&gt;
 &lt;p&gt;일반적으로 UNIX의 &lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.&lt;br /&gt;
 포트 확인 기능 말고도 다양한 기능으로 사용이 된다.&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]
@@ -1388,7 +1398,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;4-curl&quot;&gt;4. curl&lt;/h4&gt;
+&lt;h4 id=&quot;id4&quot;&gt;4. curl&lt;/h4&gt;
 &lt;p&gt;대부분 서버는 telnet이 설치되어 있지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안&lt;/code&gt;이슈나 &lt;code class=&quot;highlighter-rouge&quot;&gt;최소 설치&lt;/code&gt;를 한 경우 사용이 불가능한 경우가 있다.&lt;br /&gt;
 그런 경우 다음의 명령을 사용하자. 아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1402,7 +1412,7 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;5-bash&quot;&gt;5. bash&lt;/h4&gt;
+&lt;h4 id=&quot;id5&quot;&gt;5. bash&lt;/h4&gt;
 &lt;p&gt;약간 하드한 방법이다. 
 &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt;에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.&lt;br /&gt;
 TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&lt;/p&gt;
@@ -1420,12 +1430,14 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echo $?&lt;/code&gt;는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.&lt;/p&gt;
 &lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다. 다음은 지극히 주관적인 (쉬운?) 순서대로 방법이다.</summary></entry><entry><title type="html">[CI/CD] 그래서 CI/CD가 뭔데?</title><link href="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html" rel="alternate" type="text/html" title="[CI/CD] 그래서 CI/CD가 뭔데?" /><published>2020-01-08T14:12:00+09:00</published><updated>2020-01-08T14:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/cicd-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/cicd-4.html">&lt;h2 id=&quot;드디어&quot;&gt;드디어&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;CI/CD까지 도착하여 포스팅을 하게 되었다.&lt;br /&gt;
 긴 시간이었고, 나 또한 그동안 배우고 겪었던 것들을 글로 풀어내느라 시간을 꽤 썼다.&lt;br /&gt;
 인터넷을 찾아보면 CI/CD에 관련된 수 많은 자료가 나오므로, 자세한 설명보다는 내가 배우고 느낀대로 적어보겠다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;CI/CD라는 단어를 사용하기 전에 우리는 &lt;code class=&quot;highlighter-rouge&quot;&gt;왜&lt;/code&gt; CI/CD를 적용해야 하는가를 생각해야 한다.&lt;br /&gt;
 앞선 글 &lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/07/cicd-1.html&quot;&gt;DevOps란 무엇인가?&lt;/a&gt;에서 설명했듯이,&lt;br /&gt;
 고객에게 가치를 빠르고 안정적으로 전달하는 것이 DevOps의 목적이고, 이를 위해 CI/CD를 활용하는 것이다.&lt;/p&gt;
@@ -1436,7 +1448,8 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 개발 -&amp;gt; CI -&amp;gt; CD 순으로 Flow가 진행됨을 먼저 알고가면 좋을 것 같다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;ci--cd&quot;&gt;CI / CD&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;CI / CD&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/cicd_4_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/figcaption&gt;
@@ -1452,7 +1465,7 @@ TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&
 하지만 CI/CD 파이프라인의 극적인 효율은 협업을 할 때 나오게 된다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;ci--continuous-integration&quot;&gt;CI = Continuous Integration&lt;/h5&gt;
+&lt;h5 id=&quot;id1-1&quot;&gt;CI = Continuous Integration&lt;/h5&gt;
 &lt;p&gt;CI는 개발자들의 코드를 지속적, 자동적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;빌드&lt;/code&gt;하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;단위테스트&lt;/code&gt;를 거치며, &lt;code class=&quot;highlighter-rouge&quot;&gt;통합테스트&lt;/code&gt;를 하는 과정이다.&lt;br /&gt;
 CI의 파이프라인이 구축되어 있지 않은 극적인 상황을 생각해 보자.&lt;/p&gt;
 
@@ -1490,7 +1503,7 @@ CI의 파이프라인이 구축되어 있지 않은 극적인 상황을 생각�
   &lt;p&gt;개발자들이 &lt;code class=&quot;highlighter-rouge&quot;&gt;게을러야&lt;/code&gt; 하는 이유가 단적으로 드러나지 않는가?&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;cd--continuous-deploydelivery&quot;&gt;CD = Continuous Deploy/Delivery&lt;/h5&gt;
+&lt;h5 id=&quot;id1-2&quot;&gt;CD = Continuous Deploy/Delivery&lt;/h5&gt;
 &lt;p&gt;CD는 개발된 SW가 배포되는 시점에 신뢰할 수 있는 수준을 유지하도록 지속적으로 관리하는 것이다.&lt;br /&gt;
 CI의 &lt;code class=&quot;highlighter-rouge&quot;&gt;연장선&lt;/code&gt;상에 있으며, 이상적으로는 CI가 지속적/자동적으로 이루어진다면,&lt;br /&gt;
 CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
@@ -1499,7 +1512,8 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;이론은&quot;&gt;이론은&lt;/h2&gt;
+&lt;h2 id=&quot;id2&quot;&gt;이론은&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;별거없다&lt;/code&gt;. CI/CD의 등장배경과 특징 및 장점을 살펴보았지만, 이해하기 어려운 개념은 아니다.&lt;br /&gt;
 하지만 실제로 CI/CD 자동화 파이프라인을 구축하기 위해서는 많은 &lt;code class=&quot;highlighter-rouge&quot;&gt;삽질&lt;/code&gt;이 필요하다.&lt;br /&gt;
 어떤 프로세스를 언제 어떻게 적용하고, 결과는 어떤 방법으로 처리할지 등이 고려되어야 한다.&lt;/p&gt;
@@ -1508,7 +1522,8 @@ CD 또한 지속적/자동적으로 이루어질 수밖에 없다.&lt;/p&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitLabCI&lt;/code&gt; 등의 CI 서버가 있고 각 솔루션의 장단점을 분석한 후에 단계별 Stage의 tool들을 살펴보러가겠다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;h2 id=&quot;id3&quot;&gt;Reference&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://dzone.com/articles/the-complete-introduction-to-cicd-1&quot;&gt;https://dzone.com/articles/the-complete-introduction-to-cicd-1&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&quot;&gt;https://www.redhat.com/ko/topics/devops/what-is-ci-cd&lt;/a&gt;&lt;/li&gt;

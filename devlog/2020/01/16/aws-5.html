@@ -139,13 +139,122 @@
       <header class="sidebar-sticky" role="banner">
         <br/>
         <div class="sidebar-about">
-          <h5>목차</h5>
+          
+            <h5><a href="/devlog/aws/">글 목록으로</a></h5>
+          
         </div>
-
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
       <nav class="sidebar-nav heading" role="navigation">
         <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
 <span class="sr-only">Navigation:</span>
 <ul>
+  
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id0">들어가기 앞서</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id1">1. 키 페어 생성</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id2">2. 인스턴스(EC2) 생성</a>
+      
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-1">2-1. AMI 선택</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-2">2-2. 인스턴스 유형 선택</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-3">2-3. 인스턴스 구성</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-4">2-4. 스토리지 & 추가</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-5">2-5. 보안 그룹 구성</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-6">2-6. 검토</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id2-7">2-7. 확인</a>
+        </li>
+      </ul>
+      
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id3">3. 인스턴스(EC2) SSH 접속</a>
+      
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id3-1">3-1. Mac & Linux</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/16/aws-5.html#id3-2">3-2. Window</a>
+        </li>
+      </ul>
+      
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id4">4. Public subnet을 통한 Apache 서버 구축</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/16/aws-5.html#id5">5. 끝마치며</a>
+      
+    </li>
+
+  
   
 </ul>
       </nav>
@@ -154,7 +263,7 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+        <h2 id="id0">들어가기 앞서</h2>
 <hr />
 <p>이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다.<br />
 본 편에서는 다음의 요소를 구성하고 설정할 예정이다.</p>
@@ -163,7 +272,7 @@
 <br /></li>
 </ul>
 
-<h2 id="1-키-페어-생성">1. 키 페어 생성</h2>
+<h2 id="id1">1. 키 페어 생성</h2>
 <hr />
 <p><img src="/img/aws/aws_5_1.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -198,7 +307,7 @@
 <br /></li>
 </ul>
 
-<h2 id="2-인스턴스ec2-생성">2. 인스턴스(EC2) 생성</h2>
+<h2 id="id2">2. 인스턴스(EC2) 생성</h2>
 <hr />
 <p><img src="/img/aws/aws_5_5.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -206,7 +315,7 @@
 <br /></li>
 </ul>
 
-<h4 id="2-1-ami-선택">2-1. AMI 선택</h4>
+<h4 id="id2-1">2-1. AMI 선택</h4>
 <p><img src="/img/aws/aws_5_6.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>사진처럼 맨 위의 <code class="highlighter-rouge">AMI</code>를 <code class="highlighter-rouge">선택</code>한다.
@@ -219,7 +328,7 @@
   </li>
 </ul>
 
-<h4 id="2-2-인스턴스-유형-선택">2-2. 인스턴스 유형 선택</h4>
+<h4 id="id2-2">2-2. 인스턴스 유형 선택</h4>
 <p><img src="/img/aws/aws_5_7.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>우리는 <code class="highlighter-rouge">프리티어</code>를 사용하므로, 사진처럼 <code class="highlighter-rouge">녹색</code>으로 표시된 <code class="highlighter-rouge">t2.micro</code>를 선택한다.
@@ -237,7 +346,7 @@
   </li>
 </ul>
 
-<h4 id="2-3-인스턴스-구성">2-3. 인스턴스 구성</h4>
+<h4 id="id2-3">2-3. 인스턴스 구성</h4>
 <p><img src="/img/aws/aws_5_8.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>사진의 첫 번째 빨간 사각형에서 다음과 같은 설정을 진행한다.
@@ -263,13 +372,13 @@
 <br /></li>
 </ul>
 
-<h4 id="2-4-스토리지--추가">2-4. 스토리지 &amp; 추가</h4>
+<h4 id="id2-4">2-4. 스토리지 &amp; 추가</h4>
 <ul>
   <li>딱히 수정할 사항은 <code class="highlighter-rouge">없으므로</code> 다음을 눌러 진행한다.<br />
 <br /></li>
 </ul>
 
-<h4 id="2-5-보안-그룹-구성">2-5. 보안 그룹 구성</h4>
+<h4 id="id2-5">2-5. 보안 그룹 구성</h4>
 <p><img src="/img/aws/aws_5_10.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>보안그룹은 <code class="highlighter-rouge">이름</code>을 참조하여 기존에 <code class="highlighter-rouge">생성한</code> 그룹을 선택한다.<br />
@@ -277,7 +386,7 @@
 <br /></li>
 </ul>
 
-<h4 id="2-6-검토">2-6. 검토</h4>
+<h4 id="id2-6">2-6. 검토</h4>
 <p><img src="/img/aws/aws_5_11.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>화면에 표시되는 정보들을 확인하여 제대로 설정되었는지 검토 후, <code class="highlighter-rouge">시작하기</code>를 누르면<br />
@@ -286,7 +395,7 @@
 <br /></li>
 </ul>
 
-<h4 id="확인">확인</h4>
+<h4 id="id2-7">2-7. 확인</h4>
 <p><img src="/img/aws/aws_5_12.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li>제대로 설정이 되었는지 확인하기 위해 빨간 사각형들을 살펴본다.
@@ -304,7 +413,7 @@
   </li>
 </ul>
 
-<h2 id="3-인스턴스ec2-ssh-접속">3. 인스턴스(EC2) SSH 접속</h2>
+<h2 id="id3">3. 인스턴스(EC2) SSH 접속</h2>
 <hr />
 <p><img src="/img/aws/aws_5_13.png" alt="" width="100%" height="100%" /></p>
 <ul>
@@ -312,7 +421,7 @@
 <br /></li>
 </ul>
 
-<h4 id="3-1-mac--linux">3-1. Mac &amp; Linux</h4>
+<h4 id="id3-1">3-1. Mac &amp; Linux</h4>
 <p><img src="/img/aws/aws_5_14.png" alt="" width="100%" height="100%" /></p>
 <ol>
   <li>다운로드 받은 키 페어가 있는 디렉토리로 이동한다.
@@ -371,7 +480,7 @@
   </li>
 </ol>
 
-<h4 id="3-2-window">3-2. Window</h4>
+<h4 id="id3-2">3-2. Window</h4>
 <p><img src="/img/aws/aws_5_16.png" alt="" width="100%" height="100%" /></p>
 <ul>
   <li><code class="highlighter-rouge">윈도우</code>의 경우 <a href="https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/putty.html">여기</a>를 확인하여 진행한다.</li>
@@ -396,7 +505,7 @@
 VPC 내부의 <code class="highlighter-rouge">Private</code> 서브넷들을 관리하는 역할을 한다.<br />
 <br /></p>
 
-<h2 id="4-public-subnet을-통한-apache-서버-구축">4. Public subnet을 통한 Apache 서버 구축</h2>
+<h2 id="id4">4. Public subnet을 통한 Apache 서버 구축</h2>
 <hr />
 <p><code class="highlighter-rouge">Bastion Host</code>도 생성하였으니, 이번에는 간단한 <code class="highlighter-rouge">웹 서버</code> 역할을 하는 인스턴스를 생성한다.<br />
 <code class="highlighter-rouge">동일한 방식</code>으로 다음 조건의 서브넷과 인스턴스를 하나 더 생성한다.</p>
@@ -445,7 +554,7 @@ VPC 내부의 <code class="highlighter-rouge">Private</code> 서브넷들을 관
 <p><img src="/img/aws/aws_5_18.png" alt="아파치 웹서버를 구축한 모습" width="60%" height="60%" /><br />
 <br /></p>
 
-<h2 id="끝마치며">끝마치며</h2>
+<h2 id="id5">끝마치며</h2>
 <hr />
 <p>이로써 <code class="highlighter-rouge">VPC</code> 구성부터 시작해 <code class="highlighter-rouge">인스턴스</code>의 구성까지 길었던 과정이 끝났다.</p>
 

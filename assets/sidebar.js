@@ -3,13 +3,13 @@
 // 자세한 scss는 sidebar.scss를 참조
 $(document).ready(function () { 
     var $layer = $('.sidebar-sticky');
-    var top = $layer.offset().top - parseFloat($layer.css('marginTop').replace(/auto/, 0)); 
+    var top = $layer.offset().top - parseFloat($layer.css('marginTop').replace(/auto/, 0));
     $(window).scroll(function (event) { 
         var y = $(this).scrollTop(); 
         if (y >= top) { 
             $layer.addClass('is-fixed');
         } else { 
-            $layer.removeClass('is-fixed'); 
+            $layer.removeClass('is-fixed');
         } 
     }); 
 });
