@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [CI/CD] Agile..? - 낮코밤코
+    [DevOps] 데브옵스, 에자일 그리고 CI/CD 시리즈 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="Agile Agile: 날렵한, 민첩한">
+  <meta name="description" content="개발을 하다 보면 DevOps, Agile, CI/CD와 같은 이야기들이 여기저기서 들린지 꽤 되었다. 사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다. 들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈...">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/07/cicd-2.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/07/devops-0.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -83,7 +83,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="/devlog/aws">AWS</a>
-            <a class="dropdown-item" href="/devlog/cicd">CI/CD</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
             <a class="dropdown-item" href="/devlog/java">Java</a>
             <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
             <a class="dropdown-item" href="/devlog/spring">Spring</a>
@@ -114,15 +114,15 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[CI/CD] Agile..?</h1>
+            <h1>[DevOps] 데브옵스, 에자일 그리고 CI/CD 시리즈</h1>
             
-            <h2 class="subheading">DevOps Full Chain - 2</h2>
+            <h2 class="subheading">DevOps Full Chain - 0</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 2020-01-07 10:31 &middot; <span class="reading-time" title="Estimated read time">
+              on 2020-01-07 09:41 &middot; <span class="reading-time" title="Estimated read time">
   
-   3 mins  read </span>
+   1 min  read </span>
 
             </span>
           </div>
@@ -140,70 +140,15 @@
         <br/>
         <div class="sidebar-about">
           
-            <h5><a href="/devlog/cicd/">글 목록으로</a></h5>
+            <h5><a href="/devlog/devops/">글 목록으로</a></h5>
           
         </div>
         <br/>
-        
-          <div class="sidebar-about">
-            <h5>목차</h5>
-          </div>
         
       <nav class="sidebar-nav heading" role="navigation">
         <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
 <span class="sr-only">Navigation:</span>
 <ul>
-  
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id0">Agile</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id1">기존에는 무엇이 문제였는가?</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id2">그래서 Agile은</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id3">스프린트는</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id4">우리도 Agile하게 일해봐야지</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id5">그래서 DevOps와 Agile은</a>
-      
-    </li>
-
-  
-  
-    <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/07/cicd-2.html#id6">Reference</a>
-      
-    </li>
-
-  
   
 </ul>
       </nav>
@@ -212,96 +157,28 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="id0">Agile</h2>
-<hr />
-<blockquote>
-  <p>Agile: 날렵한, <code class="highlighter-rouge">민첩한</code></p>
-</blockquote>
+        <h4 id="개발을-하다-보면">개발을 하다 보면</h4>
+<p><code class="highlighter-rouge">DevOps</code>, <code class="highlighter-rouge">Agile</code>, <code class="highlighter-rouge">CI/CD</code>와 같은 이야기들이 여기저기서 들린지 꽤 되었다.<br />
+사실 이러한 단어와 개념들이 나온지는 오래되었지만, 우리나라에서 적용되고 진행된지는 몇 년 안된 것 같다.<br />
+들어는 보았지만 각 용어에 대한 지식이 얕기에, 이번 기회에 본 시리즈를 포스팅하며 학습할 예정이다.</p>
 
-<p>Agile의 사전적 의미는 위와 같다.<br />
-그 중, 나는 후자에 가까운 의미가 더 어울린다는 생각이 든다.<br />
-민첩하게 무언가를 한다는 것은 고객에게 <code class="highlighter-rouge">빠르게</code> 가치를 전달하는 요즘 개발의 방식과 잘 맞기 때문이다.</p>
+<h4 id="나는">나는</h4>
+<p>새로운 개념을 익힐 때, <code class="highlighter-rouge">terminology(용어)</code>를 굉장히 중요하게 생각하는 편이다.<br />
+약간 꼰대같이 들릴 수도 있지만, 단어를 먼저 이해하는 것이 지식의 본질에 접근하는 가장 <code class="highlighter-rouge">정직</code>하고 <code class="highlighter-rouge">빠른</code> 길이라고 느껴지기 때문이다.<br />
+이러한 관점에서, 새로운 단어의 의미를 알기 위해서는 그 단어가 나오게 된 <code class="highlighter-rouge">배경</code>을 아는 것이 이해를 위한 첫 걸음이라 생각하며 포스팅을 시작하고자 한다.</p>
 
-<p>결국 <code class="highlighter-rouge">Agile</code>은 하나의 <code class="highlighter-rouge">방법론</code>이다. 민첩하게 개발을 하기 위한 방법론.<br />
-그렇다면 왜 항상 Agile은 DevOps와 함께 거론되며, 어떠한 배경이 있었기에 새로운 방법론이 나오게 되었는지 알아보도록 하자.<br />
-<br /></p>
-
-<h2 id="id1">기존에는 무엇이 문제였는가?</h2>
-<hr />
-<p>늘 새로운 것이 나오는 이유는, 기존에 존재하던 것이 <code class="highlighter-rouge">현 상황</code>에 잘 맞지 않기 때문이라 생각한다.<br />
-그렇다면 이 전에 존재하던 방법론은 무엇이었길래 문제였는가?</p>
-
-<p>답은 <code class="highlighter-rouge">Waterfall</code> 이라 불리는 일명 ‘폭포수모델’은 개발 생태계를 지배하던 방법론이었다.<br />
-<code class="highlighter-rouge">계획수립 - 요구분석 - 설계 - 개발 - 테스트 - 배포</code>의 과정을 거치는 이 방법론은 다음과 같은 장점으로 오랫동안 생태계에 군림했다.</p>
-<ol>
-  <li>적용사례가 풍부</li>
-  <li>전체 /현재 과정의 이해가 쉬움</li>
-  <li>문서의 관리가 쉬움</li>
-</ol>
-
-<p>이 중, 1번 장점은 생각 외로 정말 큰 <code class="highlighter-rouge">장점</code>이다.<br />
-프로젝트의 크기가 크지 않고, 새로운 방법으로 도전할 리소스가 안된다면 충분히 재고할 가치가 있는 것이다.</p>
-
-<p>하지만 이러한 방법은 치명적인 단점을 안고 있는데, 바로 개발이<code class="highlighter-rouge">병행</code>되거나 <code class="highlighter-rouge">반대로</code> 진행되지 않는다는 것이다.<br />
-시장의 변화속도가 매우 빠르고, 다양한 요구사항이 등장하는 현대에는 적용하기 어려운 방법이기 때문이다.<br />
-더이상 테스트 중에 요구사항이 변경되어 처음부터 다시 시작해야하는 방법으로는 한계에 봉착한 사람들은 새로운 방법을 몰색하였고, 
-그 결과 <code class="highlighter-rouge">Agile</code>이 등장하게 되었다.</p>
-
-<blockquote>
-  <p>하지만 나는 늘 무조건 새로운 것이, 트렌디한 것이 정답은 <code class="highlighter-rouge">아니며</code>,<br />
-<code class="highlighter-rouge">상황에 맞는</code> 방법을 잘 가져다가 쓰는 것이 <code class="highlighter-rouge">훌륭한 선택</code>이고 <code class="highlighter-rouge">좋은 결과</code>를 도출할 확률이 높다고 생각한다.<br />
-waterfall도 요구사항이 <code class="highlighter-rouge">단순</code>하고 변경 가능성이 <code class="highlighter-rouge">적거나</code>, 프로젝트의 규모와 난이도가 <code class="highlighter-rouge">낮다면</code> 충분히 고려할 만한 방법이라는 뜻이다.<br />
-<br /></p>
-</blockquote>
-
-<h2 id="id2">그래서 Agile은</h2>
-<hr />
-<p>단어 그대로 민첩한 개발에 중점을 두고 있다.<br />
-큰 계획을 수립하지 않고 주어진 요구 사항을 <code class="highlighter-rouge">스프린트</code>에 맞춰 작은 단위로 <code class="highlighter-rouge">유연</code>하게 개발하는 방식이다.<br />
-인터넷을 찾다보면 여러가지 어려운 말로 Agile을 설명하지만 결국 나는 하나의 <code class="highlighter-rouge">문화</code>라고 생각한다.</p>
-
-<blockquote>
-  <p>빠르고 유연하게 개발하는 <code class="highlighter-rouge">문화</code>. 이 이상으로 Agile한 것이 무엇이 있을까<br />
-<br /></p>
-</blockquote>
-
-<h2 id="id3">스프린트는</h2>
-<hr />
-<p>다음과 같은 과정으로 이루어 진다.<br />
-<img src="/img/cicd/cicd_2_1.jpg" alt="Agile 스프린트" /></p>
-<ol>
-  <li>고객의 피드백</li>
-  <li>다양한 방법(스크럼등)을 통해 스프린트 목표 설정</li>
-  <li>스프린트 진행</li>
-  <li>배포</li>
-  <li>1로 복귀
-    <blockquote>
-      <p>피드백을 받으며 지속적으로 배포하는 스프린트를 여러 번 진행하여 개발하는 것이 Agile 이다.<br />
-<br /></p>
-    </blockquote>
-  </li>
-</ol>
-
-<h2 id="id4">우리도 Agile하게 일해봐야지</h2>
-<hr />
-<p>라는 생각은 <code class="highlighter-rouge">충분히</code> 고려를 한 후, 적용하는 것이 좋다.<br />
-위에서도 언급했지만, 늘 Agile이 정답은 아니다.<br />
-많은 준비를 마친 후에 비로소 걸어가야 한다고 생각한다.<br />
-<br /></p>
-
-<h2 id="id5">그래서 DevOps와 Agile은</h2>
-<hr />
-<p><code class="highlighter-rouge">연장선</code>상에 있다고 생각한다.<br />
-Agile의 목표가 빠른 소비자 피드백을 기반하여 개발을 진행 한다면,<br />
-DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &amp; 배포가 가능하기 때문이다.<br />
-<br /></p>
-
-<h2 id="id6">Reference</h2>
-<hr />
+<h4 id="앞으로">앞으로</h4>
+<p>이어지게 될 CI/CD 포스팅 시리즈는 각 개념에 대해 <code class="highlighter-rouge">정의</code>와 <code class="highlighter-rouge">등장배경</code>을 포스팅하며, 크게 다음과 같은 내용을 다룰 예정이다.</p>
 <ul>
-  <li><a href="https://blog.sonim1.com/238">https://blog.sonim1.com/238</a></li>
-  <li><a href="https://www.sangheum.com/149">https://www.sangheum.com/149</a></li>
+  <li>DevOps</li>
+  <li>Agile</li>
+  <li>CI/CD와 각 stage별 플랫폼<br />
+<br /></li>
 </ul>
+
+<h4 id="여전히">여전히</h4>
+<p>부족한 것이 많아 본 시리즈를 포스팅하면서도, 틀린 부분이 있을 수 있으니 언제든 피드백은 환영합니다.</p>
+
 
 
         <hr>
@@ -309,11 +186,11 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/01/07/cicd-1.html" data-toggle="tooltip" data-placement="top" title="[CI/CD] DevOps란 무엇인가?"> << Previous</a>
+          <a href="/devlog/2020/01/06/web-2.html" data-toggle="tooltip" data-placement="top" title="[Web] JSTL & c tag"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
           
-          <a href="/devlog/2020/01/07/cicd-3.html" data-toggle="tooltip" data-placement="top" title="[CI/CD] Scrum? Agile?">Next >></a>
+          <a href="/devlog/2020/01/07/devops-1.html" data-toggle="tooltip" data-placement="top" title="[DevOps] DevOps란 무엇인가?">Next >></a>
           
 
         </div>
@@ -328,8 +205,8 @@ DevOps는 개발자와 운영자의 간극을 좁혀 더욱 민첩한 개발 &am
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'https://owin2828blog/devlog/2020/01/07/cicd-2.html';
-this.page.identifier = '/devlog/2020/01/07/cicd-2';
+this.page.url = 'https://owin2828blog/devlog/2020/01/07/devops-0.html';
+this.page.identifier = '/devlog/2020/01/07/devops-0';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
