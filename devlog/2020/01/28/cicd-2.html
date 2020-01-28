@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [CI/CD] Travis CI 파이프라인 구축하기 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 이번 포스팅 시리즈는 CI/CD 환경을 구축하여 App을 배포해보는 것이다. 이를 위해 Travis CI를 이용하여 앱을 빌드하고, AWS Code Deploy를 이용해 배포하는 환경을 구축할 것이다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_cicd.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[CI/CD] Travis CI 파이프라인 구축하기</h1>
+            
+            <h2 class="subheading">CI/CD로 Unity 앱 빌드 및 무중단 배포 - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-28 14:20 &middot; <span class="reading-time" title="Estimated read time">
+  
+   3 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/devops/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
+      <nav class="sidebar-nav heading" role="navigation">
+        <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
+<span class="sr-only">Navigation:</span>
+<ul>
+  
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/28/cicd-2.html#id0">들어가기 앞서</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/28/cicd-2.html#id1">1. Why Travis?</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/28/cicd-2.html#id2">2. 전체 구성</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/28/cicd-2.html#id3">3. Github & Travis 연동</a>
+      
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/28/cicd-2.html#id3-1">3-1. Travis 기본 설정 및 Github repository 연동</a>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+          <a class="sidebar-nav-subitem" href="/devlog/2020/01/28/cicd-2.html#id3-2">3-2. Travis 빌드 로직</a>
+        </li>
+      </ul>
+      
+      
+    </li>
+
+  
+  
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="id0">들어가기 앞서</h2>
+<hr />
+<p>이번 포스팅 시리즈는 <code class="highlighter-rouge">CI/CD</code> 환경을 구축하여 <code class="highlighter-rouge">App</code>을 <code class="highlighter-rouge">배포</code>해보는 것이다.<br />
+이를 위해 <code class="highlighter-rouge">Travis CI</code>를 이용하여 앱을 빌드하고, <code class="highlighter-rouge">AWS Code Deploy</code>를 이용해 배포하는 환경을 구축할 것이다.<br />
+<br /></p>
+
+<h2 id="id1">1. Why Travis?</h2>
+<hr />
+<p>App 배포를 위한 CI/CD 환경을 구축하기까지 많은 조사와 고민을 하였고, 내가 <code class="highlighter-rouge">Travis</code> CI를 고른것은 다음과 같은 이유다.</p>
+<ul>
+  <li><code class="highlighter-rouge">무료</code>(오픈소스에 한해서)</li>
+  <li><code class="highlighter-rouge">GitHub</code>와의 강력한 연동</li>
+</ul>
+
+<p>하지만, 장점만큼 Travis는 다음과 같은 단점이 확실하다.</p>
+<ul>
+  <li><code class="highlighter-rouge">EC2</code>와 직접적인 연동 <code class="highlighter-rouge">안됨</code></li>
+</ul>
+
+<p>앱 서버를 두고 배포할 예정인 나에게는 위의 단점이 치명적이었으나, <code class="highlighter-rouge">무료</code>라는 메리트는 막강했기에 다른 방법으로 이를 보완하기로 결정하였다.</p>
+<blockquote>
+  <p>만약, 돈에 상관이 없다면 <code class="highlighter-rouge">AWS Code Build &amp; Code Pipeline</code>을 사용하는 것을 추천한다.<br />
+AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴을 제공한다.<br />
+하지만 Code Build는 빌드 시간으로, Code Pipeline은 활성화된 파이프라인 개수로 <code class="highlighter-rouge">과금</code>한다.<br />
+물론 <code class="highlighter-rouge">프리티어</code>를 제공하지만, 장기적으로 생각을 잘해서 선택하기를 바란다.<br />
+<a href="https://jojoldu.tistory.com/282?category=777282">여기</a> 훌륭한 자료가 있어 링크를 공유한다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="id2">2. 전체 구성</h2>
+<hr />
+<p><img src="/img/cicd/newcicd_2_1.png" alt="전체 구성도(App 배포 미완성)" width="100%" height="100%" /> 
+내가 구성한  CI/CD의 전체 구성도는 위와 같다.  <br />
+우선 Travis는 EC2와 직접적인 연동이 되지 않으므로, 그림처럼 AWS <code class="highlighter-rouge">S3</code>를 이용하기로 했다.<br />
+S3에 빌드 결과물을 저장하고, AWS <code class="highlighter-rouge">Code Deploy</code>에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.</p>
+
+<p>AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 <code class="highlighter-rouge">무료</code>이다.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">On-premise</code>에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 <code class="highlighter-rouge">과금</code>된다.</p>
+</blockquote>
+
+<p>App은 <code class="highlighter-rouge">Unity</code>를 사용하여 만들고 <code class="highlighter-rouge">구글 플레이스토어</code>에 배포할 계획이며, 하나의 App 서버를 두고 가동할 예정이다.</p>
+<blockquote>
+  <p>배포하는 방식은 이 글을 작성하는 시점에서 아직 다른 개발자와 협의가 이루어지지 않아 <code class="highlighter-rouge">미완성</code>으로 남겨놓았다.<br />
+추후, 논의되어 합의가 이루어지면 <code class="highlighter-rouge">업데이트</code>할 예정이다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="id3">3. Github &amp; Travis 연동</h2>
+<hr />
+<p>우선 <a href="https://travis-ci.org/">Travis 홈페이지</a>에 방문하여 Github 계정으로 로그인을 한 후, 해당 프로젝트를 연동한다.</p>
+<blockquote>
+  <p>만약, <code class="highlighter-rouge">Priavate</code> 저장소라면 <a href="https://travis-ci.com/">여기</a>에서 확인가능하다.</p>
+</blockquote>
+
+<p><img src="/img/cicd/newcicd_2_2.png" alt="" width="80%" height="80%" /><br />
+위와 같은 화면이 나온 후, Github와 travis 연동의 동의를 묻는 화면이 나오는데, <code class="highlighter-rouge">동의</code>를 누르면 된다.</p>
+<blockquote>
+  <p>나는 이미 다른 프로젝트를 연동하여, 해당 스샷을 찍지 못하였다..</p>
+</blockquote>
+
+<h5 id="id3-1">3-1. Travis 기본 설정 및 Github repository 연동</h5>
+
+<p><img src="/img/cicd/newcicd_2_3.png" alt="해당하는 public 저장소를 눌러주자" width="80%" height="80%" /></p>
+
+<p><img src="/img/cicd/newcicd_2_4.png" alt="연결이 안되었다는 화면이 나오면, 버튼을 눌러 활성화한다." width="80%" height="80%" /></p>
+
+<p><img src="/img/cicd/newcicd_2_5.png" alt="위와 같은 그림으로 변경되며, 빌드가 없다는 화면을 띄워준다." width="80%" height="80%" /></p>
+
+<h5 id="id3-2">3-2. Travis 빌드 로직</h5>
+<p>Travis에서 Unity를 이용하여 앱을 개발하기 위해서는 다음과 같은 <code class="highlighter-rouge">빌드 로직</code>을 만들어 주어야한다.</p>
+
+<ol>
+  <li>해당 깃허브 프로젝트가 존재하는 폴더의 root위치에 <code class="highlighter-rouge">.travis.yml</code>파일을 생성한다.</li>
+  <li>또한 <code class="highlighter-rouge">travis-build</code>라는 디렉토리를 생성 후, 다음과 같은 파일을 추가한다.
+    <ul>
+      <li>install-unity.sh</li>
+      <li>build.sh</li>
+      <li>run-test.sh</li>
+      <li>clean-up.sh</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/img/cicd/newcicd_2_6.png" alt="vscode를 이용해 생성한 화면" width="30%" height="30%" /></p>
+
+<p>다음의 내용을 <code class="highlighter-rouge">.travis.yml</code>에 추가한다.</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">language</span><span class="pi">:</span> <span class="s">objective-c</span>
+<span class="na">osx_image</span><span class="pi">:</span> <span class="s">xcode9.2</span>
+<span class="na">rvm</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="m">2.2</span>
+<span class="na">env</span><span class="pi">:</span>
+  <span class="na">global</span><span class="pi">:</span>
+<span class="na">cache</span><span class="pi">:</span>
+  <span class="na">directories</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">$UNITY_DOWNLOAD_CACHE"</span>
+<span class="na">before_install</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">chmod a+x ./travis-build/*.sh</span>
+<span class="na">install</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">cat /etc/hosts</span>
+<span class="pi">-</span> <span class="s2">"</span><span class="s">./travis-build/install-unity.sh"</span>
+<span class="na">script</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s2">"</span><span class="s">./travis-build/build.sh"</span>
+<span class="pi">-</span> <span class="s2">"</span><span class="s">./travis-build/run-tests.sh"</span>
+<span class="pi">-</span> <span class="s2">"</span><span class="s">./travis-build/clean-up.sh"</span>
+</code></pre></div></div>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/16/aws-6.html" data-toggle="tooltip" data-placement="top" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/28/cicd-2.html';
+this.page.identifier = '/devlog/2020/01/28/cicd-2';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

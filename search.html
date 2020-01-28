@@ -138,6 +138,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-01-28-cicd-2-html": {
+        "title": "[CI/CD] Travis CI 파이프라인 구축하기",
+        "subtitle":"CI/CD로 Unity 앱 빌드 및 무중단 배포 - 2",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "devops",
+        "content": "들어가기 앞서이번 포스팅 시리즈는 CI/CD 환경을 구축하여 App을 배포해보는 것이다.이를 위해 Travis CI를 이용하여 앱을 빌드하고, AWS Code Deploy를 이용해 배포하는 환경을 구축할 것이다.1. Why Travis?App 배포를 위한 CI/CD 환경을 구축하기까지 많은 조사와 고민을 하였고, 내가 Travis CI를 고른것은 다음과 같은 이유다.  무료(오픈소스에 한해서)  GitHub와의 강력한 연동하지만, 장점만큼 Travis는 다음과 같은 단점이 확실하다.  EC2와 직접적인 연동 안됨앱 서버를 두고 배포할 예정인 나에게는 위의 단점이 치명적이었으나, 무료라는 메리트는 막강했기에 다른 방법으로 이를 보완하기로 결정하였다.  만약, 돈에 상관이 없다면 AWS Code Build &amp; Code Pipeline을 사용하는 것을 추천한다.AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴을 제공한다.하지만 Code Build는 빌드 시간으로, Code Pipeline은 활성화된 파이프라인 개수로 과금한다.물론 프리티어를 제공하지만, 장기적으로 생각을 잘해서 선택하기를 바란다.여기 훌륭한 자료가 있어 링크를 공유한다.2. 전체 구성 내가 구성한  CI/CD의 전체 구성도는 위와 같다.  우선 Travis는 EC2와 직접적인 연동이 되지 않으므로, 그림처럼 AWS S3를 이용하기로 했다.S3에 빌드 결과물을 저장하고, AWS Code Deploy에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다.  On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.App은 Unity를 사용하여 만들고 구글 플레이스토어에 배포할 계획이며, 하나의 App 서버를 두고 가동할 예정이다.  배포하는 방식은 이 글을 작성하는 시점에서 아직 다른 개발자와 협의가 이루어지지 않아 미완성으로 남겨놓았다.추후, 논의되어 합의가 이루어지면 업데이트할 예정이다.3. Github &amp; Travis 연동우선 Travis 홈페이지에 방문하여 Github 계정으로 로그인을 한 후, 해당 프로젝트를 연동한다.  만약, Priavate 저장소라면 여기에서 확인가능하다.위와 같은 화면이 나온 후, Github와 travis 연동의 동의를 묻는 화면이 나오는데, 동의를 누르면 된다.  나는 이미 다른 프로젝트를 연동하여, 해당 스샷을 찍지 못하였다..3-1. Travis 기본 설정 및 Github repository 연동3-2. Travis 빌드 로직Travis에서 Unity를 이용하여 앱을 개발하기 위해서는 다음과 같은 빌드 로직을 만들어 주어야한다.  해당 깃허브 프로젝트가 존재하는 폴더의 root위치에 .travis.yml파일을 생성한다.  또한 travis-build라는 디렉토리를 생성 후, 다음과 같은 파일을 추가한다.          install-unity.sh      build.sh      run-test.sh      clean-up.sh      다음의 내용을 .travis.yml에 추가한다.language: objective-cosx_image: xcode9.2rvm:- 2.2env:  global:cache:  directories:  - \"$UNITY_DOWNLOAD_CACHE\"before_install:- chmod a+x ./travis-build/*.shinstall:- cat /etc/hosts- \"./travis-build/install-unity.sh\"script:- \"./travis-build/build.sh\"- \"./travis-build/run-tests.sh\"- \"./travis-build/clean-up.sh\"",
+        "url": "/devlog/2020/01/28/cicd-2.html"
+      }
+      ,
+    
       "devlog-2020-01-16-aws-6-html": {
         "title": "[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)",
         "subtitle":"AWS 기초 - 6",
@@ -217,7 +228,7 @@
     
       "devlog-2020-01-09-cicd-1-html": {
         "title": "[CI/CD] Jenkins vs GitLabCI vs Travis",
-        "subtitle":"DevOps Full Chain - 5",
+        "subtitle":"CI/CD로 Unity 앱 빌드 및 무중단 배포 - 1",
         "author": "owin2828", 
         "categories": "devlog",
         "tags": "devops",
