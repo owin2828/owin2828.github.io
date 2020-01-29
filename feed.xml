@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-29T13:25:32+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] IAM</title><link href="https://owin2828.github.io/devlog/2020/01/29/aws-7.html" rel="alternate" type="text/html" title="[AWS] IAM" /><published>2020-01-29T09:51:00+09:00</published><updated>2020-01-29T09:51:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/29/aws-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/29/aws-7.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-29T14:45:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] IAM</title><link href="https://owin2828.github.io/devlog/2020/01/29/aws-7.html" rel="alternate" type="text/html" title="[AWS] IAM" /><published>2020-01-29T09:51:00+09:00</published><updated>2020-01-29T09:51:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/29/aws-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/29/aws-7.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;본 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
@@ -253,66 +253,7 @@ AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴�
   &lt;p&gt;배포하는 방식은 이 글을 작성하는 시점에서 아직 다른 개발자와 협의가 이루어지지 않아 &lt;code class=&quot;highlighter-rouge&quot;&gt;미완성&lt;/code&gt;으로 남겨놓았다.&lt;br /&gt;
 추후, 논의되어 합의가 이루어지면 &lt;code class=&quot;highlighter-rouge&quot;&gt;업데이트&lt;/code&gt;할 예정이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;3. Github &amp;amp; Travis 연동&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;우선 &lt;a href=&quot;https://travis-ci.org/&quot;&gt;Travis 홈페이지&lt;/a&gt;에 방문하여 Github 계정으로 로그인을 한 후, 해당 프로젝트를 연동한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;만약, &lt;code class=&quot;highlighter-rouge&quot;&gt;Priavate&lt;/code&gt; 저장소라면 &lt;a href=&quot;https://travis-ci.com/&quot;&gt;여기&lt;/a&gt;에서 확인가능하다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_2.png&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;br /&gt;
-위와 같은 화면이 나온 후, Github와 travis 연동의 동의를 묻는 화면이 나오는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;동의&lt;/code&gt;를 누르면 된다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;나는 이미 다른 프로젝트를 연동하여, 해당 스샷을 찍지 못하였다..&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h5 id=&quot;id3-1&quot;&gt;3-1. Travis 기본 설정 및 Github repository 연동&lt;/h5&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_3.png&quot; alt=&quot;해당하는 public 저장소를 눌러주자&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_4.png&quot; alt=&quot;연결이 안되었다는 화면이 나오면, 버튼을 눌러 활성화한다.&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_5.png&quot; alt=&quot;위와 같은 그림으로 변경되며, 빌드가 없다는 화면을 띄워준다.&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;id3-2&quot;&gt;3-2. Travis 빌드 로직&lt;/h5&gt;
-&lt;p&gt;Travis에서 Unity를 이용하여 앱을 개발하기 위해서는 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;빌드 로직&lt;/code&gt;을 만들어 주어야한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;해당 깃허브 프로젝트가 존재하는 폴더의 root위치에 &lt;code class=&quot;highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt;파일을 생성한다.&lt;/li&gt;
-  &lt;li&gt;또한 &lt;code class=&quot;highlighter-rouge&quot;&gt;travis-build&lt;/code&gt;라는 디렉토리를 생성 후, 다음과 같은 파일을 추가한다.
-    &lt;ul&gt;
-      &lt;li&gt;install-unity.sh&lt;/li&gt;
-      &lt;li&gt;build.sh&lt;/li&gt;
-      &lt;li&gt;run-test.sh&lt;/li&gt;
-      &lt;li&gt;clean-up.sh&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_6.png&quot; alt=&quot;vscode를 이용해 생성한 화면&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음의 내용을 &lt;code class=&quot;highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt;에 추가한다.&lt;/p&gt;
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;objective-c&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;osx_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;xcode9.2&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;rvm&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2.2&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;directories&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$UNITY_DOWNLOAD_CACHE&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;before_install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;chmod a+x ./travis-build/*.sh&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cat /etc/hosts&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/install-unity.sh&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/build.sh&quot;&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/run-tests.sh&quot;&lt;/span&gt;
-&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/clean-up.sh&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.&lt;/p&gt;
 &lt;ul&gt;
