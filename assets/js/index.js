@@ -5,11 +5,11 @@ $('.col-lg-8 p > img[alt]').replaceWith(function () {
     var src = makeValue(this, "src")
     var alt = makeValue(this, "alt")
     // var alt = makeValue("alt")
-    var width = makeValue(this, "width", "100%")
-    var height = makeValue(this, "height", "100%")
+    var width = makeValue(this, "width", "80%")
+    var height = makeValue(this, "height", "80%")
     return '<figure>'
         + '<a href="' + src + '" class="mg-link">'
-        + '<img src="' + src + '" width="'+ width +'" height="'+ height +'"/></a>'
+        + '<center><img src="' + src + '" width="'+ width +'" height="'+ height +'"/></center></a>'
         + (alt ? '<figcaption class="caption" style="width:'+ width +'">' + alt + '</figcaption>' : '')
         + '</figure>';
 });

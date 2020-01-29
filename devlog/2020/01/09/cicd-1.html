@@ -12,7 +12,7 @@
     
   </title>
 
-  <meta name="description" content="이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins">
+  <meta name="description" content="이번 시리즈에서는 CI/CD 환경을 구축하여 App을 배포해보는 것이 목적이다. 이를 위해 Jenkins를 이용하여 앱을 빌드하고, AWS Code Deploy를 이용해 배포하는 환경을 구축할 것이다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -116,7 +116,7 @@
           <div class="post-heading">
             <h1>[CI/CD] Jenkins vs GitLabCI vs Travis</h1>
             
-            <h2 class="subheading">CI/CD로 Unity 앱 빌드 및 무중단 배포 - 1</h2>
+            <h2 class="subheading">Jenkisn & Code Deploy로 Unity 앱 빌드 및 무중단 배포 - 1</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
@@ -157,7 +157,7 @@
   
   
     <li>      
-      <a class="sidebar-nav-item" href="/devlog/2020/01/09/cicd-1.html#id0">이번 글에서는</a>
+      <a class="sidebar-nav-item" href="/devlog/2020/01/09/cicd-1.html#id0">이번 시리즈에서는</a>
       
     </li>
 
@@ -247,9 +247,12 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h2 id="id0">이번 글에서는</h2>
+        <h2 id="id0">이번 시리즈에서는</h2>
 <hr />
-<p>CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,<br />
+<p><code class="highlighter-rouge">CI/CD</code> 환경을 구축하여 <code class="highlighter-rouge">App</code>을 <code class="highlighter-rouge">배포</code>해보는 것이 목적이다.<br />
+이를 위해 <code class="highlighter-rouge">Jenkins</code>를 이용하여 앱을 빌드하고, <code class="highlighter-rouge">AWS Code Deploy</code>를 이용해 배포하는 환경을 구축할 것이다.</p>
+
+<p>본격적으로 시작하기 전에 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,<br />
 다음과 같은 솔루션들의 장단점을 분석하고자 한다.</p>
 <ul>
   <li>Travis</li>

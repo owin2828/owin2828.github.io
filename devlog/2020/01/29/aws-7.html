@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AWS] IAM - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 본 포스팅에서는 IAM에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/01/29/aws-7.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_aws.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AWS] IAM</h1>
+            
+            <h2 class="subheading">AWS 권한설정</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-01-29 09:51 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/aws/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+        
+      <nav class="sidebar-nav heading" role="navigation">
+        <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
+<span class="sr-only">Navigation:</span>
+<ul>
+  
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id0">들어가기 앞서</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id1">1. IAM이란?</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id2">2. IAM의 기능</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id3">3. IAM 유저 생성</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id4">4. 루트계정 MFA 활성화</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id5">5. IAM 역할 부여</a>
+      
+    </li>
+
+  
+  
+    <li>      
+      <a class="sidebar-nav-item" href="/devlog/2020/01/29/aws-7.html#id6">6. 끝마치며</a>
+      
+    </li>
+
+  
+  
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <h2 id="id0">들어가기 앞서</h2>
+<hr />
+<p>본 포스팅에서는 <code class="highlighter-rouge">IAM</code>에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.<br />
+<br /></p>
+
+<h2 id="id1">1. IAM이란?</h2>
+<hr />
+<p><code class="highlighter-rouge">IAM</code>은 Identity and Access Management의 약자로, AWS 리소스에 대한 접근을 안전하게 제어할 수 있는 웹 서비스이다.<br />
+이 설정을 통해 리소스를 사용하도록 인증하거나, 권한을 부여할 수 있다.</p>
+
+<p>처음 AWS 계정을 생성하게 되면, 해당 계정에 모든 리소스에 접근할 수 있는 권한이 부여된 <code class="highlighter-rouge">root</code> 계정이 생성된다.<br />
+이러한 사용자는 <code class="highlighter-rouge">root 사용자</code>라고 부르며, 로그인할 때 <code class="highlighter-rouge">Email</code>을 입력하여 로그인하게 된다.<br />
+이에 AWS는 일상작업뿐 아니라 관리작업에도 이 루트사용자를 사용하는 것을 <code class="highlighter-rouge">비권장</code>한다.<br />
+대신 <a href="https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/best-practices.html">이곳</a>과 같은 방법으로 IAM 사용자를 생성할 때만 사용하도록 권장한다.</p>
+
+<blockquote>
+  <p>즉 루트 사용자는 계정 및 서비스 관기 작업에만 사용하기를 권장한다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="id2">2. IAM의 기능</h2>
+<hr />
+<p>IAM은 다양한 기능을 제공하지만, 주로 사용하게 될 기능은 다음과 같다.</p>
+<ul>
+  <li>AWS 계정에 대한 공유 접근제어</li>
+  <li>권한을 세분화하여 부여</li>
+  <li>MFA(멀티 팩터 인증)</li>
+</ul>
+
+<blockquote>
+  <p>더 구체적인 사항은 <a href="https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/introduction.html">AWS 공식 홈페이지</a>를 참고하기 바란다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="id3">3. IAM 유저 생성</h2>
+<hr />
+<p><img src="/img/aws/aws_7_1.png" alt="" /></p>
+<ul>
+  <li>콘솔에 로그인하여 <code class="highlighter-rouge">내 보안자격 증명</code>을 눌러준다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_2.png" alt="" /></p>
+<ul>
+  <li>위와 같은 팝업창이 뜨게 되는데 여기서 빨간 사각형의 버튼을 클릭한다.
+    <blockquote>
+      <p>혹은 서비스에서 <code class="highlighter-rouge">IAM</code>을 검색하여 들어가도 된다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_3.png" alt="" /></p>
+<ul>
+  <li><code class="highlighter-rouge">사용자 추가</code> 버튼을 눌러 새로운 IAM 사용자를 추가해준다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_4.png" alt="" /></p>
+<ul>
+  <li>생성할 사용자의 이름을 입력한다.</li>
+  <li>액세스 유형은 <code class="highlighter-rouge">콘솔</code>로 설정한다. (추후, 키를 발급받을 수 있다.)</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_5.png" alt="" /></p>
+<ul>
+  <li>권한 설정에서 <code class="highlighter-rouge">그룹 생성</code>을 클릭한다.<br />
+그룹에 권한을 설정하고 유저를 추가하면, 관리가 <code class="highlighter-rouge">편리</code>하다.
+    <blockquote>
+      <p>만약 특정 유저에게서 권한을 제거하고 싶다면, 그룹에서 사용자를 제거하면 된다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_6.png" alt="" /></p>
+<ul>
+  <li>그룹 이름을 지정후, <code class="highlighter-rouge">AdministratorAccess</code>를 체크하여 관리자 권한을 해당 그룹에 부여한다.</li>
+  <li><code class="highlighter-rouge">그룹 생성</code>을 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_7.png" alt="" /></p>
+<ul>
+  <li>위와 같이 성공적으로 추가되었음을 확인할 수 있고, 다음 단계로 넘어간다.
+    <blockquote>
+      <p>다음 단계는 <code class="highlighter-rouge">태그</code>이지만, 딱히 추가할 태그가 없으므로 <code class="highlighter-rouge">검토</code>로 가도록 한다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_8.png" alt="" /></p>
+<ul>
+  <li>생성한 정보를 확인 후, <code class="highlighter-rouge">사용자 만들기</code>를 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_9.png" alt="" /></p>
+<ul>
+  <li>사용자들이 접속할 <code class="highlighter-rouge">콘솔 주소</code>가 표시되며, 해당 주소를 통해 <code class="highlighter-rouge">IAM 유저</code>로 로그인이 가능하다.</li>
+  <li>사용자의 액세스 키(액세스 키 ID &amp; 보안 액세스 키)를 확인하려면, <code class="highlighter-rouge">표시</code> 버튼을 눌러 확인한다.</li>
+  <li>액세스 키를 저장하려면, <code class="highlighter-rouge">.csv 다운로드</code> 버튼을 클릭한 후 안전한 위치에 저장한다.
+    <blockquote>
+      <p>보안 액세스 키는 이 단계에서만 확인 및 다운로드가 가능하다.<br />
+<code class="highlighter-rouge">다시는</code> 확인하거나 다운로드 할 수 없으므로 주의하자.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_10.png" alt="" /></p>
+<ul>
+  <li><code class="highlighter-rouge">IAM 유저</code>가 생성됨을 확인할 수 있다.<br />
+앞으로는 IAM유저로 로그인하여 네트워크를 구성하면 된다.<br />
+<br /></li>
+</ul>
+
+<h2 id="id4">4. 루트계정 MFA 활성화</h2>
+<hr />
+<p>AWS에서 제공하는 <code class="highlighter-rouge">MFA</code>는 보안을 강화하는 수단이다. AWS계정 및 개별 IAM 사용자들에 대해 AWS MFA를 활성화할 수 있다.<br />
+<code class="highlighter-rouge">루트계정</code>에는 MFA를 활성화하는것이 권장되며, 현재는 토큰 기반의 가상 MfA 어플리케이션만 존재한다.</p>
+<blockquote>
+  <p>2019.02.01 이후로 SMS 문자 메세지 기반 방식은 더이상 지원되지 않는다.</p>
+</blockquote>
+
+<p><img src="/img/aws/aws_7_11.png" alt="" /></p>
+<ul>
+  <li>좌측메뉴의 <code class="highlighter-rouge">대시보드</code>를 누른 후, 사진처럼 <code class="highlighter-rouge">MFA 관리</code> 버튼을 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_12.png" alt="" /></p>
+<ul>
+  <li><code class="highlighter-rouge">MFA 활성화</code> 버튼을 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_13.png" alt="" width="60%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">가상 MFA 디바이스</code>를 체크하고 계속을 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_14.png" alt="" width="60%" /></p>
+<ul>
+  <li><code class="highlighter-rouge">QR 코드 표시</code>를 클릭하여 나오는 QR 코드를 <code class="highlighter-rouge">Google OTP</code>를 설치하여 스캔하면 MFA 코드가 생성된다.</li>
+  <li>생성된 2개의 <code class="highlighter-rouge">MFA 코드</code>를 입력하여 할당을 누른다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_15.png" alt="" width="60%" /></p>
+<ul>
+  <li>성공적으로 할당시, 사진과 같이 성공했다는 표시가 되며, 루트계정 로그인은 <code class="highlighter-rouge">MFA</code> 인증을 해야한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_16.png" alt="" /></p>
+<ul>
+  <li>루트 계정으로 로그인할 시 <code class="highlighter-rouge">MFA</code> 코드를 입력하는 화면이 뜨게되며,  <code class="highlighter-rouge">Google OTP</code>에서 코드를 입력하면 로그인할 수 있다.<br />
+<br /></li>
+</ul>
+
+<h2 id="id5">5. IAM 역할 부여</h2>
+<hr />
+<p>IAM에서 제공하는 기능중 <code class="highlighter-rouge">역할</code>을 사용하면 특정 인스턴스에 제약을 걸 수 있다.<br />
+이어지는 실습에서는 특정 EC2에게 S3버킷에 대한 접근 제어 역할을 부여하겠다.</p>
+
+<p><img src="/img/aws/aws_7_17.png" alt="" /></p>
+<ul>
+  <li>좌측 메뉴에서 <code class="highlighter-rouge">역할</code>을 클릭 후, <code class="highlighter-rouge">역할 만들기</code>를 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_18.png" alt="" /></p>
+<ul>
+  <li>우리는 특정 <code class="highlighter-rouge">EC2</code>에게 역할을 부여할 것이므로, 사진처럼 <code class="highlighter-rouge">EC2</code>를 클릭 후 다음을 누른다.
+    <blockquote>
+      <p><code class="highlighter-rouge">다른 AWS 계정</code>을 눌러 특정 계정에게 역할을 부여할 수도 있다.<br />
+이런 경우, 계정 ID는 이메일 형식의 로그인ID가 아니라, 내 정보에서 볼 수 있는 12자리 숫자 ID이다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_19.png" alt="" /></p>
+<ul>
+  <li>특정 EC2에게 <code class="highlighter-rouge">S3</code>버킷에 접근할 역할을 부여할 것이므로, <code class="highlighter-rouge">amazons3fullaccess</code>를 검색 후 체크하여 다음을 클릭한다.
+    <blockquote>
+      <p>이어지는 태그는 건너뛰고 <code class="highlighter-rouge">검토</code>를 클릭한다.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/img/aws/aws_7_20.png" alt="" /></p>
+<ul>
+  <li>역할의 이름을 지정하고 방금 지정한 정책이 맞는지 확인 후, 만들기를 클릭한다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_21.png" alt="" /></p>
+<ul>
+  <li>생성한 역할이 지정한 이름과 할당한 서비스를 표시함을 확인할 수 있다.</li>
+</ul>
+
+<p><img src="/img/aws/aws_7_22.png" alt="" /></p>
+<ul>
+  <li>EC2를 생성할 때, 우리가 지정한 역할을 부여할 수 있음을 알 수 있다.<br />
+이렇게 생성된 EC2 인스턴스는 S3외의 다른 서비스의 접근은 <code class="highlighter-rouge">불가능</code>해진다.<br />
+<br /></li>
+</ul>
+
+<h2 id="id6">6. 끝마치며</h2>
+<hr />
+<p>AWS의 기본 구성을 알아봤으니, 그 다음으로 보안 및 권한설정을 알아보았다.<br />
+실제 AWS에서도 <code class="highlighter-rouge">IAM</code> 설정은 적극 권장되니, 앞으로는 적극 사용하자.</p>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/28/cicd-2.html" data-toggle="tooltip" data-placement="top" title="[CI/CD] Travis CI 파이프라인 구축하기"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/01/29/aws-7.html';
+this.page.identifier = '/devlog/2020/01/29/aws-7';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

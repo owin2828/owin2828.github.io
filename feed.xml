@@ -1,25 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-28T18:01:04+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[CI/CD] Travis CI 파이프라인 구축하기</title><link href="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] Travis CI 파이프라인 구축하기" /><published>2020-01-28T14:20:00+09:00</published><updated>2020-01-28T14:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/28/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-01-29T13:25:32+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AWS] IAM</title><link href="https://owin2828.github.io/devlog/2020/01/29/aws-7.html" rel="alternate" type="text/html" title="[AWS] IAM" /><published>2020-01-29T09:51:00+09:00</published><updated>2020-01-29T09:51:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/29/aws-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/29/aws-7.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;이번 포스팅 시리즈는 &lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt; 환경을 구축하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;App&lt;/code&gt;을 &lt;code class=&quot;highlighter-rouge&quot;&gt;배포&lt;/code&gt;해보는 것이다.&lt;br /&gt;
-이를 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis CI&lt;/code&gt;를 이용하여 앱을 빌드하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Code Deploy&lt;/code&gt;를 이용해 배포하는 환경을 구축할 것이다.&lt;br /&gt;
+&lt;p&gt;본 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;id1&quot;&gt;1. Why Travis?&lt;/h2&gt;
+&lt;h2 id=&quot;id1&quot;&gt;1. IAM이란?&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;App 배포를 위한 CI/CD 환경을 구축하기까지 많은 조사와 고민을 하였고, 내가 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt; CI를 고른것은 다음과 같은 이유다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;(오픈소스에 한해서)&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GitHub&lt;/code&gt;와의 강력한 연동&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;은 Identity and Access Management의 약자로, AWS 리소스에 대한 접근을 안전하게 제어할 수 있는 웹 서비스이다.&lt;br /&gt;
+이 설정을 통해 리소스를 사용하도록 인증하거나, 권한을 부여할 수 있다.&lt;/p&gt;
 
-&lt;p&gt;하지만, 장점만큼 Travis는 다음과 같은 단점이 확실하다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;와 직접적인 연동 &lt;code class=&quot;highlighter-rouge&quot;&gt;안됨&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;처음 AWS 계정을 생성하게 되면, 해당 계정에 모든 리소스에 접근할 수 있는 권한이 부여된 &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; 계정이 생성된다.&lt;br /&gt;
+이러한 사용자는 &lt;code class=&quot;highlighter-rouge&quot;&gt;root 사용자&lt;/code&gt;라고 부르며, 로그인할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;Email&lt;/code&gt;을 입력하여 로그인하게 된다.&lt;br /&gt;
+이에 AWS는 일상작업뿐 아니라 관리작업에도 이 루트사용자를 사용하는 것을 &lt;code class=&quot;highlighter-rouge&quot;&gt;비권장&lt;/code&gt;한다.&lt;br /&gt;
+대신 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/best-practices.html&quot;&gt;이곳&lt;/a&gt;과 같은 방법으로 IAM 사용자를 생성할 때만 사용하도록 권장한다.&lt;/p&gt;
 
-&lt;p&gt;앱 서버를 두고 배포할 예정인 나에게는 위의 단점이 치명적이었으나, &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;라는 메리트는 막강했기에 다른 방법으로 이를 보완하기로 결정하였다.&lt;/p&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;만약, 돈에 상관이 없다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Code Build &amp;amp; Code Pipeline&lt;/code&gt;을 사용하는 것을 추천한다.&lt;br /&gt;
+  &lt;p&gt;즉 루트 사용자는 계정 및 서비스 관기 작업에만 사용하기를 권장한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;id2&quot;&gt;2. IAM의 기능&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;IAM은 다양한 기능을 제공하지만, 주로 사용하게 될 기능은 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;AWS 계정에 대한 공유 접근제어&lt;/li&gt;
+  &lt;li&gt;권한을 세분화하여 부여&lt;/li&gt;
+  &lt;li&gt;MFA(멀티 팩터 인증)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;더 구체적인 사항은 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/introduction.html&quot;&gt;AWS 공식 홈페이지&lt;/a&gt;를 참고하기 바란다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;id3&quot;&gt;3. IAM 유저 생성&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;콘솔에 로그인하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;내 보안자격 증명&lt;/code&gt;을 눌러준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;위와 같은 팝업창이 뜨게 되는데 여기서 빨간 사각형의 버튼을 클릭한다.
+    &lt;blockquote&gt;
+      &lt;p&gt;혹은 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;을 검색하여 들어가도 된다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;사용자 추가&lt;/code&gt; 버튼을 눌러 새로운 IAM 사용자를 추가해준다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;생성할 사용자의 이름을 입력한다.&lt;/li&gt;
+  &lt;li&gt;액세스 유형은 &lt;code class=&quot;highlighter-rouge&quot;&gt;콘솔&lt;/code&gt;로 설정한다. (추후, 키를 발급받을 수 있다.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;권한 설정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;그룹 생성&lt;/code&gt;을 클릭한다.&lt;br /&gt;
+그룹에 권한을 설정하고 유저를 추가하면, 관리가 &lt;code class=&quot;highlighter-rouge&quot;&gt;편리&lt;/code&gt;하다.
+    &lt;blockquote&gt;
+      &lt;p&gt;만약 특정 유저에게서 권한을 제거하고 싶다면, 그룹에서 사용자를 제거하면 된다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;그룹 이름을 지정후, &lt;code class=&quot;highlighter-rouge&quot;&gt;AdministratorAccess&lt;/code&gt;를 체크하여 관리자 권한을 해당 그룹에 부여한다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;그룹 생성&lt;/code&gt;을 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;위와 같이 성공적으로 추가되었음을 확인할 수 있고, 다음 단계로 넘어간다.
+    &lt;blockquote&gt;
+      &lt;p&gt;다음 단계는 &lt;code class=&quot;highlighter-rouge&quot;&gt;태그&lt;/code&gt;이지만, 딱히 추가할 태그가 없으므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;검토&lt;/code&gt;로 가도록 한다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;생성한 정보를 확인 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;사용자 만들기&lt;/code&gt;를 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;사용자들이 접속할 &lt;code class=&quot;highlighter-rouge&quot;&gt;콘솔 주소&lt;/code&gt;가 표시되며, 해당 주소를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM 유저&lt;/code&gt;로 로그인이 가능하다.&lt;/li&gt;
+  &lt;li&gt;사용자의 액세스 키(액세스 키 ID &amp;amp; 보안 액세스 키)를 확인하려면, &lt;code class=&quot;highlighter-rouge&quot;&gt;표시&lt;/code&gt; 버튼을 눌러 확인한다.&lt;/li&gt;
+  &lt;li&gt;액세스 키를 저장하려면, &lt;code class=&quot;highlighter-rouge&quot;&gt;.csv 다운로드&lt;/code&gt; 버튼을 클릭한 후 안전한 위치에 저장한다.
+    &lt;blockquote&gt;
+      &lt;p&gt;보안 액세스 키는 이 단계에서만 확인 및 다운로드가 가능하다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;다시는&lt;/code&gt; 확인하거나 다운로드 할 수 없으므로 주의하자.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM 유저&lt;/code&gt;가 생성됨을 확인할 수 있다.&lt;br /&gt;
+앞으로는 IAM유저로 로그인하여 네트워크를 구성하면 된다.&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;id4&quot;&gt;4. 루트계정 MFA 활성화&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;AWS에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt;는 보안을 강화하는 수단이다. AWS계정 및 개별 IAM 사용자들에 대해 AWS MFA를 활성화할 수 있다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;루트계정&lt;/code&gt;에는 MFA를 활성화하는것이 권장되며, 현재는 토큰 기반의 가상 MfA 어플리케이션만 존재한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;2019.02.01 이후로 SMS 문자 메세지 기반 방식은 더이상 지원되지 않는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;좌측메뉴의 &lt;code class=&quot;highlighter-rouge&quot;&gt;대시보드&lt;/code&gt;를 누른 후, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 관리&lt;/code&gt; 버튼을 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 활성화&lt;/code&gt; 버튼을 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_13.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가상 MFA 디바이스&lt;/code&gt;를 체크하고 계속을 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_14.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;QR 코드 표시&lt;/code&gt;를 클릭하여 나오는 QR 코드를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Google OTP&lt;/code&gt;를 설치하여 스캔하면 MFA 코드가 생성된다.&lt;/li&gt;
+  &lt;li&gt;생성된 2개의 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 코드&lt;/code&gt;를 입력하여 할당을 누른다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_15.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;성공적으로 할당시, 사진과 같이 성공했다는 표시가 되며, 루트계정 로그인은 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt; 인증을 해야한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;루트 계정으로 로그인할 시 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt; 코드를 입력하는 화면이 뜨게되며,  &lt;code class=&quot;highlighter-rouge&quot;&gt;Google OTP&lt;/code&gt;에서 코드를 입력하면 로그인할 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;id5&quot;&gt;5. IAM 역할 부여&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;IAM에서 제공하는 기능중 &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;을 사용하면 특정 인스턴스에 제약을 걸 수 있다.&lt;br /&gt;
+이어지는 실습에서는 특정 EC2에게 S3버킷에 대한 접근 제어 역할을 부여하겠다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_17.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;좌측 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;을 클릭 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;역할 만들기&lt;/code&gt;를 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_18.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;우리는 특정 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;에게 역할을 부여할 것이므로, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 클릭 후 다음을 누른다.
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;다른 AWS 계정&lt;/code&gt;을 눌러 특정 계정에게 역할을 부여할 수도 있다.&lt;br /&gt;
+이런 경우, 계정 ID는 이메일 형식의 로그인ID가 아니라, 내 정보에서 볼 수 있는 12자리 숫자 ID이다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_19.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;특정 EC2에게 &lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;버킷에 접근할 역할을 부여할 것이므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;amazons3fullaccess&lt;/code&gt;를 검색 후 체크하여 다음을 클릭한다.
+    &lt;blockquote&gt;
+      &lt;p&gt;이어지는 태그는 건너뛰고 &lt;code class=&quot;highlighter-rouge&quot;&gt;검토&lt;/code&gt;를 클릭한다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;역할의 이름을 지정하고 방금 지정한 정책이 맞는지 확인 후, 만들기를 클릭한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_21.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;생성한 역할이 지정한 이름과 할당한 서비스를 표시함을 확인할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_22.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;EC2를 생성할 때, 우리가 지정한 역할을 부여할 수 있음을 알 수 있다.&lt;br /&gt;
+이렇게 생성된 EC2 인스턴스는 S3외의 다른 서비스의 접근은 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;해진다.&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;id6&quot;&gt;6. 끝마치며&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;AWS의 기본 구성을 알아봤으니, 그 다음으로 보안 및 권한설정을 알아보았다.&lt;br /&gt;
+실제 AWS에서도 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt; 설정은 적극 권장되니, 앞으로는 적극 사용하자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 IAM에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.</summary></entry><entry><title type="html">[CI/CD] Travis CI 파이프라인 구축하기</title><link href="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] Travis CI 파이프라인 구축하기" /><published>2020-01-28T14:20:00+09:00</published><updated>2020-01-28T14:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/28/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/10/aws-1.html&quot;&gt;AWS 기초 시리즈&lt;/a&gt;에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다.&lt;br /&gt;
+물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;를 이용하고 CD는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy&lt;/code&gt;를 이용하여 구축하겠다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/ko/codedeploy/&quot;&gt;AWS Code Deploy&lt;/a&gt;는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;이다.&lt;br /&gt;
+ &lt;code class=&quot;highlighter-rouge&quot;&gt;On-premise&lt;/code&gt;에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;된다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;id1&quot;&gt;1. Why Jenkins?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;나는 처음에 다음과 같은 이유로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;를 사용하여 환경을 구축하려 했다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;무료(오픈소스에 한해서)&lt;/li&gt;
+  &lt;li&gt;GitHub와의 강력한 연동&lt;/li&gt;
+  &lt;li&gt;추가적인 서버 필요 없음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;하지만 다음과 같은 결정적인 단점이 존재하였고, 이는 굉장히 치명적이었다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;래퍼런스 문서가 &lt;code class=&quot;highlighter-rouge&quot;&gt;없음&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;아무것도 아닌 문제처럼 보일 수 있으나, 정말 &lt;code class=&quot;highlighter-rouge&quot;&gt;심각하게&lt;/code&gt; 내가 원하는 방향에 관련된 문서가 없었다.&lt;br /&gt;
+Jenkins는 다양한 플러그인과 이를 Script로 표현하여 설정하는 다양한 문서들이 존재하는 반면에, 
+Travis는 Unity를 배포하는 방법에 관련된 문서가 &lt;code class=&quot;highlighter-rouge&quot;&gt;없었다&lt;/code&gt;.&lt;br /&gt;
+그나마 존재하는 문서들은 Mac 환경에서 진행된 개발이 전부였고, &lt;code class=&quot;highlighter-rouge&quot;&gt;Window&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt;에서 진행하는 내게 이는 상당한 부담으로 다가왔다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;아무것도 안하고 이 일만 하면 모를까 회사일과 병행하며 삽질을 하기에는 무리였다..&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;결국 하루의 삽질과 고민 끝에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;로 노선을 변경했다. &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;를 공부하고 배웠으니 이렇게 된김에 free tier가 유지되는 동안에 적극 활용해보자는 다짐과 함께.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;만약, AWS CI/CD에 관심이 있다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Code Build &amp;amp; Code Pipeline&lt;/code&gt;을 사용하는 것을 추천한다.&lt;br /&gt;
 AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴을 제공한다.&lt;br /&gt;
 하지만 Code Build는 빌드 시간으로, Code Pipeline은 활성화된 파이프라인 개수로 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;한다.&lt;br /&gt;
 물론 &lt;code class=&quot;highlighter-rouge&quot;&gt;프리티어&lt;/code&gt;를 제공하지만, 장기적으로 생각을 잘해서 선택하기를 바란다.&lt;br /&gt;
@@ -30,14 +243,10 @@ AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴�
 &lt;h2 id=&quot;id2&quot;&gt;2. 전체 구성&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_1.png&quot; alt=&quot;전체 구성도(App 배포 미완성)&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt; 
-내가 구성한  CI/CD의 전체 구성도는 위와 같다.  &lt;br /&gt;
-우선 Travis는 EC2와 직접적인 연동이 되지 않으므로, 그림처럼 AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;를 이용하기로 했다.&lt;br /&gt;
-S3에 빌드 결과물을 저장하고, AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy&lt;/code&gt;에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.&lt;/p&gt;
-
-&lt;p&gt;AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;이다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;On-premise&lt;/code&gt;에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;된다.&lt;/p&gt;
-&lt;/blockquote&gt;
+내가 구성한  CI/CD의 전체 구성도는 위와 같은데, Jenkins를 이용하여 CI를 구축하고 Code Deploy를 이용해 CD를 구축하기로 했다.&lt;br /&gt;
+둘 사이의 연결은 Jenkins에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy Pulgin&lt;/code&gt;을 사용할 계획이다.&lt;br /&gt;
+이러한 파이프 라인을 통해 S3에 빌드 결과물을 저장하고, AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy&lt;/code&gt;에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.&lt;br /&gt;
+여기서 Jenkins Build Server와 배포를 위한 앱 서버는 모두 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 사용할 것이며, &lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/15/aws-3.html&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;&lt;/a&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt; 설정을 통해 해나갈 것이다.&lt;/p&gt;
 
 &lt;p&gt;App은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Unity&lt;/code&gt;를 사용하여 만들고 &lt;code class=&quot;highlighter-rouge&quot;&gt;구글 플레이스토어&lt;/code&gt;에 배포할 계획이며, 하나의 App 서버를 두고 가동할 예정이다.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -103,7 +312,7 @@ S3에 빌드 결과물을 저장하고, AWS &lt;code class=&quot;highlighter-rou
 &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/build.sh&quot;&lt;/span&gt;
 &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/run-tests.sh&quot;&lt;/span&gt;
 &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;./travis-build/clean-up.sh&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">들어가기 앞서 이번 포스팅 시리즈는 CI/CD 환경을 구축하여 App을 배포해보는 것이다. 이를 위해 Travis CI를 이용하여 앱을 빌드하고, AWS Code Deploy를 이용해 배포하는 환경을 구축할 것이다.</summary></entry><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.&lt;/p&gt;
 &lt;ul&gt;
@@ -160,7 +369,7 @@ S3에 빌드 결과물을 저장하고, AWS &lt;code class=&quot;highlighter-rou
 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;은 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 검색 후, 좌측 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;로드밸런서&lt;/code&gt;에서 할 수 있다.&lt;br /&gt;
 생성 시, 3개 중 하나를 고르라고 하는데 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Classic&lt;/code&gt;을 선택하면 된다.&lt;/p&gt;
 
-&lt;p&gt;그 후 다음의 대략 단계에 따라서 구성한다.&lt;/p&gt;
+&lt;p&gt;그 후 대략 다음의 단계에 따라서 구성한다.&lt;/p&gt;
 &lt;ol&gt;
   &lt;li&gt;본인의 VPC와 서브넷을 잘 선택&lt;/li&gt;
   &lt;li&gt;보안그룹 할당: &lt;code class=&quot;highlighter-rouge&quot;&gt;기존&lt;/code&gt;그룹에서 생성한 그룹 선택&lt;/li&gt;
@@ -1048,7 +1257,7 @@ Elastic Load Balancer를 통해 각각의 AZ가 다른 일을 수행하게 하�
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_2.png&quot; alt=&quot;&quot; width=&quot;130%&quot; height=&quot;130%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/aws/aws_2_2.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
   &lt;figcaption&gt;출처: &lt;a href=&quot;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&quot;&gt;https://cloudaffaire.com/create-a-vpc-interface-endpoint/&lt;/a&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1350,9 +1559,12 @@ HW 관리자 – 하이퍼바이저 관리자 – SW 관리자 이런식의 구�
 &lt;h2 id=&quot;id4&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://4rgos.tistory.com/4&quot;&gt;https://4rgos.tistory.com/4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Jenkins vs GitLabCI vs Travis</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] Jenkins vs GitLabCI vs Travis" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-1.html">&lt;h2 id=&quot;id0&quot;&gt;이번 글에서는&lt;/h2&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">1. 파일 업로드 취약점이란 주로 게시판 등에서 파일 업로드 기능을 악용하여 시스템 권한을 획득할 수 있는 취약점을 의미한다. 나처럼 보안에 대한 지식이 얕은 사람은 위의 문장이 생소하게 느껴질 것이기에, 다시 풀어 써본다. 악성 스크립트가 업로드 된 후, 서버상에서 스크립트를 실행하여 쉘을 획득하는 등의 행위로 서버를 장악할 수 있다.</summary></entry><entry><title type="html">[CI/CD] Jenkins vs GitLabCI vs Travis</title><link href="https://owin2828.github.io/devlog/2020/01/09/cicd-1.html" rel="alternate" type="text/html" title="[CI/CD] Jenkins vs GitLabCI vs Travis" /><published>2020-01-09T13:13:00+09:00</published><updated>2020-01-09T13:13:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/09/cicd-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/09/cicd-1.html">&lt;h2 id=&quot;id0&quot;&gt;이번 시리즈에서는&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,&lt;br /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CI/CD&lt;/code&gt; 환경을 구축하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;App&lt;/code&gt;을 &lt;code class=&quot;highlighter-rouge&quot;&gt;배포&lt;/code&gt;해보는 것이 목적이다.&lt;br /&gt;
+이를 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;를 이용하여 앱을 빌드하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Code Deploy&lt;/code&gt;를 이용해 배포하는 환경을 구축할 것이다.&lt;/p&gt;
+
+&lt;p&gt;본격적으로 시작하기 전에 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고,&lt;br /&gt;
 다음과 같은 솔루션들의 장단점을 분석하고자 한다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Travis&lt;/li&gt;
@@ -1461,77 +1673,4 @@ GitLab의 클라우드 서비스를 사용하는 경우에도, Runner만 &lt;cod
   &lt;li&gt;&lt;a href=&quot;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&quot;&gt;https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&quot;&gt;https://www.thecodecampus.de/blog/jenkins-vs-gitlab-ci/&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&quot;&gt;https://blog.cookapps.io/cook-dev/tech-stack/#ci-cd&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">이번 글에서는 CI/CD 파이프라인 구축을 위한 서비스들이 무엇이 있는지 살펴보고, 다음과 같은 솔루션들의 장단점을 분석하고자 한다. Travis GitLab CI Jenkins</summary></entry><entry><title type="html">[Linux] 기본 설정으로 포트 확인하기</title><link href="https://owin2828.github.io/devlog/2020/01/08/etc-1.html" rel="alternate" type="text/html" title="[Linux] 기본 설정으로 포트 확인하기" /><published>2020-01-08T15:17:00+09:00</published><updated>2020-01-08T15:17:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/08/etc-1</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/08/etc-1.html">&lt;h2 id=&quot;id0&quot;&gt;외부 서버의 포트가 살아있는지 open여부를 점검하기&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다.&lt;br /&gt;
-나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다.&lt;br /&gt;
-이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다.&lt;br /&gt;
-다음은 지극히 &lt;code class=&quot;highlighter-rouge&quot;&gt;주관적인&lt;/code&gt; (쉬운?) 순서대로 방법이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;id1&quot;&gt;1. Ping&lt;/h4&gt;
-&lt;p&gt;포트고 뭐고 필요 없을 때&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;은 port를 &lt;code class=&quot;highlighter-rouge&quot;&gt;사용하지 않는다&lt;/code&gt;.&lt;br /&gt;
-이유는 TCP/IP 계층에서 사용되고, port가 사용되는 상위 계층인 TCP/UDP 와는 상관이 없기 때문이다.&lt;br /&gt;
-즉, ping으로는 port 확인이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP]
-
-// 예시
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping 8.8.8.8
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;id2&quot;&gt;2. Telnet&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;특정&lt;/code&gt; port를 확인해야 할 경우&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]  
-
-// 예시
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet 100.1.1.1 8080
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;id3&quot;&gt;3. nc(NetCat)&lt;/h4&gt;
-&lt;p&gt;일반적으로 UNIX의 &lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;명령과 비슷한 사용법 이지만, 대상이 파일이 아니라 network connection이다.&lt;br /&gt;
-포트 확인 기능 말고도 다양한 기능으로 사용이 된다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;IP] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PORT]
-
-// 예시
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; 100.1.1.1 8080
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;id4&quot;&gt;4. curl&lt;/h4&gt;
-&lt;p&gt;대부분 서버는 telnet이 설치되어 있지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;보안&lt;/code&gt;이슈나 &lt;code class=&quot;highlighter-rouge&quot;&gt;최소 설치&lt;/code&gt;를 한 경우 사용이 불가능한 경우가 있다.&lt;br /&gt;
-그런 경우 다음의 명령을 사용하자. 아무리 최소 설치를 해도 curl은 설치되어 있기 때문이다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;의 parameter중 URL telnet 스키마를 사용하여 서버 통신 확인&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://[IP]:PORT  
-
-// 예시
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; telnet://100.1.1.1:8080
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;id5&quot;&gt;5. bash&lt;/h4&gt;
-&lt;p&gt;약간 하드한 방법이다. 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt;에 익숙하지 않은 사람들은 4번에서 끝내기를 권장한다.&lt;br /&gt;
-TCP 연결을 간단하게 bash의 내장된 기능으로 확인할 수 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;timeout &lt;/span&gt;5 bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/[IP]/[PORT]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
-
-// 예시
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;timeout &lt;/span&gt;5 bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cat &amp;lt; /dev/null &amp;gt; /dev/tcp/100.1.1.1/8080'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
-// 결과
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;0   // 성공 
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;1   // 실패 연결 전 에러&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hostname &lt;/span&gt;not known등 오류&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;124 // 실패 Timeout 에러
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echo $?&lt;/code&gt;는 UNIX에서 바로 전 실행의 결과를 보여주는 명령어이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">외부 서버의 포트가 살아있는지 open여부를 점검하기 이런 저런 이유로, 명령어들을 사용할 수 없는 경우가 존재한다. 나도 원격 서버가 살아있는지 점검해야 하는데, host 서버에 telnet등이 지원하지 않아 고생한 경험이 있다. 이러한 경우를 대비해, 서버와 통신이 되는지 확인하는 명령어를 종류에 따라 정리해 보았다. 다음은 지극히 주관적인 (쉬운?) 순서대로 방법이다.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="devops" /><summary type="html">이번 시리즈에서는 CI/CD 환경을 구축하여 App을 배포해보는 것이 목적이다. 이를 위해 Jenkins를 이용하여 앱을 빌드하고, AWS Code Deploy를 이용해 배포하는 환경을 구축할 것이다.</summary></entry></feed>
