@@ -142,19 +142,37 @@
           
         </div>
         <br/>
-        
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
       <nav class="sidebar-nav heading" role="navigation">
-        <!-- 포스팅에서 sidebar로 소제목 찾아가기 -->
-<span class="sr-only">Navigation:</span>
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#1-jackson-의존-설정">1. Jackson 의존 설정</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-restcontroller로-json-형식-응답">2. @RestController로 JSON 형식 응답</a>
 <ul>
-  
+<li class="sidebar-nav-item toc-h4"><a href="#2-1-jsonignore를-이용한-예외-처리">2-1. @JsonIgnore를 이용한 예외 처리</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-2-날짜-형식-변환-처리-jsonformat">2-2. 날짜 형식 변환 처리: @JsonFormat</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-3-날짜-형식-변환처리-기본-적용-설정">2-3. 날짜 형식 변환처리: 기본 적용 설정</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-requestbody로-json-요청-처리">4. @RequestBody로 JSON 요청 처리</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#4-1-json-데이터의-날짜-형식-다루기">4-1. JSON 데이터의 날짜 형식 다루기</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#5-responseentity로-객체-리턴하고-응답-코드-지정하기">5. ResponseEntity로 객체 리턴하고 응답 코드 지정하기</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#5-1-responseentity를-이용한-응답-데이터-처리">5-1. ResponseEntity를 이용한 응답 데이터 처리</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#5-2-exceptionhandler-적용-매서드에서-reponseentity로-응답하기">5-2. @ExceptionHandler 적용 매서드에서 ReponseEntity로 응답하기</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#5-3-valid-에러-결과를-json으로-응답하기">5-3. @Valid 에러 결과를 JSON으로 응답하기</a></li>
+</ul>
+</li>
 </ul>
       </nav>
       </header>
     </div>
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
-
         <h2 id="1-jackson-의존-설정">1. Jackson 의존 설정</h2>
 <hr />
 <ul>
