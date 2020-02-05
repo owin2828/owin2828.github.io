@@ -203,7 +203,7 @@ AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴�
 
 <h2 id="id2">2. 전체 구성</h2>
 <hr />
-<p><img src="/img/cicd/newcicd_2_1.png" alt="전체 구성도(App 배포 미완성)" width="100%" height="100%" /> 
+<p><img src="/img/cicd/newcicd_2_1.png" alt="전체 구성도(App 배포 미완성)" />
 내가 구성한  CI/CD의 전체 구성도는 위와 같은데, Jenkins를 이용하여 CI를 구축하고 Code Deploy를 이용해 CD를 구축하기로 했다.<br />
 둘 사이의 연결은 Jenkins에서 제공하는 <code class="highlighter-rouge">Code Deploy Pulgin</code>을 사용할 계획이다.<br />
 이러한 파이프 라인을 통해 S3에 빌드 결과물을 저장하고, AWS <code class="highlighter-rouge">Code Deploy</code>에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.<br />
