@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Oauth] Oauth2.0의 4가지 인증 방식 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 이번 글에서는 실제로 다음과 같은 oauth2.0의 인증 방식에 대하여 알아볼 예정이다. Authorization Code Grant Type Implicit Grant Type Resource Own...">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/03/11/web-4.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Oauth] Oauth2.0의 4가지 인증 방식</h1>
+            
+            <h2 class="subheading">oauth2.0 이해 및 구현 - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-03-11 16:30 &middot; <span class="reading-time" title="Estimated read time">
+  
+   2 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-authorization-code-grant-type">1. Authorization Code Grant Type</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-implicit-grant">2. Implicit Grant</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-resource-owner-password-credentials-grant">3. Resource Owner Password Credentials Grant</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-client-credentials-grant-type-방식">4. Client Credentials Grant Type 방식</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p>지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 
+이번 글에서는 실제로 다음과 같은 oauth2.0의 <code class="highlighter-rouge">인증 방식</code>에 대하여 알아볼 예정이다.</p>
+<ol>
+  <li><code class="highlighter-rouge">Authorization Code Grant Type</code></li>
+  <li><code class="highlighter-rouge">Implicit Grant Type</code></li>
+  <li><code class="highlighter-rouge">Resource Owner Password Credentials Grant Type</code></li>
+  <li><code class="highlighter-rouge">Client Credentials Grant Type</code><br />
+<br /></li>
+</ol>
+
+<h2 id="1-authorization-code-grant-type">1. Authorization Code Grant Type</h2>
+<hr />
+<p><img src="/img/web/web_2_1.png" alt="Authorization Code Grant Type 방식" /></p>
+<ol>
+  <li>클라이언트는 리소스 주인이 권한 서버에게 Client ID, Redirect URI, Response_type을 code로 지정하여 전달하도록 유도<br />
+  인증이 된다면 <code class="highlighter-rouge">code</code>값을 돌려 받음</li>
+  <li>클라이언트는 전달 받은 <code class="highlighter-rouge">code</code>를 사용해 필요한 정보들과 함께 access token 획득 요청을 권한서버에게 보냄</li>
+  <li>획득한 <code class="highlighter-rouge">access token</code>을 사용해 리소스 서버에 사용자의 데이터를 요청<br />
+<br /></li>
+</ol>
+
+<h2 id="2-implicit-grant">2. Implicit Grant</h2>
+<hr />
+<p><img src="/img/web/web_2_2.png" alt="Implicit Grant 방식" /></p>
+<ol>
+  <li>클라이언트는 리소스 주인이 권한 서버에게 Client ID, Redirect URI, Response_type을 code로 지정하여 전달하도록 유도<br />
+  인증이 된다면 <code class="highlighter-rouge">token</code>을 돌려 받음</li>
+  <li>획득한 access token이 유요한지 <code class="highlighter-rouge">검증</code></li>
+  <li>검증에 대한 응답을 돌려줌</li>
+  <li>획득한 <code class="highlighter-rouge">access token</code>을 사용해 리소스 서버에 사용자의 데이터를 요청<br />
+<br /></li>
+</ol>
+
+<h2 id="3-resource-owner-password-credentials-grant">3. Resource Owner Password Credentials Grant</h2>
+<hr />
+<p><img src="/img/web/web_2_3.png" alt="Resource Owner Password Credentials Grant 방식" /></p>
+<ol>
+  <li>리소스 주인이 인증을 진행, 대부분 ID/PW로 <code class="highlighter-rouge">자격증명</code>을 수행</li>
+  <li>클라이언트는 전달 받은 정보를 기반으로 권한 서버에 <code class="highlighter-rouge">access token</code> 획득 요청</li>
+  <li>Access token을 돌려줌</li>
+  <li>획득한 <code class="highlighter-rouge">access token</code>을 사용해 리소스 서버에 사용자의 데이터를 요청<br />
+<br /></li>
+</ol>
+
+<h2 id="4-client-credentials-grant-type-방식">4. Client Credentials Grant Type 방식</h2>
+<hr />
+<p><img src="/img/web/web_2_4.png" alt="Client Credentials Grant Type 방식" /></p>
+<ol>
+  <li>리소스 주인이 access token 정보를 <code class="highlighter-rouge">직접</code> 권한 서버에 요청</li>
+  <li>Access token을 돌려줌</li>
+  <li>획득한 <code class="highlighter-rouge">access token</code>을 사용해 리소스 서버에 사용자의 데이터를 요청
+<br /></li>
+</ol>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>Oauth2.0의 인증 방식에 대하여 간략하게 알아보았다. 다음 포스팅에서는 각 방식을 직접 구현할 예정이다.</p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/03/11/etc-4.html" data-toggle="tooltip" data-placement="top" title="[Mac]백 쿼트(`) 입력하는 법"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/03/11/web-4.html';
+this.page.identifier = '/devlog/2020/03/11/web-4';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Oauth] Oauth2.0의 등장배경, 역할 및 기본 정보 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 Oauth2.0의 기초에 대해 알아보고자 한다. 많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 개념부터 구현까지 직접하며 글을 남기고자 한다. 자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다. 생활코딩 oauth2.0">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/03/11/web-3.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Oauth] Oauth2.0의 등장배경, 역할 및 기본 정보</h1>
+            
+            <h2 class="subheading">oauth2.0 이해 및 구현 - 1</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-03-11 14:54 &middot; <span class="reading-time" title="Estimated read time">
+  
+   3 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-인증-vs-인가">1. 인증 vs 인가</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-oauth20의-등장배경">2. Oauth2.0의 등장배경</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-oauth20의-4가지-역할">3. Oauth2.0의 4가지 역할</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-oauth20의-기본-정보">4. Oauth2.0의 기본 정보</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p><code class="highlighter-rouge">Oauth2.0</code>의 기초에 대해 알아보고자 한다. 
+많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 <code class="highlighter-rouge">개념</code>부터 <code class="highlighter-rouge">구현</code>까지 직접하며 글을 남기고자 한다.</p>
+<blockquote>
+  <p>자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다.<br />
+  <a href="https://opentutorials.org/course/3405">생활코딩 oauth2.0</a><br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-인증-vs-인가">1. 인증 vs 인가</h2>
+<hr />
+<p>본격적으로 oauth2.0를 살펴보기 전에 다음과 같은 <code class="highlighter-rouge">용어</code>의 의미를 짚고 가자.</p>
+<ul>
+  <li><code class="highlighter-rouge">인증</code>(Authentication)<br />
+인증이란, <code class="highlighter-rouge">신원을 확인</code> 하는 행위이다.<br />
+즉, 어떠한 주권을 행사할 자격이 있는지를 검증하는 단계이다.<br />
+그렇기 때문에 인증을 한다고 해서, 주체에게 새로운 권한이 부여되지는 않는다.</li>
+  <li><code class="highlighter-rouge">인가</code>(Authorization)<br />
+인가란 <code class="highlighter-rouge">승인</code>이라고도 불리는데, <code class="highlighter-rouge">권한을 부여</code>하는 행위이다.<br />
+즉, 인가를 받은 대상이 새로운 자격을 얻게 되어 제한된 리소스에 접근이 가능하다.<br />
+<br /></li>
+</ul>
+
+<h2 id="2-oauth20의-등장배경">2. Oauth2.0의 등장배경</h2>
+<hr />
+<p>권한이 각 사용자에게 부여되는 경우에는 <code class="highlighter-rouge">반드시</code> 권한 소유자에 대한 인증절차를 거치게 된다. 
+웹에서 이러한 가장 보편적인 방법은 <code class="highlighter-rouge">ID/PW</code> 방식으로 로그인하는 것이다. 
+사용자가 입력한 정보를 서버에 전송하여 인증이 성공할 경우, <code class="highlighter-rouge">쿠키</code>에 <code class="highlighter-rouge">세션</code> 값을 저장함으로써 권한이 부여된다. 
+이런 방식은 한 번의 로그인으로 세션이 종료되기 전까지 제한된 기능을 수행할 수 있어, <code class="highlighter-rouge">간편</code>하고 <code class="highlighter-rouge">효율적</code>인 방식으로 널리 사용된다. 
+하지만 이러한 쿠키 기반 권한 부여는 다음과 같은 <code class="highlighter-rouge">단점</code>을 지닌다.</p>
+
+<ul>
+  <li>서버에 요청이 올때마다 DB를 통해 현재 상태를 매번 확인하는 <code class="highlighter-rouge">낭비</code>가 발생한다.</li>
+  <li>모바일 앱에 적합하지 <code class="highlighter-rouge">않다</code>.</li>
+  <li>서로 다른 서비스 간에 정보를 공유하기 <code class="highlighter-rouge">어렵다</code>.</li>
+</ul>
+
+<p>이러한 단점을 해결하기 위해 IETF는 <code class="highlighter-rouge">Oauth</code>라는 프레임워크를 만들게 된다.</p>
+<blockquote>
+  <p>oauth1과 oauth2는 완전히 <code class="highlighter-rouge">다른</code> 프로토콜이며, 호환되지 않는다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="3-oauth20의-4가지-역할">3. Oauth2.0의 4가지 역할</h2>
+<hr />
+<p>Oauth2.0의 시나리오에는 다음과 같은 4가지 역할이 존재한다.</p>
+
+<p><img src="/img/web/web_1_1.jpg" alt="Oauth2 역할, 출처: http://tutorials.jenkov.com/oauth2/roles.html" width="50%" /></p>
+<ol>
+  <li><code class="highlighter-rouge">Resource Owner</code><br />
+  <code class="highlighter-rouge">사용자</code>로서 자신의 리소스에 대한 접근 권한을 가지고 있는 주체이다.</li>
+  <li><code class="highlighter-rouge">Client</code><br />
+  사용자가 <code class="highlighter-rouge">접근하는 서비스</code>로서 사용자의 데이터에 대한 요청을 보내는 주체이다.</li>
+  <li><code class="highlighter-rouge">Resource Server</code><br />
+  사용자의 <code class="highlighter-rouge">데이터를 보유</code>한 기관으로서 유효한 권한을 부여받은 client가 요청할 경우 제공한다.</li>
+  <li><code class="highlighter-rouge">Authorization Server</code> <br />
+  사용자의 데이터에 접근할 <code class="highlighter-rouge">권한을 제공</code>하는 서버이다. client의 요청에 따라 사용자에게 <code class="highlighter-rouge">정보제공 동의</code>를 받은 후, 권한을 부여한다.
+    <blockquote>
+      <p>규모가 작을 경우, Resource Server와 Authorization Server를 하나의 서버로 구현하기도 한다.<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="4-oauth20의-기본-정보">4. Oauth2.0의 기본 정보</h2>
+<hr />
+<p>Oauth2.0에는 다음과 같은 세 가지의 기본 정보가 존재한다.</p>
+
+<ol>
+  <li><code class="highlighter-rouge">등록정보</code><br />
+  서비스를 제공하는 Client는 사전에 Authorization Server에 <code class="highlighter-rouge">등록</code>해야한다. 
+  새로운 서비스가 출시될 때마다 정보를 갱신하여 제출한다.</li>
+  <li><code class="highlighter-rouge">Redirect URI</code><br />
+  Authorization Server는 사용자가 <code class="highlighter-rouge">정보제공 동의</code>를 하게되면 사용자를 등록된 <code class="highlighter-rouge">Redirect URI</code>로 이동시킨다. 
+  만약 등록되지 않은 Redirect URI를 담은 요청이 들어오면 <code class="highlighter-rouge">무효</code> 처리한다.</li>
+  <li><code class="highlighter-rouge">Client ID</code> &amp; <code class="highlighter-rouge">Client Secret</code><br />
+  새로 등록하는 Client는 Authorization Server로 부터 <code class="highlighter-rouge">Client ID</code>와 <code class="highlighter-rouge">Client Secret</code>을 발급받는다. 
+  Client ID는 노출되어도 상관 없지만, Client Secret는 <code class="highlighter-rouge">절대</code> 노출되어서는 안된다.<br />
+<br /></li>
+</ol>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>Oauth2.0에 대하여 간략하게 알아보았다. 다음 포스팅에서는 oauth2.0의 <code class="highlighter-rouge">4가지 인증 방식</code>에 대하여 알아볼 예정이다.</p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/01/29/aws-7.html" data-toggle="tooltip" data-placement="top" title="[AWS] IAM"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+          <a href="/devlog/2020/03/11/etc-4.html" data-toggle="tooltip" data-placement="top" title="[Mac]백 쿼트(`) 입력하는 법">Next >></a>
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/03/11/web-3.html';
+this.page.identifier = '/devlog/2020/03/11/web-3';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>
