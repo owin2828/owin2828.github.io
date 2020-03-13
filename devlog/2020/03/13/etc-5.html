@@ -181,11 +181,13 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 id="들어가기-앞서">들어가기 앞서</h2>
-<p>프로메테우스는 <code class="highlighter-rouge">오픈 소스</code> 기반의 <code class="highlighter-rouge">모니터링</code> 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 <code class="highlighter-rouge">저장</code>하고 <code class="highlighter-rouge">검색</code>할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 <code class="highlighter-rouge">시각화</code>를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 <code class="highlighter-rouge">다양한 플러그인</code>을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 <code class="highlighter-rouge">쿠버네티스</code>의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</p>
+<p>프로메테우스는 <code class="highlighter-rouge">오픈 소스</code> 기반의 <code class="highlighter-rouge">모니터링</code> 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 <code class="highlighter-rouge">저장</code>하고 <code class="highlighter-rouge">검색</code>할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 <code class="highlighter-rouge">시각화</code>를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 <code class="highlighter-rouge">다양한 플러그인</code>을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 <code class="highlighter-rouge">쿠버네티스</code>의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.<br />
+<br /></p>
 
 <h2 id="1-기본-구조">1. 기본 구조</h2>
-<p><img src="/img/etc/etc_5_1.png" alt="" />
-<img src="/img/etc/etc_5_2.png" alt="" /></p>
+<hr />
+<p><img src="/img/etc/etc_5_1.png" alt="" width="60%" />
+<img src="/img/etc/etc_5_2.png" alt="" width="80%" /></p>
 
 <h4 id="1-1-metric-수집">1-1. Metric 수집</h4>
 <p>수집을 하려는 대상 시스템이 Target system이다. MySQL이나, Tomcat 또는 VM 과 같이 여러가지 자원이 모니터링 대상이 될 수 있다. 이 대상 시스템에서 메트릭을 프로메테우스로 전송하기 위해서는 Exporter 라는 것을 사용한다.</p>
@@ -212,9 +214,11 @@
 <h4 id="1-7-서빙">1-7. 서빙</h4>
 <p>이렇게 저장된 메트릭은 <code class="highlighter-rouge">PromQL 쿼리</code> 언어를 이용해서 조회가 가능하고, 이를 외부 API나 프로메테우스 웹콘솔을 이용해서 서빙이 가능하다. 또한 그라파나등과 통합하여 대쉬보드등을 구성하는 것이 가능하다.</p>
 
-<p>이 외에도 메트릭을 수집하기 위한 gateway, 알람을 위한 Alert manager 등의 컴포넌트등이 존재한다.</p>
+<p>이 외에도 메트릭을 수집하기 위한 gateway, 알람을 위한 Alert manager 등의 컴포넌트등이 존재한다.<br />
+<br /></p>
 
 <h2 id="2-장단점">2. 장/단점</h2>
+<hr />
 <p>위의 내용을 기반으로 확장한 프로메테우스의 장/단점은 다음과 같다.</p>
 
 <h4 id="2-1-장점">2-1. 장점</h4>
@@ -229,8 +233,9 @@ Linux, Window등의 OS metric 뿐 아니라 각종 <code class="highlighter-roug
 </ul>
 
 <h4 id="2-2-단점">2-2. 단점</h4>
-<p>프로메테우스는 장점이 확실한 만큼 다음과 같이 단점도 확실하다.<br />
-<img src="/img/etc/etc_5_3.jpg" alt="" /></p>
+<p>프로메테우스는 장점이 확실한 만큼 다음과 같이 단점도 확실하다.</p>
+
+<p><img src="/img/etc/etc_5_3.jpg" alt="" /></p>
 
 <ul>
   <li>위의 그림처럼, 각 Region에 프로메테우스를 배치 한 뒤, 이를 Master에 Aggregate하는 방식이 프로메테우스가 공식적으로 권장하는 <code class="highlighter-rouge">다중화</code> 방식<br />
@@ -238,10 +243,12 @@ Linux, Window등의 OS metric 뿐 아니라 각종 <code class="highlighter-roug
   <li>싱글 호스트 아키텍처이기 때문에 저장용량이 부족하면 <code class="highlighter-rouge">디스크 용량을 늘리는 것</code> 밖에 방법이 없음</li>
   <li>프로메테우스 서버가 다운되거나, 설정 변경 등을 위해서 재시작을 할 경우 그간의 metric은 <code class="highlighter-rouge">유실</code>됨</li>
   <li>일정 풀링 주기를 기반으로 metric을 가져오기 때문에 <code class="highlighter-rouge">풀링하는 순간</code>의 스냅샷 정보만 알 수 있음<br />
-스냅샷의 연속된 모음이기 때문에 <code class="highlighter-rouge">근사값</code>의 형태</li>
+스냅샷의 연속된 모음이기 때문에 <code class="highlighter-rouge">근사값</code>의 형태<br />
+<br /></li>
 </ul>
 
 <h2 id="3-hello-prometheus">3. Hello Prometheus</h2>
+<hr />
 <p>프로메테우스를 이해하기 위해 간단한 테스트를 https://www.katacoda.com/ 에서 진행하였다.</p>
 
 <h4 id="3-1-설정-파일-정의">3-1. 설정 파일 정의</h4>
@@ -301,6 +308,8 @@ Linux, Window등의 OS metric 뿐 아니라 각종 <code class="highlighter-roug
 검색 쿼리 부분에 메트릭 쿼리를 입력하면 그래프등의 형태로 볼 수 있다.</li>
 </ul>
 
+<p><img src="/img/etc/etc_5_4.png" alt="" /></p>
+
 
         <hr>
 
@@ -310,6 +319,8 @@ Linux, Window등의 OS metric 뿐 아니라 각종 <code class="highlighter-roug
           <a href="/devlog/2020/03/11/web-4.html" data-toggle="tooltip" data-placement="top" title="[Oauth] Oauth2.0의 4가지 인증 방식"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
+          
+          <a href="/devlog/2020/03/13/etc-6.html" data-toggle="tooltip" data-placement="top" title="[Prometheus]프로메테우스 & 그라파나 연동">Next >></a>
           
 
         </div>

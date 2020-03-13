@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Prometheus]프로메테우스 &amp; 그라파나 연동 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/03/13/etc-6.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_etc.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Prometheus]프로메테우스 & 그라파나 연동</h1>
+            
+            <h2 class="subheading">Prometheus: 오픈소스 모니터링 tool - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-03-13 17:29 &middot; <span class="reading-time" title="Estimated read time">
+  
+   2 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/etc/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-그라파나-설치-및-접속">1. 그라파나 설치 및 접속</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-그라파나-템플릿-사용">2. 그라파나 템플릿 사용</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p><code class="highlighter-rouge">프로메테우스</code>가 메트릭의 정보를 가져오는 모니터링 툴이었다면, <code class="highlighter-rouge">그라파나</code>는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 
+그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</p>
+
+<ul>
+  <li>Graphite, Prometheus, InfluxDB등 <code class="highlighter-rouge">다양한</code> 데이타베이스와 메트릭수집 시스템을 지원</li>
+  <li>하나의 대시보드에 동시에 <code class="highlighter-rouge">여러</code> 메트릭 시스템들의 지표를 표시</li>
+  <li>설치 및 사용이 <code class="highlighter-rouge">쉬움</code></li>
+  <li>프로메테우스를 잘 <code class="highlighter-rouge">지원</code>함</li>
+</ul>
+
+<p>그라파나의 설치는 <a href="https://grafana.com/docs/grafana/latest/installation/debian/">공식문서</a>를 따라 진행하면 된다. 
+본 문서에서 이용한 환경은 이전 포스팅과 동일하게 katacoda에서 그라파나 듀토리얼을 사용한다.</p>
+<blockquote>
+  <p><a href="https://www.katacoda.com/courses/prometheus/creating-dashboards-with-grafana">그라파나 듀토리얼</a><br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-그라파나-설치-및-접속">1. 그라파나 설치 및 접속</h2>
+<hr />
+<p><img src="/img/etc/etc_6_1.png" alt="" /></p>
+<ul>
+  <li>로그인 화면의 기본 ID/PW는 <code class="highlighter-rouge">amdin</code>/<code class="highlighter-rouge">admin</code> 이다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_2.png" alt="" /></p>
+<ul>
+  <li>연동되었다면, <code class="highlighter-rouge">Add data source</code>를 눌러 프로메테우스를 연결한다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_3.png" alt="" /></p>
+<ul>
+  <li>본 문서에서는 프로메테우스를 localhost:9090에 실행중이므로, 사진과 같이 정보를 입력 후 <code class="highlighter-rouge">savt &amp; test</code> 를 누른다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_4.png" alt="" /></p>
+<ul>
+  <li><code class="highlighter-rouge">Create your first dashboard</code>를 눌러 <code class="highlighter-rouge">Graph</code>를 누르면 위와 같이 빈 그래프가 생성된다.</li>
+  <li>이때 <code class="highlighter-rouge">panel title</code> 버튼을 눌러 메트릭을 추가한다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_5.png" alt="" /></p>
+<ul>
+  <li>사진과 같이 <code class="highlighter-rouge">Metrics</code> 란에 <code class="highlighter-rouge">node_cpu</code>를 입력하여 원하는 메트릭 정보를 입력한다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_6.png" alt="" /></p>
+<ul>
+  <li>그래프에 해당 메트릭이 표시되는 것을 알 수 있다.<br />
+<br /></li>
+</ul>
+
+<h2 id="2-그라파나-템플릿-사용">2. 그라파나 템플릿 사용</h2>
+<hr />
+<p>그라파나의 장점은 이미 만들어진 다양한 <code class="highlighter-rouge">Template</code>이 존재한다는 것이다. 
+사용자들이 다양한 템플릿을 만들어 공유하는데, 템플릿은 <a href="https://grafana.com/dashboards/22">https://grafana.com/dashboards/22</a>에 가서 볼 수 있다. 
+본 예제에서는 프로메테우스의 node_exporter에 의해 제공되는 템플릿을 import할 예정이다.</p>
+
+<p><img src="/img/etc/etc_6_7.png" alt="" /></p>
+<ul>
+  <li>상단의 <code class="highlighter-rouge">Node exporter single server</code>를 클릭하여 <code class="highlighter-rouge">Import Dashboard</code>를 누른다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_8.png" alt="" /></p>
+<ul>
+  <li><code class="highlighter-rouge">Json</code> 파일로 템플릿을 저장할 수도 있지만, 제공하는 공식 탬플릿 중 ID:22 대시보드의 URL을 입력한다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_9.png" alt="" /></p>
+<ul>
+  <li>성공적으로 인식되었다면, 위의 사진과 같이 창이 변경되고 <code class="highlighter-rouge">prometheus</code>란을 사진처럼 설정 후 <code class="highlighter-rouge">Import</code> 버튼을 누른다.</li>
+</ul>
+
+<p><img src="/img/etc/etc_6_10.png" alt="" /></p>
+<ul>
+  <li>모든 과정이 완료되면 사진처럼 준비된 대시보드가 로딩되게 된다.</li>
+</ul>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/03/13/etc-5.html" data-toggle="tooltip" data-placement="top" title="[Prometheus]프로메테우스 개념 구조 및 quick start"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/03/13/etc-6.html';
+this.page.identifier = '/devlog/2020/03/13/etc-6';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

@@ -138,6 +138,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-03-13-etc-6-html": {
+        "title": "[Prometheus]프로메테우스 &amp; 그라파나 연동",
+        "subtitle":"Prometheus: 오픈소스 모니터링 tool - 2",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "etc",
+        "content": "들어가기 앞서프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.  Graphite, Prometheus, InfluxDB등 다양한 데이타베이스와 메트릭수집 시스템을 지원  하나의 대시보드에 동시에 여러 메트릭 시스템들의 지표를 표시  설치 및 사용이 쉬움  프로메테우스를 잘 지원함그라파나의 설치는 공식문서를 따라 진행하면 된다. 본 문서에서 이용한 환경은 이전 포스팅과 동일하게 katacoda에서 그라파나 듀토리얼을 사용한다.  그라파나 듀토리얼1. 그라파나 설치 및 접속  로그인 화면의 기본 ID/PW는 amdin/admin 이다.  연동되었다면, Add data source를 눌러 프로메테우스를 연결한다.  본 문서에서는 프로메테우스를 localhost:9090에 실행중이므로, 사진과 같이 정보를 입력 후 savt &amp; test 를 누른다.  Create your first dashboard를 눌러 Graph를 누르면 위와 같이 빈 그래프가 생성된다.  이때 panel title 버튼을 눌러 메트릭을 추가한다.  사진과 같이 Metrics 란에 node_cpu를 입력하여 원하는 메트릭 정보를 입력한다.  그래프에 해당 메트릭이 표시되는 것을 알 수 있다.2. 그라파나 템플릿 사용그라파나의 장점은 이미 만들어진 다양한 Template이 존재한다는 것이다. 사용자들이 다양한 템플릿을 만들어 공유하는데, 템플릿은 https://grafana.com/dashboards/22에 가서 볼 수 있다. 본 예제에서는 프로메테우스의 node_exporter에 의해 제공되는 템플릿을 import할 예정이다.  상단의 Node exporter single server를 클릭하여 Import Dashboard를 누른다.  Json 파일로 템플릿을 저장할 수도 있지만, 제공하는 공식 탬플릿 중 ID:22 대시보드의 URL을 입력한다.  성공적으로 인식되었다면, 위의 사진과 같이 창이 변경되고 prometheus란을 사진처럼 설정 후 Import 버튼을 누른다.  모든 과정이 완료되면 사진처럼 준비된 대시보드가 로딩되게 된다.",
+        "url": "/devlog/2020/03/13/etc-6.html"
+      }
+      ,
+    
       "devlog-2020-03-13-etc-5-html": {
         "title": "[Prometheus]프로메테우스 개념 구조 및 quick start",
         "subtitle":"Prometheus: 오픈소스 모니터링 tool - 1",
