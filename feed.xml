@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-03-13T18:29:25+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Prometheus]프로메테우스 &amp;amp; 그라파나 연동</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-6.html" rel="alternate" type="text/html" title="[Prometheus]프로메테우스 &amp; 그라파나 연동" /><published>2020-03-13T17:29:00+09:00</published><updated>2020-03-13T17:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-03-13T19:20:23+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Thanos]프로메테우스의 스케일링 tool</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-7.html" rel="alternate" type="text/html" title="[Thanos]프로메테우스의 스케일링 tool" /><published>2020-03-13T18:19:00+09:00</published><updated>2020-03-13T18:19:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;프로메테우스&lt;/code&gt;는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제점&lt;/code&gt;을 지닌다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;확장성의 어려움&lt;/li&gt;
+  &lt;li&gt;가용성의 어려움&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 중 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장성&lt;/code&gt;의 문제는 디스크를 사서 붙이는 것으로 어느 정도 해결이된다. 
+하지만 데이터의 양이 방대해지고 많아질 경우, 이러한 방식으로 매 번 증축할 수 없고 결국 하나의 프로메테우스 인스턴스로는 감당이 되지 않는 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제&lt;/code&gt;가 발생한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
+이러한 문제를 해결하기 위해 프로메테우스에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Federation&lt;/code&gt;이라는 방법을 권장한다. 
+프로메테우스 인스턴스를 여러개 만들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;Master-Slave&lt;/code&gt; 구로조 관리를 하여 계층적으로 관리를 하는 방법이다. 
+약간은 지저분하고 또 복잡해 보이지만, 위의 구조를 사용함으로써 어느정도 보완이 되었다. 
+하지만 여전히 이러한 구조는 단점을 지닌다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가용성&lt;/code&gt;의 문제가 바로 그것인데, 프로메테우스는 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나&lt;/code&gt;의 서버로 기동된다. 
+따라서 실행중인 서버가 다운되거나 장애 및 재시작 등의 업무로 인해 생기는 공백의 기간동안은 메트릭을 수집할 수 &lt;code class=&quot;highlighter-rouge&quot;&gt;없다&lt;/code&gt;. 
+클러스터링 기능이 존재하지 않기 때문에 이러한 문제점을 해결하기 위해서는 다음의 그림과 같이 프로메테우스 인스턴스를 &lt;code class=&quot;highlighter-rouge&quot;&gt;두 개&lt;/code&gt; 띄우고 같은 대상으로부터 메트릭을 수집해야 한다.&lt;br /&gt;
+&lt;img src=&quot;/img/etc/etc_7_2.png&quot; alt=&quot;&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;여전히 마음에 들지 않는다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1-thanos란&quot;&gt;1. Thanos란&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;위와 같은 문제를 해결하기 위해 등장한 것이 바로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos&lt;/code&gt;이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_3.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
+타노스의 기본 구조는 위와 같다. 여러개의 프로메테우스에서 메트릭 정보를 받아 &lt;code class=&quot;highlighter-rouge&quot;&gt;전체적인&lt;/code&gt; 정보를 제공해준다. 
+또한 수집된 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;스케일&lt;/code&gt;이 가능한 스토리지에 저장해서 특정 프로메테우스 인스턴스가 다운이 되더라도, 그 인스턴스가 담당하는 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;조회&lt;/code&gt;할 수 있도록 해준다. 
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-thanos-아키텍처&quot;&gt;2. Thanos 아키텍처&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;타노스의 전반적인 이해를 돕기 위해 타노스의 아키텍처를 살펴본다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-1-thanos-side-car--querier&quot;&gt;2-1. Thanos Side car &amp;amp; Querier&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_4.png&quot; alt=&quot;&quot; width=&quot;30%&quot; /&gt;
+타노스는 프로메테우스 서버에 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스 에이전트(Thanos Sidecar)&lt;/code&gt;를 설치하여 데이터를 조회할 수 있도록 한다. 
+프로메테우스는 수집된 메트릭 데이터를 로컬 디스크에 저장하기 때문에 타노스 에이전트는 디스크에 저장된 내용을 읽어 필요시 쿼리 엔진에게 전달한다. 
+이러한 구조로 이루어져 있기 때문에 사용자가 관리하고 바라보는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos Query&lt;/code&gt; 하나로 줄어들게 된다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-2-ha-지원&quot;&gt;2-2. HA 지원&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_5.png&quot; alt=&quot;&quot; width=&quot;30%&quot; /&gt;
+타노스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;HA&lt;/code&gt;(High Availability, 서버 이중화)는 기존과 동일하다. 프로메테우스 인스턴스를 두 개 띄워서 같은 대상을 모니터링 하는 것이다. 
+기존 방식에서는 프로메테우스 인스턴스를 각각 모니터링 해야하지만, 타노스는 특정 그룹의 프로메테우스 인스턴스들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나로&lt;/code&gt; 처리해서 메트릭을 보여준다. 
+즉, 두 인스턴스에서 수집된 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;합쳐서&lt;/code&gt; 보여줄 수도 있고, &lt;code class=&quot;highlighter-rouge&quot;&gt;중복값을 제거&lt;/code&gt;해주는 De-duplication 기능을 지원한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-3-오래된-값-저장&quot;&gt;2-3. 오래된 값 저장&lt;/h4&gt;
+&lt;p&gt;프로메테우스는 로컬에 데이터를 저장하기 때문에 일정 기간이 지난 데이터는 &lt;code class=&quot;highlighter-rouge&quot;&gt;삭제&lt;/code&gt;된다. 따라서 기간이 오래된 데이터는 조회가 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다. 
+이 문제는 여러 대의 프로메테우스를 모니터링하게 되므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스에서도 발생&lt;/code&gt;하는데, 메모리와 로컬디스크의 용량 문제로 여러 프로메테우스 모니터링이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하게 된다. 
+이를 해결하기 위해 타노스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부 스토리지&lt;/code&gt;를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;프로메테우스에서 수집된 데이터는 2시간 정도 메모리에 저장된 후, 로컬 디스크로 덤프되어 저장된다. 이 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스 에이전트&lt;/code&gt;가 수집하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부 스토리지에 저장&lt;/code&gt;한다. 
+외부 스토리지는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ceph&lt;/code&gt;와 같은 분산형 파일 시스템 혹은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Google Cloud Storage&lt;/code&gt;, AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;와 같은 클라우드 스토리지를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_6.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
+즉 쿼리 엔진에서 최근의 데이터를 조회할 때는 타노스 에이전트를 통해서 가져오고, 오래된 데이터는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos Sotrage Gateway&lt;/code&gt;를 통해 조회한다. 
+이 게이트웨이는 외부 스토리지에 저장된 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Storage API&lt;/code&gt;를 통해 쿼리 엔진과 통신하는 역할 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;캐싱 기능&lt;/code&gt;을 제공한다.&lt;/p&gt;
+
+&lt;p&gt;데이터가 많이 축적되게 되면, 오래된 데이터를 조회하는 경우 많은 양을 조회하기 때문에 성능에 문제가 발생한다. 
+이러한 문제를 피하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Compactor&lt;/code&gt;가 존재하는데, 데이터 파일을 &lt;code class=&quot;highlighter-rouge&quot;&gt;압축&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;다운 샘플링&lt;/code&gt;을 한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;다운 샘플링&lt;/code&gt;: 1분단위로 저장된 데이터를 10분이나 1시간 단위로 샘플링 기준을 낮춰서(해상도 낮춤) 전체 데이터 저장용량을 낮추는 방법&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 문제점을 지닌다. 확장성의 어려움 가용성의 어려움</summary></entry><entry><title type="html">[Grafana]프로메테우스 &amp;amp; 그라파나 연동</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-6.html" rel="alternate" type="text/html" title="[Grafana]프로메테우스 &amp; 그라파나 연동" /><published>2020-03-13T17:29:00+09:00</published><updated>2020-03-13T17:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;프로메테우스&lt;/code&gt;가 메트릭의 정보를 가져오는 모니터링 툴이었다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;그라파나&lt;/code&gt;는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 
 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.&lt;/p&gt;
 
@@ -74,7 +145,10 @@
 &lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;모든 과정이 완료되면 사진처럼 준비된 대시보드가 로딩되게 된다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</summary></entry><entry><title type="html">[Prometheus]프로메테우스 개념 구조 및 quick start</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-5.html" rel="alternate" type="text/html" title="[Prometheus]프로메테우스 개념 구조 및 quick start" /><published>2020-03-13T16:09:00+09:00</published><updated>2020-03-13T16:09:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</summary></entry><entry><title type="html">[Prometheus]프로메테우스 개념 구조 및 quick start</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-5.html" rel="alternate" type="text/html" title="[Prometheus]프로메테우스 개념 구조 및 quick start" /><published>2020-03-13T16:09:00+09:00</published><updated>2020-03-13T16:09:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;프로메테우스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;오픈 소스&lt;/code&gt; 기반의 &lt;code class=&quot;highlighter-rouge&quot;&gt;모니터링&lt;/code&gt; 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;저장&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;검색&lt;/code&gt;할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 &lt;code class=&quot;highlighter-rouge&quot;&gt;시각화&lt;/code&gt;를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;다양한 플러그인&lt;/code&gt;을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 &lt;code class=&quot;highlighter-rouge&quot;&gt;쿠버네티스&lt;/code&gt;의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
@@ -202,7 +276,10 @@ Linux, Window등의 OS metric 뿐 아니라 각종 &lt;code class=&quot;highligh
 검색 쿼리 부분에 메트릭 쿼리를 입력하면 그래프등의 형태로 볼 수 있다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 오픈 소스 기반의 모니터링 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 저장하고 검색할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 시각화를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 다양한 플러그인을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 쿠버네티스의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</summary></entry><entry><title type="html">[Oauth] Oauth2.0의 4가지 인증 방식</title><link href="https://owin2828.github.io/devlog/2020/03/11/web-4.html" rel="alternate" type="text/html" title="[Oauth] Oauth2.0의 4가지 인증 방식" /><published>2020-03-11T16:30:00+09:00</published><updated>2020-03-11T16:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/11/web-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/11/web-4.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 오픈 소스 기반의 모니터링 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 저장하고 검색할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 시각화를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 다양한 플러그인을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 쿠버네티스의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</summary></entry><entry><title type="html">[Oauth] Oauth2.0의 4가지 인증 방식</title><link href="https://owin2828.github.io/devlog/2020/03/11/web-4.html" rel="alternate" type="text/html" title="[Oauth] Oauth2.0의 4가지 인증 방식" /><published>2020-03-11T16:30:00+09:00</published><updated>2020-03-11T16:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/11/web-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/11/web-4.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 
 이번 글에서는 실제로 다음과 같은 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;인증 방식&lt;/code&gt;에 대하여 알아볼 예정이다.&lt;/p&gt;
 &lt;ol&gt;
@@ -1078,187 +1155,4 @@ VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&g
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다. 본 편에서는 다음의 요소를 구성하고 설정할 예정이다. EC2</summary></entry><entry><title type="html">[AWS] VPC 만들어보기(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/15/aws-3.html" rel="alternate" type="text/html" title="[AWS] VPC 만들어보기(실습)" /><published>2020-01-15T09:31:00+09:00</published><updated>2020-01-15T09:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/15/aws-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/15/aws-3.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;이번 포스팅은 aws에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 구축해보는 &lt;code class=&quot;highlighter-rouge&quot;&gt;실습(?)&lt;/code&gt;에 관련된 포스팅이다.&lt;br /&gt;
-깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;앞으로 이어질 모든 실습 내용에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;이름&lt;/code&gt; 만큼은 &lt;code class=&quot;highlighter-rouge&quot;&gt;직관적&lt;/code&gt;이고 &lt;code class=&quot;highlighter-rouge&quot;&gt;확실&lt;/code&gt;하게 지어주자&lt;br /&gt;
-이름만 보고도, 해당 객체가 어떤 일을 수행하는지 알 수 있어야 실수를 방지한다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;진행되는 모든 &lt;code class=&quot;highlighter-rouge&quot;&gt;Naming Rule&lt;/code&gt;은 다음을 따른다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Object 이름&lt;/code&gt; / &lt;code class=&quot;highlighter-rouge&quot;&gt;Region-code&lt;/code&gt; / &lt;code class=&quot;highlighter-rouge&quot;&gt;AZ-code&lt;/code&gt; / &lt;code class=&quot;highlighter-rouge&quot;&gt;서비스 약칭(dev, stg, prod)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;본 예제에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Single AZ&lt;/code&gt;만을 사용하므로, 중간 AZ-code가 &lt;code class=&quot;highlighter-rouge&quot;&gt;생략&lt;/code&gt;될 예정이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;마지막으로, 모든 사진은 클릭 시, &lt;code class=&quot;highlighter-rouge&quot;&gt;확대&lt;/code&gt;기능을 제공한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id1&quot;&gt;1. AWS 계정 생성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;다음의 링크로 접속하여 aws 홈페이지에 들어가보자.&lt;br /&gt;
-&lt;a href=&quot;https://aws.amazon.com/ko/&quot;&gt;https://aws.amazon.com/ko/&lt;/a&gt;&lt;br /&gt;
-우측 상단에 aws 계정생성 버튼을 눌러 가입을 진행하면 된다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;가입할 때, 신용카드 정보를 입력을 하게 되는데 갑자기 &lt;code class=&quot;highlighter-rouge&quot;&gt;결제&lt;/code&gt;가 되었다고 놀라지 말자.&lt;br /&gt;
-aws에서 결제가능한 카드인지 확인하기 위해 1$ 정도를 결제했다가 &lt;code class=&quot;highlighter-rouge&quot;&gt;취소&lt;/code&gt;하는 것이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id2&quot;&gt;2. 콘솔 로그인&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_1.png&quot; alt=&quot;&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;우측 상단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Management Console&lt;/code&gt;을 클릭하여 로그인을 진행하자.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;지역은 &lt;code class=&quot;highlighter-rouge&quot;&gt;서울&lt;/code&gt;로 선택한다. &lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;3. VPC 생성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_3.png&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 검색후 클릭한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_4.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;로그인에 성공하면 AWS Management Console 화면이 나타나고, &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 검색하여 클릭한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_5.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;기본 VPC&lt;/code&gt;가 1개 있음을 볼 수 있고, 해당 VCP에 관한 정보가 하단에 공개된다.&lt;br /&gt;
-이제 좌측 상단의 VPC 생성을 클릭하여 새로운 VPC를 만든다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_6.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;VPC를 생성할 때는, 앞서 설명한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Naming Rule&lt;/code&gt;을 따라 &lt;code class=&quot;highlighter-rouge&quot;&gt;vpc-apne2-dev-test&lt;/code&gt;로 작성한다.&lt;br /&gt;
-CIDR블록은 특별한 경우가 아니면, 가이드대로 &lt;code class=&quot;highlighter-rouge&quot;&gt;10.0.0.0/16&lt;/code&gt;으로 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;2016년 6월 1일부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;App Store&lt;/code&gt;에 배포되는 모든 앱은 &lt;code class=&quot;highlighter-rouge&quot;&gt;IPv6&lt;/code&gt; 네트워크를 지원해야 한다. &lt;br /&gt;
-IPv6가 지원이 안 될 경우 배포가 안된다고 하니, 필요시 체크를 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_7.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;방금 우리가 작성한 이름을 가진 이름으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;가 하나 생성되었음을 확인 할 수 있다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_8.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;마지막으로 방금 생성한 VPC를 &lt;code class=&quot;highlighter-rouge&quot;&gt;우클릭&lt;/code&gt; 후, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;DNS 호스트 이름 편집&lt;/code&gt;을 눌러준다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_9.png&quot; alt=&quot;&quot; width=&quot;70%&quot; height=&quot;70%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;기본 값은 비활성화지만, DNS 호스트 이름을 &lt;code class=&quot;highlighter-rouge&quot;&gt;활성화&lt;/code&gt;하여 이름을 주도록 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;여기까지 진행 함으로써, 기본적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;구성은 완료되었다.&lt;br /&gt;
-다음으로 구성된 VPC에 대해 기본요소들을 살펴보자.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id4&quot;&gt;4. 기본구성 살펴보기&lt;/h2&gt;
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;id4-1&quot;&gt;4-1. 서브넷&lt;/h4&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_10.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;좌측에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;서브넷&lt;/code&gt;을 클릭하면, 사진처럼 기본적으로 구성되어있는 총 3개의 서브넷이 확인 가능하다.&lt;br /&gt;
-이때 각 서브넷은 서울 지역에 존재하는 AZ3개(a,b,c)에 하나씩 꾸려진 모습이다.
-    &lt;blockquote&gt;
-      &lt;p&gt;이 서브넷은 우리가 구성한 VPC가 아니라 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본 VPC&lt;/code&gt;에 존재하는 것으로 수정하지 말자.&lt;br /&gt;
-아직 우리는 어떠한 서브넷도 생성하지 않았다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id4-2&quot;&gt;4-2. 라우팅 테이블&lt;/h4&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_11.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;다음으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅 테이블&lt;/code&gt;을 클릭하면,&lt;br /&gt;
-사진에서 보이는 바와 같이 방금 생성한 VPC에 할당된 라우팅 테이블이 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;되었음을 알 수 있다.&lt;br /&gt;
-(사진속 빨간 사각형 안에 우리가 정한 이름으로된 VPC에 할당되어있다.)&lt;br /&gt;
-앞으로는 이 VPC의 라우팅 테이블에 규칙을 추가하며 각종 &lt;code class=&quot;highlighter-rouge&quot;&gt;네트워크 규칙&lt;/code&gt;을 설정할 것이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id4-3&quot;&gt;4-3. 인터넷 게이트웨이&lt;/h4&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_12.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인터넷 게이트웨이&lt;/code&gt; 또한 아직 생성된 것이 없어 기본 VPC에 부착된것만 보인다.&lt;br /&gt;
-인터넷 게이트웨이는 기본적으로 VPC 내부 요소들이 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부&lt;/code&gt;와 통신하는 징검다리 역할을 한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;이 인터넷 게이트웨이를 생성하여 우리가 생성한 VPC에 붙여줘야 비로소 &lt;code class=&quot;highlighter-rouge&quot;&gt;통신&lt;/code&gt;이 가능해지는 것이다.&lt;br /&gt;
-다음 글에서는 이러한 게이트웨이 생성 및 설정법을 다룰 것이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id4-4&quot;&gt;4-4. ACL&lt;/h4&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_13.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ACL&lt;/code&gt;을 눌러보면 사진처럼 우리가 생성한 VPC에 할당된 ACL을 확인할 수 있다.
-    &lt;blockquote&gt;
-      &lt;p&gt;아직은 어떠한 서브넷을 생성하지 않아, 연결된 서브넷이 &lt;code class=&quot;highlighter-rouge&quot;&gt;없음&lt;/code&gt;이 확인된다.&lt;br /&gt;
-주로 ACL의 설정은 건드리지 않으며, 더 세밀한 설정이 되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;보안그룹&lt;/code&gt;의 설정을 변경한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id4-5&quot;&gt;4-5. 보안그룹&lt;/h4&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_3_14.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;보안그룹&lt;/code&gt;을 확인해보면, 사진의 빨간 사각형 부분에 방금 만든 VPC ID로 설정되었음이 확인된다.
-    &lt;blockquote&gt;
-      &lt;p&gt;이 보안그룹의 &lt;code class=&quot;highlighter-rouge&quot;&gt;인바운드&lt;/code&gt; 설정을 변경하여 앞으로 진행할 것이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id5&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;여태 진행한 과정을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 하나 설정하고 기본요소들에 대하여 살펴보았다.&lt;br /&gt;
-이는 서울 Region 내에 나만의 &lt;code class=&quot;highlighter-rouge&quot;&gt;IDC&lt;/code&gt;가 하나 생긴것과 마찬가지이다.&lt;/p&gt;
-
-&lt;p&gt;다음 포스팅에서는 각 기본요소들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;설정&lt;/code&gt;하는 방법 및 서브넷 &amp;amp; 인스턴스 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;과&lt;br /&gt;
-실제로 우리가 생성한 서브넷의 인스턴스에 접속하는 방법을 설명하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이번 포스팅은 aws에서 VPC를 구축해보는 실습(?)에 관련된 포스팅이다. 깊게 들어가지는 않고 간단하게 VPC를 구성하는 방법을 써 볼 예정이다.</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다. 본 편에서는 다음의 요소를 구성하고 설정할 예정이다. EC2</summary></entry></feed>
