@@ -357,7 +357,7 @@ DB 연동 기능을 구현한 Bean객체는 DataSource를 <code class="highlight
   <li>인덱스 파라미터에 들어갈 값은 query() 매서드 맨 마지막 부분의 email 에서 전달
     <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Member</span><span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">query</span><span class="o">(</span>
       <span class="s">"select * from MEMBER where EMAIL = ?"</span><span class="o">,</span>
-      <span class="k">new</span> <span class="nc">RowMapper</span><span class="o">&lt;</span><span class="nc">Member</span><span class="o">&gt;()</span> <span class="o">{...</span><span class="err">코드생략</span><span class="o">},</span>
+      <span class="k">new</span> <span class="nc">RowMapper</span><span class="o">&lt;</span><span class="nc">Member</span><span class="o">&gt;()</span> <span class="o">{...</span><span class="na">코드생략</span><span class="o">},</span>
           <span class="n">email</span><span class="o">);</span> <span class="c1">// 물음표에 해당하는 값 전달</span>
 </code></pre></div>    </div>
     <p><br /></p>
@@ -512,7 +512,7 @@ jdbcTemplate.update(new PreparedStatementCreator(){…생략}, <code class="high
   <span class="k">try</span><span class="o">{</span>
       <span class="o">...</span>
       <span class="n">conn</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span> <span class="c1">// 트랜잭션 범위 시작</span>
-      <span class="o">...</span> <span class="err">쿼리실행</span>
+      <span class="o">...</span> <span class="n">쿼리실행</span>
       <span class="n">conn</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span> <span class="c1">// 트랜잭션 범위 종료: 커밋</span>
   <span class="o">}</span>
   <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">){</span>

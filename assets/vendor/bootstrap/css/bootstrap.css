@@ -610,6 +610,9 @@ pre code {
   .container {
     max-width: 960px;
   }
+  /* .container-content{
+    padding-right: 10rem;
+  } */
 }
 
 @media (min-width: 1200px) {
