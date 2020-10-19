@@ -138,6 +138,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-10-19-etc-8-html": {
+        "title": "[PSQL]PostgreSQL 설치 및 data 저장 위치 변경",
+        "subtitle":"CentOS 7 PSQL",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "etc",
+        "content": "들어가기 앞서본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.PSQL 설치  설치     sudo yum install postgresql94-server postgresql94-contrib sudo /usr/pgsql-9.4/bin/postgresql94-setup initdb sudo systemctl enable postgresql-9.4        기동     sudo systemctl start postgresql-9.4      PSQL 기본 설정  listen 변경     설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf org #listen_address = 'localhost' change listen_address = '*'        권한 변경     설정파일 - /var/lib/pgsql/9.4/data/pg_hba.conf org local   all             all                        peer host    all             all    127.0.0.1/32        trust change local   all             all                        trust host    all             all             0.0.0.0/0            trust      PSQL DATA DIRECTORY 변경  현재 data directory 확인     sudo -iu postgres postgres=# show data_directory;        db 중지     sudo systemctl stop postgresql-9.4        db 설정 파일 수정     설정파일 - /var/lib/pgsql/9.4/data/postmaster.opts /user/pgsql-9.4/bin/postgres \"-D\" \"&lt;&lt;to directory&gt;&gt;\"        서비스 설정 파일 수정     설정파일 - /etc/lib/systemd/system/postgresql-9.4.service Environment=PGDATA=&lt;&lt;to directory&gt;&gt;        기존 데이터 복사     mv &lt;&lt;org directory&gt;&gt; &lt;&lt;to directory&gt;&gt;        서비스 재시작     systemctl daemon-reload systemctl start postgresql-9.4        현재 data directory 확인 (1번방법)",
+        "url": "/devlog/2020/10/19/etc-8.html"
+      }
+      ,
+    
       "devlog-2020-03-13-etc-7-html": {
         "title": "[Thanos]프로메테우스의 스케일링 tool",
         "subtitle":"Prometheus: 오픈소스 모니터링 tool - 3",

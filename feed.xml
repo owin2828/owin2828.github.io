@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-03-13T19:22:28+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Thanos]프로메테우스의 스케일링 tool</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-7.html" rel="alternate" type="text/html" title="[Thanos]프로메테우스의 스케일링 tool" /><published>2020-03-13T18:19:00+09:00</published><updated>2020-03-13T18:19:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-19T16:08:43+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;psql-설치&quot;&gt;PSQL 설치&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;설치
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;postgresql94-server postgresql94-contrib
+ &lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /usr/pgsql-9.4/bin/postgresql94-setup initdb
+ &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;postgresql-9.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;기동
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start postgresql-9.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;psql-기본-설정&quot;&gt;PSQL 기본 설정&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;listen 변경
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf
+ org
+ #listen_address = 'localhost'
+ change
+ listen_address = '*'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;권한 변경
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/pg_hba.conf
+ org
+ local   all             all                        peer
+ host    all             all    127.0.0.1/32        trust
+ change
+ local   all             all                        trust
+ host    all             all             0.0.0.0/0            trust
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;psql-data-directory-변경&quot;&gt;PSQL DATA DIRECTORY 변경&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;현재 data directory 확인
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo -iu postgres
+ postgres=# show data_directory;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;db 중지
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo systemctl stop postgresql-9.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;db 설정 파일 수정
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/postmaster.opts
+ /user/pgsql-9.4/bin/postgres &quot;-D&quot; &quot;&amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;서비스 설정 파일 수정
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /etc/lib/systemd/system/postgresql-9.4.service
+ Environment=PGDATA=&amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;기존 데이터 복사
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt; directory&amp;gt;&amp;gt; &amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;서비스 재시작
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; systemctl daemon-reload
+ systemctl start postgresql-9.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;현재 data directory 확인 (1번방법)&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="etc" /><summary type="html">들어가기 앞서 본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.</summary></entry><entry><title type="html">[Thanos]프로메테우스의 스케일링 tool</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-7.html" rel="alternate" type="text/html" title="[Thanos]프로메테우스의 스케일링 tool" /><published>2020-03-13T18:19:00+09:00</published><updated>2020-03-13T18:19:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;프로메테우스&lt;/code&gt;는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제점&lt;/code&gt;을 지닌다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;확장성의 어려움&lt;/li&gt;
@@ -850,311 +921,4 @@ VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rou
 이번 기회로 새로운 눈이 뜨여지게 된 것 같다.&lt;/p&gt;
 
 &lt;p&gt;배웠으니 앞으로 어딘가에 적용하기를 기대하고,&lt;br /&gt;
-누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3</summary></entry><entry><title type="html">[AWS] EC2 인스턴스(실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-5.html" rel="alternate" type="text/html" title="[AWS] EC2 인스턴스(실습)" /><published>2020-01-16T09:20:00+09:00</published><updated>2020-01-16T09:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-5.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다.&lt;br /&gt;
-본 편에서는 다음의 요소를 구성하고 설정할 예정이다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;EC2&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id1&quot;&gt;1. 키 페어 생성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_1.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;인스턴스 생성하기 전, 인증에 사용되는 키 페어를 만들기 위해&lt;br /&gt;
-사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 검색하여 이동한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_2.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;좌측의 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;키 페어&lt;/code&gt;를 클릭 후, 키 페어 생성을 눌러 생성한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_3.png&quot; alt=&quot;&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;규칙&lt;/code&gt;에 따라 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;keypair-apne2-dev-public&lt;/code&gt;으로 이름을 지정 후,&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;을 누른다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_4.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;키 페어&lt;/code&gt;가 생성됨이 확인되고, &lt;code class=&quot;highlighter-rouge&quot;&gt;다운로드&lt;/code&gt;가 시작이 된다.
-    &lt;blockquote&gt;
-      &lt;p&gt;이때 생성되는 키 페어는 &lt;code class=&quot;highlighter-rouge&quot;&gt;단 한번&lt;/code&gt;만 다운로드가 가능하므로, 주의하자&lt;br /&gt;
-잃어버릴 시, 키 페어를 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로&lt;/code&gt; 생성해야 한다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;하나의 키 페어로 모든 인스턴스에 적용하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;매우 위험&lt;/code&gt;하다.&lt;br /&gt;
-따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;적절한 보안 규칙&lt;/code&gt;을 세워 키 페어를 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리&lt;/code&gt;해야한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id2&quot;&gt;2. 인스턴스(EC2) 생성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_5.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;좌측의 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;를 클릭 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;을 클릭한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-1&quot;&gt;2-1. AMI 선택&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_6.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;사진처럼 맨 위의 &lt;code class=&quot;highlighter-rouge&quot;&gt;AMI&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;선택&lt;/code&gt;한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;선택된 이미지는 아마존에서 지원하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;기본&lt;/code&gt; 이미지이다.&lt;br /&gt;
-또한, 사진 좌측의 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Marketplace&lt;/code&gt;나 &lt;code class=&quot;highlighter-rouge&quot;&gt;커뮤티니 AMI&lt;/code&gt;등에서&lt;br /&gt;
-여러가지 옵션으로 준비된 이미지를 선택할 수 있다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-2&quot;&gt;2-2. 인스턴스 유형 선택&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_7.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;우리는 &lt;code class=&quot;highlighter-rouge&quot;&gt;프리티어&lt;/code&gt;를 사용하므로, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;녹색&lt;/code&gt;으로 표시된 &lt;code class=&quot;highlighter-rouge&quot;&gt;t2.micro&lt;/code&gt;를 선택한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;여기서 유형 앞에 &lt;code class=&quot;highlighter-rouge&quot;&gt;t&lt;/code&gt;가 붙는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;개발용&lt;/code&gt;이거나 &lt;code class=&quot;highlighter-rouge&quot;&gt;테스트용&lt;/code&gt;이라는 의미이다.&lt;br /&gt;
-또한 t뒤에 &lt;code class=&quot;highlighter-rouge&quot;&gt;숫자&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;세대&lt;/code&gt;를 의미하며 클수록 최신이다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;선택을 하였다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;다음: 인스턴스 세부 정보 구성&lt;/code&gt;을 눌러 진행한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;여기서 &lt;code class=&quot;highlighter-rouge&quot;&gt;검토 및 시작&lt;/code&gt;을 누르게되면 우리가 원하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;구성을 진행할 수 &lt;code class=&quot;highlighter-rouge&quot;&gt;없다&lt;/code&gt;.&lt;br /&gt;
-그러므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;주의&lt;/code&gt;해서 진행하도록 하자.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-3&quot;&gt;2-3. 인스턴스 구성&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_8.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;사진의 첫 번째 빨간 사각형에서 다음과 같은 설정을 진행한다.
-    &lt;ol&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;네트워크&lt;/code&gt;는 기본 VPC로 선택이 되어있는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;우리가 만든 VPC&lt;/code&gt;를 선택한다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;서브넷&lt;/code&gt;은 우리가 인스턴스를 생성할 서브넷을 지정해준다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;퍼블릭 IP 자동할당&lt;/code&gt;은 &lt;code class=&quot;highlighter-rouge&quot;&gt;활성화&lt;/code&gt;를 해준다.
-        &lt;blockquote&gt;
-          &lt;p&gt;외부와 통신하는 서비스는 활성화를 해줘야한다.&lt;br /&gt;
-  서비스를 재실행시, Public IP는 &lt;code class=&quot;highlighter-rouge&quot;&gt;고정&lt;/code&gt;되지만, Private IP는 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경&lt;/code&gt;되기 때문이다.&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;두 번째 사각형에서는 다음과 같은 설정을 진행한다.
-    &lt;ol&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;종료 방지 기능 활성화&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;체크&lt;/code&gt;하여준다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;모니터링&lt;/code&gt;은 &lt;code class=&quot;highlighter-rouge&quot;&gt;활성화&lt;/code&gt;하는 것을 권장한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;위의 설정이 되었다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;다음&lt;/code&gt;을 눌러 진행한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-4&quot;&gt;2-4. 스토리지 &amp;amp; 추가&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;딱히 수정할 사항은 &lt;code class=&quot;highlighter-rouge&quot;&gt;없으므로&lt;/code&gt; 다음을 눌러 진행한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-5&quot;&gt;2-5. 보안 그룹 구성&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_10.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;보안그룹은 &lt;code class=&quot;highlighter-rouge&quot;&gt;이름&lt;/code&gt;을 참조하여 기존에 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성한&lt;/code&gt; 그룹을 선택한다.&lt;br /&gt;
-하단에 표시되는 프로토콜 규칙을 확인 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;검토 및 시작&lt;/code&gt;을 누른다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-6&quot;&gt;2-6. 검토&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_11.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;화면에 표시되는 정보들을 확인하여 제대로 설정되었는지 검토 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;시작하기&lt;/code&gt;를 누르면&lt;br /&gt;
-사진과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;키 페어&lt;/code&gt; 선택화면이 표시된다.&lt;/li&gt;
-  &lt;li&gt;이때 &lt;code class=&quot;highlighter-rouge&quot;&gt;기존 키 페어&lt;/code&gt;를 선택하고, 체크박스에 &lt;code class=&quot;highlighter-rouge&quot;&gt;체크&lt;/code&gt;하여 시작한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id2-7&quot;&gt;2-7. 확인&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_12.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;제대로 설정이 되었는지 확인하기 위해 빨간 사각형들을 살펴본다.
-    &lt;ol&gt;
-      &lt;li&gt;인스턴스 상태: 생성 직후는 &lt;code class=&quot;highlighter-rouge&quot;&gt;노란색&lt;/code&gt;으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pending&lt;/code&gt;이라 표시되지만 당황하지 말자.&lt;br /&gt;
-  아직 &lt;code class=&quot;highlighter-rouge&quot;&gt;준비 중&lt;/code&gt;이라는 뜻이며, 곧 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;초록색&lt;/code&gt;으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;running&lt;/code&gt;이 표시될 것이다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스 ID&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;상태&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;유형&lt;/code&gt;을 확인한다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가용영역&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;보안그룹&lt;/code&gt;이 제대로 설정되었는지 확인한다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;키 페어 이름&lt;/code&gt;을 확인한다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;퍼블릭 DNS&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;퍼블릭 IP&lt;/code&gt;를 확인한다.&lt;br /&gt;
-  추후 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt;로 접속할 때 , 이 주소를 사용할 것인다.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;가 제대로 할당되었는지 확인한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;3. 인스턴스(EC2) SSH 접속&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_13.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;새로 생성한 인스턴스에 접속하기 위해 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;연결&lt;/code&gt;을 눌러 가이드를 확인한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;id3-1&quot;&gt;3-1. Mac &amp;amp; Linux&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_14.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;다운로드 받은 키 페어가 있는 디렉토리로 이동한다.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;디렉토리위치&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;키 페어 파일의 &lt;code class=&quot;highlighter-rouge&quot;&gt;권한&lt;/code&gt;을 다음 명령어로 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경&lt;/code&gt;한다.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;400 keypair-apne2-dev-public.pem
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt;를 이용해 다음 명령으로 접속한다.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; // 가이드에서 제공하는 DNS로 접속하는 방법
- // 사진에서 제공하는 명령어를 그대로 사용하면 된다.  
- &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;keypair-apne2-dev-public.pem&quot;&lt;/span&gt; ec2-user@ec2-1X-XXX-XXX-XXX.ap-northeast-2.compute.amazonaws.com
-
- // 퍼블릭 IP를 이용해 접속하는 방법
- &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;keypair-apne2-dev-public.pem&quot;&lt;/span&gt; ec2-user@&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;본인의 퍼블릭 IP&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;성공적으로 접속되었다면, 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;접속 허용 여부&lt;/code&gt;를 묻는 문구가 등장한다.&lt;br /&gt;
-(&lt;code class=&quot;highlighter-rouge&quot;&gt;에러&lt;/code&gt; 발생시 6번으로)
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; The authenticity of host &lt;span class=&quot;s1&quot;&gt;'1X.XXX.XXX.XXX (1X.XXX.XXX.XXX)'&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;'t be established.
- ECDSA key fingerprint is SHA256:+Kxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
- Are you sure you want to continue connecting (yes/no)? yes
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;터미널 창에 &lt;code class=&quot;highlighter-rouge&quot;&gt;yes&lt;/code&gt;를 입력해주면 다음과 같은 성공화면이 뜨게 된다.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;         __|  __|_  &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-         _|  &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;     /   Amazon Linux 2 AMI
-         ___|&lt;span class=&quot;se&quot;&gt;\_&lt;/span&gt;__|___|
-
- https://aws.amazon.com/amazon-linux-2/
- 2 package&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; needed &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;security, out of 13 available
- Run &lt;span class=&quot;s2&quot;&gt;&quot;sudo yum update&quot;&lt;/span&gt; to apply all updates.
- &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ec2-user@ip-10-0-1-97 ~]&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;만약 위 과정중 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;에러&lt;/code&gt;를 마주할 때 몇 가지 대안을 소개한다.
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ssh: connect to host 1X.XXX.XXX.XXX port 22: Connection timed out
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;ul&gt;
-      &lt;li&gt;ssh용 &lt;code class=&quot;highlighter-rouge&quot;&gt;22번 포트&lt;/code&gt;가 열려있는지 확인&lt;/li&gt;
-      &lt;li&gt;VPC - &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅 테이블&lt;/code&gt; 설정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;인터넷 게이트웨이&lt;/code&gt;의 설정 확인&lt;/li&gt;
-      &lt;li&gt;VPC - &lt;code class=&quot;highlighter-rouge&quot;&gt;보안그룹&lt;/code&gt; 설정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;인바운드 규칙&lt;/code&gt;을 클릭하여&lt;br /&gt;
- &lt;code class=&quot;highlighter-rouge&quot;&gt;규칙 편집&lt;/code&gt;을 눌러 소스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;내 ip&lt;/code&gt;를 눌러 갱신
-        &lt;blockquote&gt;
-          &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;핫스팟&lt;/code&gt; 환경등 접속한 IP가 &lt;code class=&quot;highlighter-rouge&quot;&gt;달라질&lt;/code&gt; 경우, 보안그룹의 설정을 &lt;code class=&quot;highlighter-rouge&quot;&gt;갱신&lt;/code&gt;해야한다.&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;blockquote&gt;
-      &lt;p&gt;그래도 안 될 경우, &lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/15/aws-4.html&quot;&gt;이전 포스팅&lt;/a&gt;을 참고하여 차분히 하나씩 되짚어 보자.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;id3-2&quot;&gt;3-2. Window&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_16.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;윈도우&lt;/code&gt;의 경우 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/putty.html&quot;&gt;여기&lt;/a&gt;를 확인하여 진행한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Putty&lt;/code&gt;를 설치한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Puttygen&lt;/code&gt;을 이용하여 다운로드 받은 &lt;code class=&quot;highlighter-rouge&quot;&gt;.pem&lt;/code&gt; 파일을 &lt;code class=&quot;highlighter-rouge&quot;&gt;.ppk&lt;/code&gt; 파일로 변환한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Host Name&lt;/code&gt;에 사진의 빨간 사각형의 정보를 붙여넣기 한다.&lt;br /&gt;
- &lt;img src=&quot;/img/aws/aws_5_15.png&quot; alt=&quot;&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;br /&gt;
- &lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;Connection(연결) - SSH - &lt;code class=&quot;highlighter-rouge&quot;&gt;Auth&lt;/code&gt;를 클릭하여 변경한 &lt;code class=&quot;highlighter-rouge&quot;&gt;.ppk&lt;/code&gt;파일을 넣어준다.&lt;br /&gt;
- &lt;img src=&quot;/img/aws/aws_5_17.png&quot; alt=&quot;&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;br /&gt;
- &lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt;을 눌러 접속을 진행하면 mac &amp;amp; linux의 경우와 동일하게 접속에 성공한다.&lt;/li&gt;
-  &lt;li&gt;만약 &lt;code class=&quot;highlighter-rouge&quot;&gt;에러&lt;/code&gt;가 발생하거나, 접속이 안된다면, 위의 mac &amp;amp; linux 6번을 참조한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;이로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;를 하나 생성하고, 각종 &lt;code class=&quot;highlighter-rouge&quot;&gt;설정&lt;/code&gt;들을 한 뒤 실제 인스턴스 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 만들어 보았다.&lt;br /&gt;
-생성한 EC2 인스턴스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt; 역할을 하는 인스턴스로써,&lt;br /&gt;
-VPC 내부의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private&lt;/code&gt; 서브넷들을 관리하는 역할을 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id4&quot;&gt;4. Public subnet을 통한 Apache 서버 구축&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt;도 생성하였으니, 이번에는 간단한 &lt;code class=&quot;highlighter-rouge&quot;&gt;웹 서버&lt;/code&gt; 역할을 하는 인스턴스를 생성한다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;동일한 방식&lt;/code&gt;으로 다음 조건의 서브넷과 인스턴스를 하나 더 생성한다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;VPC: &lt;code class=&quot;highlighter-rouge&quot;&gt;동일&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Subnet
-    &lt;ul&gt;
-      &lt;li&gt;이름: &lt;code class=&quot;highlighter-rouge&quot;&gt;subnet-apne2c-dev-web&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Routing Table
-    &lt;ul&gt;
-      &lt;li&gt;이름: &lt;code class=&quot;highlighter-rouge&quot;&gt;rt-apne2-dev-web&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;인터넷 게이트웨이: 기존 것과 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Security Group
-    &lt;ul&gt;
-      &lt;li&gt;이름: &lt;code class=&quot;highlighter-rouge&quot;&gt;sg_apne2_dev_web&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;EC2(web server instance)
-    &lt;ul&gt;
-      &lt;li&gt;이름: &lt;code class=&quot;highlighter-rouge&quot;&gt;ec2-apne2c-dev-web&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;키 페어: 기존 것과 &lt;code class=&quot;highlighter-rouge&quot;&gt;동일&lt;/code&gt;
-        &lt;blockquote&gt;
-          &lt;p&gt;실제 개발을 진행할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;규칙&lt;/code&gt;을 정하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;다른&lt;/code&gt; 키 페어로 하자.&lt;/p&gt;
-        &lt;/blockquote&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;성공적으로 생성하였다면, 새로 생성한 인스턴스에 &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt; 접속을 하여 다음 명령을 실행한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum update
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;httpd
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start httpd
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl localhost
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;sudo yum update 명령어를 사용하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;꽤&lt;/code&gt; 시간이 걸리는데 당황하지말고 그대로 두자.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;다음과 같은 화면이 나오면 &lt;code class=&quot;highlighter-rouge&quot;&gt;정상&lt;/code&gt; 실행이 된 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_18.png&quot; alt=&quot;아파치 웹서버를 구축한 모습&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id5&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;이로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt; 구성부터 시작해 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;의 구성까지 길었던 과정이 끝났다.&lt;/p&gt;
-
-&lt;p&gt;간단하게 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Web Server&lt;/code&gt;를 구축하여 ssh 접속까지 해보았다.&lt;br /&gt;
-실습에서 전부 다루지 못했던 부분은 다음과 같은데,&lt;br /&gt;
-이어지는 포스팅에서 추가 설명으로 대체하겠다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Private Subnet&lt;/code&gt;을 구성하는 방법&lt;/li&gt;
-  &lt;li&gt;Bastion Host를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private Subnet&lt;/code&gt;에 접근하는 방법&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ELB&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 이전 포스팅에서는 실제 인스턴스를 생성하기 전 기본적인 구성을 끝마쳤다. 본 편에서는 다음의 요소를 구성하고 설정할 예정이다. EC2</summary></entry></feed>
+누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3</summary></entry></feed>
