@@ -161,9 +161,11 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 id="들어가기-앞서">들어가기 앞서</h2>
 <p>본 문서에서는 <code class="highlighter-rouge">PSQL</code> <code class="highlighter-rouge">CentOS 7 설치</code> 및 <code class="highlighter-rouge">Data directory 변경</code> 방법에 대하여 기술한다.
+<br />
 <br /></p>
 
 <h2 id="psql-설치">PSQL 설치</h2>
+<hr />
 <ol>
   <li>설치
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>yum <span class="nb">install </span>postgresql94-server postgresql94-contrib
@@ -179,6 +181,7 @@
 </ol>
 
 <h2 id="psql-기본-설정">PSQL 기본 설정</h2>
+<hr />
 <ol>
   <li>listen 변경
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf
@@ -202,6 +205,7 @@
 </ol>
 
 <h2 id="psql-data-directory-변경">PSQL DATA DIRECTORY 변경</h2>
+<hr />
 <ol>
   <li>현재 data directory 확인
     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo -iu postgres

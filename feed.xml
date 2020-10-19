@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-19T17:53:11+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-19T18:00:09+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;본 문서에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;PSQL&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7 설치&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;Data directory 변경&lt;/code&gt; 방법에 대하여 기술한다.
+&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;psql-설치&quot;&gt;PSQL 설치&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;ol&gt;
   &lt;li&gt;설치
     &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;postgresql94-server postgresql94-contrib
@@ -18,6 +20,7 @@
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;psql-기본-설정&quot;&gt;PSQL 기본 설정&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;ol&gt;
   &lt;li&gt;listen 변경
     &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf
@@ -41,6 +44,7 @@
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;psql-data-directory-변경&quot;&gt;PSQL DATA DIRECTORY 변경&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;ol&gt;
   &lt;li&gt;현재 data directory 확인
     &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo -iu postgres
