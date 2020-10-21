@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-19T18:00:09+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-21T11:08:20+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] Vue.js 시작</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-5.html" rel="alternate" type="text/html" title="[Vue] Vue.js 시작" /><published>2020-10-21T09:56:00+09:00</published><updated>2020-10-21T09:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Front-End&lt;/code&gt;를 담당하는 프레임워크 중 3대장은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;React&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Angular&lt;/code&gt;이 있다. 
+그 중, 가장 최근에 나온 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;에 대하여 알아보기 위해 포스팅을 시작한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;본 시리즈는 다음의 교재를 바탕으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;학습&lt;/code&gt;에 목적을 둔 글임을 밝힙니다.
+    &lt;ul&gt;
+      &lt;li&gt;교재: Vue.js 입문&lt;/li&gt;
+      &lt;li&gt;저자: 장기효&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-vuejs란-무엇인가&quot;&gt;1. Vue.js란 무엇인가&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Vue.js&lt;/code&gt;는 웹 페이지 개발을 위한 프론트엔드 프레임워크이다.
+창시자인 &lt;code class=&quot;highlighter-rouge&quot;&gt;Evan You&lt;/code&gt;는 앵귤러와 리액트의 장점을 살려 Vue를 만들었다고 한다. &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-vuejs-장점&quot;&gt;2. Vue.js 장점&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;다음은 Vue.js 장점이라고 알려진 특징이다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;배우기가 쉽다.&lt;/li&gt;
+  &lt;li&gt;리액트와 앵귤러에 비해 성능이 뛰어나다.&lt;/li&gt;
+  &lt;li&gt;리액트와 앵귤러의 장점을 갖고 있다.
+    &lt;blockquote&gt;
+      &lt;p&gt;앵귤러의 &lt;code class=&quot;highlighter-rouge&quot;&gt;데이터 바인딩&lt;/code&gt; 특성과 리액트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;가상 돔&lt;/code&gt; 기반 렌더링 특징을 가지고 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;3-vuejs의-특징&quot;&gt;3. Vue.js의 특징&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Vue.js는 다음과 같이 크게 4가지 특징을 지닌다.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-1-ui-화면단-라이브러리&quot;&gt;3-1. UI 화면단 라이브러리&lt;/h4&gt;
+&lt;p&gt;Vue.js는 &lt;code class=&quot;highlighter-rouge&quot;&gt;MVVM&lt;/code&gt; 패턴에 해당하는 화면단 라이브러리이다.  이러한 방식을 채택함으로써, 화면의 요소들을 제어하는 코드와 데이터 제어 로직을 &lt;code class=&quot;highlighter-rouge&quot;&gt;분리&lt;/code&gt;하여 코드를 더 &lt;code class=&quot;highlighter-rouge&quot;&gt;직관적&lt;/code&gt;으로 이해가 가능하며, 추후 &lt;code class=&quot;highlighter-rouge&quot;&gt;유지보수&lt;/code&gt;가 용이하다.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_5_1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MVVM&lt;/code&gt; 패턴이란 화면을 모델(Model) - 뷰(View) - 뷰 모델(ViewModel) 방식으로 구조화하여 개발하는 방식을 의미&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-2-컴포넌트-기반-프레임워크&quot;&gt;3-2. 컴포넌트 기반 프레임워크&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트(component)&lt;/code&gt;란 레고 블럭과 같다. 뷰의 컴포넌트들을 잘 쌓아서 화면이 구성 가능한데, 이러한 방식의 장점은 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;높은 재사용성&lt;/li&gt;
+  &lt;li&gt;HTML 코드에서 화면의 구조를 직관적으로 파악 가능&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;3-3-리액트와-앵귤러의-장점을-가진-프레임워크&quot;&gt;3-3. 리액트와 앵귤러의 장점을 가진 프레임워크&lt;/h4&gt;
+&lt;p&gt;뷰는 앵귤러의 &lt;code class=&quot;highlighter-rouge&quot;&gt;양방향 데이터 바인딩&lt;/code&gt;과 리액트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;단방향 데이터 흐름&lt;/code&gt;의 장점을 모두 결합한 프레임워크이다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;양방향데이터 바인딩이란, 화면에 표시되는 값과 프레임워크 모델 데이터 값이 &lt;code class=&quot;highlighter-rouge&quot;&gt;동기화&lt;/code&gt;되어, 한쪽의 변경이 다른쪽에 &lt;code class=&quot;highlighter-rouge&quot;&gt;자동 반영&lt;/code&gt;되는 것이며,&lt;br /&gt;
+단뱡향 데이터 흐름은 항상 상위 컴포넌트에서 하위 컴포넌트로 &lt;code class=&quot;highlighter-rouge&quot;&gt;단방향 전달&lt;/code&gt;하도록 되어있는 구조를 의미&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;3-4-가상-돔-사용&quot;&gt;3-4. 가상 돔 사용&lt;/h4&gt;
+&lt;p&gt;뷰는 빠른 화면 렌더링을 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;가상 돔(Virtual DOM)&lt;/code&gt; 방식을 적용하여, 사용자 인터렉션이 많은 요즘 웹 화면에 적합한 동작 구조를 지닌다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가상 돔&lt;/code&gt;을 사용하면, 특정 돔 요소를 추가하거나 삭제하는 변경이 일어날 때 화면 전체를 다시 그리지 않고,&lt;br /&gt;
+프레임 워크에서 정의한 방식대로 화면을 &lt;code class=&quot;highlighter-rouge&quot;&gt;갱신&lt;/code&gt;하여 성능을 높임&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;간단하게 뷰의 특징과 장점에 대해서 알아보았지만, 백앤드 개발을 주로 하는 나에게는 잘 다가오지 않는다..&lt;br /&gt;
+역시 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello world&lt;/code&gt;를 한 번 해봐야 알 것 같다. 그런 의미에서 다음 글에서는 간단한 프로젝트를 만들어 보도록 하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Front-End를 담당하는 프레임워크 중 3대장은 Vue, React, Angular이 있다. 그 중, 가장 최근에 나온 Vue에 대하여 알아보기 위해 포스팅을 시작한다.</summary></entry><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;본 문서에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;PSQL&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7 설치&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;Data directory 변경&lt;/code&gt; 방법에 대하여 기술한다.
 &lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
@@ -786,145 +859,4 @@ AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴�
   &lt;p&gt;배포하는 방식은 이 글을 작성하는 시점에서 아직 다른 개발자와 협의가 이루어지지 않아 &lt;code class=&quot;highlighter-rouge&quot;&gt;미완성&lt;/code&gt;으로 남겨놓았다.&lt;br /&gt;
 추후, 논의되어 합의가 이루어지면 &lt;code class=&quot;highlighter-rouge&quot;&gt;업데이트&lt;/code&gt;할 예정이다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry><entry><title type="html">[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)</title><link href="https://owin2828.github.io/devlog/2020/01/16/aws-6.html" rel="alternate" type="text/html" title="[AWS] Private Subnet, NAT, ELB, Elastic IP, S3 (실습)" /><published>2020-01-16T17:12:00+09:00</published><updated>2020-01-16T17:12:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/16/aws-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/16/aws-6.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Private Subnet&lt;/code&gt;을 구성하는 방법&lt;/li&gt;
-  &lt;li&gt;Bastion Host를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Private Subnet&lt;/code&gt;에 접근하는 방법&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ELB&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id1&quot;&gt;1. Private Subnet 구성 및 접근&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;우선 구성하는 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단&lt;/code&gt;하다. 그냥 라우팅 테이블을 하나 만들고,&lt;br /&gt;
-인터넷 게이트웨이를 설정하지 않으면 그만이다.&lt;/p&gt;
-
-&lt;p&gt;접근 또한 마찬가지로 어렵지 않은데, 우선 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt;로 접속 후&lt;br /&gt;
-다시 &lt;code class=&quot;highlighter-rouge&quot;&gt;내부&lt;/code&gt;적으로 접속을 진행하면된다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;대략적으로 그려보면 다음과 같다.&lt;br /&gt;
-외부 접속 –&amp;gt; Bastion Host –&amp;gt; Private Subnet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;약간의 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제&lt;/code&gt;가 있다하면 ssh 접속을 위한 &lt;code class=&quot;highlighter-rouge&quot;&gt;키 페어 관리&lt;/code&gt;인데,&lt;br /&gt;
-내부 private subnet에 접속하기 위해 Bastion Host는 각 서브넷의&lt;br /&gt;
-키 페어를 &lt;code class=&quot;highlighter-rouge&quot;&gt;가지고&lt;/code&gt; 있어야 한다.&lt;/p&gt;
-
-&lt;p&gt;이런 경우, 관리자들이 적절한 &lt;code class=&quot;highlighter-rouge&quot;&gt;보안 규칙&lt;/code&gt;을 세워 키 페어 관리를 해야한다.&lt;br /&gt;
-그렇지 않으면 Bastion Host에 접속하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;모든&lt;/code&gt; private subnet에 접근이 &lt;code class=&quot;highlighter-rouge&quot;&gt;가능&lt;/code&gt;해,&lt;br /&gt;
-그냥 &lt;code class=&quot;highlighter-rouge&quot;&gt;모두 public&lt;/code&gt;으로 만든 것이랑 별반 다름이 없을 수 있기 때문이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id2&quot;&gt;2. NAT(Network Access Translation)&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NAT&lt;/code&gt;는 설명했듯이, 인터넷 게이트웨이를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;outbound&lt;/code&gt;만 허용한다.&lt;br /&gt;
-이는 AWS의 정책으로 외부에서 접근이 불가하다.&lt;/p&gt;
-
-&lt;p&gt;설정하는 방법은 다음과 같이 두 가지 방법이 존재한다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;를 생성하여 설정&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;게이트웨이&lt;/code&gt;로 생성하여 설정&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;또한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;를 설정하며 &lt;code class=&quot;highlighter-rouge&quot;&gt;유료&lt;/code&gt; 서비스다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;Elastic IP를 사용하는 경우, 서버 재부팅 시에도 IP가 고정된다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;3. ELB(Elastic Load Balancer)&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_5_19.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;은 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 검색 후, 좌측 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;로드밸런서&lt;/code&gt;에서 할 수 있다.&lt;br /&gt;
-생성 시, 3개 중 하나를 고르라고 하는데 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Classic&lt;/code&gt;을 선택하면 된다.&lt;/p&gt;
-
-&lt;p&gt;그 후 대략 다음의 단계에 따라서 구성한다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;본인의 VPC와 서브넷을 잘 선택&lt;/li&gt;
-  &lt;li&gt;보안그룹 할당: &lt;code class=&quot;highlighter-rouge&quot;&gt;기존&lt;/code&gt;그룹에서 생성한 그룹 선택&lt;/li&gt;
-  &lt;li&gt;EC2 인스턴스 추가: 이 단계에서 우리의 &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; 인스턴스를 추가한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;위와 같은 설정의 이점은 EC2에 ELB를 거치치 않고 들어오는 경우를 막는 것이다.&lt;br /&gt;
-즉, prviate EC2에 웹 프로토콜로 접속 시, &lt;code class=&quot;highlighter-rouge&quot;&gt;ELB&lt;/code&gt;를 통해서 접근해야 한다. &lt;br /&gt;
-이를 통해 다음과 같은 흐름으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Inbound&lt;/code&gt;를 설정할 수 있다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;ACL –&amp;gt; ELB –&amp;gt; EC2&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ELB&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bastion Host&lt;/code&gt;를 제외한 나머지 subnet은 &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt; 설정을 해야한다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;또한 EC2는 다음과 같은 3가지 방법으로 구분이 되는데,&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;private IP&lt;/li&gt;
-  &lt;li&gt;Public IP + address&lt;/li&gt;
-  &lt;li&gt;Unique ID(Instance ID)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;이 중, 3번째 방법인 &lt;code class=&quot;highlighter-rouge&quot;&gt;유니크&lt;/code&gt;한 ID가 ELB에 제공되어야 밸런싱을 잘 해준다고 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id4&quot;&gt;4. Elastic IP(탄력적 IP)&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;AWS에서 Elastic IP를 가지고 있지 않은 리소스의 경우,&lt;br /&gt;
-재부팅 시 IP의 &lt;code class=&quot;highlighter-rouge&quot;&gt;변경&lt;/code&gt;이 일어난다.&lt;br /&gt;
-이러한 현상을 막기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Elastic IP&lt;/code&gt;를 설정하면 IP가 &lt;code class=&quot;highlighter-rouge&quot;&gt;고정&lt;/code&gt;된다.&lt;/p&gt;
-
-&lt;p&gt;이러한 서비스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Floating&lt;/code&gt;되어 있다고 한다.&lt;br /&gt;
-무슨 말이나면, 특정 객체에 묶여있는 것이 아니라&lt;br /&gt;
-상황에 따라 이리 붙었다 저리 붙었다가 가능하다는 뜻이다.&lt;/p&gt;
-
-&lt;p&gt;이러한 특징 때문에 특정 서비스가 &lt;code class=&quot;highlighter-rouge&quot;&gt;다운&lt;/code&gt;되면 Elastic IP를&lt;br /&gt;
-다른쪽으로 붙여서 트래픽을 그 쪽으로 유도해 &lt;code class=&quot;highlighter-rouge&quot;&gt;장애&lt;/code&gt;에 대처할 수 있게 된다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;End-User에게 보여지는 IP는 &lt;code class=&quot;highlighter-rouge&quot;&gt;고정&lt;/code&gt;된 IP이기 때문이다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;혹은 서비스를 이관할 때도 이 서비스를 이용하여&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;유동적&lt;/code&gt;으로 트래픽을 처리할 수 있게 된다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id5&quot;&gt;5. S3(Simple Storage Service)&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_6_1.png&quot; alt=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot; /&gt;&lt;br /&gt;
-S3는 VPC &lt;code class=&quot;highlighter-rouge&quot;&gt;외부&lt;/code&gt;에 존재하는 서비스로써 &lt;code class=&quot;highlighter-rouge&quot;&gt;Bucket&lt;/code&gt; 단위로 구분하며,&lt;br /&gt;
-AWS에서 S3 서비스를 검색하여 시작할 수 있으며 다음과 같은 특징이 있다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;S3는 내부적으로 2군데 더 &lt;code class=&quot;highlighter-rouge&quot;&gt;미러링&lt;/code&gt;을 한다.&lt;br /&gt;
-현재 내 region에 1개 + 가장 가까운 region에 1개에 구성함으로써,&lt;br /&gt;
-어떤식으로 장애가 나더라도 &lt;code class=&quot;highlighter-rouge&quot;&gt;대응&lt;/code&gt; 할 수 있는 구조이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;S3는 외부에 보여지지 않으므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;버킷레벨&lt;/code&gt;로 권한을 설정하거나&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;파일레벨&lt;/code&gt;로 권한을 설정할 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;S3는 &lt;code class=&quot;highlighter-rouge&quot;&gt;스토리지&lt;/code&gt; 서비스 이므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;DB&lt;/code&gt;와의 연동은 &lt;code class=&quot;highlighter-rouge&quot;&gt;안된다&lt;/code&gt;.&lt;br /&gt;
-즉 S3에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Static Data&lt;/code&gt;만 저장할 수 있다.&lt;br /&gt;
-이러한 특징으로 인해, 서버사이드 언어를 저장하고 돌려도 &lt;code class=&quot;highlighter-rouge&quot;&gt;작동하지 않는다&lt;/code&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;S3는 &lt;code class=&quot;highlighter-rouge&quot;&gt;AZ&lt;/code&gt; 밖에 존재하게 되므로,&lt;br /&gt;
-VPC 안에 있는 객체들과의 통신은 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;을 유발하게 된다.&lt;br /&gt;
-이 문제를 피하기 위해, S3에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;인증토큰&lt;/code&gt;을 이용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;허용된&lt;/code&gt; REST API만 받아주면 된다고 한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id6&quot;&gt;6. 끝마치며&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;AWS에 대해서 배워볼까? 로 시작했던 시리즈의 포스팅이 끝났다.&lt;br /&gt;
-단순하고 짧게 쓰려고 했지만, 쓰다보니 점점 길어지게 되었다.&lt;/p&gt;
-
-&lt;p&gt;AWS는 늘 t2.micro 인스턴스 하나만 띡 만들어서 대충 써봤던게 전부였는데,&lt;br /&gt;
-이번 기회로 새로운 눈이 뜨여지게 된 것 같다.&lt;/p&gt;
-
-&lt;p&gt;배웠으니 앞으로 어딘가에 적용하기를 기대하고,&lt;br /&gt;
-누군가에게 이 글이 도움이 되었길 바라며 포스팅을 마친다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 다음과 같은 구성요소들을 살펴볼 예정이다. Private Subnet을 구성하는 방법 Bastion Host를 통해 Private Subnet에 접근하는 방법 NAT ELB Elastic IP S3</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry></feed>

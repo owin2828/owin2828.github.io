@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [PSQL]PostgreSQL 설치 및 data 저장 위치 변경 - 낮코밤코
+    [Vue] Vue.js 시작 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="들어가기 앞서 본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.">
+  <meta name="description" content="들어가기 앞서 Front-End를 담당하는 프레임워크 중 3대장은 Vue, React, Angular이 있다. 그 중, 가장 최근에 나온 Vue에 대하여 알아보기 위해 포스팅을 시작한다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/10/21/web-5.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -107,22 +107,22 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_etc.jpg')">
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</h1>
+            <h1>[Vue] Vue.js 시작</h1>
             
-            <h2 class="subheading">CentOS 7 PSQL</h2>
+            <h2 class="subheading">vue.js에 대한 이해 - 1</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 2020-10-19 13:29 &middot; <span class="reading-time" title="Estimated read time">
+              on 2020-10-21 09:56 &middot; <span class="reading-time" title="Estimated read time">
   
-   1 min  read </span>
+   2 mins  read </span>
 
             </span>
           </div>
@@ -140,7 +140,7 @@
         <br/>
         <div class="sidebar-about">
           
-            <h5><a href="/devlog/etc/">글 목록으로</a></h5>
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
           
         </div>
         <br/>
@@ -150,9 +150,17 @@
       <nav class="sidebar-nav heading" role="navigation">
         <ul class="">
 <li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#psql-설치">PSQL 설치</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#psql-기본-설정">PSQL 기본 설정</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#psql-data-directory-변경">PSQL DATA DIRECTORY 변경</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-vuejs란-무엇인가">1. Vue.js란 무엇인가</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-vuejs-장점">2. Vue.js 장점</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-vuejs의-특징">3. Vue.js의 특징</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#3-1-ui-화면단-라이브러리">3-1. UI 화면단 라이브러리</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-2-컴포넌트-기반-프레임워크">3-2. 컴포넌트 기반 프레임워크</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-3-리액트와-앵귤러의-장점을-가진-프레임워크">3-3. 리액트와 앵귤러의 장점을 가진 프레임워크</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-4-가상-돔-사용">3-4. 가상 돔 사용</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
 </ul>
       </nav>
       </header>
@@ -160,83 +168,79 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 id="들어가기-앞서">들어가기 앞서</h2>
-<p>본 문서에서는 <code class="highlighter-rouge">PSQL</code> <code class="highlighter-rouge">CentOS 7 설치</code> 및 <code class="highlighter-rouge">Data directory 변경</code> 방법에 대하여 기술한다.
-<br />
+<p><code class="highlighter-rouge">Front-End</code>를 담당하는 프레임워크 중 3대장은 <code class="highlighter-rouge">Vue</code>, <code class="highlighter-rouge">React</code>, <code class="highlighter-rouge">Angular</code>이 있다. 
+그 중, 가장 최근에 나온 <code class="highlighter-rouge">Vue</code>에 대하여 알아보기 위해 포스팅을 시작한다.</p>
+
+<ul>
+  <li>본 시리즈는 다음의 교재를 바탕으로 <code class="highlighter-rouge">학습</code>에 목적을 둔 글임을 밝힙니다.
+    <ul>
+      <li>교재: Vue.js 입문</li>
+      <li>저자: 장기효<br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="1-vuejs란-무엇인가">1. Vue.js란 무엇인가</h2>
+<hr />
+<p><code class="highlighter-rouge">Vue.js</code>는 웹 페이지 개발을 위한 프론트엔드 프레임워크이다.
+창시자인 <code class="highlighter-rouge">Evan You</code>는 앵귤러와 리액트의 장점을 살려 Vue를 만들었다고 한다. <br />
 <br /></p>
 
-<h2 id="psql-설치">PSQL 설치</h2>
+<h2 id="2-vuejs-장점">2. Vue.js 장점</h2>
 <hr />
+<p>다음은 Vue.js 장점이라고 알려진 특징이다.</p>
 <ol>
-  <li>설치
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>yum <span class="nb">install </span>postgresql94-server postgresql94-contrib
- <span class="nb">sudo</span> /usr/pgsql-9.4/bin/postgresql94-setup initdb
- <span class="nb">sudo </span>systemctl <span class="nb">enable </span>postgresql-9.4
-</code></pre></div>    </div>
-  </li>
-  <li>기동
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>systemctl start postgresql-9.4
-</code></pre></div>    </div>
-    <p><br /></p>
+  <li>배우기가 쉽다.</li>
+  <li>리액트와 앵귤러에 비해 성능이 뛰어나다.</li>
+  <li>리액트와 앵귤러의 장점을 갖고 있다.
+    <blockquote>
+      <p>앵귤러의 <code class="highlighter-rouge">데이터 바인딩</code> 특성과 리액트의 <code class="highlighter-rouge">가상 돔</code> 기반 렌더링 특징을 가지고 있다.<br />
+<br /></p>
+    </blockquote>
   </li>
 </ol>
 
-<h2 id="psql-기본-설정">PSQL 기본 설정</h2>
+<h2 id="3-vuejs의-특징">3. Vue.js의 특징</h2>
 <hr />
+<p>Vue.js는 다음과 같이 크게 4가지 특징을 지닌다.</p>
+
+<h4 id="3-1-ui-화면단-라이브러리">3-1. UI 화면단 라이브러리</h4>
+<p>Vue.js는 <code class="highlighter-rouge">MVVM</code> 패턴에 해당하는 화면단 라이브러리이다.  이러한 방식을 채택함으로써, 화면의 요소들을 제어하는 코드와 데이터 제어 로직을 <code class="highlighter-rouge">분리</code>하여 코드를 더 <code class="highlighter-rouge">직관적</code>으로 이해가 가능하며, 추후 <code class="highlighter-rouge">유지보수</code>가 용이하다.</p>
+
+<figure>
+<p><img src="/img/web/web_5_1.png" alt="" width="50%" /></p>
+  <figcaption><code class="highlighter-rouge">MVVM</code> 패턴이란 화면을 모델(Model) - 뷰(View) - 뷰 모델(ViewModel) 방식으로 구조화하여 개발하는 방식을 의미</figcaption>
+</figure>
+<p><br /></p>
+
+<h4 id="3-2-컴포넌트-기반-프레임워크">3-2. 컴포넌트 기반 프레임워크</h4>
+<p><code class="highlighter-rouge">컴포넌트(component)</code>란 레고 블럭과 같다. 뷰의 컴포넌트들을 잘 쌓아서 화면이 구성 가능한데, 이러한 방식의 장점은 다음과 같다.</p>
 <ol>
-  <li>listen 변경
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf
- org
- #listen_address = 'localhost'
- change
- listen_address = '*'
-</code></pre></div>    </div>
-  </li>
-  <li>권한 변경
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 설정파일 - /var/lib/pgsql/9.4/data/pg_hba.conf
- org
- local   all             all                        peer
- host    all             all    127.0.0.1/32        trust
- change
- local   all             all                        trust
- host    all             all             0.0.0.0/0            trust
-</code></pre></div>    </div>
-    <p><br /></p>
-  </li>
+  <li>높은 재사용성</li>
+  <li>HTML 코드에서 화면의 구조를 직관적으로 파악 가능<br />
+<br /></li>
 </ol>
 
-<h2 id="psql-data-directory-변경">PSQL DATA DIRECTORY 변경</h2>
-<hr />
-<ol>
-  <li>현재 data directory 확인
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo -iu postgres
- postgres=# show data_directory;
-</code></pre></div>    </div>
-  </li>
-  <li>db 중지
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo systemctl stop postgresql-9.4
-</code></pre></div>    </div>
-  </li>
-  <li>db 설정 파일 수정
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 설정파일 - /var/lib/pgsql/9.4/data/postmaster.opts
- /user/pgsql-9.4/bin/postgres "-D" "&lt;&lt;to directory&gt;&gt;"
-</code></pre></div>    </div>
-  </li>
-  <li>서비스 설정 파일 수정
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 설정파일 - /etc/lib/systemd/system/postgresql-9.4.service
- Environment=PGDATA=&lt;&lt;to directory&gt;&gt;
-</code></pre></div>    </div>
-  </li>
-  <li>기존 데이터 복사
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">mv</span> <span class="o">&lt;&lt;</span><span class="no">org</span><span class="sh"> directory&gt;&gt; &lt;&lt;to directory&gt;&gt;
-</span></code></pre></div>    </div>
-  </li>
-  <li>서비스 재시작
-    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> systemctl daemon-reload
- systemctl start postgresql-9.4
-</code></pre></div>    </div>
-  </li>
-  <li>현재 data directory 확인 (1번방법)</li>
-</ol>
+<h4 id="3-3-리액트와-앵귤러의-장점을-가진-프레임워크">3-3. 리액트와 앵귤러의 장점을 가진 프레임워크</h4>
+<p>뷰는 앵귤러의 <code class="highlighter-rouge">양방향 데이터 바인딩</code>과 리액트의 <code class="highlighter-rouge">단방향 데이터 흐름</code>의 장점을 모두 결합한 프레임워크이다.</p>
+<blockquote>
+  <p>양방향데이터 바인딩이란, 화면에 표시되는 값과 프레임워크 모델 데이터 값이 <code class="highlighter-rouge">동기화</code>되어, 한쪽의 변경이 다른쪽에 <code class="highlighter-rouge">자동 반영</code>되는 것이며,<br />
+단뱡향 데이터 흐름은 항상 상위 컴포넌트에서 하위 컴포넌트로 <code class="highlighter-rouge">단방향 전달</code>하도록 되어있는 구조를 의미<br />
+<br /></p>
+</blockquote>
+
+<h4 id="3-4-가상-돔-사용">3-4. 가상 돔 사용</h4>
+<p>뷰는 빠른 화면 렌더링을 위해 <code class="highlighter-rouge">가상 돔(Virtual DOM)</code> 방식을 적용하여, 사용자 인터렉션이 많은 요즘 웹 화면에 적합한 동작 구조를 지닌다.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">가상 돔</code>을 사용하면, 특정 돔 요소를 추가하거나 삭제하는 변경이 일어날 때 화면 전체를 다시 그리지 않고,<br />
+프레임 워크에서 정의한 방식대로 화면을 <code class="highlighter-rouge">갱신</code>하여 성능을 높임<br />
+<br /></p>
+</blockquote>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>간단하게 뷰의 특징과 장점에 대해서 알아보았지만, 백앤드 개발을 주로 하는 나에게는 잘 다가오지 않는다..<br />
+역시 <code class="highlighter-rouge">Hello world</code>를 한 번 해봐야 알 것 같다. 그런 의미에서 다음 글에서는 간단한 프로젝트를 만들어 보도록 하겠다.</p>
 
 
         <hr>
@@ -244,11 +248,9 @@
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/03/13/etc-7.html" data-toggle="tooltip" data-placement="top" title="[Thanos]프로메테우스의 스케일링 tool"> << Previous</a>
+          <a href="/devlog/2020/10/19/etc-8.html" data-toggle="tooltip" data-placement="top" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
-          
-          <a href="/devlog/2020/10/21/web-5.html" data-toggle="tooltip" data-placement="top" title="[Vue] Vue.js 시작">Next >></a>
           
 
         </div>
@@ -263,8 +265,8 @@
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'https://owin2828blog/devlog/2020/10/19/etc-8.html';
-this.page.identifier = '/devlog/2020/10/19/etc-8';
+this.page.url = 'https://owin2828blog/devlog/2020/10/21/web-5.html';
+this.page.identifier = '/devlog/2020/10/21/web-5';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
