@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Vue] 인스턴스 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 뷰로 웹 개발을 하기 위해 필수적인 인스턴스와 컴포넌트에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자. 본 글에 앞서, 크롬 익스텐션 Vue.js devtools를 설치 후, 실행하는 것을 권장합니다. 설치법은 이곳을 참조">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/10/21/web-6.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Vue] 인스턴스</h1>
+            
+            <h2 class="subheading">vue.js에 대한 이해 - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-10-21 11:15 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-hello-vuejs">1. Hello Vue.js</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-뷰-인스턴스의-정의와-속성">2. 뷰 인스턴스의 정의와 속성</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-뷰-인스턴스-옵션-속성">3. 뷰 인스턴스 옵션 속성</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-뷰-인스턴스의-유효범위">4. 뷰 인스턴스의 유효범위</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#5-뷰-인스턴스-라이프-사이클">5. 뷰 인스턴스 라이프 사이클</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p>뷰로 웹 개발을 하기 위해 필수적인 <code class="highlighter-rouge">인스턴스</code>와 <code class="highlighter-rouge">컴포넌트</code>에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자.</p>
+<blockquote>
+  <p>본 글에 앞서, 크롬 익스텐션 <code class="highlighter-rouge">Vue.js devtools</code>를 설치 후, 실행하는 것을 권장합니다.<br />
+  설치법은 <a href="https://hubring.tistory.com/17">이곳</a>을 참조<br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-hello-vuejs">1. Hello Vue.js</h2>
+<hr />
+<p>index.html 파일을 하나 생성 한 후, 다음과 같이 작성한다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Sample<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      { { message }}
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>해당 파일을 크롬 브라우저를 통해 열게되면, 화면에 Hello Vue.js! 라는 문구가 뜨게 된다.<br />
+이제 각 속성들에 대하여 알아보도록 하자.<br />
+<br /></p>
+
+<h2 id="2-뷰-인스턴스의-정의와-속성">2. 뷰 인스턴스의 정의와 속성</h2>
+<hr />
+<p>뷰에서 <code class="highlighter-rouge">인스턴스(Instance)</code>는 뷰로 화면 개발을 위해 필수적으로 생성해야 하는 기본 단위이다.</p>
+
+<ol>
+  <li>뷰 인스턴스 생성<br />
+  뷰 인스턴스는 다음과 같은 형식으로 생성한다.
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 인스턴스</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+     <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// el 속성</span>
+     <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+       <span class="c1">// data 속성</span>
+       <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+     <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre></div>    </div>
+    <p>‘Hello Vue.js!’ 텍스트를 화면에 표시하기 위해, <code class="highlighter-rouge">new Vue()</code>를 통해 인스턴스를 생성한다.<br />
+  그 후, 인스턴스 안에 <code class="highlighter-rouge">el 속성</code>으로 뷰 인스턴스가 그려질 위치를 지정하고, <code class="highlighter-rouge">data 속성</code>에 message 값을 정의하여 화면의 <code class="highlighter-rouge">{ {message}}</code>와 연결한다.</p>
+  </li>
+  <li>뷰 인스턴스 생성자<br />
+  <code class="highlighter-rouge">new Vue()</code>로 인스턴스를 생성할 때, <code class="highlighter-rouge">Vue</code>를 생성자라고 한다.<br />
+<br /></li>
+</ol>
+
+<h2 id="3-뷰-인스턴스-옵션-속성">3. 뷰 인스턴스 옵션 속성</h2>
+<hr />
+<p>뷰 인스턴스 속성은 인스턴스를 생성할 때, 재정의할 <code class="highlighter-rouge">data</code>, <code class="highlighter-rouge">el</code>, <code class="highlighter-rouge">template</code>등의 속성을 포함한다.<br />
+그 중, <code class="highlighter-rouge">el</code>속성은 뷰로 만든 화면이 그려지는 시작점을 의미하며, 렌더링 시 화면이 그러질 위치의 돔 요소를 지정해 주어야한다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    { { message }}
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">})</span>
+</code></pre></div></div>
+<blockquote>
+  <p><code class="highlighter-rouge">#app</code>값은 화면의 돔 요소 중, <code class="highlighter-rouge">app</code>이라는 아이디를 가진 요소를 의미<br />
+위 서술한 속성 외에도, <code class="highlighter-rouge">template</code>, <code class="highlighter-rouge">methods</code>, <code class="highlighter-rouge">created</code> 등이 존재<br />
+<br /></p>
+</blockquote>
+
+<h2 id="4-뷰-인스턴스의-유효범위">4. 뷰 인스턴스의 유효범위</h2>
+<hr />
+<p>뷰 인스턴스를 생성하면 HTML의 <code class="highlighter-rouge">특정</code> 범위 안에서만 옵션들이 적용되어 나타나며, 이는 <code class="highlighter-rouge">el</code> 속성과 밀접한 관련이 있다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">// 아래의 message 값이 message에 치환되어 출력</span>
+      <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+</code></pre></div></div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 치환전 --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    { { message }}
+  <span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 치환 후 --&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- el 태그가 부착된 이 div 태그 아래 값들만 치환되는 유효범위 --&gt;</span>
+    Hello Vue.js!
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">el</code> 속성에 인스턴스가 부착되고 나면, 인스턴스에 정의한 <code class="highlighter-rouge">옵션 객체</code>의 내용이 el 속성에 지정한 화면 요소와 그 이하 레벨의 화면요소에 값이 적용되어 값이 <code class="highlighter-rouge">치환</code> 된다.<br />
+<br /></p>
+
+<h2 id="5-뷰-인스턴스-라이프-사이클">5. 뷰 인스턴스 라이프 사이클</h2>
+<hr />
+<p>인스턴스의 상태에 따라 호출할 수 있는 속성들을 <code class="highlighter-rouge">라이프 사이클(life cycle) 속성</code>이라고 한다.<br />
+그리고 각 라이프 사이클 속성에서 실행되는 커스텀 로직을 <code class="highlighter-rouge">라이프 사이클 훅(hook)</code>이라고 한다.</p>
+
+<figure>
+<p><img src="/img/web/web_5_2.png" alt="" width="80%" /></p>
+  <figcaption>뷰 라이프 사이클 다이어그램</figcaption>
+</figure>
+
+<p>라이프 사이클은 크게 인스턴스 <code class="highlighter-rouge">생성</code>, 생성된 인스턴스를 화면에 <code class="highlighter-rouge">부착</code>, 인스턴스 내용의 <code class="highlighter-rouge">갱신</code>, 인스턴스의 <code class="highlighter-rouge">소멸</code> 4가지로 이루어진다.<br />
+각 라이프 사이클에는 다시 2단계로 나뉘어 다음과 같은 총 8 단계로 구성된다.</p>
+
+<ol>
+  <li><code class="highlighter-rouge">beforeCreate</code><br />
+  인스턴스가 생성되고 가장 처음으로 실행되는 단계, 속성 및 DOM에 접근이 <code class="highlighter-rouge">불가</code></li>
+  <li><code class="highlighter-rouge">created</code><br />
+  인스턴스가 화면에 부착되기 전 단계, data와 method에는 <code class="highlighter-rouge">접근 가능</code>하나 template 속성에 정의된 돔 요소에 접근 <code class="highlighter-rouge">불가</code><br />
+  data, methods 등의 속성이 정의되어 <code class="highlighter-rouge">서버에 데이터를 요청</code>하여 받아오는 로직을 수행하기 알맞음</li>
+  <li><code class="highlighter-rouge">beforeMount</code><br />
+  DOM에 인스턴스를 부착하기 전 단계, <code class="highlighter-rouge">render()</code> 함수가 호출되기 직전의 로직을 추가</li>
+  <li><code class="highlighter-rouge">mounted</code><br />
+  el 속성에서 지정한 요소에 인스턴스가 부착되고 나면 호출되는 단계<br />
+  template에 접근 가능하여 <code class="highlighter-rouge">화면 요소를 제어</code>하는 로직을 수행하기 알맞음</li>
+  <li><code class="highlighter-rouge">beforeUpdate</code>  <br />
+  관찰하고 있는 데이터가 변경 시, 가상DOM으로 화면을 다시 그리기 전 호출하는 단계<br />
+  <code class="highlighter-rouge">변경 예정 데이터의 값</code>과 관련된 로직을 미리 넣기 알맞음</li>
+  <li><code class="highlighter-rouge">updated</code><br />
+  데이터가 변경되고나서 가상DOM으로 화면을 다시 그리고 나면 실행되는 단계<br />
+  데이터 변경 후, <code class="highlighter-rouge">화면 요소 제어</code>와 관련된 로직을 추가하기 알맞음
+    <blockquote>
+      <p>이 단계에서 데이터를 변경하면 무한 루프에 빠질 수 있기 때문에 값 변경을 위해서 <code class="highlighter-rouge">computed</code>, <code class="highlighter-rouge">watch</code> 속성을 사용해야 함<br />
+  따라서 데이터 값을 갱신하는 로직은 가급적 <code class="highlighter-rouge">beforeUpdate</code>에 추가하고, updated에서는 변경 데이터의 <code class="highlighter-rouge">화면요소(DOM)</code> 로직을 추가해야 함</p>
+    </blockquote>
+  </li>
+  <li>beforeDestory<br />
+  인스턴스가 파괴되기 직전 단계, 인스턴스의 데이터를 삭제하기 알맞음
+<br /></li>
+</ol>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/10/21/web-5.html" data-toggle="tooltip" data-placement="top" title="[Vue] Vue.js 시작"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/10/21/web-6.html';
+this.page.identifier = '/devlog/2020/10/21/web-6';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

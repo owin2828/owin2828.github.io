@@ -1,4 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-21T11:08:20+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] Vue.js 시작</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-5.html" rel="alternate" type="text/html" title="[Vue] Vue.js 시작" /><published>2020-10-21T09:56:00+09:00</published><updated>2020-10-21T09:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-21T17:22:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 인스턴스</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-6.html" rel="alternate" type="text/html" title="[Vue] 인스턴스" /><published>2020-10-21T11:15:00+09:00</published><updated>2020-10-21T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;뷰로 웹 개발을 하기 위해 필수적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트&lt;/code&gt;에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;본 글에 앞서, 크롬 익스텐션 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue.js devtools&lt;/code&gt;를 설치 후, 실행하는 것을 권장합니다.&lt;br /&gt;
+  설치법은 &lt;a href=&quot;https://hubring.tistory.com/17&quot;&gt;이곳&lt;/a&gt;을 참조&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1-hello-vuejs&quot;&gt;1. Hello Vue.js&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;index.html 파일을 하나 생성 한 후, 다음과 같이 작성한다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      { { message }}
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;해당 파일을 크롬 브라우저를 통해 열게되면, 화면에 Hello Vue.js! 라는 문구가 뜨게 된다.&lt;br /&gt;
+이제 각 속성들에 대하여 알아보도록 하자.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-뷰-인스턴스의-정의와-속성&quot;&gt;2. 뷰 인스턴스의 정의와 속성&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스(Instance)&lt;/code&gt;는 뷰로 화면 개발을 위해 필수적으로 생성해야 하는 기본 단위이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;뷰 인스턴스 생성&lt;br /&gt;
+  뷰 인스턴스는 다음과 같은 형식으로 생성한다.
+    &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;c1&quot;&gt;// 인스턴스&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+     &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// el 속성&lt;/span&gt;
+     &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;c1&quot;&gt;// data 속성&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;‘Hello Vue.js!’ 텍스트를 화면에 표시하기 위해, &lt;code class=&quot;highlighter-rouge&quot;&gt;new Vue()&lt;/code&gt;를 통해 인스턴스를 생성한다.&lt;br /&gt;
+  그 후, 인스턴스 안에 &lt;code class=&quot;highlighter-rouge&quot;&gt;el 속성&lt;/code&gt;으로 뷰 인스턴스가 그려질 위치를 지정하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;data 속성&lt;/code&gt;에 message 값을 정의하여 화면의 &lt;code class=&quot;highlighter-rouge&quot;&gt;{ {message}}&lt;/code&gt;와 연결한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;뷰 인스턴스 생성자&lt;br /&gt;
+  &lt;code class=&quot;highlighter-rouge&quot;&gt;new Vue()&lt;/code&gt;로 인스턴스를 생성할 때, &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;를 생성자라고 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;3-뷰-인스턴스-옵션-속성&quot;&gt;3. 뷰 인스턴스 옵션 속성&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰 인스턴스 속성은 인스턴스를 생성할 때, 재정의할 &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;el&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;template&lt;/code&gt;등의 속성을 포함한다.&lt;br /&gt;
+그 중, &lt;code class=&quot;highlighter-rouge&quot;&gt;el&lt;/code&gt;속성은 뷰로 만든 화면이 그려지는 시작점을 의미하며, 렌더링 시 화면이 그러질 위치의 돔 요소를 지정해 주어야한다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    { { message }}
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#app&lt;/code&gt;값은 화면의 돔 요소 중, &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt;이라는 아이디를 가진 요소를 의미&lt;br /&gt;
+위 서술한 속성 외에도, &lt;code class=&quot;highlighter-rouge&quot;&gt;template&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;methods&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;created&lt;/code&gt; 등이 존재&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;4-뷰-인스턴스의-유효범위&quot;&gt;4. 뷰 인스턴스의 유효범위&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰 인스턴스를 생성하면 HTML의 &lt;code class=&quot;highlighter-rouge&quot;&gt;특정&lt;/code&gt; 범위 안에서만 옵션들이 적용되어 나타나며, 이는 &lt;code class=&quot;highlighter-rouge&quot;&gt;el&lt;/code&gt; 속성과 밀접한 관련이 있다.&lt;/p&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 아래의 message 값이 message에 치환되어 출력&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 치환전 --&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    { { message }}
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 치환 후 --&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- el 태그가 부착된 이 div 태그 아래 값들만 치환되는 유효범위 --&amp;gt;&lt;/span&gt;
+    Hello Vue.js!
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;el&lt;/code&gt; 속성에 인스턴스가 부착되고 나면, 인스턴스에 정의한 &lt;code class=&quot;highlighter-rouge&quot;&gt;옵션 객체&lt;/code&gt;의 내용이 el 속성에 지정한 화면 요소와 그 이하 레벨의 화면요소에 값이 적용되어 값이 &lt;code class=&quot;highlighter-rouge&quot;&gt;치환&lt;/code&gt; 된다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-뷰-인스턴스-라이프-사이클&quot;&gt;5. 뷰 인스턴스 라이프 사이클&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;인스턴스의 상태에 따라 호출할 수 있는 속성들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;라이프 사이클(life cycle) 속성&lt;/code&gt;이라고 한다.&lt;br /&gt;
+그리고 각 라이프 사이클 속성에서 실행되는 커스텀 로직을 &lt;code class=&quot;highlighter-rouge&quot;&gt;라이프 사이클 훅(hook)&lt;/code&gt;이라고 한다.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_5_2.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;뷰 라이프 사이클 다이어그램&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;라이프 사이클은 크게 인스턴스 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;, 생성된 인스턴스를 화면에 &lt;code class=&quot;highlighter-rouge&quot;&gt;부착&lt;/code&gt;, 인스턴스 내용의 &lt;code class=&quot;highlighter-rouge&quot;&gt;갱신&lt;/code&gt;, 인스턴스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;소멸&lt;/code&gt; 4가지로 이루어진다.&lt;br /&gt;
+각 라이프 사이클에는 다시 2단계로 나뉘어 다음과 같은 총 8 단계로 구성된다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;beforeCreate&lt;/code&gt;&lt;br /&gt;
+  인스턴스가 생성되고 가장 처음으로 실행되는 단계, 속성 및 DOM에 접근이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;created&lt;/code&gt;&lt;br /&gt;
+  인스턴스가 화면에 부착되기 전 단계, data와 method에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;접근 가능&lt;/code&gt;하나 template 속성에 정의된 돔 요소에 접근 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가&lt;/code&gt;&lt;br /&gt;
+  data, methods 등의 속성이 정의되어 &lt;code class=&quot;highlighter-rouge&quot;&gt;서버에 데이터를 요청&lt;/code&gt;하여 받아오는 로직을 수행하기 알맞음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;beforeMount&lt;/code&gt;&lt;br /&gt;
+  DOM에 인스턴스를 부착하기 전 단계, &lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt; 함수가 호출되기 직전의 로직을 추가&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mounted&lt;/code&gt;&lt;br /&gt;
+  el 속성에서 지정한 요소에 인스턴스가 부착되고 나면 호출되는 단계&lt;br /&gt;
+  template에 접근 가능하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;화면 요소를 제어&lt;/code&gt;하는 로직을 수행하기 알맞음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;beforeUpdate&lt;/code&gt;  &lt;br /&gt;
+  관찰하고 있는 데이터가 변경 시, 가상DOM으로 화면을 다시 그리기 전 호출하는 단계&lt;br /&gt;
+  &lt;code class=&quot;highlighter-rouge&quot;&gt;변경 예정 데이터의 값&lt;/code&gt;과 관련된 로직을 미리 넣기 알맞음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;updated&lt;/code&gt;&lt;br /&gt;
+  데이터가 변경되고나서 가상DOM으로 화면을 다시 그리고 나면 실행되는 단계&lt;br /&gt;
+  데이터 변경 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;화면 요소 제어&lt;/code&gt;와 관련된 로직을 추가하기 알맞음
+    &lt;blockquote&gt;
+      &lt;p&gt;이 단계에서 데이터를 변경하면 무한 루프에 빠질 수 있기 때문에 값 변경을 위해서 &lt;code class=&quot;highlighter-rouge&quot;&gt;computed&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;watch&lt;/code&gt; 속성을 사용해야 함&lt;br /&gt;
+  따라서 데이터 값을 갱신하는 로직은 가급적 &lt;code class=&quot;highlighter-rouge&quot;&gt;beforeUpdate&lt;/code&gt;에 추가하고, updated에서는 변경 데이터의 &lt;code class=&quot;highlighter-rouge&quot;&gt;화면요소(DOM)&lt;/code&gt; 로직을 추가해야 함&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;beforeDestory&lt;br /&gt;
+  인스턴스가 파괴되기 직전 단계, 인스턴스의 데이터를 삭제하기 알맞음
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 뷰로 웹 개발을 하기 위해 필수적인 인스턴스와 컴포넌트에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자. 본 글에 앞서, 크롬 익스텐션 Vue.js devtools를 설치 후, 실행하는 것을 권장합니다. 설치법은 이곳을 참조</summary></entry><entry><title type="html">[Vue] Vue.js 시작</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-5.html" rel="alternate" type="text/html" title="[Vue] Vue.js 시작" /><published>2020-10-21T09:56:00+09:00</published><updated>2020-10-21T09:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Front-End&lt;/code&gt;를 담당하는 프레임워크 중 3대장은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;React&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Angular&lt;/code&gt;이 있다. 
 그 중, 가장 최근에 나온 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;에 대하여 알아보기 위해 포스팅을 시작한다.&lt;/p&gt;
 
@@ -803,60 +944,4 @@ Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다�
 &lt;a href=&quot;https://musma.github.io/2019/11/05/about-aws-iam-policy.html&quot;&gt;이현수님 포스팅&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt; 이 3가지는 굉장히 중요하다고 한다.&lt;br /&gt;
-꼭 잘 설정하여 좋은 환경을 구축하기를 바란다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 IAM에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.</summary></entry><entry><title type="html">[CI/CD] Travis CI 파이프라인 구축하기</title><link href="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html" rel="alternate" type="text/html" title="[CI/CD] Travis CI 파이프라인 구축하기" /><published>2020-01-28T14:20:00+09:00</published><updated>2020-01-28T14:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/28/cicd-2</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/28/cicd-2.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/10/aws-1.html&quot;&gt;AWS 기초 시리즈&lt;/a&gt;에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다.&lt;br /&gt;
-물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;를 이용하고 CD는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy&lt;/code&gt;를 이용하여 구축하겠다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/ko/codedeploy/&quot;&gt;AWS Code Deploy&lt;/a&gt;는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;무료&lt;/code&gt;이다.&lt;br /&gt;
- &lt;code class=&quot;highlighter-rouge&quot;&gt;On-premise&lt;/code&gt;에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;된다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id1&quot;&gt;1. Why Jenkins?&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;나는 처음에 다음과 같은 이유로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Travis&lt;/code&gt;를 사용하여 환경을 구축하려 했다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;무료(오픈소스에 한해서)&lt;/li&gt;
-  &lt;li&gt;GitHub와의 강력한 연동&lt;/li&gt;
-  &lt;li&gt;추가적인 서버 필요 없음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;하지만 다음과 같은 결정적인 단점이 존재하였고, 이는 굉장히 치명적이었다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;래퍼런스 문서가 &lt;code class=&quot;highlighter-rouge&quot;&gt;없음&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아무것도 아닌 문제처럼 보일 수 있으나, 정말 &lt;code class=&quot;highlighter-rouge&quot;&gt;심각하게&lt;/code&gt; 내가 원하는 방향에 관련된 문서가 없었다.&lt;br /&gt;
-Jenkins는 다양한 플러그인과 이를 Script로 표현하여 설정하는 다양한 문서들이 존재하는 반면에, 
-Travis는 Unity를 배포하는 방법에 관련된 문서가 &lt;code class=&quot;highlighter-rouge&quot;&gt;없었다&lt;/code&gt;.&lt;br /&gt;
-그나마 존재하는 문서들은 Mac 환경에서 진행된 개발이 전부였고, &lt;code class=&quot;highlighter-rouge&quot;&gt;Window&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt;에서 진행하는 내게 이는 상당한 부담으로 다가왔다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;아무것도 안하고 이 일만 하면 모를까 회사일과 병행하며 삽질을 하기에는 무리였다..&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;결국 하루의 삽질과 고민 끝에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jenkins&lt;/code&gt;로 노선을 변경했다. &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;를 공부하고 배웠으니 이렇게 된김에 free tier가 유지되는 동안에 적극 활용해보자는 다짐과 함께.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;만약, AWS CI/CD에 관심이 있다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS Code Build &amp;amp; Code Pipeline&lt;/code&gt;을 사용하는 것을 추천한다.&lt;br /&gt;
-AWS도 훌륭한 빌드 툴과 전체적인 파이프라인을 관리하는 툴을 제공한다.&lt;br /&gt;
-하지만 Code Build는 빌드 시간으로, Code Pipeline은 활성화된 파이프라인 개수로 &lt;code class=&quot;highlighter-rouge&quot;&gt;과금&lt;/code&gt;한다.&lt;br /&gt;
-물론 &lt;code class=&quot;highlighter-rouge&quot;&gt;프리티어&lt;/code&gt;를 제공하지만, 장기적으로 생각을 잘해서 선택하기를 바란다.&lt;br /&gt;
-&lt;a href=&quot;https://jojoldu.tistory.com/282?category=777282&quot;&gt;여기&lt;/a&gt; 훌륭한 자료가 있어 링크를 공유한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id2&quot;&gt;2. 전체 구성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/cicd/newcicd_2_1.png&quot; alt=&quot;전체 구성도(App 배포 미완성)&quot; /&gt;
-내가 구성한  CI/CD의 전체 구성도는 위와 같은데, Jenkins를 이용하여 CI를 구축하고 Code Deploy를 이용해 CD를 구축하기로 했다.&lt;br /&gt;
-둘 사이의 연결은 Jenkins에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy Pulgin&lt;/code&gt;을 사용할 계획이다.&lt;br /&gt;
-이러한 파이프 라인을 통해 S3에 빌드 결과물을 저장하고, AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;Code Deploy&lt;/code&gt;에서 해당 결과물을 가지고 우리가 가동할 APP 서버에 배포하는 방식이다.&lt;br /&gt;
-여기서 Jenkins Build Server와 배포를 위한 앱 서버는 모두 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 사용할 것이며, &lt;a href=&quot;https://owin2828.github.io/devlog/2020/01/15/aws-3.html&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;&lt;/a&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt; 설정을 통해 해나갈 것이다.&lt;/p&gt;
-
-&lt;p&gt;App은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Unity&lt;/code&gt;를 사용하여 만들고 &lt;code class=&quot;highlighter-rouge&quot;&gt;구글 플레이스토어&lt;/code&gt;에 배포할 계획이며, 하나의 App 서버를 두고 가동할 예정이다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;배포하는 방식은 이 글을 작성하는 시점에서 아직 다른 개발자와 협의가 이루어지지 않아 &lt;code class=&quot;highlighter-rouge&quot;&gt;미완성&lt;/code&gt;으로 남겨놓았다.&lt;br /&gt;
-추후, 논의되어 합의가 이루어지면 &lt;code class=&quot;highlighter-rouge&quot;&gt;업데이트&lt;/code&gt;할 예정이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="devops" /><summary type="html">들어가기 앞서 AWS 기초 시리즈에서 AWS의 구성을 살펴보았으니, 배운 것을 활용할 겸 AWS를 적극 사용하려한다. 물론 AWS에서 제공하는 Code Build나 Code Pipeline까지 활용해야 적극 활용이라 할 수 있지만, CI는 Jenkins를 이용하고 CD는 Code Deploy를 이용하여 구축하겠다. AWS Code Deploy는 AWS에서 제공하는 배포 서비스로, EC2에서 사용하는 경우 무료이다. On-premise에서 Code Deploy를 사용하는 경우는 업데이트당 0.02USD가 과금된다.</summary></entry></feed>
+꼭 잘 설정하여 좋은 환경을 구축하기를 바란다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 IAM에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.</summary></entry></feed>
