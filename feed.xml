@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-21T17:22:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 인스턴스</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-6.html" rel="alternate" type="text/html" title="[Vue] 인스턴스" /><published>2020-10-21T11:15:00+09:00</published><updated>2020-10-21T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-26T16:07:48+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 인스턴스</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-6.html" rel="alternate" type="text/html" title="[Vue] 인스턴스" /><published>2020-10-21T11:15:00+09:00</published><updated>2020-10-21T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;뷰로 웹 개발을 하기 위해 필수적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트&lt;/code&gt;에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;본 글에 앞서, 크롬 익스텐션 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue.js devtools&lt;/code&gt;를 설치 후, 실행하는 것을 권장합니다.&lt;br /&gt;
@@ -136,10 +136,17 @@
   따라서 데이터 값을 갱신하는 로직은 가급적 &lt;code class=&quot;highlighter-rouge&quot;&gt;beforeUpdate&lt;/code&gt;에 추가하고, updated에서는 변경 데이터의 &lt;code class=&quot;highlighter-rouge&quot;&gt;화면요소(DOM)&lt;/code&gt; 로직을 추가해야 함&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
-  &lt;li&gt;beforeDestory&lt;br /&gt;
-  인스턴스가 파괴되기 직전 단계, 인스턴스의 데이터를 삭제하기 알맞음
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;beforeDestory&lt;/code&gt;&lt;br /&gt;
+  인스턴스가 파괴되기 직전 단계, 인스턴스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;데이터를 삭제&lt;/code&gt;하기 알맞음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;destroyed&lt;/code&gt;
+  뷰 인스턴스가 파괴되고 호출되는 단계
+  모든 속성이 제거되고 하위 인스턴스가 모두 파괴&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 뷰로 웹 개발을 하기 위해 필수적인 인스턴스와 컴포넌트에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자. 본 글에 앞서, 크롬 익스텐션 Vue.js devtools를 설치 후, 실행하는 것을 권장합니다. 설치법은 이곳을 참조</summary></entry><entry><title type="html">[Vue] Vue.js 시작</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-5.html" rel="alternate" type="text/html" title="[Vue] Vue.js 시작" /><published>2020-10-21T09:56:00+09:00</published><updated>2020-10-21T09:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;뷰의 인스턴스와 라이프 사이클에 대하여 알아보았다.&lt;br /&gt;
+다음 포스팅에서는 뷰 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트&lt;/code&gt;에 대하여 알아보도록 하자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 뷰로 웹 개발을 하기 위해 필수적인 인스턴스와 컴포넌트에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자. 본 글에 앞서, 크롬 익스텐션 Vue.js devtools를 설치 후, 실행하는 것을 권장합니다. 설치법은 이곳을 참조</summary></entry><entry><title type="html">[Vue] Vue.js 시작</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-5.html" rel="alternate" type="text/html" title="[Vue] Vue.js 시작" /><published>2020-10-21T09:56:00+09:00</published><updated>2020-10-21T09:56:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Front-End&lt;/code&gt;를 담당하는 프레임워크 중 3대장은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;React&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Angular&lt;/code&gt;이 있다. 
 그 중, 가장 최근에 나온 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt;에 대하여 알아보기 위해 포스팅을 시작한다.&lt;/p&gt;
 

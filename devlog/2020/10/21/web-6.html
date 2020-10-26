@@ -155,6 +155,7 @@
 <li class="sidebar-nav-item toc-h2"><a href="#3-뷰-인스턴스-옵션-속성">3. 뷰 인스턴스 옵션 속성</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#4-뷰-인스턴스의-유효범위">4. 뷰 인스턴스의 유효범위</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#5-뷰-인스턴스-라이프-사이클">5. 뷰 인스턴스 라이프 사이클</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
 </ul>
       </nav>
       </header>
@@ -299,10 +300,17 @@
   따라서 데이터 값을 갱신하는 로직은 가급적 <code class="highlighter-rouge">beforeUpdate</code>에 추가하고, updated에서는 변경 데이터의 <code class="highlighter-rouge">화면요소(DOM)</code> 로직을 추가해야 함</p>
     </blockquote>
   </li>
-  <li>beforeDestory<br />
-  인스턴스가 파괴되기 직전 단계, 인스턴스의 데이터를 삭제하기 알맞음
+  <li><code class="highlighter-rouge">beforeDestory</code><br />
+  인스턴스가 파괴되기 직전 단계, 인스턴스의 <code class="highlighter-rouge">데이터를 삭제</code>하기 알맞음</li>
+  <li><code class="highlighter-rouge">destroyed</code>
+  뷰 인스턴스가 파괴되고 호출되는 단계
+  모든 속성이 제거되고 하위 인스턴스가 모두 파괴<br />
 <br /></li>
 </ol>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>뷰의 인스턴스와 라이프 사이클에 대하여 알아보았다.<br />
+다음 포스팅에서는 뷰 <code class="highlighter-rouge">컴포넌트</code>에 대하여 알아보도록 하자.</p>
 
 
         <hr>
