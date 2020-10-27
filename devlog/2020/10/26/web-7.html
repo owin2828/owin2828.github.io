@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Vue] 컴포넌트 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 이전 포스팅에 이어 뷰의 컴포넌트의 정의, 유효범위 및 사용법에 대해 알아보도록 한다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/10/26/web-7.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Vue] 컴포넌트</h1>
+            
+            <h2 class="subheading">vue.js에 대한 이해 - 3</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-10-26 16:06 &middot; <span class="reading-time" title="Estimated read time">
+  
+   10 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-컴포넌트란">1. 컴포넌트란?</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-전역-컴포넌트-vs-지역-컴포넌트">2. 전역 컴포넌트 VS 지역 컴포넌트</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#2-1-전역-컴포넌트">2-1. 전역 컴포넌트</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-2-지역-컴포넌트">2-2. 지역 컴포넌트</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-3-전역-vs-지역-컴포넌트-차이">2-3. 전역 vs 지역 컴포넌트 차이</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-컴포넌트-통신">3. 컴포넌트 통신</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#3-1-상위---하위-데이터-전달">3-1. 상위 -&gt; 하위 데이터 전달</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-2-하위---상위-이벤트-전달">3-2. 하위 -&gt; 상위 이벤트 전달</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-3-같은-레벨의-컴포넌트-간-통신">3-3. 같은 레벨의 컴포넌트 간 통신</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p>이전 포스팅에 이어 뷰의 컴포넌트의 정의, 유효범위 및 사용법에 대해 알아보도록 한다.<br />
+<br /></p>
+
+<h2 id="1-컴포넌트란">1. 컴포넌트란?</h2>
+<hr />
+<p><code class="highlighter-rouge">컴포넌트(Component)</code>란 조합하여 화면을 구성할 수 있는 블록을 의미하며 다음과 같은 장점을 지닌다.</p>
+<ol>
+  <li>구조화하여 일괄적인 패턴으로 개발 가능</li>
+  <li>코드 재사용성이 높아짐</li>
+  <li>남의 코드를 직관적으로 이해하기 편함</li>
+</ol>
+<figure>
+<p><img src="/img/web/web_7_1.png" alt="" width="50%" /></p>
+  <figcaption>컴포넌트로 구분한 화면 영역 간의 관계도</figcaption>
+</figure>
+<p><br /></p>
+
+<h2 id="2-전역-컴포넌트-vs-지역-컴포넌트">2. 전역 컴포넌트 VS 지역 컴포넌트</h2>
+<hr />
+<p>컴포넌트를 등록할 때, <code class="highlighter-rouge">전역</code>과 <code class="highlighter-rouge">지역</code> 두 가지 방법으로 가능하다.<br />
+<code class="highlighter-rouge">지역(Local)</code> 컴포넌트는 특정 인스턴스에서만 유효한 범위를, <code class="highlighter-rouge">전역(Global)</code> 컴포넌트는 여러 인스턴스에서 공통으로 사용할 수 있다.<br />
+<br /></p>
+
+<h4 id="2-1-전역-컴포넌트">2-1. 전역 컴포넌트</h4>
+<p>전역 컴포넌트는 다음과 같이 <code class="highlighter-rouge">Vue</code> 변수를 이용하여 등록하며, <code class="highlighter-rouge">.component()</code> 함수를 호출하여 실행한다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Component Registration<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;button&gt;</span>컴포넌트 등록<span class="nt">&lt;/button&gt;</span>
+      <span class="nt">&lt;my-component&gt;&lt;/my-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;전역 컴포넌트가 등록되었습니다!&lt;/div&gt;</span><span class="dl">'</span>
+      <span class="p">});</span>
+
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>위의 my-component 태그부분은 최종적으로 다음과 같이 변경된다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;button&gt;</span>컴포넌트 등록<span class="nt">&lt;/button&gt;</span>
+      <span class="c">&lt;!-- 치환된 모습 --&gt;</span>
+      <span class="nt">&lt;div&gt;</span>전역 컴포넌트가 등록되었습니다!<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="2-2-지역-컴포넌트">2-2. 지역 컴포넌트</h4>
+<p>지역 컴포넌트는 인스턴스에 <code class="highlighter-rouge">component</code> 속성을 추가하여 이름과 내용을 정의한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ...
+    <span class="nt">&lt;script&gt;</span>
+      <span class="kd">var</span> <span class="nx">cmp</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1">// 컴포넌트 내용</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;지역 컴포넌트가 등록되었습니다!&lt;/div&gt;</span><span class="dl">'</span>
+      <span class="p">};</span>
+
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">components</span><span class="p">:</span> <span class="p">{</span>
+          <span class="dl">'</span><span class="s1">my-local-component</span><span class="dl">'</span><span class="p">:</span> <span class="nx">cmp</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="2-3-전역-vs-지역-컴포넌트-차이">2-3. 전역 vs 지역 컴포넌트 차이</h4>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Local and Global Components<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h3&gt;</span>첫 번째 인스턴스 영역<span class="nt">&lt;/h3&gt;</span>
+      <span class="nt">&lt;my-global-component&gt;&lt;/my-global-component&gt;</span>
+      <span class="nt">&lt;my-local-component&gt;&lt;/my-local-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;hr&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app2"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h3&gt;</span>두 번째 인스턴스 영역<span class="nt">&lt;/h3&gt;</span>
+      <span class="nt">&lt;my-global-component&gt;&lt;/my-global-component&gt;</span>
+      <span class="nt">&lt;my-local-component&gt;&lt;/my-local-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="c1">// 전역 컴포넌트 등록</span>
+      <span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-global-component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;전역 컴포넌트 입니다.&lt;/div&gt;</span><span class="dl">'</span>
+      <span class="p">});</span>
+
+      <span class="c1">// 지역 컴포넌트 내용</span>
+      <span class="kd">var</span> <span class="nx">cmp</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;지역 컴포넌트 입니다.&lt;/div&gt;</span><span class="dl">'</span>
+      <span class="p">};</span>
+
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="c1">// 지역 컴포넌트 등록</span>
+        <span class="na">components</span><span class="p">:</span> <span class="p">{</span>
+          <span class="dl">'</span><span class="s1">my-local-component</span><span class="dl">'</span><span class="p">:</span> <span class="nx">cmp</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+
+      <span class="c1">// 두 번째 인스턴스</span>
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app2</span><span class="dl">'</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>위와 같은 코드에서 첫번째 인스턴스 영역에서는 전역, 지역이 <code class="highlighter-rouge">모두</code> 표기되나 두번째 인스턴스에서는 <code class="highlighter-rouge">전역</code>만 노출된다.<br />
+전역 컴포넌트는 인스턴스를 새로 생성할 때마다, 인스턴스에 components 속성으로 등록할 필요 없이 사용 가능하나, <br />
+지역 컴포넌트는 새 인스턴스를 사용할 때마다 등록해줘야 한다.<br />
+<br /></p>
+
+<h2 id="3-컴포넌트-통신">3. 컴포넌트 통신</h2>
+<hr />
+<p>뷰 컴포넌트는 자체적으로 <code class="highlighter-rouge">고유한 유효 범위(Scope)</code>을 지니기 때문에 같은 웹 페이지에 존재하더라도, 데이터 공유가 <code class="highlighter-rouge">불가능</code>하다.<br />
+따라서 뷰 프레임워크 자체에서 정의한 컴포넌트 데이터 전달 방법을 따라야 하는데, 가장 기본적인 방법은 <code class="highlighter-rouge">상위-하위</code> 컴포넌트 간의 데이터전달이다.<br />
+기본적으로 <code class="highlighter-rouge">상위 -&gt; 하위</code>로는 <code class="highlighter-rouge">props</code>라는 특별한 속성을 전달하고, <code class="highlighter-rouge">하위 -&gt; 상위</code>로는 <code class="highlighter-rouge">이벤트</code>만 전달이 가능하다.<br />
+<br /></p>
+
+<h4 id="3-1-상위---하위-데이터-전달">3-1. 상위 -&gt; 하위 데이터 전달</h4>
+<p><code class="highlighter-rouge">상위 -&gt; 하위</code> 컴포넌트로 데이터를 전달할 때는 <code class="highlighter-rouge">props</code>라는 속성을 다음과 같은 순서로 사용한다.</p>
+<ol>
+  <li>하위 컴포넌트 속성에 <code class="highlighter-rouge">props</code>를 정의</li>
+  <li>상위 컴포넌트의 해당하는 태그에 <code class="highlighter-rouge">v-bind</code> 속성을 추가</li>
+</ol>
+
+<p>이를 코드로 나타내면 다음과 같다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Props Sample<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- 팁 : 오른쪽에서 왼쪽으로 속성을 읽으면 더 수월합니다. --&gt;</span>
+      <span class="nt">&lt;child-component</span> <span class="na">v-bind:propsdata=</span><span class="s">"message"</span><span class="nt">&gt;&lt;/child-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">child-component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">props</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">propsdata</span><span class="dl">'</span><span class="p">],</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;p&gt;{ { propsdata }}&lt;/p&gt;</span><span class="dl">'</span><span class="p">,</span>
+      <span class="p">});</span>
+
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue! passed from Parent Component</span><span class="dl">'</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="3-2-하위---상위-이벤트-전달">3-2. 하위 -&gt; 상위 이벤트 전달</h4>
+<p><code class="highlighter-rouge">하위 -&gt; 상위</code> 컴포넌트의 통신은 <code class="highlighter-rouge">이벤트(Event)</code>를 발생시켜 신호를 보내는 방식으로 작동한다.<br />
+이를 처리하기 위해 상위 컴포넌트는 이벤트를 기다리고 있다가 하위 컴포넌트에서 특정 이벤트가 발생하면,<br />
+상위 컴포넌트에서 해당 이벤트를 수신하여 상위 컴포넌트의 <code class="highlighter-rouge">메서드</code>를 호출한다.</p>
+
+<blockquote>
+  <p>뷰 공식 사이트에서 이벤트 발생 사용방법에서는 하위 -&gt; 상위 컴포넌트로 데이터의 전달은 다루지 않는다고 한다.<br />
+뷰의 단방향 데이터 흐름에 어긋나는 방법이기 때문인데, 복잡한 어플리케이션에서는 전달해야할 경우가 생기게 된다.<br />
+이를 위한 방법이 <code class="highlighter-rouge">이벤트 버스(Event Bus)</code>이다.</p>
+</blockquote>
+
+<p>이벤트 발생과 수신은 <code class="highlighter-rouge">$emit()</code>과 <code class="highlighter-rouge">v-on:</code> 속성을 사용하여 구현하며, 이를 코드로 나타내면 다음과 같다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Event Emit Sample<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;child-component</span> <span class="na">v-on:show-log=</span><span class="s">"printText"</span><span class="nt">&gt;&lt;/child-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">child-component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;button v-on:click="showLog"&gt;show&lt;/button&gt;</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">showLog</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">show-log</span><span class="dl">'</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue! passed from Parent Component</span><span class="dl">'</span>
+        <span class="p">},</span>
+        <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">printText</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">received an event</span><span class="dl">"</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">$emit()</code>을 호출하면 괄호안에 정의된 이벤트가 발생되며, 해당 이벤트 명을 <code class="highlighter-rouge">v-on:</code>속성에지정하고 발생시킬 메서드를 지정한다.<br />
+<br /></p>
+
+<h4 id="3-3-같은-레벨의-컴포넌트-간-통신">3-3. 같은 레벨의 컴포넌트 간 통신</h4>
+<p>기본적인 통신 규칙을 지키며 동레벨의 컴포넌트에게 데이터를 전달하기 위해서는, 해당 컴포넌트들의 <code class="highlighter-rouge">공통 상위 컴포넌트</code>를 통해 전달해야 한다.<br />
+즉, 하위 컴포넌트1 -&gt; 공통 상위 컴포넌트 -&gt; 하위 컴포넌트2의 방식으로 전달되야 하는데, 이를 해결하기 위한 방법이 <code class="highlighter-rouge">이벤트 버스</code>이다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Vue Event Bus Sample<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;child-component&gt;&lt;/child-component&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="kd">var</span> <span class="nx">eventBus</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">();</span>
+
+      <span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">child-component</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;하위 컴포넌트 영역입니다.&lt;button v-on:click="showLog"&gt;show&lt;/button&gt;&lt;/div&gt;</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">showLog</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">eventBus</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">triggerEventBus</span><span class="dl">'</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+
+      <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">created</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">eventBus</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="dl">'</span><span class="s1">triggerEventBus</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">이벤트를 전달 받음. 전달 받은 값 : </span><span class="dl">"</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+          <span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>위 코드는 show 버튼을 클릭했을 때, 이벤트 버스를 이용하여 상위 컴포넌트로 데이터를 전달하는 코드이며 다음과 같은 흐름으로 진행된다.</p>
+<ol>
+  <li>show 버튼 클릭</li>
+  <li>showLog() 실행</li>
+  <li><code class="highlighter-rouge">eventBus</code>의 이벤트 발생</li>
+  <li>상위 컴포넌트 created()에 있는 <code class="highlighter-rouge">eventBus.$on()</code>에서 전달 받음</li>
+  <li>콘솔에 전달된 인자 값 100이 출력</li>
+</ol>
+
+<blockquote>
+  <p>위와 같이 이벤트 버스를 활용하면 props 속성을 이용하지 않고 원하는 컴포넌트 간의 데이터 교환이 가능하다.<br />
+하지만 컴포넌트가 많아지면, 어디서 어디로 보내는지 <code class="highlighter-rouge">관리가 되지 않는 문제점</code>이 발생한다.<br />
+이 문제를 해결하기 위해서는 <code class="highlighter-rouge">Vuex</code>라는 상태 관리 도구가 필요하다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>여태까지 뷰의 기본적인 개요 및 인스턴스와 컴포넌트에 대하여 알아보았다.<br />
+다음 포스팅에서는 뷰의 <code class="highlighter-rouge">라우터</code>와 <code class="highlighter-rouge">HTTP</code>통신 방법에 대하여 알아보자.</p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/10/21/web-6.html" data-toggle="tooltip" data-placement="top" title="[Vue] 인스턴스"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/10/26/web-7.html';
+this.page.identifier = '/devlog/2020/10/26/web-7';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,4 +1,296 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-26T16:07:48+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 인스턴스</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-6.html" rel="alternate" type="text/html" title="[Vue] 인스턴스" /><published>2020-10-21T11:15:00+09:00</published><updated>2020-10-21T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-27T15:43:22+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 컴포넌트</title><link href="https://owin2828.github.io/devlog/2020/10/26/web-7.html" rel="alternate" type="text/html" title="[Vue] 컴포넌트" /><published>2020-10-26T16:06:00+09:00</published><updated>2020-10-26T16:06:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/26/web-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/26/web-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;이전 포스팅에 이어 뷰의 컴포넌트의 정의, 유효범위 및 사용법에 대해 알아보도록 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-컴포넌트란&quot;&gt;1. 컴포넌트란?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트(Component)&lt;/code&gt;란 조합하여 화면을 구성할 수 있는 블록을 의미하며 다음과 같은 장점을 지닌다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;구조화하여 일괄적인 패턴으로 개발 가능&lt;/li&gt;
+  &lt;li&gt;코드 재사용성이 높아짐&lt;/li&gt;
+  &lt;li&gt;남의 코드를 직관적으로 이해하기 편함&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_7_1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;컴포넌트로 구분한 화면 영역 간의 관계도&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-전역-컴포넌트-vs-지역-컴포넌트&quot;&gt;2. 전역 컴포넌트 VS 지역 컴포넌트&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;컴포넌트를 등록할 때, &lt;code class=&quot;highlighter-rouge&quot;&gt;전역&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;지역&lt;/code&gt; 두 가지 방법으로 가능하다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;지역(Local)&lt;/code&gt; 컴포넌트는 특정 인스턴스에서만 유효한 범위를, &lt;code class=&quot;highlighter-rouge&quot;&gt;전역(Global)&lt;/code&gt; 컴포넌트는 여러 인스턴스에서 공통으로 사용할 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-1-전역-컴포넌트&quot;&gt;2-1. 전역 컴포넌트&lt;/h4&gt;
+&lt;p&gt;전역 컴포넌트는 다음과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue&lt;/code&gt; 변수를 이용하여 등록하며, &lt;code class=&quot;highlighter-rouge&quot;&gt;.component()&lt;/code&gt; 함수를 호출하여 실행한다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Component Registration&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;컴포넌트 등록&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;my-component&amp;gt;&amp;lt;/my-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;my-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;전역 컴포넌트가 등록되었습니다!&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 my-component 태그부분은 최종적으로 다음과 같이 변경된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;컴포넌트 등록&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 치환된 모습 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;전역 컴포넌트가 등록되었습니다!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-2-지역-컴포넌트&quot;&gt;2-2. 지역 컴포넌트&lt;/h4&gt;
+&lt;p&gt;지역 컴포넌트는 인스턴스에 &lt;code class=&quot;highlighter-rouge&quot;&gt;component&lt;/code&gt; 속성을 추가하여 이름과 내용을 정의한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 컴포넌트 내용&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;지역 컴포넌트가 등록되었습니다!&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;my-local-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cmp&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-3-전역-vs-지역-컴포넌트-차이&quot;&gt;2-3. 전역 vs 지역 컴포넌트 차이&lt;/h4&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Local and Global Components&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;첫 번째 인스턴스 영역&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;my-global-component&amp;gt;&amp;lt;/my-global-component&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;my-local-component&amp;gt;&amp;lt;/my-local-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;hr&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;두 번째 인스턴스 영역&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;my-global-component&amp;gt;&amp;lt;/my-global-component&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;my-local-component&amp;gt;&amp;lt;/my-local-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 전역 컴포넌트 등록&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;my-global-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;전역 컴포넌트 입니다.&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 지역 컴포넌트 내용&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;지역 컴포넌트 입니다.&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 지역 컴포넌트 등록&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;my-local-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cmp&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 두 번째 인스턴스&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;위와 같은 코드에서 첫번째 인스턴스 영역에서는 전역, 지역이 &lt;code class=&quot;highlighter-rouge&quot;&gt;모두&lt;/code&gt; 표기되나 두번째 인스턴스에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;전역&lt;/code&gt;만 노출된다.&lt;br /&gt;
+전역 컴포넌트는 인스턴스를 새로 생성할 때마다, 인스턴스에 components 속성으로 등록할 필요 없이 사용 가능하나, &lt;br /&gt;
+지역 컴포넌트는 새 인스턴스를 사용할 때마다 등록해줘야 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-컴포넌트-통신&quot;&gt;3. 컴포넌트 통신&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰 컴포넌트는 자체적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;고유한 유효 범위(Scope)&lt;/code&gt;을 지니기 때문에 같은 웹 페이지에 존재하더라도, 데이터 공유가 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다.&lt;br /&gt;
+따라서 뷰 프레임워크 자체에서 정의한 컴포넌트 데이터 전달 방법을 따라야 하는데, 가장 기본적인 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;상위-하위&lt;/code&gt; 컴포넌트 간의 데이터전달이다.&lt;br /&gt;
+기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;상위 -&amp;gt; 하위&lt;/code&gt;로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;props&lt;/code&gt;라는 특별한 속성을 전달하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;하위 -&amp;gt; 상위&lt;/code&gt;로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;이벤트&lt;/code&gt;만 전달이 가능하다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-1-상위---하위-데이터-전달&quot;&gt;3-1. 상위 -&amp;gt; 하위 데이터 전달&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;상위 -&amp;gt; 하위&lt;/code&gt; 컴포넌트로 데이터를 전달할 때는 &lt;code class=&quot;highlighter-rouge&quot;&gt;props&lt;/code&gt;라는 속성을 다음과 같은 순서로 사용한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;하위 컴포넌트 속성에 &lt;code class=&quot;highlighter-rouge&quot;&gt;props&lt;/code&gt;를 정의&lt;/li&gt;
+  &lt;li&gt;상위 컴포넌트의 해당하는 태그에 &lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt; 속성을 추가&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이를 코드로 나타내면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Props Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 팁 : 오른쪽에서 왼쪽으로 속성을 읽으면 더 수월합니다. --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;child-component&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-bind:propsdata=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;message&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/child-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;child-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;propsdata&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;p&amp;gt;{ { propsdata }}&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue! passed from Parent Component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-2-하위---상위-이벤트-전달&quot;&gt;3-2. 하위 -&amp;gt; 상위 이벤트 전달&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;하위 -&amp;gt; 상위&lt;/code&gt; 컴포넌트의 통신은 &lt;code class=&quot;highlighter-rouge&quot;&gt;이벤트(Event)&lt;/code&gt;를 발생시켜 신호를 보내는 방식으로 작동한다.&lt;br /&gt;
+이를 처리하기 위해 상위 컴포넌트는 이벤트를 기다리고 있다가 하위 컴포넌트에서 특정 이벤트가 발생하면,&lt;br /&gt;
+상위 컴포넌트에서 해당 이벤트를 수신하여 상위 컴포넌트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;메서드&lt;/code&gt;를 호출한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;뷰 공식 사이트에서 이벤트 발생 사용방법에서는 하위 -&amp;gt; 상위 컴포넌트로 데이터의 전달은 다루지 않는다고 한다.&lt;br /&gt;
+뷰의 단방향 데이터 흐름에 어긋나는 방법이기 때문인데, 복잡한 어플리케이션에서는 전달해야할 경우가 생기게 된다.&lt;br /&gt;
+이를 위한 방법이 &lt;code class=&quot;highlighter-rouge&quot;&gt;이벤트 버스(Event Bus)&lt;/code&gt;이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이벤트 발생과 수신은 &lt;code class=&quot;highlighter-rouge&quot;&gt;$emit()&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;v-on:&lt;/code&gt; 속성을 사용하여 구현하며, 이를 코드로 나타내면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Event Emit Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;child-component&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-on:show-log=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;printText&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/child-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;child-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;button v-on:click=&quot;showLog&quot;&amp;gt;show&amp;lt;/button&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;showLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$emit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;show-log&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue! passed from Parent Component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;printText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;received an event&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$emit()&lt;/code&gt;을 호출하면 괄호안에 정의된 이벤트가 발생되며, 해당 이벤트 명을 &lt;code class=&quot;highlighter-rouge&quot;&gt;v-on:&lt;/code&gt;속성에지정하고 발생시킬 메서드를 지정한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-3-같은-레벨의-컴포넌트-간-통신&quot;&gt;3-3. 같은 레벨의 컴포넌트 간 통신&lt;/h4&gt;
+&lt;p&gt;기본적인 통신 규칙을 지키며 동레벨의 컴포넌트에게 데이터를 전달하기 위해서는, 해당 컴포넌트들의 &lt;code class=&quot;highlighter-rouge&quot;&gt;공통 상위 컴포넌트&lt;/code&gt;를 통해 전달해야 한다.&lt;br /&gt;
+즉, 하위 컴포넌트1 -&amp;gt; 공통 상위 컴포넌트 -&amp;gt; 하위 컴포넌트2의 방식으로 전달되야 하는데, 이를 해결하기 위한 방법이 &lt;code class=&quot;highlighter-rouge&quot;&gt;이벤트 버스&lt;/code&gt;이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Event Bus Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;child-component&amp;gt;&amp;lt;/child-component&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;eventBus&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+      &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;child-component&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;하위 컴포넌트 영역입니다.&amp;lt;button v-on:click=&quot;showLog&quot;&amp;gt;show&amp;lt;/button&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;showLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;eventBus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$emit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;triggerEventBus&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;created&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;eventBus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;triggerEventBus&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;이벤트를 전달 받음. 전달 받은 값 : &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 코드는 show 버튼을 클릭했을 때, 이벤트 버스를 이용하여 상위 컴포넌트로 데이터를 전달하는 코드이며 다음과 같은 흐름으로 진행된다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;show 버튼 클릭&lt;/li&gt;
+  &lt;li&gt;showLog() 실행&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;eventBus&lt;/code&gt;의 이벤트 발생&lt;/li&gt;
+  &lt;li&gt;상위 컴포넌트 created()에 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;eventBus.$on()&lt;/code&gt;에서 전달 받음&lt;/li&gt;
+  &lt;li&gt;콘솔에 전달된 인자 값 100이 출력&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;위와 같이 이벤트 버스를 활용하면 props 속성을 이용하지 않고 원하는 컴포넌트 간의 데이터 교환이 가능하다.&lt;br /&gt;
+하지만 컴포넌트가 많아지면, 어디서 어디로 보내는지 &lt;code class=&quot;highlighter-rouge&quot;&gt;관리가 되지 않는 문제점&lt;/code&gt;이 발생한다.&lt;br /&gt;
+이 문제를 해결하기 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vuex&lt;/code&gt;라는 상태 관리 도구가 필요하다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;여태까지 뷰의 기본적인 개요 및 인스턴스와 컴포넌트에 대하여 알아보았다.&lt;br /&gt;
+다음 포스팅에서는 뷰의 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우터&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt;통신 방법에 대하여 알아보자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 이전 포스팅에 이어 뷰의 컴포넌트의 정의, 유효범위 및 사용법에 대해 알아보도록 한다.</summary></entry><entry><title type="html">[Vue] 인스턴스</title><link href="https://owin2828.github.io/devlog/2020/10/21/web-6.html" rel="alternate" type="text/html" title="[Vue] 인스턴스" /><published>2020-10-21T11:15:00+09:00</published><updated>2020-10-21T11:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/21/web-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/21/web-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;뷰로 웹 개발을 하기 위해 필수적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;인스턴스&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트&lt;/code&gt;에 대해 알아보고, 각 요소들의 필요성에 대해 알아보자.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;본 글에 앞서, 크롬 익스텐션 &lt;code class=&quot;highlighter-rouge&quot;&gt;Vue.js devtools&lt;/code&gt;를 설치 후, 실행하는 것을 권장합니다.&lt;br /&gt;
@@ -744,211 +1036,4 @@ Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다�
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;Oauth2.0에 대하여 간략하게 알아보았다. 다음 포스팅에서는 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;4가지 인증 방식&lt;/code&gt;에 대하여 알아볼 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Oauth2.0의 기초에 대해 알아보고자 한다. 많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 개념부터 구현까지 직접하며 글을 남기고자 한다. 자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다. 생활코딩 oauth2.0</summary></entry><entry><title type="html">[AWS] IAM</title><link href="https://owin2828.github.io/devlog/2020/01/29/aws-7.html" rel="alternate" type="text/html" title="[AWS] IAM" /><published>2020-01-29T09:51:00+09:00</published><updated>2020-01-29T09:51:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/01/29/aws-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/01/29/aws-7.html">&lt;h2 id=&quot;id0&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;본 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;id1&quot;&gt;1. IAM이란?&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;은 Identity and Access Management의 약자로, AWS 리소스에 대한 접근을 안전하게 제어할 수 있는 웹 서비스이다.&lt;br /&gt;
-이 설정을 통해 리소스를 사용하도록 인증하거나, 권한을 부여할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;처음 AWS 계정을 생성하게 되면, 해당 계정에 모든 리소스에 접근할 수 있는 권한이 부여된 &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; 계정이 생성된다.&lt;br /&gt;
-이러한 사용자는 &lt;code class=&quot;highlighter-rouge&quot;&gt;root 사용자&lt;/code&gt;라고 부르며, 로그인할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;Email&lt;/code&gt;을 입력하여 로그인하게 된다.&lt;br /&gt;
-이에 AWS는 일상작업뿐 아니라 관리작업에도 이 루트사용자를 사용하는 것을 &lt;code class=&quot;highlighter-rouge&quot;&gt;비권장&lt;/code&gt;한다.&lt;br /&gt;
-대신 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/best-practices.html&quot;&gt;이곳&lt;/a&gt;과 같은 방법으로 IAM 사용자를 생성할 때만 사용하도록 권장한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;즉 루트 사용자는 계정 및 서비스 관기 작업에만 사용하기를 권장한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id2&quot;&gt;2. IAM의 기능&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;IAM은 다양한 기능을 제공하지만, 주로 사용하게 될 기능은 다음과 같다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;AWS 계정에 대한 공유 접근제어&lt;/li&gt;
-  &lt;li&gt;권한을 세분화하여 부여&lt;/li&gt;
-  &lt;li&gt;MFA(멀티 팩터 인증)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;더 구체적인 사항은 &lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/introduction.html&quot;&gt;AWS 공식 홈페이지&lt;/a&gt;를 참고하기 바란다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;3. IAM 유저 생성&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;콘솔에 로그인하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;내 보안자격 증명&lt;/code&gt;을 눌러준다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;위와 같은 팝업창이 뜨게 되는데 여기서 빨간 사각형의 버튼을 클릭한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;혹은 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;을 검색하여 들어가도 된다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;사용자 추가&lt;/code&gt; 버튼을 눌러 새로운 IAM 사용자를 추가해준다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;생성할 사용자의 이름을 입력한다.&lt;/li&gt;
-  &lt;li&gt;액세스 유형은 &lt;code class=&quot;highlighter-rouge&quot;&gt;콘솔&lt;/code&gt;로 설정한다. (추후, 키를 발급받을 수 있다.)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;권한 설정에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;그룹 생성&lt;/code&gt;을 클릭한다.&lt;br /&gt;
-그룹에 권한을 설정하고 유저를 추가하면, 관리가 &lt;code class=&quot;highlighter-rouge&quot;&gt;편리&lt;/code&gt;하다.
-    &lt;blockquote&gt;
-      &lt;p&gt;만약 특정 유저에게서 권한을 제거하고 싶다면, 그룹에서 사용자를 제거하면 된다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;그룹 이름을 지정후, &lt;code class=&quot;highlighter-rouge&quot;&gt;AdministratorAccess&lt;/code&gt;를 체크하여 관리자 권한을 해당 그룹에 부여한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;그룹 생성&lt;/code&gt;을 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;위와 같이 성공적으로 추가되었음을 확인할 수 있고, 다음 단계로 넘어간다.
-    &lt;blockquote&gt;
-      &lt;p&gt;다음 단계는 &lt;code class=&quot;highlighter-rouge&quot;&gt;태그&lt;/code&gt;이지만, 딱히 추가할 태그가 없으므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;검토&lt;/code&gt;로 가도록 한다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;생성한 정보를 확인 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;사용자 만들기&lt;/code&gt;를 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;사용자들이 접속할 &lt;code class=&quot;highlighter-rouge&quot;&gt;콘솔 주소&lt;/code&gt;가 표시되며, 해당 주소를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;IAM 유저&lt;/code&gt;로 로그인이 가능하다.&lt;/li&gt;
-  &lt;li&gt;사용자의 액세스 키(액세스 키 ID &amp;amp; 보안 액세스 키)를 확인하려면, &lt;code class=&quot;highlighter-rouge&quot;&gt;표시&lt;/code&gt; 버튼을 눌러 확인한다.&lt;/li&gt;
-  &lt;li&gt;액세스 키를 저장하려면, &lt;code class=&quot;highlighter-rouge&quot;&gt;.csv 다운로드&lt;/code&gt; 버튼을 클릭한 후 안전한 위치에 저장한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;보안 액세스 키는 이 단계에서만 확인 및 다운로드가 가능하다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;다시는&lt;/code&gt; 확인하거나 다운로드 할 수 없으므로 주의하자.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM 유저&lt;/code&gt;가 생성됨을 확인할 수 있다.&lt;br /&gt;
-앞으로는 IAM유저로 로그인하여 네트워크를 구성하면 된다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id4&quot;&gt;4. 루트계정 MFA 활성화&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;AWS에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt;는 보안을 강화하는 수단이다. AWS계정 및 개별 IAM 사용자들에 대해 AWS MFA를 활성화할 수 있다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;루트계정&lt;/code&gt;에는 MFA를 활성화하는것이 권장되며, 현재는 토큰 기반의 가상 MfA 어플리케이션만 존재한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;2019.02.01 이후로 SMS 문자 메세지 기반 방식은 더이상 지원되지 않는다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;좌측메뉴의 &lt;code class=&quot;highlighter-rouge&quot;&gt;대시보드&lt;/code&gt;를 누른 후, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 관리&lt;/code&gt; 버튼을 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 활성화&lt;/code&gt; 버튼을 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_13.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가상 MFA 디바이스&lt;/code&gt;를 체크하고 계속을 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_14.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;QR 코드 표시&lt;/code&gt;를 클릭하여 나오는 QR 코드를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Google OTP&lt;/code&gt;를 설치하여 스캔하면 MFA 코드가 생성된다.&lt;/li&gt;
-  &lt;li&gt;생성된 2개의 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA 코드&lt;/code&gt;를 입력하여 할당을 누른다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_15.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;성공적으로 할당시, 사진과 같이 성공했다는 표시가 되며, 루트계정 로그인은 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt; 인증을 해야한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;루트 계정으로 로그인할 시 &lt;code class=&quot;highlighter-rouge&quot;&gt;MFA&lt;/code&gt; 코드를 입력하는 화면이 뜨게되며,  &lt;code class=&quot;highlighter-rouge&quot;&gt;Google OTP&lt;/code&gt;에서 코드를 입력하면 로그인할 수 있다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id5&quot;&gt;5. IAM 역할 부여&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;IAM에서 제공하는 기능중 &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;을 사용하면 특정 인스턴스에 제약을 걸 수 있다.&lt;br /&gt;
-이어지는 실습에서는 특정 EC2에게 S3버킷에 대한 접근 제어 역할을 부여하겠다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_17.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;좌측 메뉴에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;을 클릭 후, &lt;code class=&quot;highlighter-rouge&quot;&gt;역할 만들기&lt;/code&gt;를 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_18.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;우리는 특정 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;에게 역할을 부여할 것이므로, 사진처럼 &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt;를 클릭 후 다음을 누른다.
-    &lt;blockquote&gt;
-      &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;다른 AWS 계정&lt;/code&gt;을 눌러 특정 계정에게 역할을 부여할 수도 있다.&lt;br /&gt;
-이런 경우, 계정 ID는 이메일 형식의 로그인ID가 아니라, 내 정보에서 볼 수 있는 12자리 숫자 ID이다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_19.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;특정 EC2에게 &lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;버킷에 접근할 역할을 부여할 것이므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;amazons3fullaccess&lt;/code&gt;를 검색 후 체크하여 다음을 클릭한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;이어지는 태그는 건너뛰고 &lt;code class=&quot;highlighter-rouge&quot;&gt;검토&lt;/code&gt;를 클릭한다.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_20.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;역할의 이름을 지정하고 방금 지정한 정책이 맞는지 확인 후, 만들기를 클릭한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_21.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;생성한 역할이 지정한 이름과 할당한 서비스를 표시함을 확인할 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/aws/aws_7_22.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;EC2를 생성할 때, 우리가 지정한 역할을 부여할 수 있음을 알 수 있다.&lt;br /&gt;
-이렇게 생성된 EC2 인스턴스는 S3외의 다른 서비스의 접근은 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;해진다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;id6&quot;&gt;6. 끝마치며&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;공부하며, 내용을 정리하다 보니 문득 &lt;code class=&quot;highlighter-rouge&quot;&gt;정책&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;의 차이가 모호해져 찾아보게 되었다.&lt;br /&gt;
-내가 이해한 바로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;정책&lt;/code&gt;은 어떤 일을 할 수 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;권한&lt;/code&gt;과 관련이 있고,&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;역할&lt;/code&gt;은 그러한 &lt;code class=&quot;highlighter-rouge&quot;&gt;권한&lt;/code&gt;들의 논리적인 &lt;code class=&quot;highlighter-rouge&quot;&gt;집합&lt;/code&gt;이라는 것이다.&lt;br /&gt;
-자세한 내용은 다음의 두 링크를 참조하자.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/id_roles_compare-resource-policies.html&quot;&gt;AWS 홈페이지&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://musma.github.io/2019/11/05/about-aws-iam-policy.html&quot;&gt;이현수님 포스팅&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;IAM&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;VPC&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;EC2&lt;/code&gt; 이 3가지는 굉장히 중요하다고 한다.&lt;br /&gt;
-꼭 잘 설정하여 좋은 환경을 구축하기를 바란다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="aws" /><summary type="html">들어가기 앞서 본 포스팅에서는 IAM에 대해 살펴보고, 접근 제어 및 권한 설정을 하는 방법에 대해 알아볼 예정이다.</summary></entry></feed>
+&lt;p&gt;Oauth2.0에 대하여 간략하게 알아보았다. 다음 포스팅에서는 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;4가지 인증 방식&lt;/code&gt;에 대하여 알아볼 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Oauth2.0의 기초에 대해 알아보고자 한다. 많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 개념부터 구현까지 직접하며 글을 남기고자 한다. 자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다. 생활코딩 oauth2.0</summary></entry></feed>
