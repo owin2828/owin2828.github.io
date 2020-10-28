@@ -1,4 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-27T15:43:22+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 컴포넌트</title><link href="https://owin2828.github.io/devlog/2020/10/26/web-7.html" rel="alternate" type="text/html" title="[Vue] 컴포넌트" /><published>2020-10-26T16:06:00+09:00</published><updated>2020-10-26T16:06:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/26/web-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/26/web-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-28T14:16:41+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 라우터</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-8.html" rel="alternate" type="text/html" title="[Vue] 라우터" /><published>2020-10-28T11:20:00+09:00</published><updated>2020-10-28T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;웹 페이지의 경우, 여러 페이지로 구성되어 있기 때문에 페이지 간에 이동을 돕는 라우터를 사용해야 한다.&lt;br /&gt;
+이를 위해 뷰에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 라우터&lt;/code&gt; 라이브러리를 지원하는데 이번 포스팅에서는 이를 알아보도록 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-라우팅이란&quot;&gt;1. 라우팅이란?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;라우터(Router)&lt;/code&gt;를 이해하기 위해서는 먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅(Routing)&lt;/code&gt;에 대해서 알아야 한다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅&lt;/code&gt;이란 웹 피이지간의 이동 방법을 의미하는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;싱글 페이지 어플리케이션(SPA, Single Page Application)&lt;/code&gt;에서 주로 사용한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SPA(Singe Page Application)&lt;/code&gt;&lt;br /&gt;
+페이지를 이동할 때마다 서버에 웹 페이지를 요청하여 새로 갱신하는 것이 아니라, 미리 해당 페이지들을 받아놓고 화면을 갱신하는 기법&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이런 라우팅을 이용하면 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;을 지니게 된다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;화면간의 전환이 &lt;code class=&quot;highlighter-rouge&quot;&gt;매끄러움&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;사용자 입장에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;응답성&lt;/code&gt;이 빨라짐&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;뷰 라우터를 사용하지 않고, HTML 파일들로도 JavaScript 라이브러리를 활용하여 라우팅 방식의 페이지 이동이 구현 가능&lt;br /&gt;
+이러한 라이브러리로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;router.js&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;navigo.js&lt;/code&gt; 등이 존재&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;2-뷰-라우터&quot;&gt;2. 뷰 라우터&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 라우터&lt;/code&gt;란 뷰에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅&lt;/code&gt; 기능을 구현하도록 지원하는 공식 라이브러리이며, 이를 이용하여 뷰로 만든 페이지 간에 자유로운 이동이 가능하다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;router-link to=&quot;URL 값&quot;&amp;gt;&lt;/code&gt;: 페이지 이동 태그. 화면에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a&amp;gt;&lt;/code&gt;로 표시되며 틀릭하면 to에 지정된 URL로 이동&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;router-view&amp;gt;&lt;/code&gt;: 페이지 표시태그. 변경되는 URL에 따라 해당 컴포넌트를 뿌려주는 영역&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Router Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;뷰 라우터 예제&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 1. URL 값을 변경하는 태그 --&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;to=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/main&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Main 컴포넌트로 이동&lt;span class=&quot;nt&quot;&gt;&amp;lt;/router-link&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;to=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/login&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Login 컴포넌트로 이동&lt;span class=&quot;nt&quot;&gt;&amp;lt;/router-link&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 2. URL 값에 따라 갱신되는 화면 영역 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 3. Main. Login 컴포넌트 내용 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;main&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;login&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 4. 각 url에 해당하는 컴포넌트 등록&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/main&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/login&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 5. 뷰 라우터 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 6. 뷰 라우터를 인스턴스에 등록&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$mount() API&lt;/code&gt;&lt;br /&gt;
+el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlighter-rouge&quot;&gt;붙이는&lt;/code&gt; 역할을 함. el 속성을 지정하지 않더라도 mount를 이용하여 화면에 &lt;code class=&quot;highlighter-rouge&quot;&gt;강제&lt;/code&gt;로 인스턴스를 붙일 수 있다.&lt;br /&gt;
+뷰 라우터의 공식 문서는 모두 인스턴스 안에 el 속성을 지정하지 않고 라우터만 지정하여 생성한 다음, 생성된 인스턴스를 $mount()를 이용하는 방식으로 가이드 함&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이런식으로 코드를 짜게 되면, 버튼을 누름면 &lt;code class=&quot;highlighter-rouge&quot;&gt;URL에 따라서&lt;/code&gt; 끝이 main인지 login인지에 따라 화면이 바뀌게 된다.&lt;br /&gt;
+그러나 여러개의 컴포넌트를 동시에 표현해야 하는 상황에서는 적합하지 않으며, 이를 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Nested Router&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Named View&lt;/code&gt;가 존재한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-nested-라우터&quot;&gt;3. Nested 라우터&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;네스티드 라우터(Nested Router)&lt;/code&gt;는 라우터로 페이지를 이동할 때 최소 2개 이상의 컴포넌트를 화면에 나타낼 수 있다.&lt;br /&gt;
+이는 상위 컴포넌트 1개에 하위 컴포넌트 1개를 포함하는 구조로 다음과 같다.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_8_1.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;네스티드 라우터의 구조&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;맨 왼쪽에는 아무것도 지정하지 않았기 때문에 User 컴포넌트만 노출&lt;/li&gt;
+  &lt;li&gt;오른쪽 2개의 그림에는 post, profile에 따라 각각 Post, Profile 컴포넌트가 노출&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이를 코드로 나타내면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Nested Router&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- User 컴포넌트가 뿌려질 영역 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 컴포넌트 내용 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
+          &amp;lt;div&amp;gt;
+            User Component
+            // 하위 컴포넌트가 뿌려질 영역
+            &amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;
+          &amp;lt;/div&amp;gt;
+        &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProfile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;p&amp;gt;User Profile Component&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserPost&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;p&amp;gt;User Post Component&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 네스티드 라우팅 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/user&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;posts&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserPost&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProfile&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 뷰 라우터 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;// 뷰 인스턴스에 라우터 추가&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이러한 기법은 화면을 구성하는 컴포넌트의 수가 적을 때는 유용하지만, 한 번에 많은 컴포넌트를 표시하는데 한계가 있다.&lt;br /&gt;
+이를 위한 방안으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;네임드 뷰&lt;/code&gt;가 존재한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-named-view&quot;&gt;4. Named View&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;네임드 뷰(Named View)&lt;/code&gt;는 특정 페이지로 이동 했을 때, 여러 개의 컴포넌트를 동시에 표시하는 라우팅 방식이다.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_8_2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;네스티드 라우터 vs 네임드 뷰&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Named View Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 라우팅 영역 정의 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;header&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- name이 없는 경우는 디폴트 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;footer&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;// 컴포넌트 내용 정의&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Body&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Body&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Header&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Footer&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;의&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;속성과&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;컴포넌트를&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;연결&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;footer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Footer&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;이로써 간단하게 뷰에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우터&lt;/code&gt;에 대하여 알아보았다.&lt;br /&gt;
+다음 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; 통신에 대해 알아보도록 하자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 웹 페이지의 경우, 여러 페이지로 구성되어 있기 때문에 페이지 간에 이동을 돕는 라우터를 사용해야 한다. 이를 위해 뷰에서는 뷰 라우터 라이브러리를 지원하는데 이번 포스팅에서는 이를 알아보도록 한다.</summary></entry><entry><title type="html">[Vue] 컴포넌트</title><link href="https://owin2828.github.io/devlog/2020/10/26/web-7.html" rel="alternate" type="text/html" title="[Vue] 컴포넌트" /><published>2020-10-26T16:06:00+09:00</published><updated>2020-10-26T16:06:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/26/web-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/26/web-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;이전 포스팅에 이어 뷰의 컴포넌트의 정의, 유효범위 및 사용법에 대해 알아보도록 한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
@@ -953,87 +1180,4 @@ Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다�
 
 &lt;blockquote&gt;
   &lt;p&gt;맥을 &lt;code class=&quot;highlighter-rouge&quot;&gt;재부팅&lt;/code&gt;하자 변경사항이 적용될 것이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">(`) 입력하기 맥을 사용하다보면, 한글을 타이핑하다가 (`)버튼을 누르면 원하는 grave는 나오지 않고 (₩)가 나오는 것을 볼 수 있다. Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다음과 같은 해결법을 공유한다.</summary></entry><entry><title type="html">[Oauth] Oauth2.0의 등장배경, 역할 및 기본 정보</title><link href="https://owin2828.github.io/devlog/2020/03/11/web-3.html" rel="alternate" type="text/html" title="[Oauth] Oauth2.0의 등장배경, 역할 및 기본 정보" /><published>2020-03-11T14:54:00+09:00</published><updated>2020-03-11T14:54:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/11/web-3</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/11/web-3.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Oauth2.0&lt;/code&gt;의 기초에 대해 알아보고자 한다. 
-많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;개념&lt;/code&gt;부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;구현&lt;/code&gt;까지 직접하며 글을 남기고자 한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다.&lt;br /&gt;
-  &lt;a href=&quot;https://opentutorials.org/course/3405&quot;&gt;생활코딩 oauth2.0&lt;/a&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;1-인증-vs-인가&quot;&gt;1. 인증 vs 인가&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;본격적으로 oauth2.0를 살펴보기 전에 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;용어&lt;/code&gt;의 의미를 짚고 가자.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인증&lt;/code&gt;(Authentication)&lt;br /&gt;
-인증이란, &lt;code class=&quot;highlighter-rouge&quot;&gt;신원을 확인&lt;/code&gt; 하는 행위이다.&lt;br /&gt;
-즉, 어떠한 주권을 행사할 자격이 있는지를 검증하는 단계이다.&lt;br /&gt;
-그렇기 때문에 인증을 한다고 해서, 주체에게 새로운 권한이 부여되지는 않는다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;인가&lt;/code&gt;(Authorization)&lt;br /&gt;
-인가란 &lt;code class=&quot;highlighter-rouge&quot;&gt;승인&lt;/code&gt;이라고도 불리는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;권한을 부여&lt;/code&gt;하는 행위이다.&lt;br /&gt;
-즉, 인가를 받은 대상이 새로운 자격을 얻게 되어 제한된 리소스에 접근이 가능하다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-oauth20의-등장배경&quot;&gt;2. Oauth2.0의 등장배경&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;권한이 각 사용자에게 부여되는 경우에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;반드시&lt;/code&gt; 권한 소유자에 대한 인증절차를 거치게 된다. 
-웹에서 이러한 가장 보편적인 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;ID/PW&lt;/code&gt; 방식으로 로그인하는 것이다. 
-사용자가 입력한 정보를 서버에 전송하여 인증이 성공할 경우, &lt;code class=&quot;highlighter-rouge&quot;&gt;쿠키&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;세션&lt;/code&gt; 값을 저장함으로써 권한이 부여된다. 
-이런 방식은 한 번의 로그인으로 세션이 종료되기 전까지 제한된 기능을 수행할 수 있어, &lt;code class=&quot;highlighter-rouge&quot;&gt;간편&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;효율적&lt;/code&gt;인 방식으로 널리 사용된다. 
-하지만 이러한 쿠키 기반 권한 부여는 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;단점&lt;/code&gt;을 지닌다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;서버에 요청이 올때마다 DB를 통해 현재 상태를 매번 확인하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;낭비&lt;/code&gt;가 발생한다.&lt;/li&gt;
-  &lt;li&gt;모바일 앱에 적합하지 &lt;code class=&quot;highlighter-rouge&quot;&gt;않다&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;서로 다른 서비스 간에 정보를 공유하기 &lt;code class=&quot;highlighter-rouge&quot;&gt;어렵다&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이러한 단점을 해결하기 위해 IETF는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Oauth&lt;/code&gt;라는 프레임워크를 만들게 된다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;oauth1과 oauth2는 완전히 &lt;code class=&quot;highlighter-rouge&quot;&gt;다른&lt;/code&gt; 프로토콜이며, 호환되지 않는다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-oauth20의-4가지-역할&quot;&gt;3. Oauth2.0의 4가지 역할&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;Oauth2.0의 시나리오에는 다음과 같은 4가지 역할이 존재한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/web/web_1_1.jpg&quot; alt=&quot;Oauth2 역할, 출처: http://tutorials.jenkov.com/oauth2/roles.html&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Resource Owner&lt;/code&gt;&lt;br /&gt;
-  &lt;code class=&quot;highlighter-rouge&quot;&gt;사용자&lt;/code&gt;로서 자신의 리소스에 대한 접근 권한을 가지고 있는 주체이다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Client&lt;/code&gt;&lt;br /&gt;
-  사용자가 &lt;code class=&quot;highlighter-rouge&quot;&gt;접근하는 서비스&lt;/code&gt;로서 사용자의 데이터에 대한 요청을 보내는 주체이다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Resource Server&lt;/code&gt;&lt;br /&gt;
-  사용자의 &lt;code class=&quot;highlighter-rouge&quot;&gt;데이터를 보유&lt;/code&gt;한 기관으로서 유효한 권한을 부여받은 client가 요청할 경우 제공한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Authorization Server&lt;/code&gt; &lt;br /&gt;
-  사용자의 데이터에 접근할 &lt;code class=&quot;highlighter-rouge&quot;&gt;권한을 제공&lt;/code&gt;하는 서버이다. client의 요청에 따라 사용자에게 &lt;code class=&quot;highlighter-rouge&quot;&gt;정보제공 동의&lt;/code&gt;를 받은 후, 권한을 부여한다.
-    &lt;blockquote&gt;
-      &lt;p&gt;규모가 작을 경우, Resource Server와 Authorization Server를 하나의 서버로 구현하기도 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;4-oauth20의-기본-정보&quot;&gt;4. Oauth2.0의 기본 정보&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;Oauth2.0에는 다음과 같은 세 가지의 기본 정보가 존재한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;등록정보&lt;/code&gt;&lt;br /&gt;
-  서비스를 제공하는 Client는 사전에 Authorization Server에 &lt;code class=&quot;highlighter-rouge&quot;&gt;등록&lt;/code&gt;해야한다. 
-  새로운 서비스가 출시될 때마다 정보를 갱신하여 제출한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Redirect URI&lt;/code&gt;&lt;br /&gt;
-  Authorization Server는 사용자가 &lt;code class=&quot;highlighter-rouge&quot;&gt;정보제공 동의&lt;/code&gt;를 하게되면 사용자를 등록된 &lt;code class=&quot;highlighter-rouge&quot;&gt;Redirect URI&lt;/code&gt;로 이동시킨다. 
-  만약 등록되지 않은 Redirect URI를 담은 요청이 들어오면 &lt;code class=&quot;highlighter-rouge&quot;&gt;무효&lt;/code&gt; 처리한다.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Client ID&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;Client Secret&lt;/code&gt;&lt;br /&gt;
-  새로 등록하는 Client는 Authorization Server로 부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;Client ID&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Client Secret&lt;/code&gt;을 발급받는다. 
-  Client ID는 노출되어도 상관 없지만, Client Secret는 &lt;code class=&quot;highlighter-rouge&quot;&gt;절대&lt;/code&gt; 노출되어서는 안된다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;Oauth2.0에 대하여 간략하게 알아보았다. 다음 포스팅에서는 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;4가지 인증 방식&lt;/code&gt;에 대하여 알아볼 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Oauth2.0의 기초에 대해 알아보고자 한다. 많은 자료가 있지만, 정확한 이해를 위해 oauth2.0의 개념부터 구현까지 직접하며 글을 남기고자 한다. 자세한 개념 설명은 다음과 같은 더 좋은 글들을 찾아보기 바란다. 생활코딩 oauth2.0</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">(`) 입력하기 맥을 사용하다보면, 한글을 타이핑하다가 (`)버튼을 누르면 원하는 grave는 나오지 않고 (₩)가 나오는 것을 볼 수 있다. Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다음과 같은 해결법을 공유한다.</summary></entry></feed>
