@@ -1,4 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-28T14:16:41+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 라우터</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-8.html" rel="alternate" type="text/html" title="[Vue] 라우터" /><published>2020-10-28T11:20:00+09:00</published><updated>2020-10-28T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-28T15:36:02+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] HTTP 통신</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-9.html" rel="alternate" type="text/html" title="[Vue] HTTP 통신" /><published>2020-10-28T14:15:00+09:00</published><updated>2020-10-28T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-9</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-9.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;브라우저와 서버간의 통신을 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt;라는 프로토콜을 통한다. 이때 웹 앱 HTTP 통신의 대표적인 방법으로 jQuery의 &lt;code class=&quot;highlighter-rouge&quot;&gt;ajax&lt;/code&gt;가 있다.&lt;br /&gt;
+이는 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고 화면의 일부분만 변경할 수 있게 하는 자바 스크립트의 기법이다.&lt;br /&gt;
+뷰에서도 마찬가지로 이를 지원하기 위한 라이브러리로 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 리소스&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;axios&lt;/code&gt;를 지원한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-뷰-리소스&quot;&gt;1. 뷰 리소스&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 리소스(resource)&lt;/code&gt;는 초기에 지원되는 라이브러리였으나, 2016년 말에 지원이 중단되어 기존에 관리했던 PageKit 팀의 라이브러리로 돌아갔다.&lt;br /&gt;
+현재도 계속하여 사용가능하며, CDN을 이용해 라이브러리를 로딩하는 방법과 NPM으로 라이브러리를 설치하는 방법이 있다.&lt;br /&gt;
+하지만 뷰의 창시자인 에반이 2016년 말에 지원을 중단하며 대안으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;axios&lt;/code&gt;가 뷰의 대세를 이루게 되었다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;뷰 리소스는 본 포스팅에서는 다루지 않는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-axios&quot;&gt;2. Axios&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;액시오스(Axios)&lt;/code&gt;는 현재 뷰 커뮤니티에서 가장 많이 사용되는 HTTP 통신 라이브러리이다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Promise&lt;/code&gt; 기반의 API 형식이 다양하게 제공되어 별도의 로직을 구현할 필요 없이 주어진 API로 구현이 가능하다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Promise 기반의 API&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Promise&lt;/code&gt;란 서버에 데이터를 요청하여 받아오는 동작같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;비동기&lt;/code&gt; 로직 처리에 유용한 자바스크립트 객체이다.&lt;br /&gt;
+자바스크립트는 단일 스레드로 처리하기에 비동기 동작을 처리하기 위해 promise와 같은 방법을 활용한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;액시오스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;CDN&lt;/code&gt;을 활용하여 사용할 수 있는데, 다음과 같은 코드를 추가하면 된다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/axios/dist/axios.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;axios API에 대한 자세한 설명은 &lt;a href=&quot;https://github.com/axios/axios#axios-api&quot;&gt;이곳&lt;/a&gt;을 참조&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이를 활용해 간단하게 GET 요청을 보내 데이터를 출력하는 코드는 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue with Axios Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-on:click=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;getData&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;프레임워크 목록 가져오기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/axios/dist/axios.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 액시오스 라이브러리 로딩 --&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+				&lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+				&lt;span class=&quot;na&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+					&lt;span class=&quot;na&quot;&gt;getData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                                                &lt;span class=&quot;c1&quot;&gt;// 액시오스 GET 요청 API&lt;/span&gt;
+						&lt;span class=&quot;nx&quot;&gt;axios&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+							&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+								&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+							&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+					&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+				&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;여기까지 진행하며 간단하게 뷰의 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우터&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; 통신에 대해 알아보았다.&lt;br /&gt;
+다음 글에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 템플릿&lt;/code&gt;과 프로젝트 구성에 대해 알아보자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 브라우저와 서버간의 통신을 위해 HTTP라는 프로토콜을 통한다. 이때 웹 앱 HTTP 통신의 대표적인 방법으로 jQuery의 ajax가 있다. 이는 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고 화면의 일부분만 변경할 수 있게 하는 자바 스크립트의 기법이다. 뷰에서도 마찬가지로 이를 지원하기 위한 라이브러리로 뷰 리소스와 axios를 지원한다.</summary></entry><entry><title type="html">[Vue] 라우터</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-8.html" rel="alternate" type="text/html" title="[Vue] 라우터" /><published>2020-10-28T11:20:00+09:00</published><updated>2020-10-28T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;웹 페이지의 경우, 여러 페이지로 구성되어 있기 때문에 페이지 간에 이동을 돕는 라우터를 사용해야 한다.&lt;br /&gt;
 이를 위해 뷰에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 라우터&lt;/code&gt; 라이브러리를 지원하는데 이번 포스팅에서는 이를 알아보도록 한다.&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
@@ -1154,30 +1223,4 @@ Linux, Window등의 OS metric 뿐 아니라 각종 &lt;code class=&quot;highligh
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;Oauth2.0의 인증 방식에 대하여 간략하게 알아보았다. 다음 포스팅에서는 각 방식을 직접 구현할 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 이번 글에서는 실제로 다음과 같은 oauth2.0의 인증 방식에 대하여 알아볼 예정이다. Authorization Code Grant Type Implicit Grant Type Resource Owner Password Credentials Grant Type Client Credentials Grant Type</summary></entry><entry><title type="html">[Mac]백 쿼트(`) 입력하는 법</title><link href="https://owin2828.github.io/devlog/2020/03/11/etc-4.html" rel="alternate" type="text/html" title="[Mac]백 쿼트(`) 입력하는 법" /><published>2020-03-11T15:09:00+09:00</published><updated>2020-03-11T15:09:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/11/etc-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/11/etc-4.html">&lt;h2 id=&quot;-입력하기&quot;&gt;(`) 입력하기&lt;/h2&gt;
-&lt;p&gt;맥을 사용하다보면, 한글을 타이핑하다가 (`)버튼을 누르면 원하는 grave는 나오지 않고 (₩)가 나오는 것을 볼 수 있다. 
-Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다음과 같은 해결법을 공유한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;기본-키-설정-파일-생성&quot;&gt;기본 키 설정 파일 생성&lt;/h4&gt;
-&lt;p&gt;다음의 내용을 터미널에서 입력한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Keybindings 디렉토리 생성&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/Library
-&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;KeyBindings
-
-&lt;span class=&quot;c&quot;&gt;# DefaultkeyBinding.dict 파일 생성&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;KeyBindings
-&lt;span class=&quot;nb&quot;&gt;touch &lt;/span&gt;DefaultkeyBinding.dict
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;설정-파일-변경&quot;&gt;설정 파일 변경&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DefaultkeyBinding.dict&lt;/code&gt; 파일에 다음과 같은 내용을 추가한다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;₩&quot; = (&quot;insertText:&quot;, &quot;`&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;맥을 &lt;code class=&quot;highlighter-rouge&quot;&gt;재부팅&lt;/code&gt;하자 변경사항이 적용될 것이다.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">(`) 입력하기 맥을 사용하다보면, 한글을 타이핑하다가 (`)버튼을 누르면 원하는 grave는 나오지 않고 (₩)가 나오는 것을 볼 수 있다. Markdown 문서나 개발자들에게는 여러모로 불편한 일인데, 다음과 같은 해결법을 공유한다.</summary></entry></feed>
+&lt;p&gt;Oauth2.0의 인증 방식에 대하여 간략하게 알아보았다. 다음 포스팅에서는 각 방식을 직접 구현할 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 이번 글에서는 실제로 다음과 같은 oauth2.0의 인증 방식에 대하여 알아볼 예정이다. Authorization Code Grant Type Implicit Grant Type Resource Owner Password Credentials Grant Type Client Credentials Grant Type</summary></entry></feed>
