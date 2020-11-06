@@ -1,4 +1,227 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-10-28T15:36:02+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] HTTP 통신</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-9.html" rel="alternate" type="text/html" title="[Vue] HTTP 통신" /><published>2020-10-28T14:15:00+09:00</published><updated>2020-10-28T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-9</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-9.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-06T16:40:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 뷰 템플릿</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-10.html" rel="alternate" type="text/html" title="[Vue] 뷰 템플릿" /><published>2020-11-06T14:35:00+09:00</published><updated>2020-11-06T14:35:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-10</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-10.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 템플릿(Vue Template)&lt;/code&gt;은  HTML, CSS등의 마크업 속성과 뷰 인스턴스에서 정의한 데이터 및 로직들을 연결하여 
+사용자가 브라우저에서 볼 수 있는 형태의 HTML로 변환해주는 속성으로, 다음과 같이 크게 2가지 방법이 존재한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;ES5에서 뷰 인스턴스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;template&lt;/code&gt; 속성을 이용하는 방법&lt;/li&gt;
+  &lt;li&gt;싱글 파일 컴포넌트 체계의 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;template&amp;gt;&lt;/code&gt; 코드를 활용&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;템플릿에서 사용하는 뷰의 속성과 문법은 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;데이터 바인딩&lt;/li&gt;
+  &lt;li&gt;자바스크립트 표현식&lt;/li&gt;
+  &lt;li&gt;디렉티브&lt;/li&gt;
+  &lt;li&gt;이벤트 처리&lt;/li&gt;
+  &lt;li&gt;고급 템플릿 기법&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-데이터-바인딩&quot;&gt;1. 데이터 바인딩&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;데이터 바인딩은 HTML 화면 요소를 뷰 인스턴스와 연결하는 것을 의미하며, 주요 문법으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;{ { } }&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt; 속성이 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-1-------콧수염-괄호&quot;&gt;1-1. { { } } - 콧수염 괄호&lt;/h4&gt;
+&lt;p&gt;중괄호 2개를 이용하는 방법은 HTML 태그에 연결하는 가장 기본적인 텍스트 삽입 방식이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	{ {message}}
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+		&lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+		&lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약 데이터가 변경되어도 값을 바꾸지 않고 싶다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;v-once&lt;/code&gt; 속성을 사용한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-once&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	{ {message}}
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-v-bind&quot;&gt;1-2. v-bind&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt;는 아이디, 클래스, 스타일 등의 HTML 속성 값에 뷰 데이터 값을 연결할 때 사용한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-bind:id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;idA&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;아이디 바인딩&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-bind:class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;classA&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;클래스 바인딩&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-bind:style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;styleA&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;스타일 바인딩&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;idA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;classA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;styleA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;color: blue&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;추가적으로, &lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind:&lt;/code&gt; 문법을 &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;로 간소화 할 수 있다. 그러나 약식문법은 혼동을 야기할 수 있으므로, 기본 문법으로 쓰자.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;2-자바스크립트-표현식&quot;&gt;2. 자바스크립트 표현식&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰의 템플릿에서도 자바스크립트 표현식을 사용할 수 있다. &lt;code class=&quot;highlighter-rouge&quot;&gt;{ { } }&lt;/code&gt;안에 자바스크립트 표현식을 넣으면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;{ { message }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;{ { message + &quot;!!!&quot; }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;{ { message.split('').reverse().join('') }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;출력&lt;br /&gt;
+Hello Vue.js!&lt;br /&gt;
+Hello Vue.js!!!&lt;br /&gt;
+!sj. euV olleH&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;그러나 위와 같은 방식에서 다음과 같은 2가지를 주의해야 한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;자바스크립트의 &lt;code class=&quot;highlighter-rouge&quot;&gt;선언문&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;분기 구문&lt;/code&gt;은 사용 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;복잡한 연산은 인스턴스 안에서, 화면에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단한&lt;/code&gt; 결과만 표시&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 1. --&amp;gt;&lt;/span&gt;
+      { { var a = 10; }} &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- X, 선언문은 사용 불가능 --&amp;gt;&lt;/span&gt;
+      { { if (true) {return 100} }} &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- X, 분기 구문은 사용 불가능 --&amp;gt;&lt;/span&gt;
+      { { true ? 100 : 0 }} &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- O, 삼항 연산자로 표현 가능 --&amp;gt;&lt;/span&gt;
+
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 2. --&amp;gt;&lt;/span&gt;
+      { { message.split('').reverse().join('') }} &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- X, 복잡한 연산은 인스턴스 안에서 수행 --&amp;gt;&lt;/span&gt;
+      { { reversedMessage }} &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- O, 스크립트에서 computed 속성으로 계산 후 최종 값만 표현 --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello Vue.js!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;computed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;reversedMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;위에서 역순으로 변환하는 함수는 &lt;code class=&quot;highlighter-rouge&quot;&gt;computed&lt;/code&gt; 속성을 이용해 계산을 한다.&lt;br /&gt;
+이러한 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;캐싱&lt;/code&gt; 효과를 제공하여 성능을 높일 수 있다. &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;3-디렉티브&quot;&gt;3. 디렉티브&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 디렉티브(Directive)&lt;/code&gt;란 HTML 태그 안에 &lt;code class=&quot;highlighter-rouge&quot;&gt;v- 접두사&lt;/code&gt;를 가지는 모든 속성을 의미하며 다음과 같은 종류가 존재한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-if&lt;/code&gt;: 지정한 뷰 데이터 값의 참, 거짓 여부에 따라 HTML 태그를 화면에 표시하거나 표시하지 않음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-for&lt;/code&gt;: 지정한 뷰 데이터의 개수만큼 해당 HTML 태그를 반복 출력&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-show&lt;/code&gt;: 데이터의 진위여부에 따라 표시하거나 표시하지 않음, 실제 태그는 남아있고 화면상으로만 노출하지 않음&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-bind&lt;/code&gt;: 뷰 데이터 - HTML 기본속성 연결&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-on&lt;/code&gt;: 화면 요소의 이벤트를 감지하여 처리&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v-model&lt;/code&gt;: 폼(form)에서 주로 사용, 폼의 값과 뷰 데이터를 즉시 동기화.&lt;br /&gt;
+화면에 입력된 값을 저장하여 서버에 보내거나, &lt;code class=&quot;highlighter-rouge&quot;&gt;watch&lt;/code&gt;와 같은 속성을 사용하여 추가 로직 수행&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;4-이벤트-처리&quot;&gt;4. 이벤트 처리&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;뷰는 화면에서 발생한 &lt;code class=&quot;highlighter-rouge&quot;&gt;이벤트&lt;/code&gt;를 처리하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;v-on&lt;/code&gt; 디렉티브와 &lt;code class=&quot;highlighter-rouge&quot;&gt;method&lt;/code&gt; 속성을 사용한다.&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;v-on:click=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;clickBtn&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;클릭&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+...
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// 클릭 이벤트 처리 &lt;/span&gt;
+    	&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;nl&quot;&gt;clickBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// 매서드 호풀 시, 인자 값 넘기기 &lt;/span&gt;
+    	&lt;span class=&quot;nl&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;clickBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;// event 인자를 이용해 화면 요소의 돔 이벤트에 접근 &lt;/span&gt;
+    	&lt;span class=&quot;nl&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;clickBtn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;5-고급-템플릿-기법&quot;&gt;5. 고급 템플릿 기법&lt;/h4&gt;
+&lt;hr /&gt;
+&lt;p&gt;고급 템플릿 기법은 데이터 바인딩과 디렉티브 같은 기본적인 문법과 함께 사용하는 유용한 속성이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;5-1-computed-속성&quot;&gt;5-1. computed 속성&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;computed&lt;/code&gt; 속성은 데이터 연산들을 정의하는 영역으로, 다음과 같은 장점을 지닌다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;data 속성 값의 변화에 따라 자동을 다시 연산&lt;/li&gt;
+  &lt;li&gt;캐싱
+    &lt;blockquote&gt;
+      &lt;p&gt;캐싱의 특징을 정확히 이해하려면, 비슷한 기능을 하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;method&lt;/code&gt; 기능과의 비교가 필요&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;5-2-computed-속성과-methods-속성의-차이점&quot;&gt;5-2. computed 속성과 methods 속성의 차이점&lt;/h4&gt;
+&lt;p&gt;가장 큰 차이점은 method 속성은 &lt;code class=&quot;highlighter-rouge&quot;&gt;호출할 때만&lt;/code&gt; 해당 로직이 수행되고, computed 속성은 값의 변경에 따라 자동적으로 수행 된다는 것이다.&lt;br /&gt;
+다시 말해, method 속성은 수행할 때마다 연산을 하기에 별도로 값을 저장하지 않는다.&lt;br /&gt;
+하지만, computed 속성은 데이터가 변경되지 않는한 이전 값을 캐싱하고 있다가, 반환한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;따라서 복잡한 연산을 반복 수행해서 화면에 나타낼 경우, computed 속성을 이용하는 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;효율적&lt;/code&gt;이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;5-3-watch-속성&quot;&gt;5-3. watch 속성&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;watch&lt;/code&gt; 속성은 데이터의 변화를 감지하여 자동으로 특정 로직을 수행한다.&lt;br /&gt;
+computed 속성과 비슷하지만, computed 속성은 &lt;code class=&quot;highlighter-rouge&quot;&gt;간단한&lt;/code&gt; 연산을 수행하는 반면에,&lt;br /&gt;
+watch 속성은 데이터 호출 처럼 상대적으로 더 많이 소요되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;비동기&lt;/code&gt; 처리에 적합하다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;뷰 템플릿에 대하여 간단하게 알아보았다. 다음 포스팅에서는 뷰 프로젝트의 구성에 대해 알아볼 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 뷰 템플릿(Vue Template)은 HTML, CSS등의 마크업 속성과 뷰 인스턴스에서 정의한 데이터 및 로직들을 연결하여 사용자가 브라우저에서 볼 수 있는 형태의 HTML로 변환해주는 속성으로, 다음과 같이 크게 2가지 방법이 존재한다. ES5에서 뷰 인스턴스의 template 속성을 이용하는 방법 싱글 파일 컴포넌트 체계의 &amp;lt;template&amp;gt; 코드를 활용</summary></entry><entry><title type="html">[Vue] HTTP 통신</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-9.html" rel="alternate" type="text/html" title="[Vue] HTTP 통신" /><published>2020-10-28T14:15:00+09:00</published><updated>2020-10-28T14:15:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-9</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-9.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;브라우저와 서버간의 통신을 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt;라는 프로토콜을 통한다. 이때 웹 앱 HTTP 통신의 대표적인 방법으로 jQuery의 &lt;code class=&quot;highlighter-rouge&quot;&gt;ajax&lt;/code&gt;가 있다.&lt;br /&gt;
 이는 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고 화면의 일부분만 변경할 수 있게 하는 자바 스크립트의 기법이다.&lt;br /&gt;
 뷰에서도 마찬가지로 이를 지원하기 위한 라이브러리로 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 리소스&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;axios&lt;/code&gt;를 지원한다.&lt;br /&gt;
@@ -1167,60 +1390,4 @@ Linux, Window등의 OS metric 뿐 아니라 각종 &lt;code class=&quot;highligh
 &lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 오픈 소스 기반의 모니터링 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 저장하고 검색할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 시각화를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 다양한 플러그인을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 쿠버네티스의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</summary></entry><entry><title type="html">[Oauth] Oauth2.0의 4가지 인증 방식</title><link href="https://owin2828.github.io/devlog/2020/03/11/web-4.html" rel="alternate" type="text/html" title="[Oauth] Oauth2.0의 4가지 인증 방식" /><published>2020-03-11T16:30:00+09:00</published><updated>2020-03-11T16:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/11/web-4</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/11/web-4.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 
-이번 글에서는 실제로 다음과 같은 oauth2.0의 &lt;code class=&quot;highlighter-rouge&quot;&gt;인증 방식&lt;/code&gt;에 대하여 알아볼 예정이다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Authorization Code Grant Type&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Implicit Grant Type&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Resource Owner Password Credentials Grant Type&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Client Credentials Grant Type&lt;/code&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;1-authorization-code-grant-type&quot;&gt;1. Authorization Code Grant Type&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_2_1.png&quot; alt=&quot;Authorization Code Grant Type 방식&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;클라이언트는 리소스 주인이 권한 서버에게 Client ID, Redirect URI, Response_type을 code로 지정하여 전달하도록 유도&lt;br /&gt;
-  인증이 된다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt;값을 돌려 받음&lt;/li&gt;
-  &lt;li&gt;클라이언트는 전달 받은 &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt;를 사용해 필요한 정보들과 함께 access token 획득 요청을 권한서버에게 보냄&lt;/li&gt;
-  &lt;li&gt;획득한 &lt;code class=&quot;highlighter-rouge&quot;&gt;access token&lt;/code&gt;을 사용해 리소스 서버에 사용자의 데이터를 요청&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;2-implicit-grant&quot;&gt;2. Implicit Grant&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_2_2.png&quot; alt=&quot;Implicit Grant 방식&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;클라이언트는 리소스 주인이 권한 서버에게 Client ID, Redirect URI, Response_type을 code로 지정하여 전달하도록 유도&lt;br /&gt;
-  인증이 된다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;token&lt;/code&gt;을 돌려 받음&lt;/li&gt;
-  &lt;li&gt;획득한 access token이 유요한지 &lt;code class=&quot;highlighter-rouge&quot;&gt;검증&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;검증에 대한 응답을 돌려줌&lt;/li&gt;
-  &lt;li&gt;획득한 &lt;code class=&quot;highlighter-rouge&quot;&gt;access token&lt;/code&gt;을 사용해 리소스 서버에 사용자의 데이터를 요청&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;3-resource-owner-password-credentials-grant&quot;&gt;3. Resource Owner Password Credentials Grant&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_2_3.png&quot; alt=&quot;Resource Owner Password Credentials Grant 방식&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;리소스 주인이 인증을 진행, 대부분 ID/PW로 &lt;code class=&quot;highlighter-rouge&quot;&gt;자격증명&lt;/code&gt;을 수행&lt;/li&gt;
-  &lt;li&gt;클라이언트는 전달 받은 정보를 기반으로 권한 서버에 &lt;code class=&quot;highlighter-rouge&quot;&gt;access token&lt;/code&gt; 획득 요청&lt;/li&gt;
-  &lt;li&gt;Access token을 돌려줌&lt;/li&gt;
-  &lt;li&gt;획득한 &lt;code class=&quot;highlighter-rouge&quot;&gt;access token&lt;/code&gt;을 사용해 리소스 서버에 사용자의 데이터를 요청&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;4-client-credentials-grant-type-방식&quot;&gt;4. Client Credentials Grant Type 방식&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_2_4.png&quot; alt=&quot;Client Credentials Grant Type 방식&quot; /&gt;&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;리소스 주인이 access token 정보를 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt; 권한 서버에 요청&lt;/li&gt;
-  &lt;li&gt;Access token을 돌려줌&lt;/li&gt;
-  &lt;li&gt;획득한 &lt;code class=&quot;highlighter-rouge&quot;&gt;access token&lt;/code&gt;을 사용해 리소스 서버에 사용자의 데이터를 요청
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;Oauth2.0의 인증 방식에 대하여 간략하게 알아보았다. 다음 포스팅에서는 각 방식을 직접 구현할 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 지난 글에서 oauth2.0의 기초 및 구성에 대하여 알아보았다. 이번 글에서는 실제로 다음과 같은 oauth2.0의 인증 방식에 대하여 알아볼 예정이다. Authorization Code Grant Type Implicit Grant Type Resource Owner Password Credentials Grant Type Client Credentials Grant Type</summary></entry></feed>
+&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 오픈 소스 기반의 모니터링 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 저장하고 검색할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 시각화를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 다양한 플러그인을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 쿠버네티스의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</summary></entry></feed>

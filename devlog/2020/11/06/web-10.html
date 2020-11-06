@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [Vue] 뷰 템플릿 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 뷰 템플릿(Vue Template)은 HTML, CSS등의 마크업 속성과 뷰 인스턴스에서 정의한 데이터 및 로직들을 연결하여 사용자가 브라우저에서 볼 수 있는 형태의 HTML로 변환해주는 속성으로, 다음과 같이 크게 2가지 방법이 존재한다. ES5에서 뷰 인스턴스의 ...">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/06/web-10.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[Vue] 뷰 템플릿</h1>
+            
+            <h2 class="subheading">vue.js에 대한 이해 - 6</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-11-06 14:35 &middot; <span class="reading-time" title="Estimated read time">
+  
+   8 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-데이터-바인딩">1. 데이터 바인딩</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#1-1-------콧수염-괄호">1-1. { { } } - 콧수염 괄호</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#1-2-v-bind">1-2. v-bind</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-자바스크립트-표현식">2. 자바스크립트 표현식</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-디렉티브">3. 디렉티브</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-이벤트-처리">4. 이벤트 처리</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#5-고급-템플릿-기법">5. 고급 템플릿 기법</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#5-1-computed-속성">5-1. computed 속성</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#5-2-computed-속성과-methods-속성의-차이점">5-2. computed 속성과 methods 속성의 차이점</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#5-3-watch-속성">5-3. watch 속성</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p><code class="highlighter-rouge">뷰 템플릿(Vue Template)</code>은  HTML, CSS등의 마크업 속성과 뷰 인스턴스에서 정의한 데이터 및 로직들을 연결하여 
+사용자가 브라우저에서 볼 수 있는 형태의 HTML로 변환해주는 속성으로, 다음과 같이 크게 2가지 방법이 존재한다.</p>
+<ol>
+  <li>ES5에서 뷰 인스턴스의 <code class="highlighter-rouge">template</code> 속성을 이용하는 방법</li>
+  <li>싱글 파일 컴포넌트 체계의 <code class="highlighter-rouge">&lt;template&gt;</code> 코드를 활용</li>
+</ol>
+
+<p>템플릿에서 사용하는 뷰의 속성과 문법은 다음과 같다.</p>
+<ul>
+  <li>데이터 바인딩</li>
+  <li>자바스크립트 표현식</li>
+  <li>디렉티브</li>
+  <li>이벤트 처리</li>
+  <li>고급 템플릿 기법<br />
+<br /></li>
+</ul>
+
+<h2 id="1-데이터-바인딩">1. 데이터 바인딩</h2>
+<hr />
+<p>데이터 바인딩은 HTML 화면 요소를 뷰 인스턴스와 연결하는 것을 의미하며, 주요 문법으로는 <code class="highlighter-rouge">{ { } }</code>과 <code class="highlighter-rouge">v-bind</code> 속성이 있다.<br />
+<br /></p>
+
+<h4 id="1-1-------콧수염-괄호">1-1. { { } } - 콧수염 괄호</h4>
+<p>중괄호 2개를 이용하는 방법은 HTML 태그에 연결하는 가장 기본적인 텍스트 삽입 방식이다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id = </span><span class="s">"app"</span><span class="nt">&gt;</span>
+	{ {message}}
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+		<span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+		<span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+		<span class="p">}</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>만약 데이터가 변경되어도 값을 바꾸지 않고 싶다면, <code class="highlighter-rouge">v-once</code> 속성을 사용한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id = </span><span class="s">"app"</span> <span class="na">v-once</span><span class="nt">&gt;</span>
+	{ {message}}
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="1-2-v-bind">1-2. v-bind</h4>
+<p><code class="highlighter-rouge">v-bind</code>는 아이디, 클래스, 스타일 등의 HTML 속성 값에 뷰 데이터 값을 연결할 때 사용한다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">v-bind:id=</span><span class="s">"idA"</span><span class="nt">&gt;</span>아이디 바인딩<span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">v-bind:class=</span><span class="s">"classA"</span><span class="nt">&gt;</span>클래스 바인딩<span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">v-bind:style=</span><span class="s">"styleA"</span><span class="nt">&gt;</span>스타일 바인딩<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+...
+    <span class="nt">&lt;script&gt;</span>
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">idA</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+          <span class="na">classA</span><span class="p">:</span> <span class="dl">'</span><span class="s1">container</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">styleA</span><span class="p">:</span> <span class="dl">'</span><span class="s1">color: blue</span><span class="dl">'</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+...
+</code></pre></div></div>
+<blockquote>
+  <p>추가적으로, <code class="highlighter-rouge">v-bind:</code> 문법을 <code class="highlighter-rouge">:</code>로 간소화 할 수 있다. 그러나 약식문법은 혼동을 야기할 수 있으므로, 기본 문법으로 쓰자.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="2-자바스크립트-표현식">2. 자바스크립트 표현식</h2>
+<hr />
+<p>뷰의 템플릿에서도 자바스크립트 표현식을 사용할 수 있다. <code class="highlighter-rouge">{ { } }</code>안에 자바스크립트 표현식을 넣으면 된다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;p&gt;</span>{ { message }}<span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;p&gt;</span>{ { message + "!!!" }}<span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;p&gt;</span>{ { message.split('').reverse().join('') }}<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+...
+    <span class="nt">&lt;script&gt;</span>
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+...
+</code></pre></div></div>
+<blockquote>
+  <p>출력<br />
+Hello Vue.js!<br />
+Hello Vue.js!!!<br />
+!sj. euV olleH</p>
+</blockquote>
+
+<p>그러나 위와 같은 방식에서 다음과 같은 2가지를 주의해야 한다.</p>
+<ol>
+  <li>자바스크립트의 <code class="highlighter-rouge">선언문</code>과 <code class="highlighter-rouge">분기 구문</code>은 사용 <code class="highlighter-rouge">불가능</code></li>
+  <li>복잡한 연산은 인스턴스 안에서, 화면에서는 <code class="highlighter-rouge">간단한</code> 결과만 표시</li>
+</ol>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- 1. --&gt;</span>
+      { { var a = 10; }} <span class="c">&lt;!-- X, 선언문은 사용 불가능 --&gt;</span>
+      { { if (true) {return 100} }} <span class="c">&lt;!-- X, 분기 구문은 사용 불가능 --&gt;</span>
+      { { true ? 100 : 0 }} <span class="c">&lt;!-- O, 삼항 연산자로 표현 가능 --&gt;</span>
+
+      <span class="c">&lt;!-- 2. --&gt;</span>
+      { { message.split('').reverse().join('') }} <span class="c">&lt;!-- X, 복잡한 연산은 인스턴스 안에서 수행 --&gt;</span>
+      { { reversedMessage }} <span class="c">&lt;!-- O, 스크립트에서 computed 속성으로 계산 후 최종 값만 표현 --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+...
+    <span class="nt">&lt;script&gt;</span>
+      <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue.js!</span><span class="dl">'</span>
+        <span class="p">},</span>
+        <span class="na">computed</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">reversedMessage</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">''</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+...
+</code></pre></div></div>
+<blockquote>
+  <p>위에서 역순으로 변환하는 함수는 <code class="highlighter-rouge">computed</code> 속성을 이용해 계산을 한다.<br />
+이러한 방법은 <code class="highlighter-rouge">캐싱</code> 효과를 제공하여 성능을 높일 수 있다. <br />
+<br /></p>
+</blockquote>
+
+<h2 id="3-디렉티브">3. 디렉티브</h2>
+<hr />
+<p><code class="highlighter-rouge">뷰 디렉티브(Directive)</code>란 HTML 태그 안에 <code class="highlighter-rouge">v- 접두사</code>를 가지는 모든 속성을 의미하며 다음과 같은 종류가 존재한다.</p>
+<ol>
+  <li><code class="highlighter-rouge">v-if</code>: 지정한 뷰 데이터 값의 참, 거짓 여부에 따라 HTML 태그를 화면에 표시하거나 표시하지 않음</li>
+  <li><code class="highlighter-rouge">v-for</code>: 지정한 뷰 데이터의 개수만큼 해당 HTML 태그를 반복 출력</li>
+  <li><code class="highlighter-rouge">v-show</code>: 데이터의 진위여부에 따라 표시하거나 표시하지 않음, 실제 태그는 남아있고 화면상으로만 노출하지 않음</li>
+  <li><code class="highlighter-rouge">v-bind</code>: 뷰 데이터 - HTML 기본속성 연결</li>
+  <li><code class="highlighter-rouge">v-on</code>: 화면 요소의 이벤트를 감지하여 처리</li>
+  <li><code class="highlighter-rouge">v-model</code>: 폼(form)에서 주로 사용, 폼의 값과 뷰 데이터를 즉시 동기화.<br />
+화면에 입력된 값을 저장하여 서버에 보내거나, <code class="highlighter-rouge">watch</code>와 같은 속성을 사용하여 추가 로직 수행<br />
+<br /></li>
+</ol>
+
+<h2 id="4-이벤트-처리">4. 이벤트 처리</h2>
+<hr />
+<p>뷰는 화면에서 발생한 <code class="highlighter-rouge">이벤트</code>를 처리하기 위해 <code class="highlighter-rouge">v-on</code> 디렉티브와 <code class="highlighter-rouge">method</code> 속성을 사용한다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">"clickBtn"</span><span class="nt">&gt;</span>클릭<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+...
+    <span class="nt">&lt;script&gt;</span>
+	<span class="c1">// 클릭 이벤트 처리 </span>
+    	<span class="nx">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nl">clickBtn</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">clicked</span><span class="dl">'</span><span class="p">);</span>
+		  <span class="p">}</span>
+        <span class="p">}</span>
+
+	<span class="c1">// 매서드 호풀 시, 인자 값 넘기기 </span>
+    	<span class="nl">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">clickBtn</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">clicked</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">num</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">times</span><span class="dl">'</span><span class="p">);</span>
+		  <span class="p">}</span>
+        <span class="p">}</span>
+
+	<span class="c1">// event 인자를 이용해 화면 요소의 돔 이벤트에 접근 </span>
+    	<span class="nl">methods</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">clickBtn</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+		  <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+...
+</code></pre></div></div>
+<p><br /></p>
+
+<h4 id="5-고급-템플릿-기법">5. 고급 템플릿 기법</h4>
+<hr />
+<p>고급 템플릿 기법은 데이터 바인딩과 디렉티브 같은 기본적인 문법과 함께 사용하는 유용한 속성이다.</p>
+
+<h4 id="5-1-computed-속성">5-1. computed 속성</h4>
+<p><code class="highlighter-rouge">computed</code> 속성은 데이터 연산들을 정의하는 영역으로, 다음과 같은 장점을 지닌다.</p>
+
+<ol>
+  <li>data 속성 값의 변화에 따라 자동을 다시 연산</li>
+  <li>캐싱
+    <blockquote>
+      <p>캐싱의 특징을 정확히 이해하려면, 비슷한 기능을 하는 <code class="highlighter-rouge">method</code> 기능과의 비교가 필요<br />
+<br /></p>
+    </blockquote>
+  </li>
+</ol>
+
+<h4 id="5-2-computed-속성과-methods-속성의-차이점">5-2. computed 속성과 methods 속성의 차이점</h4>
+<p>가장 큰 차이점은 method 속성은 <code class="highlighter-rouge">호출할 때만</code> 해당 로직이 수행되고, computed 속성은 값의 변경에 따라 자동적으로 수행 된다는 것이다.<br />
+다시 말해, method 속성은 수행할 때마다 연산을 하기에 별도로 값을 저장하지 않는다.<br />
+하지만, computed 속성은 데이터가 변경되지 않는한 이전 값을 캐싱하고 있다가, 반환한다.</p>
+<blockquote>
+  <p>따라서 복잡한 연산을 반복 수행해서 화면에 나타낼 경우, computed 속성을 이용하는 것이 <code class="highlighter-rouge">효율적</code>이다.<br />
+<br /></p>
+</blockquote>
+
+<h4 id="5-3-watch-속성">5-3. watch 속성</h4>
+<p><code class="highlighter-rouge">watch</code> 속성은 데이터의 변화를 감지하여 자동으로 특정 로직을 수행한다.<br />
+computed 속성과 비슷하지만, computed 속성은 <code class="highlighter-rouge">간단한</code> 연산을 수행하는 반면에,<br />
+watch 속성은 데이터 호출 처럼 상대적으로 더 많이 소요되는 <code class="highlighter-rouge">비동기</code> 처리에 적합하다.<br />
+<br /></p>
+
+<h2 id="끝마치며">끝마치며</h2>
+<p>뷰 템플릿에 대하여 간단하게 알아보았다. 다음 포스팅에서는 뷰 프로젝트의 구성에 대해 알아볼 예정이다.</p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/10/28/web-9.html" data-toggle="tooltip" data-placement="top" title="[Vue] HTTP 통신"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/11/06/web-10.html';
+this.page.identifier = '/devlog/2020/11/06/web-10';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>
