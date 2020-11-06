@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-06T16:40:35+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 뷰 템플릿</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-10.html" rel="alternate" type="text/html" title="[Vue] 뷰 템플릿" /><published>2020-11-06T14:35:00+09:00</published><updated>2020-11-06T14:35:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-10</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-10.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-06T18:09:14+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 뷰 프로젝트 구성</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-11.html" rel="alternate" type="text/html" title="[Vue] 뷰 프로젝트 구성" /><published>2020-11-06T17:31:00+09:00</published><updated>2020-11-06T17:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-11</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-11.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;여러 개의 컴포넌트&lt;/li&gt;
+  &lt;li&gt;페이지를 이동할 라우터&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;그러나 위와 같은 구조로 HTML 파일을 구성할 경우, &lt;code class=&quot;highlighter-rouge&quot;&gt;가독성 저하&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;한 눈에 구조파악의 어려움&lt;/code&gt;의 단점이 있다.&lt;br /&gt;
+따라서, 이를 해결하기 위한 방법을 알아보도록 하자.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-싱글-파일-컴포넌트-체계&quot;&gt;1. 싱글 파일 컴포넌트 체계&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;이러한 문제를 해결하는 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;싱글 파일 컴포넌트(Single File Components)&lt;/code&gt; 체계이다.&lt;br /&gt;
+싱글 파일 컴포넌트란, &lt;code class=&quot;highlighter-rouge&quot;&gt;.vue&lt;/code&gt; 파일로 프로젝트를 구성하는 방식을 의미한다.&lt;br /&gt;
+즉, 확장자 .vue 파일 1개는 뷰 어플리케이션을 구성하는 1개의 &lt;code class=&quot;highlighter-rouge&quot;&gt;컴포넌트&lt;/code&gt;와 동일하다.  &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-뷰-cli&quot;&gt;2. 뷰 CLI&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;싱글 파일 컴포넌트를 사용하기 위해서는 .vue 파일을 웹 브라우저가 인식할 수 있도록 변환해주는 다음과 같은 도구가 필요하다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;웹팩(Webpack)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;브라우저리파이(Broswerify)&lt;/code&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;웹펙은 웹의 자원(HTML, CSS, 이미지 등)들을 자바스크립트 모듈로 변환해 하나로 묶어 웹성능을 향상시키는 &lt;code class=&quot;highlighter-rouge&quot;&gt;자바스크립트 모듈 번들러&lt;/code&gt;이다. 
+브라우저리파이도 웹팩과 유사한 번들러이지만, 웹 자원 압축이나 빌드 자동화 같은 기능은 없다.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이러한 모듈 번들러를 사용하지 않고도 편하게 프로젝트를 구성할 수 있도록 뷰에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;CLI(Command Line Interface)&lt;/code&gt;를 제공한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Vue CLI 설치를 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Node.js&lt;/code&gt;가 설치되어야 한다.&lt;br /&gt;
+Node.js 및  Vue CLI 설치는 본 포스팅에서는 다루지 않는다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;3-뷰-로더&quot;&gt;3. 뷰 로더&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 로더(Vue Loader)&lt;/code&gt;는 웹팩에서 지원하는 라이브러리로, .vue 파일의 내용을 웹페이지 형태로 변환해준다.&lt;br /&gt;
+즉 각 파일에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;template&amp;gt;&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;style&amp;gt;&lt;/code&gt; 내용이 각 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;js&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;CSS&lt;/code&gt;로 인식되도록 변환 작업을 수행한다.&lt;/p&gt;
+
+&lt;p&gt;이와 같은 과정을 통해 최종적으로 다음의 단계로 프로젝트를 구동할 수 있게 된다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;뷰 CLI 설치: &lt;code class=&quot;highlighter-rouge&quot;&gt;npm i vue-cli -g&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;프로젝트 생성: &lt;code class=&quot;highlighter-rouge&quot;&gt;vue init webpack-simple&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;관련 라이브러리 설치: &lt;code class=&quot;highlighter-rouge&quot;&gt;npm isntall&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;프로젝트 구동: &lt;code class=&quot;highlighter-rouge&quot;&gt;npm run dev&lt;/code&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;뷰 CLI 명령어로는 다음과 같은 종류가 존재&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init webpack&lt;/code&gt;: 고급 웹팩 기능을 활용한 프로젝트 구성&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init webpack-simple&lt;/code&gt;: 웹팩 최소 기능을 활용한 프로젝트 구성&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init browserify&lt;/code&gt;: 고급 브라우저리파이 기능을 활용한 프로젝트 구성&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init browserify-simple&lt;/code&gt;: 브라우저리파이 최소 기능을 활용한 프로젝트 구성&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init simple&lt;/code&gt;: 최소 뷰 기능이 포함된 HTML 파일 1개 작성&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vue init pwa&lt;/code&gt;: 웹팩기반의 프로그레시브 웹 앱(PWA, Progressive Web App) 기능을 지원&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;p&gt;이로써 기초적인 뷰의 구성 및 프로젝트 구성 방법을 알아보았다. &lt;br /&gt;
+백앤드의 개발을 주로 하는 나에게는 낯설고 생소한 개념과 어색함이 아직도 묻어난다.&lt;br /&gt;
+얼른 친숙해지기 위해서 실제 어플리케이션을 제작하며 학습한 내용을 더 탄탄하게 다져야겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다. 여러 개의 컴포넌트 페이지를 이동할 라우터</summary></entry><entry><title type="html">[Vue] 뷰 템플릿</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-10.html" rel="alternate" type="text/html" title="[Vue] 뷰 템플릿" /><published>2020-11-06T14:35:00+09:00</published><updated>2020-11-06T14:35:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-10</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-10.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 템플릿(Vue Template)&lt;/code&gt;은  HTML, CSS등의 마크업 속성과 뷰 인스턴스에서 정의한 데이터 및 로직들을 연결하여 
 사용자가 브라우저에서 볼 수 있는 형태의 HTML로 변환해주는 속성으로, 다음과 같이 크게 2가지 방법이 존재한다.&lt;/p&gt;
 &lt;ol&gt;
@@ -1259,135 +1326,4 @@ el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlig
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</summary></entry><entry><title type="html">[Prometheus]프로메테우스 개념 구조 및 quick start</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-5.html" rel="alternate" type="text/html" title="[Prometheus]프로메테우스 개념 구조 및 quick start" /><published>2020-03-13T16:09:00+09:00</published><updated>2020-03-13T16:09:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;프로메테우스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;오픈 소스&lt;/code&gt; 기반의 &lt;code class=&quot;highlighter-rouge&quot;&gt;모니터링&lt;/code&gt; 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;저장&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;검색&lt;/code&gt;할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 &lt;code class=&quot;highlighter-rouge&quot;&gt;시각화&lt;/code&gt;를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;다양한 플러그인&lt;/code&gt;을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 &lt;code class=&quot;highlighter-rouge&quot;&gt;쿠버네티스&lt;/code&gt;의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-기본-구조&quot;&gt;1. 기본 구조&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_1.png&quot; alt=&quot;&quot; width=&quot;60%&quot; /&gt;
-&lt;img src=&quot;/img/etc/etc_5_2.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;1-1-metric-수집&quot;&gt;1-1. Metric 수집&lt;/h4&gt;
-&lt;p&gt;수집을 하려는 대상 시스템이 Target system이다. MySQL이나, Tomcat 또는 VM 과 같이 여러가지 자원이 모니터링 대상이 될 수 있다. 이 대상 시스템에서 메트릭을 프로메테우스로 전송하기 위해서는 Exporter 라는 것을 사용한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-2-pulling-방식&quot;&gt;1-2. pulling 방식&lt;/h4&gt;
-&lt;p&gt;프로메테우스가 Target System에서 메트릭을 수집하는 방식은 &lt;code class=&quot;highlighter-rouge&quot;&gt;풀링&lt;/code&gt; 방식을 사용한다. 프로메테우스가 주기적으로 Exporter로 부터 메트릭 읽어와서 수집하는 방식이다. 보통 모니터링 시스템의 에이전트 들은 에이전트가 모니터링 시스템으로 메트릭을 보내는 푸쉬 방식을 사용한다. 특히 푸쉬 방식은 서비스가 오토 스켈링등으로 가변적일 경우에 유리하다. 풀링 방식의 경우 모니터링 대상이 가변적으로 변경될 경우, 모니터링 대상의 IP 주소들을 알 수 가 없기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;어려운&lt;/code&gt; 점이 있다.&lt;/p&gt;
-
-&lt;p&gt;이러한 문제를 해결하기 위한 방안이 &lt;code class=&quot;highlighter-rouge&quot;&gt;서비스 디스커버리&lt;/code&gt;라는 방식인데, 특정 시스템이 현재 기동중인 서비스들의 목록과 IP 주소를 가지고 있으면 된다. 예를 들어 앞에서 VM들을 내부 DNS에 등록해놓고 새로운 VM이 생성될때에도 DNS에 등록을 하도록 하면, DNS에서 현재 기동중인 VM 목록을 얻어와서 그 목록의 IP들로 풀링을 하면 되는 구조이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-3-service-discovery&quot;&gt;1-3. Service Discovery&lt;/h4&gt;
-&lt;p&gt;프로메테우스도 서비스 디스커버리 시스템과 통합을 하도록 되어 있다. 앞에서 언급한 &lt;code class=&quot;highlighter-rouge&quot;&gt;DNS&lt;/code&gt;나, 서비스 디스커버리 전용 솔루션인 Hashicorp사의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Consul&lt;/code&gt; 또는 &lt;code class=&quot;highlighter-rouge&quot;&gt;쿠버네티스&lt;/code&gt;를 통해서, 모니터링해야할 타겟 서비스의 목록을 가지고 올 수 있다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-4-exporter&quot;&gt;1-4. Exporter&lt;/h4&gt;
-&lt;p&gt;Exporter는 &lt;code class=&quot;highlighter-rouge&quot;&gt;모니터링 에이전트&lt;/code&gt;로 타겟 시스템에서 메트릭을 읽어서, 프로메테우스가 풀링을 할 수 있도록 한다. 또한, 단순히 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP GET&lt;/code&gt;으로 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;텍스트&lt;/code&gt; 형태로 프로메테우스에 리턴한다. 요청 당시의 데이타를 리턴하는 것일뿐, Exporter 자체는 기존값(히스토리)를 저장하는 등의 기능은 없다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-5-retrieval&quot;&gt;1-5. Retrieval&lt;/h4&gt;
-&lt;p&gt;서비스 디스커버리 시스템으로 부터 모니터링 대상 목록을 받아오고, Exporter로 부터 주기적으로 그 대상으로 부터 &lt;code class=&quot;highlighter-rouge&quot;&gt;메트릭을 수집&lt;/code&gt;하는 모듈이 프로메테우스내의 Retrieval 이라는 컴포넌트이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-6-저장&quot;&gt;1-6. 저장&lt;/h4&gt;
-&lt;p&gt;이렇게 수집된 정보는 프로메테우스 내의 &lt;code class=&quot;highlighter-rouge&quot;&gt;메모리&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;로컬 디스크&lt;/code&gt;에 저장된다. 뒷단에 별도의 데이타 베이스등을 사용하지 않고, 그냥 로컬 디스크에 저장하는데, 그로 인해서 설치가 매우 쉽다는 장점이 있지만 반대로 &lt;code class=&quot;highlighter-rouge&quot;&gt;스케일링이 불가능&lt;/code&gt;하다는 단점을 가지고 있다.  대상 시스템이 늘어날 수록 메트릭 저장 공간이 많이 필요한데, &lt;code class=&quot;highlighter-rouge&quot;&gt;단순히 디스크를 늘리는 방법&lt;/code&gt; 밖에 없다.&lt;/p&gt;
-
-&lt;p&gt;프로메테우스는 구조상 HA를 위한 이중화나 클러스터링등이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다. (클러스터링 대신 샤딩을 사용한다. HA는 복제가 아니라 프로메테우스를 두개를 띄워서 같은 타겟을 동시에 같이 저장 하는 방법을 사용한다. 이 문제에 대한 해결 방법은 Thanos 라는 오픈 소스를 사용하면 된다고 한다.)&lt;/p&gt;
-
-&lt;h4 id=&quot;1-7-서빙&quot;&gt;1-7. 서빙&lt;/h4&gt;
-&lt;p&gt;이렇게 저장된 메트릭은 &lt;code class=&quot;highlighter-rouge&quot;&gt;PromQL 쿼리&lt;/code&gt; 언어를 이용해서 조회가 가능하고, 이를 외부 API나 프로메테우스 웹콘솔을 이용해서 서빙이 가능하다. 또한 그라파나등과 통합하여 대쉬보드등을 구성하는 것이 가능하다.&lt;/p&gt;
-
-&lt;p&gt;이 외에도 메트릭을 수집하기 위한 gateway, 알람을 위한 Alert manager 등의 컴포넌트등이 존재한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-장단점&quot;&gt;2. 장/단점&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;위의 내용을 기반으로 확장한 프로메테우스의 장/단점은 다음과 같다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-장점&quot;&gt;2-1. 장점&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pull 방식&lt;/code&gt;의 구조를 채택함으로써, 모든 메트릭의 정보를 중앙 서버로 보내지 않아도 됨&lt;br /&gt;
-대부분의 모니터링 구조는 push인데, 각 타겟 서버에서 부하가 걸릴 경우 push 방식은 fail point가 될 가능성이 있음&lt;/li&gt;
-  &lt;li&gt;Kubernetes 환경에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;설치가 간단&lt;/code&gt;하고, grafana와의 연동을 통한 &lt;code class=&quot;highlighter-rouge&quot;&gt;운영이 쉽다&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;다양한 metric exporter 제공&lt;br /&gt;
-Linux, Window등의 OS metric 뿐 아니라 각종 &lt;code class=&quot;highlighter-rouge&quot;&gt;Third-party&lt;/code&gt;의 exporter를 제공&lt;/li&gt;
-  &lt;li&gt;장기간 데이터 유지와 확인&lt;br /&gt;
-데이터 저장소가 &lt;code class=&quot;highlighter-rouge&quot;&gt;시계열 데이터&lt;/code&gt; 저장소로 구성되어있어, &lt;code class=&quot;highlighter-rouge&quot;&gt;많은&lt;/code&gt; 양의 정보를 &lt;code class=&quot;highlighter-rouge&quot;&gt;빠르게&lt;/code&gt; 검색 가능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2-2-단점&quot;&gt;2-2. 단점&lt;/h4&gt;
-&lt;p&gt;프로메테우스는 장점이 확실한 만큼 다음과 같이 단점도 확실하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;위의 그림처럼, 각 Region에 프로메테우스를 배치 한 뒤, 이를 Master에 Aggregate하는 방식이 프로메테우스가 공식적으로 권장하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;다중화&lt;/code&gt; 방식&lt;br /&gt;
-즉 Clustering과는 거리가 &lt;code class=&quot;highlighter-rouge&quot;&gt;멈&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;싱글 호스트 아키텍처이기 때문에 저장용량이 부족하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;디스크 용량을 늘리는 것&lt;/code&gt; 밖에 방법이 없음&lt;/li&gt;
-  &lt;li&gt;프로메테우스 서버가 다운되거나, 설정 변경 등을 위해서 재시작을 할 경우 그간의 metric은 &lt;code class=&quot;highlighter-rouge&quot;&gt;유실&lt;/code&gt;됨&lt;/li&gt;
-  &lt;li&gt;일정 풀링 주기를 기반으로 metric을 가져오기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;풀링하는 순간&lt;/code&gt;의 스냅샷 정보만 알 수 있음&lt;br /&gt;
-스냅샷의 연속된 모음이기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;근사값&lt;/code&gt;의 형태&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-hello-prometheus&quot;&gt;3. Hello Prometheus&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;프로메테우스를 이해하기 위해 간단한 테스트를 https://www.katacoda.com/ 에서 진행하였다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-1-설정-파일-정의&quot;&gt;3-1. 설정 파일 정의&lt;/h4&gt;
-&lt;p&gt;프로메테우스의 설정은 prometheus.yml 파일에 다음과 같이 정의한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;scrape_interval&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;     &lt;span class=&quot;s&quot;&gt;15s&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;evaluation_interval&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;15s&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;scrape_configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;job_name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;prometheus'&lt;/span&gt;
-
-    &lt;span class=&quot;na&quot;&gt;static_configs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;127.0.0.1:9090'&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;127.0.0.1:9100'&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;prometheus'&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;scrape_interval&lt;/code&gt;: 타겟시스템으로부터 메트릭을 읽어오는 주기&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;evaluation_interval&lt;/code&gt;: 읽어온 메트릭을 기반으로 alert를 보낼지 말지 판단하는 주기&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;scrap_configs&lt;/code&gt;: 데이터 수집 대상과 방법을 정의&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;job&lt;/code&gt;: 대상 그룹에서 메트릭을 수집해오는 내용을 정의&lt;br /&gt;
-위의 경우, 127.0.0.1:9090과 127.0.0.1:9100으로 부터 메트릭을 수집하도록 job이 정의&lt;br /&gt;
-앞 부분은 프로메테우스 시스템 자체의 케트릭, 두 번째는 프로메테우스가 기동괴고 있는 VM의 메트릭을 수집하도록 정의&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;3-2-프로메테우스-서버와-node-exporter-기동&quot;&gt;3-2. 프로메테우스 서버와 node exporter 기동&lt;/h4&gt;
-&lt;p&gt;설정이 끝난 후, 다음의 명령을 통해 간단하게 docker로 기동한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--net&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;host &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; /root/prometheus.yml:/etc/prometheus/prometheus.yml &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; prometheus-server &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     prom/prometheus
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;프로메테우스가 기동되면 다음의 명령으로 docker를 통해 node exporter를 설치해서 기동한다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/proc:/host/proc&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/sys:/host/sys&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/:/rootfs&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;--net&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;host&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;prometheus &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-   quay.io/prometheus/node-exporter:v0.13.0 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     &lt;span class=&quot;nt&quot;&gt;-collector&lt;/span&gt;.procfs /host/proc &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     &lt;span class=&quot;nt&quot;&gt;-collector&lt;/span&gt;.sysfs /host/sys &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-     &lt;span class=&quot;nt&quot;&gt;-collector&lt;/span&gt;.filesystem.ignored-mount-points &lt;span class=&quot;s2&quot;&gt;&quot;^/(sys|proc|dev|host|etc)(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$|&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/)&quot;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;node exporter가 제대로 동작하는지 확인하기 위해, 다음의 명령을 통해 메트릭 정보를 얻는다.&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl https://&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;프로메테우스 서버 IP&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;:9100/metrics
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;3-3-프로메테우스-dashboard-접속&quot;&gt;3-3. 프로메테우스 Dashboard 접속&lt;/h4&gt;
-&lt;p&gt;프로메테우스와 exporter가 기동이 되었으면, 제대로 메트릭이 수집되는지 확인하기 위해 다음의 주소에 접속하여 대쉬보드를 확인한다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;http://{프로메테우스 서버 ip}:9090 &lt;br /&gt;
-검색 쿼리 부분에 메트릭 쿼리를 입력하면 그래프등의 형태로 볼 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_5_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 오픈 소스 기반의 모니터링 시스템이다. ELK 와 같은 로깅이 아니라, 대상 시스템으로 부터 각종 모니터링 지표를 수집하여 저장하고 검색할 수 있는 시스템이다. 구조가 간단해서 운영이 쉽고, 강력한 쿼리 기능을 가지고 있으며, 그라파나(Grafana) 를 통한 시각화를 지원한다. 무엇보다 넓은 오픈 소스 생태계를 기반으로 해서, 많은 시스템을 모니터링할 수 있는 다양한 플러그인을 가지고 있는 것이 가장 큰 장점이다. 특히 이런 간편함 때문에 특히나 쿠버네티스의 메인 모니터링 시스템으로 많이 사용되면서 요즘 특히 더 주목을 받고 있다.</summary></entry></feed>
+&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</summary></entry></feed>

@@ -138,6 +138,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-11-06-web-11-html": {
+        "title": "[Vue] 뷰 프로젝트 구성",
+        "subtitle":"vue.js에 대한 이해 - 7",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "web",
+        "content": "들어가기 앞서기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다.  여러 개의 컴포넌트  페이지를 이동할 라우터그러나 위와 같은 구조로 HTML 파일을 구성할 경우, 가독성 저하와 한 눈에 구조파악의 어려움의 단점이 있다.따라서, 이를 해결하기 위한 방법을 알아보도록 하자.1. 싱글 파일 컴포넌트 체계이러한 문제를 해결하는 방법은 싱글 파일 컴포넌트(Single File Components) 체계이다.싱글 파일 컴포넌트란, .vue 파일로 프로젝트를 구성하는 방식을 의미한다.즉, 확장자 .vue 파일 1개는 뷰 어플리케이션을 구성하는 1개의 컴포넌트와 동일하다.  2. 뷰 CLI싱글 파일 컴포넌트를 사용하기 위해서는 .vue 파일을 웹 브라우저가 인식할 수 있도록 변환해주는 다음과 같은 도구가 필요하다.  웹팩(Webpack)  브라우저리파이(Broswerify)          웹펙은 웹의 자원(HTML, CSS, 이미지 등)들을 자바스크립트 모듈로 변환해 하나로 묶어 웹성능을 향상시키는 자바스크립트 모듈 번들러이다. 브라우저리파이도 웹팩과 유사한 번들러이지만, 웹 자원 압축이나 빌드 자동화 같은 기능은 없다.      이러한 모듈 번들러를 사용하지 않고도 편하게 프로젝트를 구성할 수 있도록 뷰에서 CLI(Command Line Interface)를 제공한다.  Vue CLI 설치를 위해서는 Node.js가 설치되어야 한다.Node.js 및  Vue CLI 설치는 본 포스팅에서는 다루지 않는다.3. 뷰 로더뷰 로더(Vue Loader)는 웹팩에서 지원하는 라이브러리로, .vue 파일의 내용을 웹페이지 형태로 변환해준다.즉 각 파일에서 &lt;template&gt;, &lt;script&gt;, &lt;style&gt; 내용이 각 HTML, js, CSS로 인식되도록 변환 작업을 수행한다.이와 같은 과정을 통해 최종적으로 다음의 단계로 프로젝트를 구동할 수 있게 된다.  뷰 CLI 설치: npm i vue-cli -g  프로젝트 생성: vue init webpack-simple  관련 라이브러리 설치: npm isntall  프로젝트 구동: npm run dev          뷰 CLI 명령어로는 다음과 같은 종류가 존재              vue init webpack: 고급 웹팩 기능을 활용한 프로젝트 구성        vue init webpack-simple: 웹팩 최소 기능을 활용한 프로젝트 구성        vue init browserify: 고급 브라우저리파이 기능을 활용한 프로젝트 구성        vue init browserify-simple: 브라우저리파이 최소 기능을 활용한 프로젝트 구성        vue init simple: 최소 뷰 기능이 포함된 HTML 파일 1개 작성        vue init pwa: 웹팩기반의 프로그레시브 웹 앱(PWA, Progressive Web App) 기능을 지원            끝마치며이로써 기초적인 뷰의 구성 및 프로젝트 구성 방법을 알아보았다. 백앤드의 개발을 주로 하는 나에게는 낯설고 생소한 개념과 어색함이 아직도 묻어난다.얼른 친숙해지기 위해서 실제 어플리케이션을 제작하며 학습한 내용을 더 탄탄하게 다져야겠다.",
+        "url": "/devlog/2020/11/06/web-11.html"
+      }
+      ,
+    
       "devlog-2020-11-06-web-10-html": {
         "title": "[Vue] 뷰 템플릿",
         "subtitle":"vue.js에 대한 이해 - 6",
