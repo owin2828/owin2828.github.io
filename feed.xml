@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-06T18:09:14+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[Vue] 뷰 프로젝트 구성</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-11.html" rel="alternate" type="text/html" title="[Vue] 뷰 프로젝트 구성" /><published>2020-11-06T17:31:00+09:00</published><updated>2020-11-06T17:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-11</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-11.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-12T11:31:48+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AsCal(Awsome-Calender)] Toy project의 시작</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-12.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] Toy project의 시작" /><published>2020-11-12T10:59:00+09:00</published><updated>2020-11-12T10:59:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-12</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-12.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;최근 연말에 들어서며, 팀 내에서 다양한 &lt;code class=&quot;highlighter-rouge&quot;&gt;스터디&lt;/code&gt;를 진행하고 있다. 
+나 또한 참여자로써 무엇을 할까 고민하다가, 팀내 &lt;code class=&quot;highlighter-rouge&quot;&gt;캘린더&lt;/code&gt;를 만들기로 하였다.&lt;br /&gt;
+물론 기존에 다양한 방법으로 일정을 보고 있지만, 한 눈에 모아보기가 힘들다는 단점이 있어 토이프로젝트로 진행하려고 한다.&lt;/p&gt;
+
+&lt;p&gt;사내 스터디를 진행하며, 마주치게 될 일들을 기록으로 남긴다.&lt;/p&gt;
+
+&lt;p&gt;토이 프로젝트에 앞서 계획과 일정 그리고 생각하는 Mock-up Page 등을 끄적이고자 한다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;물론 절대 이 일정과 계획되로 매끄럽게 되진 않겠지..&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1-이름&quot;&gt;1. 이름&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;은 짓기 귀찮아 대충 Awsome-Calender의 앞글자를 따서 &lt;code class=&quot;highlighter-rouge&quot;&gt;AsCal&lt;/code&gt;이라고 명칭했다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-mock-up-page&quot;&gt;2. Mock-up Page&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;다양한 툴을 조사 중에 있으나, 결정되어 만들어지면 올릴 예정&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-techstack&quot;&gt;3. TechStack&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;사실 이번 토이프로젝트의 가장 중요한 부분이자 토이프로젝트의 목적인 기술 Stack은 다음과 같이 꾸릴 예정이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Mongo DB&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Nodejs + Express&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;React&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AWS&lt;/code&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;4-schedule&quot;&gt;4. Schedule&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;이번 토이프로젝트의 기간은 약 5주에 걸쳐 진행 될 예정으로, 총 3번 정도 다음과 같이 발표를 하게 될 것 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1주차: 환경 구성 및 HelloWorld APP 개발하기&lt;/li&gt;
+  &lt;li&gt;2주차: &lt;code class=&quot;highlighter-rouge&quot;&gt;AsCal&lt;/code&gt; 기본 기능 및 화면 개발&lt;/li&gt;
+  &lt;li&gt;3주차: &lt;code class=&quot;highlighter-rouge&quot;&gt;AsCal&lt;/code&gt; 고도화 및 회고&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;사실 위의 기술스택 중 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;React&lt;/code&gt;를 잘 모르기 때문에, 좀 삽질을 할 것 같다.  &lt;br /&gt;
+특히 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;은 기존에 익숙한 &lt;code class=&quot;highlighter-rouge&quot;&gt;RESTful API&lt;/code&gt;와는 좀 다르기에 따로 공부를 해봐야겠다.  &lt;br /&gt;
+다음 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;에 대해 정리할 예정이다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 최근 연말에 들어서며, 팀 내에서 다양한 스터디를 진행하고 있다. 나 또한 참여자로써 무엇을 할까 고민하다가, 팀내 캘린더를 만들기로 하였다. 물론 기존에 다양한 방법으로 일정을 보고 있지만, 한 눈에 모아보기가 힘들다는 단점이 있어 토이프로젝트로 진행하려고 한다.</summary></entry><entry><title type="html">[Vue] 뷰 프로젝트 구성</title><link href="https://owin2828.github.io/devlog/2020/11/06/web-11.html" rel="alternate" type="text/html" title="[Vue] 뷰 프로젝트 구성" /><published>2020-11-06T17:31:00+09:00</published><updated>2020-11-06T17:31:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/06/web-11</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/06/web-11.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;여러 개의 컴포넌트&lt;/li&gt;
@@ -1247,83 +1298,4 @@ el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlig
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://katacoda.com/bwplotka/courses/thanos&quot;&gt;katacoda 타노스 튜토리얼&lt;/a&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 문제점을 지닌다. 확장성의 어려움 가용성의 어려움</summary></entry><entry><title type="html">[Grafana]프로메테우스 &amp;amp; 그라파나 연동</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-6.html" rel="alternate" type="text/html" title="[Grafana]프로메테우스 &amp;amp; 그라파나 연동" /><published>2020-03-13T17:29:00+09:00</published><updated>2020-03-13T17:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;프로메테우스&lt;/code&gt;가 메트릭의 정보를 가져오는 모니터링 툴이었다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;그라파나&lt;/code&gt;는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 
-그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Graphite, Prometheus, InfluxDB등 &lt;code class=&quot;highlighter-rouge&quot;&gt;다양한&lt;/code&gt; 데이타베이스와 메트릭수집 시스템을 지원&lt;/li&gt;
-  &lt;li&gt;하나의 대시보드에 동시에 &lt;code class=&quot;highlighter-rouge&quot;&gt;여러&lt;/code&gt; 메트릭 시스템들의 지표를 표시&lt;/li&gt;
-  &lt;li&gt;설치 및 사용이 &lt;code class=&quot;highlighter-rouge&quot;&gt;쉬움&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;프로메테우스를 잘 &lt;code class=&quot;highlighter-rouge&quot;&gt;지원&lt;/code&gt;함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;그라파나의 설치는 &lt;a href=&quot;https://grafana.com/docs/grafana/latest/installation/debian/&quot;&gt;공식문서&lt;/a&gt;를 따라 진행하면 된다. 
-본 문서에서 이용한 환경은 이전 포스팅과 동일하게 katacoda에서 그라파나 듀토리얼을 사용한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;https://www.katacoda.com/courses/prometheus/creating-dashboards-with-grafana&quot;&gt;그라파나 듀토리얼&lt;/a&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;1-그라파나-설치-및-접속&quot;&gt;1. 그라파나 설치 및 접속&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;로그인 화면의 기본 ID/PW는 &lt;code class=&quot;highlighter-rouge&quot;&gt;amdin&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;admin&lt;/code&gt; 이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;연동되었다면, &lt;code class=&quot;highlighter-rouge&quot;&gt;Add data source&lt;/code&gt;를 눌러 프로메테우스를 연결한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;본 문서에서는 프로메테우스를 localhost:9090에 실행중이므로, 사진과 같이 정보를 입력 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;savt &amp;amp; test&lt;/code&gt; 를 누른다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Create your first dashboard&lt;/code&gt;를 눌러 &lt;code class=&quot;highlighter-rouge&quot;&gt;Graph&lt;/code&gt;를 누르면 위와 같이 빈 그래프가 생성된다.&lt;/li&gt;
-  &lt;li&gt;이때 &lt;code class=&quot;highlighter-rouge&quot;&gt;panel title&lt;/code&gt; 버튼을 눌러 메트릭을 추가한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;사진과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;Metrics&lt;/code&gt; 란에 &lt;code class=&quot;highlighter-rouge&quot;&gt;node_cpu&lt;/code&gt;를 입력하여 원하는 메트릭 정보를 입력한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;그래프에 해당 메트릭이 표시되는 것을 알 수 있다.&lt;br /&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-그라파나-템플릿-사용&quot;&gt;2. 그라파나 템플릿 사용&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;그라파나의 장점은 이미 만들어진 다양한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Template&lt;/code&gt;이 존재한다는 것이다. 
-사용자들이 다양한 템플릿을 만들어 공유하는데, 템플릿은 &lt;a href=&quot;https://grafana.com/dashboards/22&quot;&gt;https://grafana.com/dashboards/22&lt;/a&gt;에 가서 볼 수 있다. 
-본 예제에서는 프로메테우스의 node_exporter에 의해 제공되는 템플릿을 import할 예정이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;상단의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Node exporter single server&lt;/code&gt;를 클릭하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;Import Dashboard&lt;/code&gt;를 누른다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_8.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Json&lt;/code&gt; 파일로 템플릿을 저장할 수도 있지만, 제공하는 공식 탬플릿 중 ID:22 대시보드의 URL을 입력한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_9.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;성공적으로 인식되었다면, 위의 사진과 같이 창이 변경되고 &lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus&lt;/code&gt;란을 사진처럼 설정 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;Import&lt;/code&gt; 버튼을 누른다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_6_10.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;모든 과정이 완료되면 사진처럼 준비된 대시보드가 로딩되게 된다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스가 메트릭의 정보를 가져오는 모니터링 툴이었다면, 그라파나는 가져온 메트릭 정보를 시각화 해주는 오픈소스 도구이다. 그라파나는 다음과 같은 장점들로 인해 널리 사용되고 있다.</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://katacoda.com/bwplotka/courses/thanos&quot;&gt;katacoda 타노스 튜토리얼&lt;/a&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 문제점을 지닌다. 확장성의 어려움 가용성의 어려움</summary></entry></feed>

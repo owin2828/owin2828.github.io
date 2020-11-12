@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [Vue] 뷰 프로젝트 구성 - 낮코밤코
+    [AsCal(Awsome-Calender)] Toy project의 시작 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="들어가기 앞서 기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다. 여러 개의 컴포넌트 페이지를 이동할 라우터">
+  <meta name="description" content="들어가기 앞서 최근 연말에 들어서며, 팀 내에서 다양한 스터디를 진행하고 있다. 나 또한 참여자로써 무엇을 할까 고민하다가, 팀내 캘린더를 만들기로 하였다. 물론 기존에 다양한 방법으로 일정을 보고 있지만, 한 눈에 모아보기가 힘들다는 단점이 있어 토이프로젝트로 진행하려고 한다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/06/web-11.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/12/web-12.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -114,15 +114,15 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[Vue] 뷰 프로젝트 구성</h1>
+            <h1>[AsCal(Awsome-Calender)] Toy project의 시작</h1>
             
-            <h2 class="subheading">vue.js에 대한 이해 - 7</h2>
+            <h2 class="subheading">팀내 일정 토이 프로젝트 - 1</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 2020-11-06 17:31 &middot; <span class="reading-time" title="Estimated read time">
+              on 2020-11-12 10:59 &middot; <span class="reading-time" title="Estimated read time">
   
-   2 mins  read </span>
+   1 min  read </span>
 
             </span>
           </div>
@@ -150,9 +150,10 @@
       <nav class="sidebar-nav heading" role="navigation">
         <ul class="">
 <li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#1-싱글-파일-컴포넌트-체계">1. 싱글 파일 컴포넌트 체계</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#2-뷰-cli">2. 뷰 CLI</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#3-뷰-로더">3. 뷰 로더</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-이름">1. 이름</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-mock-up-page">2. Mock-up Page</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-techstack">3. TechStack</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-schedule">4. Schedule</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
 </ul>
       </nav>
@@ -161,73 +162,58 @@
   </div>
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 id="들어가기-앞서">들어가기 앞서</h2>
-<p>기존에 작성한 포스팅의 방법으로 화면을 구성하면 대략 다음과 같은 구조를 지니게 된다.</p>
-<ul>
-  <li>여러 개의 컴포넌트</li>
-  <li>페이지를 이동할 라우터</li>
-</ul>
+<p>최근 연말에 들어서며, 팀 내에서 다양한 <code class="highlighter-rouge">스터디</code>를 진행하고 있다. 
+나 또한 참여자로써 무엇을 할까 고민하다가, 팀내 <code class="highlighter-rouge">캘린더</code>를 만들기로 하였다.<br />
+물론 기존에 다양한 방법으로 일정을 보고 있지만, 한 눈에 모아보기가 힘들다는 단점이 있어 토이프로젝트로 진행하려고 한다.</p>
 
-<p>그러나 위와 같은 구조로 HTML 파일을 구성할 경우, <code class="highlighter-rouge">가독성 저하</code>와 <code class="highlighter-rouge">한 눈에 구조파악의 어려움</code>의 단점이 있다.<br />
-따라서, 이를 해결하기 위한 방법을 알아보도록 하자.<br />
-<br /></p>
+<p>사내 스터디를 진행하며, 마주치게 될 일들을 기록으로 남긴다.</p>
 
-<h2 id="1-싱글-파일-컴포넌트-체계">1. 싱글 파일 컴포넌트 체계</h2>
-<hr />
-<p>이러한 문제를 해결하는 방법은 <code class="highlighter-rouge">싱글 파일 컴포넌트(Single File Components)</code> 체계이다.<br />
-싱글 파일 컴포넌트란, <code class="highlighter-rouge">.vue</code> 파일로 프로젝트를 구성하는 방식을 의미한다.<br />
-즉, 확장자 .vue 파일 1개는 뷰 어플리케이션을 구성하는 1개의 <code class="highlighter-rouge">컴포넌트</code>와 동일하다.  <br />
-<br /></p>
-
-<h2 id="2-뷰-cli">2. 뷰 CLI</h2>
-<hr />
-<p>싱글 파일 컴포넌트를 사용하기 위해서는 .vue 파일을 웹 브라우저가 인식할 수 있도록 변환해주는 다음과 같은 도구가 필요하다.</p>
-<ul>
-  <li><code class="highlighter-rouge">웹팩(Webpack)</code></li>
-  <li><code class="highlighter-rouge">브라우저리파이(Broswerify)</code>
-    <blockquote>
-      <p>웹펙은 웹의 자원(HTML, CSS, 이미지 등)들을 자바스크립트 모듈로 변환해 하나로 묶어 웹성능을 향상시키는 <code class="highlighter-rouge">자바스크립트 모듈 번들러</code>이다. 
-브라우저리파이도 웹팩과 유사한 번들러이지만, 웹 자원 압축이나 빌드 자동화 같은 기능은 없다.</p>
-    </blockquote>
-  </li>
-</ul>
-
-<p>이러한 모듈 번들러를 사용하지 않고도 편하게 프로젝트를 구성할 수 있도록 뷰에서 <code class="highlighter-rouge">CLI(Command Line Interface)</code>를 제공한다.</p>
+<p>토이 프로젝트에 앞서 계획과 일정 그리고 생각하는 Mock-up Page 등을 끄적이고자 한다.</p>
 <blockquote>
-  <p>Vue CLI 설치를 위해서는 <code class="highlighter-rouge">Node.js</code>가 설치되어야 한다.<br />
-Node.js 및  Vue CLI 설치는 본 포스팅에서는 다루지 않는다.<br />
+  <p>물론 절대 이 일정과 계획되로 매끄럽게 되진 않겠지..<br />
 <br /></p>
 </blockquote>
 
-<h2 id="3-뷰-로더">3. 뷰 로더</h2>
+<h2 id="1-이름">1. 이름</h2>
 <hr />
-<p><code class="highlighter-rouge">뷰 로더(Vue Loader)</code>는 웹팩에서 지원하는 라이브러리로, .vue 파일의 내용을 웹페이지 형태로 변환해준다.<br />
-즉 각 파일에서 <code class="highlighter-rouge">&lt;template&gt;</code>, <code class="highlighter-rouge">&lt;script&gt;</code>, <code class="highlighter-rouge">&lt;style&gt;</code> 내용이 각 <code class="highlighter-rouge">HTML</code>, <code class="highlighter-rouge">js</code>, <code class="highlighter-rouge">CSS</code>로 인식되도록 변환 작업을 수행한다.</p>
+<p>은 짓기 귀찮아 대충 Awsome-Calender의 앞글자를 따서 <code class="highlighter-rouge">AsCal</code>이라고 명칭했다.<br />
+<br /></p>
 
-<p>이와 같은 과정을 통해 최종적으로 다음의 단계로 프로젝트를 구동할 수 있게 된다.</p>
+<h2 id="2-mock-up-page">2. Mock-up Page</h2>
+<hr />
+<p>다양한 툴을 조사 중에 있으나, 결정되어 만들어지면 올릴 예정<br />
+<br /></p>
+
+<h2 id="3-techstack">3. TechStack</h2>
+<hr />
+<p>사실 이번 토이프로젝트의 가장 중요한 부분이자 토이프로젝트의 목적인 기술 Stack은 다음과 같이 꾸릴 예정이다.</p>
+
 <ol>
-  <li>뷰 CLI 설치: <code class="highlighter-rouge">npm i vue-cli -g</code></li>
-  <li>프로젝트 생성: <code class="highlighter-rouge">vue init webpack-simple</code></li>
-  <li>관련 라이브러리 설치: <code class="highlighter-rouge">npm isntall</code></li>
-  <li>프로젝트 구동: <code class="highlighter-rouge">npm run dev</code>
-    <blockquote>
-      <p>뷰 CLI 명령어로는 다음과 같은 종류가 존재</p>
-      <ul>
-        <li><code class="highlighter-rouge">vue init webpack</code>: 고급 웹팩 기능을 활용한 프로젝트 구성</li>
-        <li><code class="highlighter-rouge">vue init webpack-simple</code>: 웹팩 최소 기능을 활용한 프로젝트 구성</li>
-        <li><code class="highlighter-rouge">vue init browserify</code>: 고급 브라우저리파이 기능을 활용한 프로젝트 구성</li>
-        <li><code class="highlighter-rouge">vue init browserify-simple</code>: 브라우저리파이 최소 기능을 활용한 프로젝트 구성</li>
-        <li><code class="highlighter-rouge">vue init simple</code>: 최소 뷰 기능이 포함된 HTML 파일 1개 작성</li>
-        <li><code class="highlighter-rouge">vue init pwa</code>: 웹팩기반의 프로그레시브 웹 앱(PWA, Progressive Web App) 기능을 지원<br />
+  <li><code class="highlighter-rouge">Mongo DB</code></li>
+  <li><code class="highlighter-rouge">Nodejs + Express</code></li>
+  <li><code class="highlighter-rouge">GraphQL</code></li>
+  <li><code class="highlighter-rouge">React</code></li>
+  <li><code class="highlighter-rouge">AWS</code><br />
 <br /></li>
-      </ul>
-    </blockquote>
-  </li>
 </ol>
 
+<h2 id="4-schedule">4. Schedule</h2>
+<hr />
+<p>이번 토이프로젝트의 기간은 약 5주에 걸쳐 진행 될 예정으로, 총 3번 정도 다음과 같이 발표를 하게 될 것 같다.</p>
+
+<ul>
+  <li>1주차: 환경 구성 및 HelloWorld APP 개발하기</li>
+  <li>2주차: <code class="highlighter-rouge">AsCal</code> 기본 기능 및 화면 개발</li>
+  <li>3주차: <code class="highlighter-rouge">AsCal</code> 고도화 및 회고<br />
+<br /></li>
+</ul>
+
 <h2 id="끝마치며">끝마치며</h2>
-<p>이로써 기초적인 뷰의 구성 및 프로젝트 구성 방법을 알아보았다. <br />
-백앤드의 개발을 주로 하는 나에게는 낯설고 생소한 개념과 어색함이 아직도 묻어난다.<br />
-얼른 친숙해지기 위해서 실제 어플리케이션을 제작하며 학습한 내용을 더 탄탄하게 다져야겠다.</p>
+<hr />
+<p>사실 위의 기술스택 중 <code class="highlighter-rouge">GraphQL</code>과 <code class="highlighter-rouge">React</code>를 잘 모르기 때문에, 좀 삽질을 할 것 같다.  <br />
+특히 <code class="highlighter-rouge">GraphQL</code>은 기존에 익숙한 <code class="highlighter-rouge">RESTful API</code>와는 좀 다르기에 따로 공부를 해봐야겠다.  <br />
+다음 포스팅에서는 <code class="highlighter-rouge">GraphQL</code>에 대해 정리할 예정이다.</p>
+
 
 
         <hr>
@@ -235,11 +221,9 @@ Node.js 및  Vue CLI 설치는 본 포스팅에서는 다루지 않는다.<br />
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/11/06/web-10.html" data-toggle="tooltip" data-placement="top" title="[Vue] 뷰 템플릿"> << Previous</a>
+          <a href="/devlog/2020/11/06/web-11.html" data-toggle="tooltip" data-placement="top" title="[Vue] 뷰 프로젝트 구성"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
-          
-          <a href="/devlog/2020/11/12/web-12.html" data-toggle="tooltip" data-placement="top" title="[AsCal(Awsome-Calender)] Toy project의 시작">Next >></a>
           
 
         </div>
@@ -254,8 +238,8 @@ Node.js 및  Vue CLI 설치는 본 포스팅에서는 다루지 않는다.<br />
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'https://owin2828blog/devlog/2020/11/06/web-11.html';
-this.page.identifier = '/devlog/2020/11/06/web-11';
+this.page.url = 'https://owin2828blog/devlog/2020/11/12/web-12.html';
+this.page.identifier = '/devlog/2020/11/12/web-12';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
