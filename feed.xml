@@ -1,4 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-13T16:42:17+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AsCal(Awsome-Calender)] GraphQL이란</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-13.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] GraphQL이란" /><published>2020-11-12T12:30:00+09:00</published><updated>2020-11-12T12:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-13</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-13.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-13T17:42:08+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AsCal(Awsome-Calender)] GraphQL이란(2)</title><link href="https://owin2828.github.io/devlog/2020/11/13/web-14.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] GraphQL이란(2)" /><published>2020-11-13T16:49:00+09:00</published><updated>2020-11-13T16:49:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/13/web-14</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/13/web-14.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;저번 포스팅에 이어, &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;에 대해 알아보고자 한다. 실제 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성요소&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;구현&lt;/code&gt; 방법등에 대하여 서술할 예정이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-graphql의-구성요소&quot;&gt;1. GraphQL의 구성요소&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;GraphQL는 크게 다음과 같은 구성 요소로 이루어져 있다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;쿼리/뮤테이션(query/mutation)&lt;/li&gt;
+  &lt;li&gt;스키마/타입(schema/type)&lt;/li&gt;
+  &lt;li&gt;리졸버(resolver)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;1-1-쿼리뮤테이션querymutation&quot;&gt;1-1. 쿼리/뮤테이션(query/mutation)&lt;/h4&gt;
+&lt;p&gt;GraphQL에서는 요청을 보내는 방법을 2가지로 정의하는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;쿼리&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;뮤테이션&lt;/code&gt;이다. 이 둘은 다른것 같지만, 실상은 별 차이가 없다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;쿼리&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;조회(R)&lt;/code&gt;에 사용되고, &lt;code class=&quot;highlighter-rouge&quot;&gt;뮤테이션&lt;/code&gt;은 데이터의 &lt;code class=&quot;highlighter-rouge&quot;&gt;변조(CUD)&lt;/code&gt;에 사용되는 개념적인 규약이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 쿼리를 통한 데이터 조회&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 단순한 조회 작업&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;human&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 인자를 통한 조회&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HeroNameAndFriends&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;hero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;friends&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// mutation을 통한 데이터 변조&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;mutation&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CreateReviewForEpisode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$ep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Episode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$review&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ReviewInput&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;createReview&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$ep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;review&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$review&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;stars&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;commentary&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-스키마타입schematype&quot;&gt;1-2. 스키마/타입(schema/type)&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;https://tech.kakao.com/2019/08/01/graphql-basic/&quot;&gt;카카오 기술블로그&lt;/a&gt;에는 다음과 같은 설명이 첨부되어 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;데이터베이스 스키마(Schema)를 작성할 때의 경험을 SQL 쿼리 작성으로 비유한다면, gql 스키마를 작성할 때의 경험은 C, C++의 &lt;code class=&quot;highlighter-rouge&quot;&gt;헤더파일&lt;/code&gt; 작성에 비유가 됩니다.&lt;br /&gt;
+그러므로, 프로그래밍언어(C, C++, JAVA등)에 익숙한 프로그래머라면 스키마 정의 또한 쉽게 배우실 것입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;즉, &lt;code class=&quot;highlighter-rouge&quot;&gt;스키마&lt;/code&gt;라는 것은 GraphQL에서 사용될 객체 타입을 사전에 지정하는 작업으로써 다음과 같은 형식을 지닌다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Character&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;appearsIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Episode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;오브젝트 타입 : Character&lt;/li&gt;
+  &lt;li&gt;필드 : name, appearsIn&lt;/li&gt;
+  &lt;li&gt;스칼라 타입 : String, ID, Int 등&lt;/li&gt;
+  &lt;li&gt;느낌표(!) : 필수 값을 의미(non-nullable)&lt;/li&gt;
+  &lt;li&gt;대괄호([, ]) : 배열을 의미(array)&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-3-리졸버resolver&quot;&gt;1-3. 리졸버(Resolver)&lt;/h4&gt;
+&lt;p&gt;데이터베이스에는 데이터베이스 어플리케이션을 사용하여 데이터를 가져오는 &lt;code class=&quot;highlighter-rouge&quot;&gt;구체적인 과정&lt;/code&gt;이 구현되어 있다.&lt;br /&gt;
+그러나 GraphQL에서는 데이터를 가져오는 구제적인 과정을 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접 구현&lt;/code&gt;해야 하며 이는 &lt;code class=&quot;highlighter-rouge&quot;&gt;리졸버(Resolver)&lt;/code&gt;가 담당하게 된다.&lt;br /&gt;
+이를 통해 데이터베이스뿐 아니라, 일반 파일 및 http SOAP 같은 네트워크 프로토콜을 활용하여 원격 데이터를 가져올 수 있다.&lt;/p&gt;
+
+&lt;p&gt;GraphQL에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;각 필드마다 하나의 함수&lt;/code&gt;가 존재하게 되고, 이 함수는 다음 타입을 반환하게 되며 이 각 함수를 &lt;code class=&quot;highlighter-rouge&quot;&gt;리졸버&lt;/code&gt;라 부른다.&lt;br /&gt;
+필드가 스칼라 값(String, Int 같은 primtive 타입)인 경우에는 연쇄 호출이 중지되고, 종료된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Query&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;limit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UserId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Limit&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;paymentsByUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;userId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Payment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Limit&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Payment&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;위와 같은 코드에서 User와 Limit는 1:1, User와 Payment는 1:N의 관계이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;이때 다음과 같은 동일한 쿼리명을 가진 2가지 쿼리를 살펴보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 쿼리1. 필드값 2개&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;paymentsByUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;userId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 쿼리2. 필드값 3개&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;paymentsByUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;userId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;phoneNumber&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;이 때 필드 1개당 리졸버 함수 1개가 불리게 되므로, 밑의 쿼리가 &lt;code class=&quot;highlighter-rouge&quot;&gt;더 많은&lt;/code&gt; 함수를 호출하게 된다.&lt;br /&gt;
+또한 각각의 리졸버 함수는 내부적으로 데이터베이스 쿼리가 존재하게 되는데, 이 두가지를 조합하면 다음과 같은 사실을 알 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;쿼리에 맞게 &lt;code class=&quot;highlighter-rouge&quot;&gt;필요한만큼만&lt;/code&gt; 최적화하여 호출 가능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;즉 기존의 RESTful API는 정해진 쿼리가 무조건 호출됨에 비해, 리졸버 체인을 잘 활용하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;효율적인 설계&lt;/code&gt;를 할 수 있다는 뜻이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-graphql-비지니스-로직&quot;&gt;2. GraphQL 비지니스 로직&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_14_1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;비지니스 로직 레이어(출처: https://graphql.github.io/learn/thinking-in-graphs/)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;GraphQL을 이용하여 비지니스 로직을 작성할 때, 실제 로직은 리졸버 함수에 담지 &lt;code class=&quot;highlighter-rouge&quot;&gt;않는다&lt;/code&gt;.&lt;br /&gt;
+유효성 검사 및 권한 확인과 실제 로직은 전부 &lt;code class=&quot;highlighter-rouge&quot;&gt;전용 비지니스 로직 레이어&lt;/code&gt; 내부에 담게 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;requestPaymentSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+    &lt;span class=&quot;nx&quot;&gt;pgId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;birthDay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phoneNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;productName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ref&lt;/span&gt; 
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// 실제 로직은 비지니스 레이어로&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requestPaymentSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pgId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;birthDay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phoneNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;productName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;removeSymbol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;requestPaymentApprove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;sessionKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authNumber&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// 실제 로직은 비지니스 레이어로&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requestApprovePayment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sessionKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authNumber&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;removeSymbol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;이로써 기본적인 GraphQL의 &lt;code class=&quot;highlighter-rouge&quot;&gt;구성&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;구현&lt;/code&gt; 방법에 대하여 알아보았다.&lt;br /&gt;
+물론 실제로 코드에 위의 개념을 녹이는 것은 완전 다른 이야기지만, 이는 앞으로 진행할 Toy Project에 적용하며 기록하려고한다.&lt;br /&gt;
+다음 포스팅은 Toy Project의 사전 작업 및 환경 설정이다.    &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;refernece&quot;&gt;Refernece&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://graphql-kr.github.io/learn/&quot;&gt;GraphQL Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://tech.kakao.com/2019/08/01/graphql-basic/&quot;&gt;카카오기술블로그&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 저번 포스팅에 이어, GraphQL에 대해 알아보고자 한다. 실제 구성요소와 구현 방법등에 대하여 서술할 예정이다.</summary></entry><entry><title type="html">[AsCal(Awsome-Calender)] GraphQL이란(1)</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-13.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] GraphQL이란(1)" /><published>2020-11-12T12:30:00+09:00</published><updated>2020-11-12T12:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-13</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-13.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;이번 토이프로젝트를 진행하며 가장 핵심적으로 배우고자 하는 부분은 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;이다. 얘기는 많이 들었지만, 한 번도 써본적이 없어 이 참에 해보려 한다.&lt;br /&gt;
 GraphQL을 정확하게 이해하기 전에는 그저 새로운 프레임워크, 라이브러리정도로 생각했으나, 전혀 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운&lt;/code&gt; 개념이라는 것을 알게 되었다.&lt;br /&gt;
 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;에 대한 포스팅은 2회에 걸쳐 진행할 예정인데, 이론적인 부분과 실제로 구성되어 있는 것들을 살펴 보고자 한다.&lt;br /&gt;
@@ -103,8 +282,11 @@ GraphQL 홈페이지에 들어가면 현재 GraphQL을 사용하는 기업들의
 따라서 기존에 REST API만을 사용할때 발생하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Overfetching&lt;/code&gt;이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;Underfetching&lt;/code&gt;등의 문제가 발생하지 않는다.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Overfetching&lt;/code&gt;&lt;br /&gt;
-원하는 data 이상의 정보를 요청받는 것, data의 정제에 리소스가 낭비&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Underfetching&lt;/code&gt;&lt;br /&gt;
+원하는 data 이상의 정보를 요청받는 것, data의 정제에 리소스가 낭비&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Underfetching&lt;/code&gt;&lt;br /&gt;
 원하는 data의 정보를 요청받기 위해 여러번 요청을 보내는 것, 네트워크를 통해 여러번 접근을 하여 리소스 낭비&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1348,81 +1530,4 @@ el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlig
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;p&gt;간단하게 뷰의 특징과 장점에 대해서 알아보았지만, 백앤드 개발을 주로 하는 나에게는 잘 다가오지 않는다..&lt;br /&gt;
-역시 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello world&lt;/code&gt;를 한 번 해봐야 알 것 같다. 그런 의미에서 다음 글에서는 간단한 프로젝트를 만들어 보도록 하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Front-End를 담당하는 프레임워크 중 3대장은 Vue, React, Angular이 있다. 그 중, 가장 최근에 나온 Vue에 대하여 알아보기 위해 포스팅을 시작한다.</summary></entry><entry><title type="html">[PSQL]PostgreSQL 설치 및 data 저장 위치 변경</title><link href="https://owin2828.github.io/devlog/2020/10/19/etc-8.html" rel="alternate" type="text/html" title="[PSQL]PostgreSQL 설치 및 data 저장 위치 변경" /><published>2020-10-19T13:29:00+09:00</published><updated>2020-10-19T13:29:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/19/etc-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/19/etc-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;본 문서에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;PSQL&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;CentOS 7 설치&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;Data directory 변경&lt;/code&gt; 방법에 대하여 기술한다.
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;psql-설치&quot;&gt;PSQL 설치&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-  &lt;li&gt;설치
-    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;postgresql94-server postgresql94-contrib
- &lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /usr/pgsql-9.4/bin/postgresql94-setup initdb
- &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;postgresql-9.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;기동
-    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start postgresql-9.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;psql-기본-설정&quot;&gt;PSQL 기본 설정&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-  &lt;li&gt;listen 변경
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/postgresql.conf
- org
- #listen_address = 'localhost'
- change
- listen_address = '*'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;권한 변경
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/pg_hba.conf
- org
- local   all             all                        peer
- host    all             all    127.0.0.1/32        trust
- change
- local   all             all                        trust
- host    all             all             0.0.0.0/0            trust
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;psql-data-directory-변경&quot;&gt;PSQL DATA DIRECTORY 변경&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-  &lt;li&gt;현재 data directory 확인
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo -iu postgres
- postgres=# show data_directory;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;db 중지
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo systemctl stop postgresql-9.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;db 설정 파일 수정
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /var/lib/pgsql/9.4/data/postmaster.opts
- /user/pgsql-9.4/bin/postgres &quot;-D&quot; &quot;&amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;서비스 설정 파일 수정
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 설정파일 - /etc/lib/systemd/system/postgresql-9.4.service
- Environment=PGDATA=&amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;기존 데이터 복사
-    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt; directory&amp;gt;&amp;gt; &amp;lt;&amp;lt;to directory&amp;gt;&amp;gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;서비스 재시작
-    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; systemctl daemon-reload
- systemctl start postgresql-9.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;현재 data directory 확인 (1번방법)&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.</summary></entry></feed>
+역시 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello world&lt;/code&gt;를 한 번 해봐야 알 것 같다. 그런 의미에서 다음 글에서는 간단한 프로젝트를 만들어 보도록 하겠다.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 Front-End를 담당하는 프레임워크 중 3대장은 Vue, React, Angular이 있다. 그 중, 가장 최근에 나온 Vue에 대하여 알아보기 위해 포스팅을 시작한다.</summary></entry></feed>
