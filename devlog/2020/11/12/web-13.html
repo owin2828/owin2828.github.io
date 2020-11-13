@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [AsCal(Awsome-Calender)] GraphQL이란 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 이번 토이프로젝트를 진행하며 가장 핵심적으로 배우고자 하는 부분은 GraphQL이다. 얘기는 많이 들었지만, 한 번도 써본적이 없어 이 참에 해보려 한다. GraphQL을 정확하게 이해하기 전에는 그저 새로운 프레임워크, 라이브러리정도로 생각했으나, 전혀 새로운 개념...">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/12/web-13.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[AsCal(Awsome-Calender)] GraphQL이란</h1>
+            
+            <h2 class="subheading">팀내 일정 토이 프로젝트 - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-11-12 12:30 &middot; <span class="reading-time" title="Estimated read time">
+  
+   7 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-graphql이란">1. GraphQL이란?</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#1-1-기존-rest-api-통신의-한계">1-1. 기존 REST API 통신의 한계</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#1-2-graphql의-특징">1-2. GraphQL의 특징</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#1-3-graphql의-통신-방법">1-3. GraphQL의 통신 방법</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#1-4-graphql을-사용하는-기업">1-4. GraphQL을 사용하는 기업</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-graphql의-장점">2. GraphQL의 장점</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#2-1-하나의-endpoint">2-1. 하나의 Endpoint</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-2-fit한-data">2-2. Fit한 Data</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-3-기종에-상관없는-api">2-3. 기종에 상관없는 API</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#2-4-redux를-대체할-apollo">2-4. Redux를 대체할 Apollo</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-graphql의-단점">3. GraphQL의 단점</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#3-1-http-캐싱">3-1. HTTP 캐싱</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-2-파일-업로드">3-2. 파일 업로드</a></li>
+<li class="sidebar-nav-item toc-h4"><a href="#3-3-요청-필터링의-어려움">3-3. 요청 필터링의 어려움</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#refernece">Refernece</a></li>
+</ul>
+</li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<p>이번 토이프로젝트를 진행하며 가장 핵심적으로 배우고자 하는 부분은 <code class="highlighter-rouge">GraphQL</code>이다. 얘기는 많이 들었지만, 한 번도 써본적이 없어 이 참에 해보려 한다.<br />
+GraphQL을 정확하게 이해하기 전에는 그저 새로운 프레임워크, 라이브러리정도로 생각했으나, 전혀 <code class="highlighter-rouge">새로운</code> 개념이라는 것을 알게 되었다.<br />
+<code class="highlighter-rouge">GraphQL</code>에 대한 포스팅은 2회에 걸쳐 진행할 예정인데, 이론적인 부분과 실제로 구성되어 있는 것들을 살펴 보고자 한다.<br />
+<br /></p>
+
+<h2 id="1-graphql이란">1. GraphQL이란?</h2>
+<hr />
+<p>처음에 이름을 들었을 때, 맨 처음든 생각은 왜 <code class="highlighter-rouge">그래프</code>라는 단어가 들어갔을까 라는 점이다.<br />
+해당 의문에 대한 답은 <a href="https://graphql-kr.github.io/learn/thinking-in-graphs/">GraphQL 홈페이지</a>에서 확인할 수 있었는데, 다음과 같이 서술되어 있다.</p>
+<blockquote>
+  <p>GraphQL을 사용하면 비즈니스 도메인을 <code class="highlighter-rouge">그래프</code>로 모델링 할 수 있습니다.</p>
+</blockquote>
+
+<p>스키마를 정의하여 비즈니스 도메인을 그래프로 연결할 수 있다는 말인데, 구조를 알기 전까지는 이해하기 어려운 문장이다.<br />
+한 문장으로만 요약하자면, <code class="highlighter-rouge">Facebook이 개발한 Query언어</code> 라고 할 수 있겠다.<br />
+<br /></p>
+
+<h4 id="1-1-기존-rest-api-통신의-한계">1-1. 기존 REST API 통신의 한계</h4>
+<p>사내에서 <code class="highlighter-rouge">REST API</code> 서버를 구축하며 재미있고, 즐거우며 Front-end 개발자와 협업 하는 것이 굉장이 용이하다는 생각을 하였다.<br />
+그러나 개발하는 서비스의 덩치가 점점 커지며 다음과 같은 <code class="highlighter-rouge">문제점</code>들에 당면하게 되었는데 생각보다 나를 괴롭게 만들었다.</p>
+<ol>
+  <li>특정 기능을 위해 <code class="highlighter-rouge">여러번</code> API가 호출 됨</li>
+  <li>특정 요청에 fit한 응답을 돌려주기 위해서는 API를 <code class="highlighter-rouge">새로</code> 만들어야함</li>
+  <li>API <code class="highlighter-rouge">유지보수</code>의 어려움</li>
+</ol>
+
+<p>한 문장으로 요약하면, <code class="highlighter-rouge">관리해야 할 EndPoint</code>의 증가로 인하여 발생되는 문제점이라 할 수 있다.<br />
+<br /></p>
+
+<h4 id="1-2-graphql의-특징">1-2. GraphQL의 특징</h4>
+<p>GraphQL의 가장 큰 특징은 다음 그림과 같이 EndPoin가 <code class="highlighter-rouge">하나</code> 라는 점이다.</p>
+<figure>
+<p><img src="/img/web/web_13_1.png" alt="" width="80%" /></p>
+  <figcaption>REST API와 GraphQL API의 사용(출처 : https://blog.apollographql.com/graphql-vs-rest-5d425123e34b)</figcaption>
+</figure>
+
+<p>기존에 REST API에서는 정보를 얻기 위해 여러번 네트워크를 호출하거나, 다양한 API를 호출해야 했다.<br />
+하지만 GraphQL은 단 <code class="highlighter-rouge">하나</code>의 Endpoint를 제공하며, 단 <code class="highlighter-rouge">한 번</code>의 요청으로 모든 정보를 가져온다.<br />
+<br /></p>
+
+<h4 id="1-3-graphql의-통신-방법">1-3. GraphQL의 통신 방법</h4>
+<figure>
+<p><img src="/img/web/web_13_2.png" alt="" width="80%" /></p>
+  <figcaption>HTTP와 gql의 기술 스택 비교(출처 : https://tech.kakao.com/2019/08/01/graphql-basic/)</figcaption>
+</figure>
+
+<p>위의 그림과 같이 Cient-side와 Server-side에서 각각 모듈을 활용하여 통신을 주고 받을 수 있으며, 다음과 같은 언어를 지원한다.</p>
+
+<ul>
+  <li>JavaScript</li>
+  <li>Pyhton</li>
+  <li>Ruby</li>
+  <li>Java</li>
+  <li>C#</li>
+  <li>Scala</li>
+  <li>Go</li>
+  <li>PHP</li>
+  <li>Swift</li>
+  <li>R</li>
+  <li>Kotlin</li>
+</ul>
+
+<p>또한, Client-side에서 지원되는 라이브러리는 다음과 같이 2가지 종류가 존재하나, 글을 쓰는 현재(2020년11월)에는 <code class="highlighter-rouge">Apollo</code>가 대세이다.</p>
+<ul>
+  <li><a href="https://relay.dev/">Relay</a></li>
+  <li><a href="https://www.apollographql.com/">Apollo GraphQL</a><br />
+<br /></li>
+</ul>
+
+<h4 id="1-4-graphql을-사용하는-기업">1-4. GraphQL을 사용하는 기업</h4>
+<p>이러한 매력적인 장점을 제공함에도, 여전히 GraphQL을 기반으로 OpenAPI를 제공하는 회사는 거의 없는 것 같다.<br />
+GraphQL 홈페이지에 들어가면 현재 GraphQL을 사용하는 기업들의 목록이 나와있는데, 다음과 같은 기업들이 함께한다.</p>
+
+<ul>
+  <li><a href="https://www.facebook.com/">Facebook</a></li>
+  <li><a href="https://developer.github.com/v4/">Github</a></li>
+  <li><a href="https://www.pinterest.co.kr/">Pinterest</a></li>
+  <li><a href="https://www.intuit.com/">Intuit</a></li>
+  <li><a href="https://www.coursera.org/">Coursera</a></li>
+  <li><a href="https://www.shopify.com/">Shopify</a></li>
+</ul>
+
+<p>이 중, <code class="highlighter-rouge">Github</code>은 API v3에서는 <code class="highlighter-rouge">REST</code>를 사용하다가 v4에서는 <code class="highlighter-rouge">GraphQL</code>로 갈아탔는데, 위 링크의 글을 읽어보면 조금 더 GraphQL의 장점을 알 수 있다.<br />
+또한 <code class="highlighter-rouge">Github Explorer</code>에서 GraphQL을 사용해볼 수 있도록 지원을 하는데, 로그인 이후 본인 계정의 정보를 조회해볼 수 있다.</p>
+<blockquote>
+  <p><a href="https://developer.github.com/v4/explorer/">Github v4 Explorer</a><br />
+<br /></p>
+</blockquote>
+
+<h2 id="2-graphql의-장점">2. GraphQL의 장점</h2>
+<hr />
+<p>GraphQL은 위에서 언급한 특징을 기반으로 다음과 같은 장점을 지닌다.<br />
+<br /></p>
+
+<h4 id="2-1-하나의-endpoint">2-1. 하나의 Endpoint</h4>
+<p>단 <code class="highlighter-rouge">한 개</code>의 Endpoint를 지님으로써, API나 View를 따로 구성할 필요가 없어진다.<br />
+요청을 보낼때는 정해진 한 군데로만 요청을 보내면 되고, 그 외의 API를 신경쓸 필요가 없어져, 유지보수가 용이해진다.<br />
+<br /></p>
+
+<h4 id="2-2-fit한-data">2-2. Fit한 Data</h4>
+<p>GraphQL은 한번의 요청으로 원하는 모든 데이터를 서버로부터 요청하여 가져온다.<br />
+따라서 기존에 REST API만을 사용할때 발생하는 <code class="highlighter-rouge">Overfetching</code>이나 <code class="highlighter-rouge">Underfetching</code>등의 문제가 발생하지 않는다.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">Overfetching</code><br />
+원하는 data 이상의 정보를 요청받는 것, data의 정제에 리소스가 낭비<br />
+<code class="highlighter-rouge">Underfetching</code><br />
+원하는 data의 정보를 요청받기 위해 여러번 요청을 보내는 것, 네트워크를 통해 여러번 접근을 하여 리소스 낭비<br />
+<br /></p>
+</blockquote>
+
+<h4 id="2-3-기종에-상관없는-api">2-3. 기종에 상관없는 API</h4>
+<p>Facebook의 <a href="https://graphql.org/blog/graphql-a-query-language/">GraphQL blog</a>에서는 iOS, Android에 따라 <code class="highlighter-rouge">다른 기종</code>을 위해 제공하는 API 구현이 힘들었다고 한다.<br />
+RESTful API로는 일일히 다른 기종을 위해 API를 구현해야 했다고 말하며, <code class="highlighter-rouge">표준화</code>된 쿼리언어를 개발했다고 한다.<br />
+<br /></p>
+
+<h4 id="2-4-redux를-대체할-apollo">2-4. Redux를 대체할 Apollo</h4>
+<p>React와 함께 사용하는 어플리케이션에서는 <code class="highlighter-rouge">Flux 아키텍처</code>를 구현한 <code class="highlighter-rouge">Redux</code>를 제공하는데, 이는 다음과 같은 방식으로 진행된다.</p>
+
+<figure>
+<p><img src="/img/web/web_13_3.png" alt="" width="80%" /></p>
+  <figcaption>Redux와 Universal Router를 사용한 SSR의 프로세스를 나타낸 도식(출처 : https://d2.naver.com/helloworld/2838729)</figcaption>
+</figure>
+
+<p>기존의 Redux와 Universal Router를 사용한 SSR은 위의 사진처럼 실행되고 이는 다음과 같은 <code class="highlighter-rouge">단점</code>을 야기한다.</p>
+<ul>
+  <li>리소스를 가져오는 로직과 API를 <code class="highlighter-rouge">라우팅 경로마다</code> 구현해야 함</li>
+  <li>Redux의 스토어를 사용하기 위해 <code class="highlighter-rouge">액션과 리듀서</code>를 구현해야 함</li>
+  <li>렌더링 절차가 <code class="highlighter-rouge">복잡</code></li>
+  <li>렌더링에 필요한 모든 리소스를 받을 때까지 렌더링을 실행할 수 <code class="highlighter-rouge">없음</code></li>
+</ul>
+
+<p>이를 <code class="highlighter-rouge">Apollo</code> 기반의 서비스에서 <code class="highlighter-rouge">React Router v4</code> 라이브러리를 사용하여 다음과 같이 진행할 수 있게 된다.</p>
+
+<figure>
+<p><img src="/img/web/web_13_4.png" alt="" width="80%" /></p>
+  <figcaption>Apollo와 React Router v4를 사용한 SSR의 프로세스를 나타낸 도식(출처 : https://d2.naver.com/helloworld/2838729)</figcaption>
+</figure>
+
+<ol>
+  <li>React Router v4에서 라우팅 경로에 맞는 컴포넌트를 랜더링</li>
+  <li>컴포넌트를 렌더링할 때 Apollo Client를 통해 컴포넌트 렌더링에 필요한 리소스를 받은 후 HTML 코드로 변환</li>
+  <li>서버에서 받은 HTML 코드로 클라이언트 렌더링을 실행</li>
+</ol>
+
+<p>Redux와 Universal Router를 사용할 때보다 프로세스가 <code class="highlighter-rouge">간결</code>해졌다.<br />
+또한 Redux와 Universal Router 조합에서 생겨난 단점이 보완되고 다음과 같은 <code class="highlighter-rouge">장점</code>이 추가되었다.</p>
+
+<ul>
+  <li>라우팅 경로에 <code class="highlighter-rouge">상관없이</code> 컴포넌트별로 필요한 리소스만 가져올 수 있음</li>
+  <li>리소스를 가져오는 데 시간이 오래 걸리는 컴포넌트는 리소스를 가져오지 않고 렌더링만 실행하고, 클라이언트 렌더링을 실행할 때 리소스를 가져오게 할 수 있음</li>
+  <li>라우팅 경로에 의존성이 사라져서 <code class="highlighter-rouge">재사용</code> 가능한 컴포넌트의 개발이 용이해짐</li>
+  <li>내부의 분기가 없는 <code class="highlighter-rouge">하나의 라우터 코드</code>로 클라이언트 렌더링과 서버 렌더링을 실행할 수 있음</li>
+  <li>별도의 액션과 리듀서가 없어도 필요한 리소스를 컴포넌트에서 사용할 수 있음</li>
+</ul>
+
+<blockquote>
+  <p>위의 내용은 <a href="https://d2.naver.com/helloworld/2838729">https://d2.naver.com/helloworld/2838729</a>의 글을 참조한 부분이며, Redux에 대한 지식이 부족하여 <code class="highlighter-rouge">원문 그대로</code>의 내용을 들고 왔습니다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="3-graphql의-단점">3. GraphQL의 단점</h2>
+<hr />
+<p>GraphQL의 단점으로 알려진 것들로는 다음과 같은 특징이 있다.</p>
+
+<h4 id="3-1-http-캐싱">3-1. HTTP 캐싱</h4>
+<p>HTTP의 캐싱 전략은 각각 URL에 각자의 정책을 설정하는 방식으로 이루어 지는데, RESTful API는 이를 그대로 사용이 가능하다.<br />
+그러나 GraphQL은 <code class="highlighter-rouge">하나</code>의 URL로 처리하기에, HTTP에서 제공하는 캐싱 전략을 그대로 사용하는 것은 <code class="highlighter-rouge">불가능</code>하다.</p>
+
+<p>따라서 <code class="highlighter-rouge">GraphQL만의 캐싱 방법</code>을 제공하게 되는데, 대표적으로는 <code class="highlighter-rouge">영속쿼리(persisted query)</code>, <code class="highlighter-rouge">아폴로엔진(Apollo Engine)</code>등이 있다.<br />
+<br /></p>
+
+<h4 id="3-2-파일-업로드">3-2. 파일 업로드</h4>
+<p>GraphQL은 지속적으로 성장하는 생태계로써, 완성된 명세가 <code class="highlighter-rouge">존재하지 않는다</code>. 따라서 이 외의 것들은 <code class="highlighter-rouge">직접</code> 개발할 수 밖에 없게 된다.<br />
+대표적인 예로 파일업로드가 있는데, 다만 이에 대해 몇가지 대안이 있다.</p>
+
+<ul>
+  <li>Base64 인코딩을 사용</li>
+  <li>Upload를 위해 분리된 API 사용</li>
+  <li><a href="https://github.com/jaydenseric/graphql-upload">apollo-upload-server</a> 같이 <a href="https://github.com/jaydenseric/graphql-multipart-request-spec">GraphQL multipart 요청 명세</a>를 구현하는 라이브러리를 사용<br />
+<br /></li>
+</ul>
+
+<h4 id="3-3-요청-필터링의-어려움">3-3. 요청 필터링의 어려움</h4>
+<p>GraphQL은 클라이언트가 필요한 데이터를 스스로 결정하여 요청하게 된다.<br />
+따라서 GraphQL의 다양한 요청형태에서 잘못된 요청을 필터링하기가 <code class="highlighter-rouge">까다롭다</code>.<br />
+<br /></p>
+
+<h2 id="끝마치며">끝마치며</h2>
+<hr />
+<p>GraphQL을 공부하며 GraphQL이 무엇인지 특징 및 장점에 대해 알아보았다.<br />
+다음 포스팅에서는 <code class="highlighter-rouge">GraphQL의 구조</code>에 대해 알아볼 예정이다.<br />
+<br /></p>
+
+<h4 id="refernece">Refernece</h4>
+<ul>
+  <li><a href="https://graphql-kr.github.io/learn/">GraphQL Blog</a></li>
+  <li><a href="https://tech.kakao.com/2019/08/01/graphql-basic/">카카오기술블로그</a></li>
+  <li><a href="https://d2.naver.com/helloworld/2838729">네이버기술블로그</a></li>
+  <li><a href="https://www.bangseongbeom.com/graphql-downsides-alternatives.html">방성범님블로그</a></li>
+</ul>
+
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/11/12/web-12.html" data-toggle="tooltip" data-placement="top" title="[AsCal(Awsome-Calender)] Toy project의 시작"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/11/12/web-13.html';
+this.page.identifier = '/devlog/2020/11/12/web-13';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,4 +1,204 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-12T11:31:48+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AsCal(Awsome-Calender)] Toy project의 시작</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-12.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] Toy project의 시작" /><published>2020-11-12T10:59:00+09:00</published><updated>2020-11-12T10:59:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-12</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-12.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-13T16:42:17+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[AsCal(Awsome-Calender)] GraphQL이란</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-13.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] GraphQL이란" /><published>2020-11-12T12:30:00+09:00</published><updated>2020-11-12T12:30:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-13</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-13.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;p&gt;이번 토이프로젝트를 진행하며 가장 핵심적으로 배우고자 하는 부분은 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;이다. 얘기는 많이 들었지만, 한 번도 써본적이 없어 이 참에 해보려 한다.&lt;br /&gt;
+GraphQL을 정확하게 이해하기 전에는 그저 새로운 프레임워크, 라이브러리정도로 생각했으나, 전혀 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로운&lt;/code&gt; 개념이라는 것을 알게 되었다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;에 대한 포스팅은 2회에 걸쳐 진행할 예정인데, 이론적인 부분과 실제로 구성되어 있는 것들을 살펴 보고자 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-graphql이란&quot;&gt;1. GraphQL이란?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;처음에 이름을 들었을 때, 맨 처음든 생각은 왜 &lt;code class=&quot;highlighter-rouge&quot;&gt;그래프&lt;/code&gt;라는 단어가 들어갔을까 라는 점이다.&lt;br /&gt;
+해당 의문에 대한 답은 &lt;a href=&quot;https://graphql-kr.github.io/learn/thinking-in-graphs/&quot;&gt;GraphQL 홈페이지&lt;/a&gt;에서 확인할 수 있었는데, 다음과 같이 서술되어 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;GraphQL을 사용하면 비즈니스 도메인을 &lt;code class=&quot;highlighter-rouge&quot;&gt;그래프&lt;/code&gt;로 모델링 할 수 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;스키마를 정의하여 비즈니스 도메인을 그래프로 연결할 수 있다는 말인데, 구조를 알기 전까지는 이해하기 어려운 문장이다.&lt;br /&gt;
+한 문장으로만 요약하자면, &lt;code class=&quot;highlighter-rouge&quot;&gt;Facebook이 개발한 Query언어&lt;/code&gt; 라고 할 수 있겠다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-1-기존-rest-api-통신의-한계&quot;&gt;1-1. 기존 REST API 통신의 한계&lt;/h4&gt;
+&lt;p&gt;사내에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;REST API&lt;/code&gt; 서버를 구축하며 재미있고, 즐거우며 Front-end 개발자와 협업 하는 것이 굉장이 용이하다는 생각을 하였다.&lt;br /&gt;
+그러나 개발하는 서비스의 덩치가 점점 커지며 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제점&lt;/code&gt;들에 당면하게 되었는데 생각보다 나를 괴롭게 만들었다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;특정 기능을 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;여러번&lt;/code&gt; API가 호출 됨&lt;/li&gt;
+  &lt;li&gt;특정 요청에 fit한 응답을 돌려주기 위해서는 API를 &lt;code class=&quot;highlighter-rouge&quot;&gt;새로&lt;/code&gt; 만들어야함&lt;/li&gt;
+  &lt;li&gt;API &lt;code class=&quot;highlighter-rouge&quot;&gt;유지보수&lt;/code&gt;의 어려움&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;한 문장으로 요약하면, &lt;code class=&quot;highlighter-rouge&quot;&gt;관리해야 할 EndPoint&lt;/code&gt;의 증가로 인하여 발생되는 문제점이라 할 수 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-graphql의-특징&quot;&gt;1-2. GraphQL의 특징&lt;/h4&gt;
+&lt;p&gt;GraphQL의 가장 큰 특징은 다음 그림과 같이 EndPoin가 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나&lt;/code&gt; 라는 점이다.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_13_1.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;REST API와 GraphQL API의 사용(출처 : https://blog.apollographql.com/graphql-vs-rest-5d425123e34b)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;기존에 REST API에서는 정보를 얻기 위해 여러번 네트워크를 호출하거나, 다양한 API를 호출해야 했다.&lt;br /&gt;
+하지만 GraphQL은 단 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나&lt;/code&gt;의 Endpoint를 제공하며, 단 &lt;code class=&quot;highlighter-rouge&quot;&gt;한 번&lt;/code&gt;의 요청으로 모든 정보를 가져온다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-3-graphql의-통신-방법&quot;&gt;1-3. GraphQL의 통신 방법&lt;/h4&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_13_2.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;HTTP와 gql의 기술 스택 비교(출처 : https://tech.kakao.com/2019/08/01/graphql-basic/)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;위의 그림과 같이 Cient-side와 Server-side에서 각각 모듈을 활용하여 통신을 주고 받을 수 있으며, 다음과 같은 언어를 지원한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JavaScript&lt;/li&gt;
+  &lt;li&gt;Pyhton&lt;/li&gt;
+  &lt;li&gt;Ruby&lt;/li&gt;
+  &lt;li&gt;Java&lt;/li&gt;
+  &lt;li&gt;C#&lt;/li&gt;
+  &lt;li&gt;Scala&lt;/li&gt;
+  &lt;li&gt;Go&lt;/li&gt;
+  &lt;li&gt;PHP&lt;/li&gt;
+  &lt;li&gt;Swift&lt;/li&gt;
+  &lt;li&gt;R&lt;/li&gt;
+  &lt;li&gt;Kotlin&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;또한, Client-side에서 지원되는 라이브러리는 다음과 같이 2가지 종류가 존재하나, 글을 쓰는 현재(2020년11월)에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Apollo&lt;/code&gt;가 대세이다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://relay.dev/&quot;&gt;Relay&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.apollographql.com/&quot;&gt;Apollo GraphQL&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;1-4-graphql을-사용하는-기업&quot;&gt;1-4. GraphQL을 사용하는 기업&lt;/h4&gt;
+&lt;p&gt;이러한 매력적인 장점을 제공함에도, 여전히 GraphQL을 기반으로 OpenAPI를 제공하는 회사는 거의 없는 것 같다.&lt;br /&gt;
+GraphQL 홈페이지에 들어가면 현재 GraphQL을 사용하는 기업들의 목록이 나와있는데, 다음과 같은 기업들이 함께한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.facebook.com/&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developer.github.com/v4/&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.pinterest.co.kr/&quot;&gt;Pinterest&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.intuit.com/&quot;&gt;Intuit&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.coursera.org/&quot;&gt;Coursera&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.shopify.com/&quot;&gt;Shopify&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 중, &lt;code class=&quot;highlighter-rouge&quot;&gt;Github&lt;/code&gt;은 API v3에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;REST&lt;/code&gt;를 사용하다가 v4에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL&lt;/code&gt;로 갈아탔는데, 위 링크의 글을 읽어보면 조금 더 GraphQL의 장점을 알 수 있다.&lt;br /&gt;
+또한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Github Explorer&lt;/code&gt;에서 GraphQL을 사용해볼 수 있도록 지원을 하는데, 로그인 이후 본인 계정의 정보를 조회해볼 수 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://developer.github.com/v4/explorer/&quot;&gt;Github v4 Explorer&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;2-graphql의-장점&quot;&gt;2. GraphQL의 장점&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;GraphQL은 위에서 언급한 특징을 기반으로 다음과 같은 장점을 지닌다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-1-하나의-endpoint&quot;&gt;2-1. 하나의 Endpoint&lt;/h4&gt;
+&lt;p&gt;단 &lt;code class=&quot;highlighter-rouge&quot;&gt;한 개&lt;/code&gt;의 Endpoint를 지님으로써, API나 View를 따로 구성할 필요가 없어진다.&lt;br /&gt;
+요청을 보낼때는 정해진 한 군데로만 요청을 보내면 되고, 그 외의 API를 신경쓸 필요가 없어져, 유지보수가 용이해진다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-2-fit한-data&quot;&gt;2-2. Fit한 Data&lt;/h4&gt;
+&lt;p&gt;GraphQL은 한번의 요청으로 원하는 모든 데이터를 서버로부터 요청하여 가져온다.&lt;br /&gt;
+따라서 기존에 REST API만을 사용할때 발생하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Overfetching&lt;/code&gt;이나 &lt;code class=&quot;highlighter-rouge&quot;&gt;Underfetching&lt;/code&gt;등의 문제가 발생하지 않는다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Overfetching&lt;/code&gt;&lt;br /&gt;
+원하는 data 이상의 정보를 요청받는 것, data의 정제에 리소스가 낭비&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Underfetching&lt;/code&gt;&lt;br /&gt;
+원하는 data의 정보를 요청받기 위해 여러번 요청을 보내는 것, 네트워크를 통해 여러번 접근을 하여 리소스 낭비&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;2-3-기종에-상관없는-api&quot;&gt;2-3. 기종에 상관없는 API&lt;/h4&gt;
+&lt;p&gt;Facebook의 &lt;a href=&quot;https://graphql.org/blog/graphql-a-query-language/&quot;&gt;GraphQL blog&lt;/a&gt;에서는 iOS, Android에 따라 &lt;code class=&quot;highlighter-rouge&quot;&gt;다른 기종&lt;/code&gt;을 위해 제공하는 API 구현이 힘들었다고 한다.&lt;br /&gt;
+RESTful API로는 일일히 다른 기종을 위해 API를 구현해야 했다고 말하며, &lt;code class=&quot;highlighter-rouge&quot;&gt;표준화&lt;/code&gt;된 쿼리언어를 개발했다고 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-4-redux를-대체할-apollo&quot;&gt;2-4. Redux를 대체할 Apollo&lt;/h4&gt;
+&lt;p&gt;React와 함께 사용하는 어플리케이션에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Flux 아키텍처&lt;/code&gt;를 구현한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Redux&lt;/code&gt;를 제공하는데, 이는 다음과 같은 방식으로 진행된다.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_13_3.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;Redux와 Universal Router를 사용한 SSR의 프로세스를 나타낸 도식(출처 : https://d2.naver.com/helloworld/2838729)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;기존의 Redux와 Universal Router를 사용한 SSR은 위의 사진처럼 실행되고 이는 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;단점&lt;/code&gt;을 야기한다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;리소스를 가져오는 로직과 API를 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅 경로마다&lt;/code&gt; 구현해야 함&lt;/li&gt;
+  &lt;li&gt;Redux의 스토어를 사용하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;액션과 리듀서&lt;/code&gt;를 구현해야 함&lt;/li&gt;
+  &lt;li&gt;렌더링 절차가 &lt;code class=&quot;highlighter-rouge&quot;&gt;복잡&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;렌더링에 필요한 모든 리소스를 받을 때까지 렌더링을 실행할 수 &lt;code class=&quot;highlighter-rouge&quot;&gt;없음&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Apollo&lt;/code&gt; 기반의 서비스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;React Router v4&lt;/code&gt; 라이브러리를 사용하여 다음과 같이 진행할 수 있게 된다.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/web/web_13_4.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;Apollo와 React Router v4를 사용한 SSR의 프로세스를 나타낸 도식(출처 : https://d2.naver.com/helloworld/2838729)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;React Router v4에서 라우팅 경로에 맞는 컴포넌트를 랜더링&lt;/li&gt;
+  &lt;li&gt;컴포넌트를 렌더링할 때 Apollo Client를 통해 컴포넌트 렌더링에 필요한 리소스를 받은 후 HTML 코드로 변환&lt;/li&gt;
+  &lt;li&gt;서버에서 받은 HTML 코드로 클라이언트 렌더링을 실행&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Redux와 Universal Router를 사용할 때보다 프로세스가 &lt;code class=&quot;highlighter-rouge&quot;&gt;간결&lt;/code&gt;해졌다.&lt;br /&gt;
+또한 Redux와 Universal Router 조합에서 생겨난 단점이 보완되고 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;이 추가되었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라우팅 경로에 &lt;code class=&quot;highlighter-rouge&quot;&gt;상관없이&lt;/code&gt; 컴포넌트별로 필요한 리소스만 가져올 수 있음&lt;/li&gt;
+  &lt;li&gt;리소스를 가져오는 데 시간이 오래 걸리는 컴포넌트는 리소스를 가져오지 않고 렌더링만 실행하고, 클라이언트 렌더링을 실행할 때 리소스를 가져오게 할 수 있음&lt;/li&gt;
+  &lt;li&gt;라우팅 경로에 의존성이 사라져서 &lt;code class=&quot;highlighter-rouge&quot;&gt;재사용&lt;/code&gt; 가능한 컴포넌트의 개발이 용이해짐&lt;/li&gt;
+  &lt;li&gt;내부의 분기가 없는 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나의 라우터 코드&lt;/code&gt;로 클라이언트 렌더링과 서버 렌더링을 실행할 수 있음&lt;/li&gt;
+  &lt;li&gt;별도의 액션과 리듀서가 없어도 필요한 리소스를 컴포넌트에서 사용할 수 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;위의 내용은 &lt;a href=&quot;https://d2.naver.com/helloworld/2838729&quot;&gt;https://d2.naver.com/helloworld/2838729&lt;/a&gt;의 글을 참조한 부분이며, Redux에 대한 지식이 부족하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;원문 그대로&lt;/code&gt;의 내용을 들고 왔습니다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;3-graphql의-단점&quot;&gt;3. GraphQL의 단점&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;GraphQL의 단점으로 알려진 것들로는 다음과 같은 특징이 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-1-http-캐싱&quot;&gt;3-1. HTTP 캐싱&lt;/h4&gt;
+&lt;p&gt;HTTP의 캐싱 전략은 각각 URL에 각자의 정책을 설정하는 방식으로 이루어 지는데, RESTful API는 이를 그대로 사용이 가능하다.&lt;br /&gt;
+그러나 GraphQL은 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나&lt;/code&gt;의 URL로 처리하기에, HTTP에서 제공하는 캐싱 전략을 그대로 사용하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다.&lt;/p&gt;
+
+&lt;p&gt;따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL만의 캐싱 방법&lt;/code&gt;을 제공하게 되는데, 대표적으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;영속쿼리(persisted query)&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;아폴로엔진(Apollo Engine)&lt;/code&gt;등이 있다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-2-파일-업로드&quot;&gt;3-2. 파일 업로드&lt;/h4&gt;
+&lt;p&gt;GraphQL은 지속적으로 성장하는 생태계로써, 완성된 명세가 &lt;code class=&quot;highlighter-rouge&quot;&gt;존재하지 않는다&lt;/code&gt;. 따라서 이 외의 것들은 &lt;code class=&quot;highlighter-rouge&quot;&gt;직접&lt;/code&gt; 개발할 수 밖에 없게 된다.&lt;br /&gt;
+대표적인 예로 파일업로드가 있는데, 다만 이에 대해 몇가지 대안이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Base64 인코딩을 사용&lt;/li&gt;
+  &lt;li&gt;Upload를 위해 분리된 API 사용&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jaydenseric/graphql-upload&quot;&gt;apollo-upload-server&lt;/a&gt; 같이 &lt;a href=&quot;https://github.com/jaydenseric/graphql-multipart-request-spec&quot;&gt;GraphQL multipart 요청 명세&lt;/a&gt;를 구현하는 라이브러리를 사용&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-3-요청-필터링의-어려움&quot;&gt;3-3. 요청 필터링의 어려움&lt;/h4&gt;
+&lt;p&gt;GraphQL은 클라이언트가 필요한 데이터를 스스로 결정하여 요청하게 된다.&lt;br /&gt;
+따라서 GraphQL의 다양한 요청형태에서 잘못된 요청을 필터링하기가 &lt;code class=&quot;highlighter-rouge&quot;&gt;까다롭다&lt;/code&gt;.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;GraphQL을 공부하며 GraphQL이 무엇인지 특징 및 장점에 대해 알아보았다.&lt;br /&gt;
+다음 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;GraphQL의 구조&lt;/code&gt;에 대해 알아볼 예정이다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;refernece&quot;&gt;Refernece&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://graphql-kr.github.io/learn/&quot;&gt;GraphQL Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://tech.kakao.com/2019/08/01/graphql-basic/&quot;&gt;카카오기술블로그&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://d2.naver.com/helloworld/2838729&quot;&gt;네이버기술블로그&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bangseongbeom.com/graphql-downsides-alternatives.html&quot;&gt;방성범님블로그&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="web" /><summary type="html">들어가기 앞서 이번 토이프로젝트를 진행하며 가장 핵심적으로 배우고자 하는 부분은 GraphQL이다. 얘기는 많이 들었지만, 한 번도 써본적이 없어 이 참에 해보려 한다. GraphQL을 정확하게 이해하기 전에는 그저 새로운 프레임워크, 라이브러리정도로 생각했으나, 전혀 새로운 개념이라는 것을 알게 되었다. GraphQL에 대한 포스팅은 2회에 걸쳐 진행할 예정인데, 이론적인 부분과 실제로 구성되어 있는 것들을 살펴 보고자 한다.</summary></entry><entry><title type="html">[AsCal(Awsome-Calender)] Toy project의 시작</title><link href="https://owin2828.github.io/devlog/2020/11/12/web-12.html" rel="alternate" type="text/html" title="[AsCal(Awsome-Calender)] Toy project의 시작" /><published>2020-11-12T10:59:00+09:00</published><updated>2020-11-12T10:59:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/12/web-12</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/12/web-12.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;p&gt;최근 연말에 들어서며, 팀 내에서 다양한 &lt;code class=&quot;highlighter-rouge&quot;&gt;스터디&lt;/code&gt;를 진행하고 있다. 
 나 또한 참여자로써 무엇을 할까 고민하다가, 팀내 &lt;code class=&quot;highlighter-rouge&quot;&gt;캘린더&lt;/code&gt;를 만들기로 하였다.&lt;br /&gt;
 물론 기존에 다양한 방법으로 일정을 보고 있지만, 한 눈에 모아보기가 힘들다는 단점이 있어 토이프로젝트로 진행하려고 한다.&lt;/p&gt;
@@ -40,8 +240,8 @@
 
 &lt;ul&gt;
   &lt;li&gt;1주차: 환경 구성 및 HelloWorld APP 개발하기&lt;/li&gt;
-  &lt;li&gt;2주차: &lt;code class=&quot;highlighter-rouge&quot;&gt;AsCal&lt;/code&gt; 기본 기능 및 화면 개발&lt;/li&gt;
-  &lt;li&gt;3주차: &lt;code class=&quot;highlighter-rouge&quot;&gt;AsCal&lt;/code&gt; 고도화 및 회고&lt;br /&gt;
+  &lt;li&gt;2주차: AsCal 기본 기능 및 화면 개발&lt;/li&gt;
+  &lt;li&gt;3주차: AsCal 고도화 및 회고&lt;br /&gt;
 &lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1225,77 +1425,4 @@ el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlig
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;현재 data directory 확인 (1번방법)&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.</summary></entry><entry><title type="html">[Thanos]프로메테우스의 스케일링 tool</title><link href="https://owin2828.github.io/devlog/2020/03/13/etc-7.html" rel="alternate" type="text/html" title="[Thanos]프로메테우스의 스케일링 tool" /><published>2020-03-13T18:19:00+09:00</published><updated>2020-03-13T18:19:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/03/13/etc-7</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/03/13/etc-7.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;프로메테우스&lt;/code&gt;는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제점&lt;/code&gt;을 지닌다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;확장성의 어려움&lt;/li&gt;
-  &lt;li&gt;가용성의 어려움&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이 중 &lt;code class=&quot;highlighter-rouge&quot;&gt;확장성&lt;/code&gt;의 문제는 디스크를 사서 붙이는 것으로 어느 정도 해결이된다. 
-하지만 데이터의 양이 방대해지고 많아질 경우, 이러한 방식으로 매 번 증축할 수 없고 결국 하나의 프로메테우스 인스턴스로는 감당이 되지 않는 &lt;code class=&quot;highlighter-rouge&quot;&gt;문제&lt;/code&gt;가 발생한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
-이러한 문제를 해결하기 위해 프로메테우스에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Federation&lt;/code&gt;이라는 방법을 권장한다. 
-프로메테우스 인스턴스를 여러개 만들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;Master-Slave&lt;/code&gt; 구로조 관리를 하여 계층적으로 관리를 하는 방법이다. 
-약간은 지저분하고 또 복잡해 보이지만, 위의 구조를 사용함으로써 어느정도 보완이 되었다. 
-하지만 여전히 이러한 구조는 단점을 지닌다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;가용성&lt;/code&gt;의 문제가 바로 그것인데, 프로메테우스는 기본적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나&lt;/code&gt;의 서버로 기동된다. 
-따라서 실행중인 서버가 다운되거나 장애 및 재시작 등의 업무로 인해 생기는 공백의 기간동안은 메트릭을 수집할 수 &lt;code class=&quot;highlighter-rouge&quot;&gt;없다&lt;/code&gt;. 
-클러스터링 기능이 존재하지 않기 때문에 이러한 문제점을 해결하기 위해서는 다음의 그림과 같이 프로메테우스 인스턴스를 &lt;code class=&quot;highlighter-rouge&quot;&gt;두 개&lt;/code&gt; 띄우고 같은 대상으로부터 메트릭을 수집해야 한다.&lt;br /&gt;
-&lt;img src=&quot;/img/etc/etc_7_2.png&quot; alt=&quot;&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;여전히 마음에 들지 않는다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;1-thanos란&quot;&gt;1. Thanos란&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;위와 같은 문제를 해결하기 위해 등장한 것이 바로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos&lt;/code&gt;이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_3.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
-타노스의 기본 구조는 위와 같다. 여러개의 프로메테우스에서 메트릭 정보를 받아 &lt;code class=&quot;highlighter-rouge&quot;&gt;전체적인&lt;/code&gt; 정보를 제공해준다. 
-또한 수집된 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;스케일&lt;/code&gt;이 가능한 스토리지에 저장해서 특정 프로메테우스 인스턴스가 다운이 되더라도, 그 인스턴스가 담당하는 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;조회&lt;/code&gt;할 수 있도록 해준다. 
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-thanos-아키텍처&quot;&gt;2. Thanos 아키텍처&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;타노스의 전반적인 이해를 돕기 위해 타노스의 아키텍처를 살펴본다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-thanos-side-car--querier&quot;&gt;2-1. Thanos Side car &amp;amp; Querier&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_4.png&quot; alt=&quot;&quot; width=&quot;30%&quot; /&gt;
-타노스는 프로메테우스 서버에 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스 에이전트(Thanos Sidecar)&lt;/code&gt;를 설치하여 데이터를 조회할 수 있도록 한다. 
-프로메테우스는 수집된 메트릭 데이터를 로컬 디스크에 저장하기 때문에 타노스 에이전트는 디스크에 저장된 내용을 읽어 필요시 쿼리 엔진에게 전달한다. 
-이러한 구조로 이루어져 있기 때문에 사용자가 관리하고 바라보는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos Query&lt;/code&gt; 하나로 줄어들게 된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-2-ha-지원&quot;&gt;2-2. HA 지원&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_5.png&quot; alt=&quot;&quot; width=&quot;30%&quot; /&gt;
-타노스의 &lt;code class=&quot;highlighter-rouge&quot;&gt;HA&lt;/code&gt;(High Availability, 서버 이중화)는 기존과 동일하다. 프로메테우스 인스턴스를 두 개 띄워서 같은 대상을 모니터링 하는 것이다. 
-기존 방식에서는 프로메테우스 인스턴스를 각각 모니터링 해야하지만, 타노스는 특정 그룹의 프로메테우스 인스턴스들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;하나로&lt;/code&gt; 처리해서 메트릭을 보여준다. 
-즉, 두 인스턴스에서 수집된 메트릭을 &lt;code class=&quot;highlighter-rouge&quot;&gt;합쳐서&lt;/code&gt; 보여줄 수도 있고, &lt;code class=&quot;highlighter-rouge&quot;&gt;중복값을 제거&lt;/code&gt;해주는 De-duplication 기능을 지원한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-3-오래된-값-저장&quot;&gt;2-3. 오래된 값 저장&lt;/h4&gt;
-&lt;p&gt;프로메테우스는 로컬에 데이터를 저장하기 때문에 일정 기간이 지난 데이터는 &lt;code class=&quot;highlighter-rouge&quot;&gt;삭제&lt;/code&gt;된다. 따라서 기간이 오래된 데이터는 조회가 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하다. 
-이 문제는 여러 대의 프로메테우스를 모니터링하게 되므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스에서도 발생&lt;/code&gt;하는데, 메모리와 로컬디스크의 용량 문제로 여러 프로메테우스 모니터링이 &lt;code class=&quot;highlighter-rouge&quot;&gt;불가능&lt;/code&gt;하게 된다. 
-이를 해결하기 위해 타노스는 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부 스토리지&lt;/code&gt;를 사용한다.&lt;/p&gt;
-
-&lt;p&gt;프로메테우스에서 수집된 데이터는 2시간 정도 메모리에 저장된 후, 로컬 디스크로 덤프되어 저장된다. 이 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;타노스 에이전트&lt;/code&gt;가 수집하여 &lt;code class=&quot;highlighter-rouge&quot;&gt;외부 스토리지에 저장&lt;/code&gt;한다. 
-외부 스토리지는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ceph&lt;/code&gt;와 같은 분산형 파일 시스템 혹은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Google Cloud Storage&lt;/code&gt;, AWS &lt;code class=&quot;highlighter-rouge&quot;&gt;S3&lt;/code&gt;와 같은 클라우드 스토리지를 사용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/etc/etc_7_6.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;
-즉 쿼리 엔진에서 최근의 데이터를 조회할 때는 타노스 에이전트를 통해서 가져오고, 오래된 데이터는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Thanos Sotrage Gateway&lt;/code&gt;를 통해 조회한다. 
-이 게이트웨이는 외부 스토리지에 저장된 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Storage API&lt;/code&gt;를 통해 쿼리 엔진과 통신하는 역할 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;캐싱 기능&lt;/code&gt;을 제공한다.&lt;/p&gt;
-
-&lt;p&gt;데이터가 많이 축적되게 되면, 오래된 데이터를 조회하는 경우 많은 양을 조회하기 때문에 성능에 문제가 발생한다. 
-이러한 문제를 피하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Compactor&lt;/code&gt;가 존재하는데, 데이터 파일을 &lt;code class=&quot;highlighter-rouge&quot;&gt;압축&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;다운 샘플링&lt;/code&gt;을 한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;다운 샘플링&lt;/code&gt;: 1분단위로 저장된 데이터를 10분이나 1시간 단위로 샘플링 기준을 낮춰서(해상도 낮춤) 전체 데이터 저장용량을 낮추는 방법&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;본 포스팅은 &lt;a href=&quot;https://bcho.tistory.com/1372?category=731548&quot;&gt;조대협님의 블로그 글&lt;/a&gt;을 참조하여 학습용으로 작성된 글임을 밝힙니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://katacoda.com/bwplotka/courses/thanos&quot;&gt;katacoda 타노스 튜토리얼&lt;/a&gt;&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 프로메테우스는 좋은 모니터링 툴이지만, 앞선 글에서 언급했듯이 클러스터링 구조를 지원하지 않기 때문에 다음과 같은 결정적인 두 가지 문제점을 지닌다. 확장성의 어려움 가용성의 어려움</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="etc" /><summary type="html">들어가기 앞서 본 문서에서는 PSQL CentOS 7 설치 및 Data directory 변경 방법에 대하여 기술한다.</summary></entry></feed>
