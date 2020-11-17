@@ -261,10 +261,10 @@ npm <span class="nb">install</span> @prisma/cli <span class="nt">--save-dev</spa
 
 // <span class="m">3</span>
 <span class="n">model</span> <span class="n">Link</span> {
-  <span class="n">id</span>          <span class="n">Int</span>      @<span class="n">id</span> @<span class="n">default</span>(<span class="n">autoincrement</span>())
-  <span class="n">createdAt</span>   <span class="n">DateTime</span> @<span class="n">default</span>(<span class="n">now</span>())
-  <span class="n">description</span> <span class="n">String</span>
-  <span class="n">url</span>         <span class="n">String</span>
+  <span class="n">id</span>                      <span class="n">Int</span>      @<span class="n">id</span> @<span class="n">default</span>(<span class="n">autoincrement</span>())
+  <span class="n">createdAt</span>       <span class="n">DateTime</span> @<span class="n">default</span>(<span class="n">now</span>())
+  <span class="n">description</span>     <span class="n">String</span>
+  <span class="n">url</span>                     <span class="n">String</span>
 }
 </code></pre></div></div>
 <p><code class="highlighter-rouge">Link</code> 모델은 <code class="highlighter-rouge">link</code> 데이터 베이스 테이블의 구조를 정의하며, Prisma는 이를 기반으로 테이블을 생성해준다.<br />
