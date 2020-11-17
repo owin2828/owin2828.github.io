@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [AsCal(Awsome-Calender)] GraphQL이란(2) - 낮코밤코
+    [GraphQL] GraphQL GraphQL의 구성요소 - 낮코밤코
     
   </title>
 
@@ -85,9 +85,10 @@
             <a class="dropdown-item" href="/devlog/aws">AWS</a>
             <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
             <a class="dropdown-item" href="/devlog/java">Java</a>
-            <!-- <a class="dropdown-item" href="/devlog/node">Node.js</a> -->
+            <a class="dropdown-item" href="/devlog/GraphQL">GraphQL</a>
             <a class="dropdown-item" href="/devlog/spring">Spring</a>
             <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/vue">Vue</a>
             <a class="dropdown-item" href="/devlog/etc">Etc</a>
           </div>
         </li>
@@ -107,22 +108,22 @@
 
   <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('/img/background_web.jpg')">
+<header class="masthead" style="background-image: url('/img/background_GraphQL.png')">
   
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[AsCal(Awsome-Calender)] GraphQL이란(2)</h1>
+            <h1>[GraphQL] GraphQL GraphQL의 구성요소</h1>
             
-            <h2 class="subheading">팀내 일정 토이 프로젝트 - 3</h2>
+            <h2 class="subheading">GraphQL에 대한 고찰 - 2</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
               on 2020-11-13 16:49 &middot; <span class="reading-time" title="Estimated read time">
   
-   7 mins  read </span>
+   6 mins  read </span>
 
             </span>
           </div>
@@ -140,7 +141,7 @@
         <br/>
         <div class="sidebar-about">
           
-            <h5><a href="/devlog/web/">글 목록으로</a></h5>
+            <h5><a href="/devlog/GraphQL/">글 목록으로</a></h5>
           
         </div>
         <br/>
@@ -327,6 +328,7 @@
     <span class="kd">const</span> <span class="nx">ret</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">requestPaymentSession</span><span class="p">({</span> <span class="nx">pgId</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">birthDay</span><span class="p">,</span> <span class="nx">phoneNumber</span><span class="p">,</span> <span class="nx">sex</span><span class="p">,</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">productName</span><span class="p">,</span> <span class="nx">ref</span> <span class="p">})</span>
     <span class="k">return</span> <span class="nx">removeSymbol</span><span class="p">(</span><span class="nx">ret</span><span class="p">)</span>
 <span class="p">},</span>
+
 <span class="nx">requestPaymentApprove</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="p">{</span>
     <span class="nx">sessionKey</span><span class="p">,</span> <span class="nx">authNumber</span>
 <span class="p">},</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -340,8 +342,7 @@
 <h2 id="끝마치며">끝마치며</h2>
 <hr />
 <p>이로써 기본적인 GraphQL의 <code class="highlighter-rouge">구성</code> 및 <code class="highlighter-rouge">구현</code> 방법에 대하여 알아보았다.<br />
-물론 실제로 코드에 위의 개념을 녹이는 것은 완전 다른 이야기지만, 이는 앞으로 진행할 Toy Project에 적용하며 기록하려고한다.<br />
-다음 포스팅은 Toy Project의 사전 작업 및 환경 설정이다.    <br />
+물론 실제로 코드에 위의 개념을 녹이는 것은 완전 다른 이야기지만..<br />
 <br /></p>
 
 <h4 id="refernece">Refernece</h4>
@@ -356,7 +357,7 @@
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/11/12/web-13.html" data-toggle="tooltip" data-placement="top" title="[AsCal(Awsome-Calender)] GraphQL이란(1)"> << Previous</a>
+          <a href="/devlog/2020/11/12/web-13.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] GraphQL 특징 및 장,단점"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
           
