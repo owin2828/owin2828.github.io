@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [GraphQL] 간단한 쿼리 작성 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 지난 포스팅에 이어 이번에는 간단한 쿼리를 작성해보도록 한다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-4.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/GraphQL">GraphQL</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/vue">Vue</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_GraphQL.png')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[GraphQL] 간단한 쿼리 작성</h1>
+            
+            <h2 class="subheading">GraphQL + Node.js - 2</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-11-17 12:55 &middot; <span class="reading-time" title="Estimated read time">
+  
+   5 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/GraphQL/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-스키마-확장">1. 스키마 확장</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-resolver-함수-구현">2. resolver 함수 구현</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-쿼리-리졸브-과정">3. 쿼리 리졸브 과정</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>지난 포스팅에 이어 이번에는 간단한 쿼리를 작성해보도록 한다.</p>
+
+<blockquote>
+  <p>본 시리즈는 <a href="https://www.howtographql.com/graphql-js/0-introduction/">HOW TO GRAPHQL</a> 글을 참고하여 작성했습니다.<br />
+기존에 참조하던 <a href="https://velog.io/@cadenzah/graphql-node-01-introduction">cadenzah</a> 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.<br />
+오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. <br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-스키마-확장">1. 스키마 확장</h2>
+<hr />
+<p><code class="highlighter-rouge">index.js</code>에 작성된 스키마를 다음과 같이 변경한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="kd">const</span> <span class="nx">typeDefs</span> <span class="o">=</span> <span class="s2">`</span><span class="err">
+  type Query {
+    info: String!
+    feed: [Link!]!
+  }
+
+  type Link {
+    id: ID!
+    description: String!
+    url: String!
+  }
+</span><span class="s2">`</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">Link</code>라는 새로운 타입이 정의되었고, 이는 Hacker News에 게시될 수 있는 링크를 나타낸다.<br />
+또한 id, description, url을 필드 값으로 가지며, 이를 통해 Query에서 Link 항복의 리스트를 <code class="highlighter-rouge">feed</code>를 통해 받을 수 있다.<br />
+<br /></p>
+
+<h2 id="2-resolver-함수-구현">2. resolver 함수 구현</h2>
+<hr />
+<p>GraphQL의 스키마에서는 <code class="highlighter-rouge">모든</code> 필드 값에 대하여 리졸버 함수를 가지므로, 각 필드에 대응하는 함수를 구현해야 한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="c1">// 1</span>
+<span class="kd">let</span> <span class="nx">links</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">link-0</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">www.howtographql.com</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Fullstack tutorial for GraphQL</span><span class="dl">'</span>
+<span class="p">}]</span>
+
+<span class="kd">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">Query</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">info</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s2">`</span><span class="err">This is the API of a Hackernews Clone</span><span class="s2">`</span><span class="p">,</span>
+    <span class="c1">// 2</span>
+    <span class="na">feed</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">links</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="c1">// 3</span>
+  <span class="na">Link</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+    <span class="na">description</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<ol>
+  <li>아직 DB를 연결하지 않았으므로, <code class="highlighter-rouge">메모리</code>에 정보들을 저장한다.</li>
+  <li><code class="highlighter-rouge">feed</code>라는 최상위 필드를 위한 새로운 리졸버를 추가한다.</li>
+  <li>스카미에 정의에 따라 <code class="highlighter-rouge">Link</code> 타입의 각 필드에 대응하는 3가지 리졸버들을 추가</li>
+</ol>
+
+<p>위의 구현 사항들을 localhost:5000에서 다음의 쿼리를 통해 테스트 해보도록 한다.</p>
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">query</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">feed</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="w">
+    </span><span class="n">url</span><span class="w">
+    </span><span class="n">description</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+<p>이는 다음과 같은 응답을 돌려준다.</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"feed"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.howtographql.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fullstack tutorial for GraphQL"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+<p><br /></p>
+
+<h2 id="3-쿼리-리졸브-과정">3. 쿼리 리졸브 과정</h2>
+<hr />
+<p>위에서 다루었던 쿼리는 다음과 같다.</p>
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">query</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">feed</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">id</span><span class="w">
+    </span><span class="n">url</span><span class="w">
+    </span><span class="n">description</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+<p>쿼리에 사용된 <code class="highlighter-rouge">feed</code>, <code class="highlighter-rouge">id</code>, <code class="highlighter-rouge">url</code>, <code class="highlighter-rouge">description</code> 4가지 필드는 모두 스키마 정의에서 확인 가능하다.<br />
+또한 각 필드를 위해 데이터를 반환해주는 리졸버 함수를 구현하게 된다.</p>
+
+<p>즉, GraphQL 서버는 쿼리에 포함된 <code class="highlighter-rouge">모든</code> 필드에 대해 리졸버 함수를 각각 호출하고,<br />
+쿼리 모양에 따라 데이터를 잘 포장하여 응답으로 만드는 것이다.</p>
+
+<p>그러나 이러한 구현에서 벗어난 것은 <code class="highlighter-rouge">Link</code> 타입의 리졸버이다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Link</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">id</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+  <span class="nx">description</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+  <span class="nx">url</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>모든 GraphQL 리졸버 함수는 <code class="highlighter-rouge">4개</code>의 인자를 입력 받는데, 위 코드에서는 생략되어 있다.<br />
+보통 <code class="highlighter-rouge">parent</code>(혹은 <code class="highlighter-rouge">root</code>)라고 불리는 인자는 호출되기 직전 리졸버 실행의 결과값이다.</p>
+
+<p>위의 코드에서 보이듯이 <code class="highlighter-rouge">feed</code> 리졸버가 호출되고 <code class="highlighter-rouge">links</code>에 포함된 모든 데이터릍 반환한다.<br />
+이어서 위 과정에서 반환된 리스트에 포함된 각 항목에 대해 <code class="highlighter-rouge">Link</code> 타입의 리졸버가 호출된다.<br />
+따라서 그 결과로, <code class="highlighter-rouge">Link</code>가 가지는 3개의 리졸버의 <code class="highlighter-rouge">parent</code> 객체는 <code class="highlighter-rouge">links</code> 리스트의 각 항목이다.</p>
+
+<p>현재 <code class="highlighter-rouge">Link</code> 리졸버 구현은 단순하게 이루어져 있기 때문에, 구현을 생략하더라고 정상적으로 서버가 동작한다.<br />
+<br /></p>
+
+<h2 id="끝마치며">끝마치며</h2>
+<hr />
+<p>이로써 기본적인 GraphQL의 쿼리를 알아보았다. 다음에는 간단한 뮤테이션에 대해 알아보자.<br />
+<br /></p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/11/17/GraphQL-3.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] GraphQL 맛보기"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/11/17/GraphQL-4.html';
+this.page.identifier = '/devlog/2020/11/17/GraphQL-4';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

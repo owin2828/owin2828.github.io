@@ -139,6 +139,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-11-17-graphql-4-html": {
+        "title": "[GraphQL] 간단한 쿼리 작성",
+        "subtitle":"GraphQL + Node.js - 2",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "GraphQL",
+        "content": "들어가기 앞서지난 포스팅에 이어 이번에는 간단한 쿼리를 작성해보도록 한다.  본 시리즈는 HOW TO GRAPHQL 글을 참고하여 작성했습니다.기존에 참조하던 cadenzah 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. 1. 스키마 확장index.js에 작성된 스키마를 다음과 같이 변경한다.// ./hackernews-node/src/index.jsconst typeDefs = `  type Query {    info: String!    feed: [Link!]!  }  type Link {    id: ID!    description: String!    url: String!  }`Link라는 새로운 타입이 정의되었고, 이는 Hacker News에 게시될 수 있는 링크를 나타낸다.또한 id, description, url을 필드 값으로 가지며, 이를 통해 Query에서 Link 항복의 리스트를 feed를 통해 받을 수 있다.2. resolver 함수 구현GraphQL의 스키마에서는 모든 필드 값에 대하여 리졸버 함수를 가지므로, 각 필드에 대응하는 함수를 구현해야 한다.// ./hackernews-node/src/index.js// 1let links = [{  id: 'link-0',  url: 'www.howtographql.com',  description: 'Fullstack tutorial for GraphQL'}]const resolvers = {  Query: {    info: () =&gt; `This is the API of a Hackernews Clone`,    // 2    feed: () =&gt; links,  },  // 3  Link: {    id: (parent) =&gt; parent.id,    description: (parent) =&gt; parent.description,    url: (parent) =&gt; parent.url,  }}  아직 DB를 연결하지 않았으므로, 메모리에 정보들을 저장한다.  feed라는 최상위 필드를 위한 새로운 리졸버를 추가한다.  스카미에 정의에 따라 Link 타입의 각 필드에 대응하는 3가지 리졸버들을 추가위의 구현 사항들을 localhost:5000에서 다음의 쿼리를 통해 테스트 해보도록 한다.query {  feed {    id    url    description  }}이는 다음과 같은 응답을 돌려준다.{  \"data\": {    \"feed\": [      {        \"id\": \"link-0\",        \"url\": \"www.howtographql.com\",        \"description\": \"Fullstack tutorial for GraphQL\"      }    ]  }}3. 쿼리 리졸브 과정위에서 다루었던 쿼리는 다음과 같다.query {  feed {    id    url    description  }}쿼리에 사용된 feed, id, url, description 4가지 필드는 모두 스키마 정의에서 확인 가능하다.또한 각 필드를 위해 데이터를 반환해주는 리졸버 함수를 구현하게 된다.즉, GraphQL 서버는 쿼리에 포함된 모든 필드에 대해 리졸버 함수를 각각 호출하고,쿼리 모양에 따라 데이터를 잘 포장하여 응답으로 만드는 것이다.그러나 이러한 구현에서 벗어난 것은 Link 타입의 리졸버이다.Link: {  id: (parent) =&gt; parent.id,  description: (parent) =&gt; parent.description,  url: (parent) =&gt; parent.url,}모든 GraphQL 리졸버 함수는 4개의 인자를 입력 받는데, 위 코드에서는 생략되어 있다.보통 parent(혹은 root)라고 불리는 인자는 호출되기 직전 리졸버 실행의 결과값이다.위의 코드에서 보이듯이 feed 리졸버가 호출되고 links에 포함된 모든 데이터릍 반환한다.이어서 위 과정에서 반환된 리스트에 포함된 각 항목에 대해 Link 타입의 리졸버가 호출된다.따라서 그 결과로, Link가 가지는 3개의 리졸버의 parent 객체는 links 리스트의 각 항목이다.현재 Link 리졸버 구현은 단순하게 이루어져 있기 때문에, 구현을 생략하더라고 정상적으로 서버가 동작한다.끝마치며이로써 기본적인 GraphQL의 쿼리를 알아보았다. 다음에는 간단한 뮤테이션에 대해 알아보자.",
+        "url": "/devlog/2020/11/17/GraphQL-4.html"
+      }
+      ,
+    
       "devlog-2020-11-17-graphql-3-html": {
         "title": "[GraphQL] GraphQL 맛보기",
         "subtitle":"GraphQL + Node.js - 1",
