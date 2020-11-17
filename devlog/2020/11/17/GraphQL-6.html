@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [GraphQL] Psima를 이용한 Database 연동 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 지난 포스팅에 이어 이번에는 prisma를 사용하여 database를 연동해보도록 한다. SQLite를 DB로 이용하여 데이터를 저장할 예정이다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-6.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/GraphQL">GraphQL</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/vue">Vue</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_GraphQL.png')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[GraphQL] Psima를 이용한 Database 연동</h1>
+            
+            <h2 class="subheading">GraphQL + Node.js - 4</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-11-17 15:09 &middot; <span class="reading-time" title="Estimated read time">
+  
+   8 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/GraphQL/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a>
+<ul>
+<li class="sidebar-nav-item toc-h5"><a href="#prisma1-vs-prisma2">Prisma1 vs Prisma2</a></li>
+</ul>
+</li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-prisma는-무엇인가">1. Prisma는 무엇인가?</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-prisma를-사용하는-이유">2. Prisma를 사용하는 이유</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-prisma--sqlite-설정하기">3. Prisma &amp; SQLite 설정하기</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-sqlite로-시작하기">4. SQLite로 시작하기</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#5-prisma-client-생성">5. Prisma Client 생성</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#6-workflow-요약">6. Workflow 요약</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a>
+<ul>
+<li class="sidebar-nav-item toc-h4"><a href="#refernce">Refernce</a></li>
+</ul>
+</li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>지난 포스팅에 이어 이번에는 <code class="highlighter-rouge">prisma</code>를 사용하여 database를 연동해보도록 한다.<br />
+<code class="highlighter-rouge">SQLite</code>를 DB로 이용하여 데이터를 저장할 예정이다.</p>
+
+<blockquote>
+  <p>본 시리즈는 <a href="https://www.howtographql.com/graphql-js/0-introduction/">HOW TO GRAPHQL</a> 글을 참고하여 작성했습니다.<br />
+기존에 참조하던 <a href="https://velog.io/@cadenzah/graphql-node-01-introduction">cadenzah</a> 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.<br />
+오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. <br />
+<br /></p>
+</blockquote>
+
+<h5 id="prisma1-vs-prisma2">Prisma1 vs Prisma2</h5>
+<blockquote>
+  <p>기존에 Prisma1에서 <code class="highlighter-rouge">Prisma2</code>로 변경되며 <a href="https://gmyankee.tistory.com/265?category=1084683">많은 부분</a>이 변경되었다. 이로 인해, GraphQL 블로그의 튜토리얼이 변경된듯 하다.<br />
+내가 이 시리즈의 포스팅을 작성하게 된 가장 큰 이유가 된 부분이다..</p>
+</blockquote>
+
+<figure>
+<p><img src="/img/GraphQL/graphql_6_2.png" alt="" width="70%" /></p>
+  <figcaption>Prisma DB Proxy 선택사항(출처: https://www.prisma.io/blog/announcing-prisma-2-zq1s745db8i5)</figcaption>
+</figure>
+
+<figure>
+<p><img src="/img/GraphQL/graphql_6_3.png" alt="" width="70%" /></p>
+  <figcaption>Prisma1 vs Prisma2(출처: https://www.codemochi.com/blog/2019-06-26-prisma-2-sneak-peak)</figcaption>
+</figure>
+<p><br /></p>
+
+<h2 id="1-prisma는-무엇인가">1. Prisma는 무엇인가?</h2>
+<hr />
+<p><code class="highlighter-rouge">Prisma</code>는 개발자들이 <code class="highlighter-rouge">깔끔</code>하고 <code class="highlighter-rouge">type-safe</code>한 API를 통해 데이터베이스에 접근하게 해주는 <code class="highlighter-rouge">오픈소스</code>이다.<br />
+이는 다음과 같은 3가지 툴과 각각의 기능으로 구성이 되어있다.</p>
+<ul>
+  <li><code class="highlighter-rouge">Primsa Client</code>: Node.js 및 TypeScript를 위한 쿼리 자동 생성</li>
+  <li><code class="highlighter-rouge">Prisma Migrate</code>: 명시적인 데이터 모델링 및 마이그레이션 시스템</li>
+  <li><code class="highlighter-rouge">Prisma Studio</code>: GUI를 통한 데이터베이스 접근 및 수정 <br />
+<br /></li>
+</ul>
+
+<h2 id="2-prisma를-사용하는-이유">2. Prisma를 사용하는 이유</h2>
+<hr />
+<p>지금까지 살펴본 방법으로 매우 간단하고 아름답게 GraphQL 서버가 동작함을 알 수 있다.<br />
+그러나 실제로 서버를 개발할 때는 이렇게 간단한 문제들로만 구성되는 않는다.</p>
+
+<p>특히 GraphQL 쿼리들은 깊은 단계로 <code class="highlighter-rouge">중첩</code>이 될 수 있는데, 이때 리졸버를 구현하는 것은 <code class="highlighter-rouge">까다롭고</code>, <code class="highlighter-rouge">성능문제</code>를 야기할 수 있다.<br />
+이러한 개발자들의 고충을 해결하기 위해, Prisma는 더욱 효율적으로 데이터에 접근하는 방법에 초점을 맞췄다.<br />
+<br /></p>
+
+<h2 id="3-prisma--sqlite-설정하기">3. Prisma &amp; SQLite 설정하기</h2>
+<hr />
+<p>우선 다음의 명령을 통해 <code class="highlighter-rouge">Prisma CLI</code>를 설치한다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+npm <span class="nb">install</span> @prisma/cli <span class="nt">--save-dev</span>
+</code></pre></div></div>
+
+<p>다음의 명령을 통해 <code class="highlighter-rouge">schema.prisma</code> 파일을 생성한다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+<span class="nb">mkdir </span>prisma
+<span class="nb">touch </span>prisma/schema.prisma
+</code></pre></div></div>
+<blockquote>
+  <p>Prisma1과 Prisma2가 가장 다른 점은 위의 방법처럼 Database에 관련된 <code class="highlighter-rouge">파일</code>을 관리하는 방법과 <code class="highlighter-rouge">아키텍처</code>가 다르다.<br />
+자세한 사항은 <a href="https://gmyankee.tistory.com/265?category=1084683">Prisma2와 Prisma1의 차이점</a>을 참고</p>
+</blockquote>
+
+<p>위의 과정을 통해 생성된 <code class="highlighter-rouge">schema.prisma</code>는 데이터베이스 스키마처럼 생각하면 되며, 다음과 같이 구성된다.</p>
+<ol>
+  <li><code class="highlighter-rouge">Data source</code>: 데이터베이스에 연결한다.</li>
+  <li><code class="highlighter-rouge">Generator</code>: Prisma Client를 생성한다.</li>
+  <li><code class="highlighter-rouge">Data model</code>: 애플리케이션의 모델을 정의한다.</li>
+</ol>
+
+<p>이를 코드로 작성해보자.</p>
+<div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// ./<span class="n">hackernews</span>-<span class="n">node</span>/<span class="n">prisma</span>/<span class="n">schema</span>.<span class="n">prisma</span>
+
+// <span class="m">1</span>
+<span class="n">datasource</span> <span class="n">db</span> {
+  <span class="n">provider</span> = <span class="s2">"sqlite"</span> 
+  <span class="n">url</span>      = <span class="s2">"file:./dev.db"</span>
+}
+
+// <span class="m">2</span>
+<span class="n">generator</span> <span class="n">client</span> {
+  <span class="n">provider</span> = <span class="s2">"prisma-client-js"</span>
+}
+
+// <span class="m">3</span>
+<span class="n">model</span> <span class="n">Link</span> {
+  <span class="n">id</span>          <span class="n">Int</span>      @<span class="n">id</span> @<span class="n">default</span>(<span class="n">autoincrement</span>())
+  <span class="n">createdAt</span>   <span class="n">DateTime</span> @<span class="n">default</span>(<span class="n">now</span>())
+  <span class="n">description</span> <span class="n">String</span>
+  <span class="n">url</span>         <span class="n">String</span>
+}
+</code></pre></div></div>
+<p><code class="highlighter-rouge">Link</code> 모델은 <code class="highlighter-rouge">link</code> 데이터 베이스 테이블의 구조를 정의하며, Prisma는 이를 기반으로 테이블을 생성해준다.<br />
+<br /></p>
+
+<h2 id="4-sqlite로-시작하기">4. SQLite로 시작하기</h2>
+<hr />
+<p>드디어 <code class="highlighter-rouge">SQLite</code> 데이터베이스를 만들 시간이다. SQLite는 <code class="highlighter-rouge">serverless</code>, <code class="highlighter-rouge">설정의 간편함</code>, <code class="highlighter-rouge">트랜잭션</code>등 다양한 장점이 있다.<br />
+또한 다른 SQL 데이터베이스와는 달리 별도의 서버 프로세스가 없어 일반 디스크 파일에 직접 읽고 쓰기를 수앻한다.<br />
+하나의 완전한 데이터 베이스(table, indice, trigger 및 view)가 하나의 디스크 파일에 포함된다.<br />
+이러한 장점은 본 프로젝트와 잘 어울린다.</p>
+
+<p>다행히 Prisma와의 연동은 간편하게 진행할 수 있는데, 다음과 같은 명령어를 통해 <code class="highlighter-rouge">migration</code>을 생성함으로써 가능하다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+npx prisma migrate save <span class="nt">--experimental</span>
+</code></pre></div></div>
+
+<p>위의 명령어를 수행하면 다음과같이 묻는 문구가 뜨게 되는데 Yes를 클릭하고, 이름을 정해준다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are trying to create a migration <span class="k">for </span>SQLite database dev.db.
+A database with that name doesn<span class="s1">'t exist at file:./dev.db
+&gt; YES
+&gt; Name of migration:
+</span></code></pre></div></div>
+
+<p>성공적으로 수행하고 나면, <code class="highlighter-rouge">prisma</code> 디렉토리 밑에 <code class="highlighter-rouge">/migrations</code>라는 디렉토리가 생성되었음을 알 수 있다.<br />
+<code class="highlighter-rouge">README.md</code> 파일을 참조하면, 우리가 생성한 <code class="highlighter-rouge">Link</code>에 대한 테이블구성을 볼 수 있으며, 여러가지 수정사항이 함께 기록된다.</p>
+
+<p>이제 실제로 데이터베이스에 대해 <code class="highlighter-rouge">마이그레이션</code>을 실행하기 위해 다음의 명령을 수행한다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+npx prisma migrate up <span class="nt">--experimental</span>
+</code></pre></div></div>
+<blockquote>
+  <p>이제 테이블이 있는 데이터베이스가 <code class="highlighter-rouge">생성</code>되었다.<br />
+<br /></p>
+</blockquote>
+
+<h2 id="5-prisma-client-생성">5. Prisma Client 생성</h2>
+<hr />
+<p>위에서 생성한 데이터 모델을 기반으로 Prisma Client를 생성해보자.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+npx prisma generate
+</code></pre></div></div>
+
+<p>성공적으로 수행된다면, Prisma client를 <code class="highlighter-rouge">/node_modules/@prisma/client</code>에서 가져와 사용할 수 있다는 문구가 뜨게 된다.<br />
+Prisma Client로 첫 번째 쿼리를 만들어서 분석을 하기 위해, 별도의 <code class="highlighter-rouge">src/script.js</code> 파일을 만들고 다음 코드를 추가한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">PrismaClient</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@prisma/client</span><span class="dl">"</span><span class="p">)</span>
+
+<span class="c1">// 2</span>
+<span class="kd">const</span> <span class="nx">prisma</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PrismaClient</span><span class="p">()</span>
+
+<span class="c1">//3</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">allLinks</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">findMany</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">allLinks</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//4</span>
+<span class="nx">main</span><span class="p">()</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">e</span>
+  <span class="p">})</span>
+  <span class="c1">// 5</span>
+  <span class="p">.</span><span class="k">finally</span><span class="p">(</span><span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">prisma</span><span class="p">.</span><span class="nx">$disconnect</span><span class="p">()</span>
+  <span class="p">})</span>
+</code></pre></div></div>
+
+<p>위 코드는 다음과 같이 동작한다.</p>
+<ol>
+  <li>노드모듈 <code class="highlighter-rouge">PrismaClient</code>에서 생성자를 가져옴</li>
+  <li>가져온 모듈 인스턴스화, <code class="highlighter-rouge">PrismaClient</code></li>
+  <li>데이터베이스에 쿼리를 보내기 위해 <code class="highlighter-rouge">async</code>로 호출되는 main 함수를 정의</li>
+  <li>실제 main 함수 호출</li>
+  <li>스크립트가 종료되면 데이터베이스 연결을 끊음</li>
+</ol>
+
+<p>위와 같이 정상적으로 설정된다면, 아래 사진처럼 자동완성이 가능해진다.</p>
+<figure>
+<p><img src="/img/GraphQL/graphql_6_1.png" alt="" width="80%" /></p>
+  <figcaption>Prisma 인스턴스를 가져와 자동완성 되는 모습</figcaption>
+</figure>
+
+<p>위에서 작성한 스크립트를 다음의 명령으로 실행하자.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/</span>
+node src/script.js
+</code></pre></div></div>
+<p>성공적으로 수행된다면, 아무것도 없는 <code class="highlighter-rouge">빈배열</code>이 응답될 것이다. 새로운 link 생성을 위해 다음과 같이 추가한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/script.js</span>
+
+<span class="p">...</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">newLink</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Fullstack tutorial for GraphQL</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">www.howtographql.com</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">})</span>
+  <span class="kd">const</span> <span class="nx">allLinks</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">findMany</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">allLinks</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>다음과 같이 성공적으로 가져온 결과물을 확인할 수 있다.</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">id:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="err">createdAt:</span><span class="w"> </span><span class="mi">2020-11-17</span><span class="err">T</span><span class="mi">07</span><span class="err">:</span><span class="mi">33</span><span class="err">:</span><span class="mf">26.767</span><span class="err">Z</span><span class="p">,</span><span class="w">
+    </span><span class="err">description:</span><span class="w"> </span><span class="err">'Fullstack</span><span class="w"> </span><span class="err">tutorial</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">GraphQL'</span><span class="p">,</span><span class="w">
+    </span><span class="err">url:</span><span class="w"> </span><span class="err">'www.howtographql.com'</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+<p><br /></p>
+
+<h2 id="6-workflow-요약">6. Workflow 요약</h2>
+<hr />
+<p>데이터를 업데이트하는 위의 과정들을 요약하자면 다음과 같다.</p>
+<ol>
+  <li>Prisma 데이터 모델 수정</li>
+  <li><code class="highlighter-rouge">prisma migrate</code> 명령을 통해 데이터베이스 마이그레이션</li>
+  <li><code class="highlighter-rouge">Prisma Client</code> 생성</li>
+  <li>어플리케이션에서 코드로 데이터베이스에 접근<br />
+<br /></li>
+</ol>
+
+<h2 id="끝마치며">끝마치며</h2>
+<hr />
+<p>Prisma와 SQLite를 이용하여 데이터베이스에 데이터를 저장하는 방법에 대해 알아보았다.<br />
+다른 DB를 사용하기 위해서는 datasource에 다른 db를 연결하면 된다.<br />
+Prisma는 꼭 GraphQL이 아니라 <code class="highlighter-rouge">REST</code>ful API에서도 사용이 가능하다.</p>
+<blockquote>
+  <p><a href="https://velog.io/@jhj46456/Prisma2-tutorial">이곳</a>을 참조</p>
+</blockquote>
+
+<p>다음 포스팅에서는 리졸버 함수 내에서 데이터베이스에 접근하는 방법에 대해 알아보도록 한다.<br />
+<br /></p>
+
+<h4 id="refernce">Refernce</h4>
+<ul>
+  <li><a href="https://medium.com/wasd/prisma2-%EC%82%AC%EC%9A%A9%EA%B8%B0-70c8517539d">Prisma2 사용기</a></li>
+  <li><a href="https://gmyankee.tistory.com/265?category=1084683">Prisma2와 Prisma1의 차이점</a></li>
+</ul>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/11/17/GraphQL-5.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] 간단한 뮤테이션 작성"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/11/17/GraphQL-6.html';
+this.page.identifier = '/devlog/2020/11/17/GraphQL-6';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>

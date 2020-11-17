@@ -1,4 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-17T14:19:58+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[GraphQL] 간단한 뮤테이션 작성</title><link href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-5.html" rel="alternate" type="text/html" title="[GraphQL] 간단한 뮤테이션 작성" /><published>2020-11-17T13:38:00+09:00</published><updated>2020-11-17T13:38:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/17/GraphQL-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/17/GraphQL-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://owin2828.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://owin2828.github.io/" rel="alternate" type="text/html" /><updated>2020-11-17T16:52:45+09:00</updated><id>https://owin2828.github.io/feed.xml</id><title type="html">낮코밤코</title><subtitle>Already done, cause will do</subtitle><author><name>owin2828</name></author><entry><title type="html">[GraphQL] Psima를 이용한 Database 연동</title><link href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-6.html" rel="alternate" type="text/html" title="[GraphQL] Psima를 이용한 Database 연동" /><published>2020-11-17T15:09:00+09:00</published><updated>2020-11-17T15:09:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/17/GraphQL-6</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/17/GraphQL-6.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;지난 포스팅에 이어 이번에는 &lt;code class=&quot;highlighter-rouge&quot;&gt;prisma&lt;/code&gt;를 사용하여 database를 연동해보도록 한다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;SQLite&lt;/code&gt;를 DB로 이용하여 데이터를 저장할 예정이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;본 시리즈는 &lt;a href=&quot;https://www.howtographql.com/graphql-js/0-introduction/&quot;&gt;HOW TO GRAPHQL&lt;/a&gt; 글을 참고하여 작성했습니다.&lt;br /&gt;
+기존에 참조하던 &lt;a href=&quot;https://velog.io/@cadenzah/graphql-node-01-introduction&quot;&gt;cadenzah&lt;/a&gt; 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.&lt;br /&gt;
+오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. &lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;prisma1-vs-prisma2&quot;&gt;Prisma1 vs Prisma2&lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;기존에 Prisma1에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma2&lt;/code&gt;로 변경되며 &lt;a href=&quot;https://gmyankee.tistory.com/265?category=1084683&quot;&gt;많은 부분&lt;/a&gt;이 변경되었다. 이로 인해, GraphQL 블로그의 튜토리얼이 변경된듯 하다.&lt;br /&gt;
+내가 이 시리즈의 포스팅을 작성하게 된 가장 큰 이유가 된 부분이다..&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/GraphQL/graphql_6_2.png&quot; alt=&quot;&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;Prisma DB Proxy 선택사항(출처: https://www.prisma.io/blog/announcing-prisma-2-zq1s745db8i5)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/GraphQL/graphql_6_3.png&quot; alt=&quot;&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;Prisma1 vs Prisma2(출처: https://www.codemochi.com/blog/2019-06-26-prisma-2-sneak-peak)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-prisma는-무엇인가&quot;&gt;1. Prisma는 무엇인가?&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma&lt;/code&gt;는 개발자들이 &lt;code class=&quot;highlighter-rouge&quot;&gt;깔끔&lt;/code&gt;하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;type-safe&lt;/code&gt;한 API를 통해 데이터베이스에 접근하게 해주는 &lt;code class=&quot;highlighter-rouge&quot;&gt;오픈소스&lt;/code&gt;이다.&lt;br /&gt;
+이는 다음과 같은 3가지 툴과 각각의 기능으로 구성이 되어있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Primsa Client&lt;/code&gt;: Node.js 및 TypeScript를 위한 쿼리 자동 생성&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma Migrate&lt;/code&gt;: 명시적인 데이터 모델링 및 마이그레이션 시스템&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma Studio&lt;/code&gt;: GUI를 통한 데이터베이스 접근 및 수정 &lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-prisma를-사용하는-이유&quot;&gt;2. Prisma를 사용하는 이유&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;지금까지 살펴본 방법으로 매우 간단하고 아름답게 GraphQL 서버가 동작함을 알 수 있다.&lt;br /&gt;
+그러나 실제로 서버를 개발할 때는 이렇게 간단한 문제들로만 구성되는 않는다.&lt;/p&gt;
+
+&lt;p&gt;특히 GraphQL 쿼리들은 깊은 단계로 &lt;code class=&quot;highlighter-rouge&quot;&gt;중첩&lt;/code&gt;이 될 수 있는데, 이때 리졸버를 구현하는 것은 &lt;code class=&quot;highlighter-rouge&quot;&gt;까다롭고&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;성능문제&lt;/code&gt;를 야기할 수 있다.&lt;br /&gt;
+이러한 개발자들의 고충을 해결하기 위해, Prisma는 더욱 효율적으로 데이터에 접근하는 방법에 초점을 맞췄다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-prisma--sqlite-설정하기&quot;&gt;3. Prisma &amp;amp; SQLite 설정하기&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;우선 다음의 명령을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma CLI&lt;/code&gt;를 설치한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+npm &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; @prisma/cli &lt;span class=&quot;nt&quot;&gt;--save-dev&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음의 명령을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;schema.prisma&lt;/code&gt; 파일을 생성한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;prisma
+&lt;span class=&quot;nb&quot;&gt;touch &lt;/span&gt;prisma/schema.prisma
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Prisma1과 Prisma2가 가장 다른 점은 위의 방법처럼 Database에 관련된 &lt;code class=&quot;highlighter-rouge&quot;&gt;파일&lt;/code&gt;을 관리하는 방법과 &lt;code class=&quot;highlighter-rouge&quot;&gt;아키텍처&lt;/code&gt;가 다르다.&lt;br /&gt;
+자세한 사항은 &lt;a href=&quot;https://gmyankee.tistory.com/265?category=1084683&quot;&gt;Prisma2와 Prisma1의 차이점&lt;/a&gt;을 참고&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;위의 과정을 통해 생성된 &lt;code class=&quot;highlighter-rouge&quot;&gt;schema.prisma&lt;/code&gt;는 데이터베이스 스키마처럼 생각하면 되며, 다음과 같이 구성된다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Data source&lt;/code&gt;: 데이터베이스에 연결한다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Generator&lt;/code&gt;: Prisma Client를 생성한다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Data model&lt;/code&gt;: 애플리케이션의 모델을 정의한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이를 코드로 작성해보자.&lt;/p&gt;
+&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// ./&lt;span class=&quot;n&quot;&gt;hackernews&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;prisma&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;schema&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;prisma&lt;/span&gt;
+
+// &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;datasource&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt; {
+  &lt;span class=&quot;n&quot;&gt;provider&lt;/span&gt; = &lt;span class=&quot;s2&quot;&gt;&quot;sqlite&quot;&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;      = &lt;span class=&quot;s2&quot;&gt;&quot;file:./dev.db&quot;&lt;/span&gt;
+}
+
+// &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;generator&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; {
+  &lt;span class=&quot;n&quot;&gt;provider&lt;/span&gt; = &lt;span class=&quot;s2&quot;&gt;&quot;prisma-client-js&quot;&lt;/span&gt;
+}
+
+// &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Link&lt;/span&gt; {
+  &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;          &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;      @&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; @&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;(&lt;span class=&quot;n&quot;&gt;autoincrement&lt;/span&gt;())
+  &lt;span class=&quot;n&quot;&gt;createdAt&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;DateTime&lt;/span&gt; @&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;(&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;())
+  &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Link&lt;/code&gt; 모델은 &lt;code class=&quot;highlighter-rouge&quot;&gt;link&lt;/code&gt; 데이터 베이스 테이블의 구조를 정의하며, Prisma는 이를 기반으로 테이블을 생성해준다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-sqlite로-시작하기&quot;&gt;4. SQLite로 시작하기&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;드디어 &lt;code class=&quot;highlighter-rouge&quot;&gt;SQLite&lt;/code&gt; 데이터베이스를 만들 시간이다. SQLite는 &lt;code class=&quot;highlighter-rouge&quot;&gt;serverless&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;설정의 간편함&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;트랜잭션&lt;/code&gt;등 다양한 장점이 있다.&lt;br /&gt;
+또한 다른 SQL 데이터베이스와는 달리 별도의 서버 프로세스가 없어 일반 디스크 파일에 직접 읽고 쓰기를 수앻한다.&lt;br /&gt;
+하나의 완전한 데이터 베이스(table, indice, trigger 및 view)가 하나의 디스크 파일에 포함된다.&lt;br /&gt;
+이러한 장점은 본 프로젝트와 잘 어울린다.&lt;/p&gt;
+
+&lt;p&gt;다행히 Prisma와의 연동은 간편하게 진행할 수 있는데, 다음과 같은 명령어를 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;migration&lt;/code&gt;을 생성함으로써 가능하다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+npx prisma migrate save &lt;span class=&quot;nt&quot;&gt;--experimental&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 명령어를 수행하면 다음과같이 묻는 문구가 뜨게 되는데 Yes를 클릭하고, 이름을 정해준다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You are trying to create a migration &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;SQLite database dev.db.
+A database with that name doesn&lt;span class=&quot;s1&quot;&gt;'t exist at file:./dev.db
+&amp;gt; YES
+&amp;gt; Name of migration:
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;성공적으로 수행하고 나면, &lt;code class=&quot;highlighter-rouge&quot;&gt;prisma&lt;/code&gt; 디렉토리 밑에 &lt;code class=&quot;highlighter-rouge&quot;&gt;/migrations&lt;/code&gt;라는 디렉토리가 생성되었음을 알 수 있다.&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;README.md&lt;/code&gt; 파일을 참조하면, 우리가 생성한 &lt;code class=&quot;highlighter-rouge&quot;&gt;Link&lt;/code&gt;에 대한 테이블구성을 볼 수 있으며, 여러가지 수정사항이 함께 기록된다.&lt;/p&gt;
+
+&lt;p&gt;이제 실제로 데이터베이스에 대해 &lt;code class=&quot;highlighter-rouge&quot;&gt;마이그레이션&lt;/code&gt;을 실행하기 위해 다음의 명령을 수행한다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+npx prisma migrate up &lt;span class=&quot;nt&quot;&gt;--experimental&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;이제 테이블이 있는 데이터베이스가 &lt;code class=&quot;highlighter-rouge&quot;&gt;생성&lt;/code&gt;되었다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;5-prisma-client-생성&quot;&gt;5. Prisma Client 생성&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;위에서 생성한 데이터 모델을 기반으로 Prisma Client를 생성해보자.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+npx prisma generate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;성공적으로 수행된다면, Prisma client를 &lt;code class=&quot;highlighter-rouge&quot;&gt;/node_modules/@prisma/client&lt;/code&gt;에서 가져와 사용할 수 있다는 문구가 뜨게 된다.&lt;br /&gt;
+Prisma Client로 첫 번째 쿼리를 만들어서 분석을 하기 위해, 별도의 &lt;code class=&quot;highlighter-rouge&quot;&gt;src/script.js&lt;/code&gt; 파일을 만들고 다음 코드를 추가한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PrismaClient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@prisma/client&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prisma&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PrismaClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//3&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allLinks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prisma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;findMany&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allLinks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//4&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 5&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prisma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$disconnect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 코드는 다음과 같이 동작한다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;노드모듈 &lt;code class=&quot;highlighter-rouge&quot;&gt;PrismaClient&lt;/code&gt;에서 생성자를 가져옴&lt;/li&gt;
+  &lt;li&gt;가져온 모듈 인스턴스화, &lt;code class=&quot;highlighter-rouge&quot;&gt;PrismaClient&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;데이터베이스에 쿼리를 보내기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;async&lt;/code&gt;로 호출되는 main 함수를 정의&lt;/li&gt;
+  &lt;li&gt;실제 main 함수 호출&lt;/li&gt;
+  &lt;li&gt;스크립트가 종료되면 데이터베이스 연결을 끊음&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위와 같이 정상적으로 설정된다면, 아래 사진처럼 자동완성이 가능해진다.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;img src=&quot;/img/GraphQL/graphql_6_1.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+  &lt;figcaption&gt;Prisma 인스턴스를 가져와 자동완성 되는 모습&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;위에서 작성한 스크립트를 다음의 명령으로 실행하자.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# ./hackernews-node/&lt;/span&gt;
+node src/script.js
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;성공적으로 수행된다면, 아무것도 없는 &lt;code class=&quot;highlighter-rouge&quot;&gt;빈배열&lt;/code&gt;이 응답될 것이다. 새로운 link 생성을 위해 다음과 같이 추가한다.&lt;/p&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// ./hackernews-node/src/script.js&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newLink&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prisma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Fullstack tutorial for GraphQL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;www.howtographql.com&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allLinks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;prisma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;findMany&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allLinks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음과 같이 성공적으로 가져온 결과물을 확인할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;id:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;createdAt:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2020-11-17&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;33&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;26.767&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;description:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'Fullstack&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;tutorial&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;GraphQL'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;url:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'www.howtographql.com'&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;6-workflow-요약&quot;&gt;6. Workflow 요약&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;데이터를 업데이트하는 위의 과정들을 요약하자면 다음과 같다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Prisma 데이터 모델 수정&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;prisma migrate&lt;/code&gt; 명령을 통해 데이터베이스 마이그레이션&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Prisma Client&lt;/code&gt; 생성&lt;/li&gt;
+  &lt;li&gt;어플리케이션에서 코드로 데이터베이스에 접근&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Prisma와 SQLite를 이용하여 데이터베이스에 데이터를 저장하는 방법에 대해 알아보았다.&lt;br /&gt;
+다른 DB를 사용하기 위해서는 datasource에 다른 db를 연결하면 된다.&lt;br /&gt;
+Prisma는 꼭 GraphQL이 아니라 &lt;code class=&quot;highlighter-rouge&quot;&gt;REST&lt;/code&gt;ful API에서도 사용이 가능하다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://velog.io/@jhj46456/Prisma2-tutorial&quot;&gt;이곳&lt;/a&gt;을 참조&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;다음 포스팅에서는 리졸버 함수 내에서 데이터베이스에 접근하는 방법에 대해 알아보도록 한다.&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;refernce&quot;&gt;Refernce&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/wasd/prisma2-%EC%82%AC%EC%9A%A9%EA%B8%B0-70c8517539d&quot;&gt;Prisma2 사용기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gmyankee.tistory.com/265?category=1084683&quot;&gt;Prisma2와 Prisma1의 차이점&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="GraphQL" /><summary type="html">들어가기 앞서 지난 포스팅에 이어 이번에는 prisma를 사용하여 database를 연동해보도록 한다. SQLite를 DB로 이용하여 데이터를 저장할 예정이다.</summary></entry><entry><title type="html">[GraphQL] 간단한 뮤테이션 작성</title><link href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-5.html" rel="alternate" type="text/html" title="[GraphQL] 간단한 뮤테이션 작성" /><published>2020-11-17T13:38:00+09:00</published><updated>2020-11-17T13:38:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/11/17/GraphQL-5</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/11/17/GraphQL-5.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;지난 포스팅에 이어 이번에는 간단한 &lt;code class=&quot;highlighter-rouge&quot;&gt;뮤테이션&lt;/code&gt;을 작성해보도록 한다.&lt;/p&gt;
 
@@ -1211,231 +1444,4 @@ watch 속성은 데이터 호출 처럼 상대적으로 더 많이 소요되는 
 
 &lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
 &lt;p&gt;여기까지 진행하며 간단하게 뷰의 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우터&lt;/code&gt; 및 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; 통신에 대해 알아보았다.&lt;br /&gt;
-다음 글에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 템플릿&lt;/code&gt;과 프로젝트 구성에 대해 알아보자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="vue" /><summary type="html">들어가기 앞서 브라우저와 서버간의 통신을 위해 HTTP라는 프로토콜을 통한다. 이때 웹 앱 HTTP 통신의 대표적인 방법으로 jQuery의 ajax가 있다. 이는 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고 화면의 일부분만 변경할 수 있게 하는 자바 스크립트의 기법이다. 뷰에서도 마찬가지로 이를 지원하기 위한 라이브러리로 뷰 리소스와 axios를 지원한다.</summary></entry><entry><title type="html">[Vue] 라우터</title><link href="https://owin2828.github.io/devlog/2020/10/28/web-8.html" rel="alternate" type="text/html" title="[Vue] 라우터" /><published>2020-10-28T11:20:00+09:00</published><updated>2020-10-28T11:20:00+09:00</updated><id>https://owin2828.github.io/devlog/2020/10/28/web-8</id><content type="html" xml:base="https://owin2828.github.io/devlog/2020/10/28/web-8.html">&lt;h2 id=&quot;들어가기-앞서&quot;&gt;들어가기 앞서&lt;/h2&gt;
-&lt;p&gt;웹 페이지의 경우, 여러 페이지로 구성되어 있기 때문에 페이지 간에 이동을 돕는 라우터를 사용해야 한다.&lt;br /&gt;
-이를 위해 뷰에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 라우터&lt;/code&gt; 라이브러리를 지원하는데 이번 포스팅에서는 이를 알아보도록 한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-라우팅이란&quot;&gt;1. 라우팅이란?&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;라우터(Router)&lt;/code&gt;를 이해하기 위해서는 먼저 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅(Routing)&lt;/code&gt;에 대해서 알아야 한다.&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅&lt;/code&gt;이란 웹 피이지간의 이동 방법을 의미하는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;싱글 페이지 어플리케이션(SPA, Single Page Application)&lt;/code&gt;에서 주로 사용한다.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SPA(Singe Page Application)&lt;/code&gt;&lt;br /&gt;
-페이지를 이동할 때마다 서버에 웹 페이지를 요청하여 새로 갱신하는 것이 아니라, 미리 해당 페이지들을 받아놓고 화면을 갱신하는 기법&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;이런 라우팅을 이용하면 다음과 같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;장점&lt;/code&gt;을 지니게 된다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;화면간의 전환이 &lt;code class=&quot;highlighter-rouge&quot;&gt;매끄러움&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;사용자 입장에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;응답성&lt;/code&gt;이 빨라짐&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;뷰 라우터를 사용하지 않고, HTML 파일들로도 JavaScript 라이브러리를 활용하여 라우팅 방식의 페이지 이동이 구현 가능&lt;br /&gt;
-이러한 라이브러리로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;router.js&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;navigo.js&lt;/code&gt; 등이 존재&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;2-뷰-라우터&quot;&gt;2. 뷰 라우터&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 라우터&lt;/code&gt;란 뷰에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우팅&lt;/code&gt; 기능을 구현하도록 지원하는 공식 라이브러리이며, 이를 이용하여 뷰로 만든 페이지 간에 자유로운 이동이 가능하다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;router-link to=&quot;URL 값&quot;&amp;gt;&lt;/code&gt;: 페이지 이동 태그. 화면에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a&amp;gt;&lt;/code&gt;로 표시되며 틀릭하면 to에 지정된 URL로 이동&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;router-view&amp;gt;&lt;/code&gt;: 페이지 표시태그. 변경되는 URL에 따라 해당 컴포넌트를 뿌려주는 영역&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Router Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;뷰 라우터 예제&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 1. URL 값을 변경하는 태그 --&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;to=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/main&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Main 컴포넌트로 이동&lt;span class=&quot;nt&quot;&gt;&amp;lt;/router-link&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;to=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/login&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Login 컴포넌트로 이동&lt;span class=&quot;nt&quot;&gt;&amp;lt;/router-link&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 2. URL 값에 따라 갱신되는 화면 영역 --&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// 3. Main. Login 컴포넌트 내용 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;main&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;login&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 4. 각 url에 해당하는 컴포넌트 등록&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/main&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/login&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Login&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 5. 뷰 라우터 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 6. 뷰 라우터를 인스턴스에 등록&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$mount() API&lt;/code&gt;&lt;br /&gt;
-el 속성과 동일하게 인스턴스를 화면에 &lt;code class=&quot;highlighter-rouge&quot;&gt;붙이는&lt;/code&gt; 역할을 함. el 속성을 지정하지 않더라도 mount를 이용하여 화면에 &lt;code class=&quot;highlighter-rouge&quot;&gt;강제&lt;/code&gt;로 인스턴스를 붙일 수 있다.&lt;br /&gt;
-뷰 라우터의 공식 문서는 모두 인스턴스 안에 el 속성을 지정하지 않고 라우터만 지정하여 생성한 다음, 생성된 인스턴스를 $mount()를 이용하는 방식으로 가이드 함&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;이런식으로 코드를 짜게 되면, 버튼을 누름면 &lt;code class=&quot;highlighter-rouge&quot;&gt;URL에 따라서&lt;/code&gt; 끝이 main인지 login인지에 따라 화면이 바뀌게 된다.&lt;br /&gt;
-그러나 여러개의 컴포넌트를 동시에 표현해야 하는 상황에서는 적합하지 않으며, 이를 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;Nested Router&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;Named View&lt;/code&gt;가 존재한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-nested-라우터&quot;&gt;3. Nested 라우터&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;네스티드 라우터(Nested Router)&lt;/code&gt;는 라우터로 페이지를 이동할 때 최소 2개 이상의 컴포넌트를 화면에 나타낼 수 있다.&lt;br /&gt;
-이는 상위 컴포넌트 1개에 하위 컴포넌트 1개를 포함하는 구조로 다음과 같다.&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_8_1.png&quot; alt=&quot;&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;네스티드 라우터의 구조&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;맨 왼쪽에는 아무것도 지정하지 않았기 때문에 User 컴포넌트만 노출&lt;/li&gt;
-  &lt;li&gt;오른쪽 2개의 그림에는 post, profile에 따라 각각 Post, Profile 컴포넌트가 노출&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이를 코드로 나타내면 다음과 같다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Nested Router&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- User 컴포넌트가 뿌려질 영역 --&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// 컴포넌트 내용 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-          &amp;lt;div&amp;gt;
-            User Component
-            // 하위 컴포넌트가 뿌려질 영역
-            &amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;
-          &amp;lt;/div&amp;gt;
-        &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProfile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;p&amp;gt;User Profile Component&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserPost&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;p&amp;gt;User Post Component&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 네스티드 라우팅 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/user&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;posts&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserPost&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;UserProfile&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 뷰 라우터 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;routes&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-      &lt;span class=&quot;c1&quot;&gt;// 뷰 인스턴스에 라우터 추가&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이러한 기법은 화면을 구성하는 컴포넌트의 수가 적을 때는 유용하지만, 한 번에 많은 컴포넌트를 표시하는데 한계가 있다.&lt;br /&gt;
-이를 위한 방안으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;네임드 뷰&lt;/code&gt;가 존재한다.&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-named-view&quot;&gt;4. Named View&lt;/h2&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;네임드 뷰(Named View)&lt;/code&gt;는 특정 페이지로 이동 했을 때, 여러 개의 컴포넌트를 동시에 표시하는 라우팅 방식이다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;p&gt;&lt;img src=&quot;/img/web/web_8_2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
-  &lt;figcaption&gt;네스티드 라우터 vs 네임드 뷰&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Vue Named View Sample&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;app&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 라우팅 영역 정의 --&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;header&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- name이 없는 경우는 디폴트 --&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;router-view&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;footer&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/router-view&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://unpkg.com/vue-router@3.0.1/dist/vue-router.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// 컴포넌트 내용 정의&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Body&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Body&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Header&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Footer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;lt;div&amp;gt;This is Footer&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;VueRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;// &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;의&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;속성과&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;컴포넌트를&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;연결&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;na&quot;&gt;footer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Footer&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$mount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#app&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;끝마치며&quot;&gt;끝마치며&lt;/h2&gt;
-&lt;p&gt;이로써 간단하게 뷰에서 제공하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;라우터&lt;/code&gt;에 대하여 알아보았다.&lt;br /&gt;
-다음 포스팅에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; 통신에 대해 알아보도록 하자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="vue" /><summary type="html">들어가기 앞서 웹 페이지의 경우, 여러 페이지로 구성되어 있기 때문에 페이지 간에 이동을 돕는 라우터를 사용해야 한다. 이를 위해 뷰에서는 뷰 라우터 라이브러리를 지원하는데 이번 포스팅에서는 이를 알아보도록 한다.</summary></entry></feed>
+다음 글에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;뷰 템플릿&lt;/code&gt;과 프로젝트 구성에 대해 알아보자.&lt;/p&gt;</content><author><name>owin2828</name></author><category term="devlog" /><category term="vue" /><summary type="html">들어가기 앞서 브라우저와 서버간의 통신을 위해 HTTP라는 프로토콜을 통한다. 이때 웹 앱 HTTP 통신의 대표적인 방법으로 jQuery의 ajax가 있다. 이는 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고 화면의 일부분만 변경할 수 있게 하는 자바 스크립트의 기법이다. 뷰에서도 마찬가지로 이를 지원하기 위한 라이브러리로 뷰 리소스와 axios를 지원한다.</summary></entry></feed>
