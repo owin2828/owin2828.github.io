@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    [GraphQL] 간단한 쿼리 작성 - 낮코밤코
+    [GraphQL] 간단한 뮤테이션 작성 - 낮코밤코
     
   </title>
 
-  <meta name="description" content="들어가기 앞서 지난 포스팅에 이어 이번에는 간단한 쿼리를 작성해보도록 한다.">
+  <meta name="description" content="들어가기 앞서 지난 포스팅에 이어 이번에는 간단한 뮤테이션을 작성해보도록 한다.">
 
   <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
   <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-4.html">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-5.html">
   <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
 
   <!-- 웹 폰트 설정 -->
@@ -115,13 +115,13 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>[GraphQL] 간단한 쿼리 작성</h1>
+            <h1>[GraphQL] 간단한 뮤테이션 작성</h1>
             
-            <h2 class="subheading">GraphQL + Node.js - 2</h2>
+            <h2 class="subheading">GraphQL + Node.js - 3</h2>
             
             <span class="meta">Posted by
               <a href="#">owin2828</a>
-              on 2020-11-17 12:55 &middot; <span class="reading-time" title="Estimated read time">
+              on 2020-11-17 13:38 &middot; <span class="reading-time" title="Estimated read time">
   
    5 mins  read </span>
 
@@ -153,7 +153,7 @@
 <li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#1-스키마-확장">1. 스키마 확장</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#2-resolver-함수-구현">2. resolver 함수 구현</a></li>
-<li class="sidebar-nav-item toc-h2"><a href="#3-쿼리-리졸브-과정">3. 쿼리 리졸브 과정</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-뮤테이션-테스트">3. 뮤테이션 테스트</a></li>
 <li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
 </ul>
       </nav>
@@ -163,7 +163,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 id="들어가기-앞서">들어가기 앞서</h2>
 <hr />
-<p>지난 포스팅에 이어 이번에는 간단한 쿼리를 작성해보도록 한다.</p>
+<p>지난 포스팅에 이어 이번에는 간단한 <code class="highlighter-rouge">뮤테이션</code>을 작성해보도록 한다.</p>
 
 <blockquote>
   <p>본 시리즈는 <a href="https://www.howtographql.com/graphql-js/0-introduction/">HOW TO GRAPHQL</a> 글을 참고하여 작성했습니다.<br />
@@ -184,6 +184,10 @@
     feed: [Link!]!
   }
 
+  type Mutation {
+    post(url: String!, description: String!): Link!
+  }
+
   type Link {
     id: ID!
     description: String!
@@ -191,105 +195,123 @@
   }
 </span><span class="s2">`</span>
 </code></pre></div></div>
-<p><code class="highlighter-rouge">Link</code>라는 새로운 타입이 정의되었고, 이는 Hacker News에 게시될 수 있는 링크를 나타낸다.<br />
-또한 id, description, url을 필드 값으로 가지며, 이를 통해 Query에서 Link 항복의 리스트를 <code class="highlighter-rouge">feed</code>를 통해 받을 수 있다.<br />
+<p>여기까지 하다보면, <code class="highlighter-rouge">typDefs</code>에 계속하여 스키마를 지정하기에는 무리가 있음을 알 수 있다.<br />
+따라서 스키마를 별도의 파일로 분리하여 리팩토링을 해보도록 하자.</p>
+
+<p><code class="highlighter-rouge">schema.graphql</code> 파일을 <code class="highlighter-rouge">src</code> 디렉토리 밑에 생성한다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node/src</span>
+<span class="nb">touch </span>src/schema.graphql
+</code></pre></div></div>
+
+<p>다음의 스키마를 새로 생성한 파일에 작성한다.</p>
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span><span class="w"> </span><span class="n">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">info</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+  </span><span class="n">feed</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Link</span><span class="p">!]!</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">type</span><span class="w"> </span><span class="n">Mutation</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!,</span><span class="w"> </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!):</span><span class="w"> </span><span class="n">Link</span><span class="p">!</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">type</span><span class="w"> </span><span class="n">Link</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nb">ID</span><span class="p">!</span><span class="w">
+  </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+  </span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">!</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>위 과정을 마치고, 기존의 <code class="highlighter-rouge">index.js</code>에서 스키마를 정의하는 부분을 삭제 후, 다음과 같이 변경한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="p">...</span>
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLServer</span><span class="p">({</span>
+  <span class="na">typeDefs</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/schema.graphql</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">resolvers</span><span class="p">,</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">GraphQLServer</code> 생성자는 위의 예시처럼, <code class="highlighter-rouge">typeDefs</code>가 <code class="highlighter-rouge">String</code>의 형태로 제공되어도 되고,<br />
+스키마의 정의를 포함하는 <code class="highlighter-rouge">별도의 파일</code>을 참조해도 된다는 장점을 지닌다.<br />
 <br /></p>
 
 <h2 id="2-resolver-함수-구현">2. resolver 함수 구현</h2>
 <hr />
-<p>GraphQL의 스키마에서는 <code class="highlighter-rouge">모든</code> 필드 값에 대하여 리졸버 함수를 가지므로, 각 필드에 대응하는 함수를 구현해야 한다.</p>
+<p>리졸버 함수를 다음과 같이 수정한다.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
 
-<span class="c1">// 1</span>
 <span class="kd">let</span> <span class="nx">links</span> <span class="o">=</span> <span class="p">[{</span>
   <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">link-0</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">www.howtographql.com</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Fullstack tutorial for GraphQL</span><span class="dl">'</span>
 <span class="p">}]</span>
 
+<span class="c1">// 1</span>
+<span class="kd">let</span> <span class="nx">idCount</span> <span class="o">=</span> <span class="nx">links</span><span class="p">.</span><span class="nx">length</span>
 <span class="kd">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">Query</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">info</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s2">`</span><span class="err">This is the API of a Hackernews Clone</span><span class="s2">`</span><span class="p">,</span>
-    <span class="c1">// 2</span>
     <span class="na">feed</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">links</span><span class="p">,</span>
   <span class="p">},</span>
-  <span class="c1">// 3</span>
-  <span class="na">Link</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">id</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
-    <span class="na">description</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
-    <span class="na">url</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
-  <span class="p">}</span>
+  <span class="na">Mutation</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// 2</span>
+    <span class="na">post</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+       <span class="kd">const</span> <span class="nx">link</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="s2">`</span><span class="err">link-</span><span class="p">${</span><span class="nx">idCount</span><span class="o">++</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+        <span class="na">description</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+        <span class="na">url</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+      <span class="p">}</span>
+      <span class="nx">links</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">link</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">link</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
 <span class="p">}</span>
 </code></pre></div></div>
 <ol>
-  <li>아직 DB를 연결하지 않았으므로, <code class="highlighter-rouge">메모리</code>에 정보들을 저장한다.</li>
-  <li><code class="highlighter-rouge">feed</code>라는 최상위 필드를 위한 새로운 리졸버를 추가한다.</li>
-  <li>스카미에 정의에 따라 <code class="highlighter-rouge">Link</code> 타입의 각 필드에 대응하는 3가지 리졸버들을 추가</li>
+  <li>새로 생성되는 <code class="highlighter-rouge">Link</code> 항목에 대한 고유한 ID 값의 변수를 할당한다.</li>
+  <li><code class="highlighter-rouge">post</code> 리졸버는 새로운 <code class="highlighter-rouge">link</code> 객체를 생성하고, <code class="highlighter-rouge">links</code> 리스트에 추가 후, 새로 생성된 <code class="highlighter-rouge">link</code> 객체를 반환한다.</li>
 </ol>
 
-<p>위의 구현 사항들을 localhost:5000에서 다음의 쿼리를 통해 테스트 해보도록 한다.</p>
-<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">query</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">feed</span><span class="w"> </span><span class="p">{</span><span class="w">
+<p>기존에는 없었던, 리졸버 함수에 2번째 인자로 <code class="highlighter-rouge">args</code> 가 담겨온다.<br />
+지금의 경우 생성될 <code class="highlighter-rouge">Link</code>의 <code class="highlighter-rouge">url</code>과 <code class="highlighter-rouge">description</code>을 의미한다.<br />
+<br /></p>
+
+<h2 id="3-뮤테이션-테스트">3. 뮤테이션 테스트</h2>
+<hr />
+<p>다음과 같은 새로운 API 동작들을 테스트 해보자.</p>
+<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mutation</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">post</span><span class="p">(</span><span class="w">
+    </span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.prisma.io"</span><span class="w">
+    </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prisma replaces traditional ORMs"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="n">id</span><span class="w">
-    </span><span class="n">url</span><span class="w">
-    </span><span class="n">description</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
-<p>이는 다음과 같은 응답을 돌려준다.</p>
+<blockquote>
+  <p>이때 post 리졸버 함수는 <code class="highlighter-rouge">link</code> 객체를 반환하므로, mutation에서 해당 객체의 반환 값을 <code class="highlighter-rouge">적어도 하나 이상</code>의 필드로 받아야 한다.<br />
+그렇지 않으면 에러가 발생하며, 위의 예시에서는 <code class="highlighter-rouge">id</code>를 통해 반환된 객체의 정보를 받아온다.</p>
+</blockquote>
+
+<p>이에 대한 서버의 응답은 다음과 같다.</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"feed"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.howtographql.com"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fullstack tutorial for GraphQL"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="nl">"post"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"link-1"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
-<p><br /></p>
 
-<h2 id="3-쿼리-리졸브-과정">3. 쿼리 리졸브 과정</h2>
-<hr />
-<p>위에서 다루었던 쿼리는 다음과 같다.</p>
-<div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">query</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">feed</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">id</span><span class="w">
-    </span><span class="n">url</span><span class="w">
-    </span><span class="n">description</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<p>쿼리에 사용된 <code class="highlighter-rouge">feed</code>, <code class="highlighter-rouge">id</code>, <code class="highlighter-rouge">url</code>, <code class="highlighter-rouge">description</code> 4가지 필드는 모두 스키마 정의에서 확인 가능하다.<br />
-또한 각 필드를 위해 데이터를 반환해주는 리졸버 함수를 구현하게 된다.</p>
-
-<p>즉, GraphQL 서버는 쿼리에 포함된 <code class="highlighter-rouge">모든</code> 필드에 대해 리졸버 함수를 각각 호출하고,<br />
-쿼리 모양에 따라 데이터를 잘 포장하여 응답으로 만드는 것이다.</p>
-
-<p>그러나 이러한 구현에서 벗어난 것은 <code class="highlighter-rouge">Link</code> 타입의 리졸버이다.</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Link</span><span class="p">:</span> <span class="p">{</span>
-  <span class="nl">id</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
-  <span class="nx">description</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
-  <span class="nx">url</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>모든 GraphQL 리졸버 함수는 <code class="highlighter-rouge">4개</code>의 인자를 입력 받는데, 위 코드에서는 생략되어 있다.<br />
-보통 <code class="highlighter-rouge">parent</code>(혹은 <code class="highlighter-rouge">root</code>)라고 불리는 인자는 호출되기 직전 리졸버 실행의 결과값이다.</p>
-
-<p>위의 코드에서 보이듯이 <code class="highlighter-rouge">feed</code> 리졸버가 호출되고 <code class="highlighter-rouge">links</code>에 포함된 모든 데이터릍 반환한다.<br />
-이어서 위 과정에서 반환된 리스트에 포함된 각 항목에 대해 <code class="highlighter-rouge">Link</code> 타입의 리졸버가 호출된다.<br />
-따라서 그 결과로, <code class="highlighter-rouge">Link</code>가 가지는 3개의 리졸버의 <code class="highlighter-rouge">parent</code> 객체는 <code class="highlighter-rouge">links</code> 리스트의 각 항목이다.</p>
-
-<p>현재 <code class="highlighter-rouge">Link</code> 리졸버 구현은 단순하게 이루어져 있기 때문에, 구현을 생략하더라고 정상적으로 서버가 동작한다.<br />
+<p>위의 뮤테이션을 통해 한번 요청을 보낼 때마다, <code class="highlighter-rouge">idCount</code> 값이 1씩 증가하고, ID가 바뀜을 알 수 있다.<br />
+생성된 객체들은 <code class="highlighter-rouge">feed</code> 쿼리를 통해 조회할 수 있다.<br />
 <br /></p>
 
 <h2 id="끝마치며">끝마치며</h2>
 <hr />
-<p>이로써 기본적인 GraphQL의 쿼리를 알아보았다. 다음에는 간단한 뮤테이션에 대해 알아보자.<br />
+<p>그러나 위와 같은 방법은 메모리를 사용하기에, 서버가 재시작되면 전부 <code class="highlighter-rouge">초기화</code>된다.<br />
+따라서 다음 포스팅에서는 <code class="highlighter-rouge">Database 연동</code>을 통해 저장하는 방법을 알아보자.  <br />
 <br /></p>
 
 
@@ -298,11 +320,9 @@
         <div class="btn-movepage">
 
           
-          <a href="/devlog/2020/11/17/GraphQL-3.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] GraphQL 맛보기"> << Previous</a>
+          <a href="/devlog/2020/11/17/GraphQL-4.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] 간단한 쿼리 작성"> << Previous</a>
           <!-- <span class="d-none d-md-inline">Post</span> -->
           
-          
-          <a href="/devlog/2020/11/17/GraphQL-5.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] 간단한 뮤테이션 작성">Next >></a>
           
 
         </div>
@@ -317,8 +337,8 @@
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'https://owin2828blog/devlog/2020/11/17/GraphQL-4.html';
-this.page.identifier = '/devlog/2020/11/17/GraphQL-4';
+this.page.url = 'https://owin2828blog/devlog/2020/11/17/GraphQL-5.html';
+this.page.identifier = '/devlog/2020/11/17/GraphQL-5';
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE

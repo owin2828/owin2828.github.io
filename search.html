@@ -139,6 +139,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-11-17-graphql-5-html": {
+        "title": "[GraphQL] 간단한 뮤테이션 작성",
+        "subtitle":"GraphQL + Node.js - 3",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "GraphQL",
+        "content": "들어가기 앞서지난 포스팅에 이어 이번에는 간단한 뮤테이션을 작성해보도록 한다.  본 시리즈는 HOW TO GRAPHQL 글을 참고하여 작성했습니다.기존에 참조하던 cadenzah 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. 1. 스키마 확장index.js에 작성된 스키마를 다음과 같이 변경한다.// ./hackernews-node/src/index.jsconst typeDefs = `  type Query {    info: String!    feed: [Link!]!  }  type Mutation {    post(url: String!, description: String!): Link!  }  type Link {    id: ID!    description: String!    url: String!  }`여기까지 하다보면, typDefs에 계속하여 스키마를 지정하기에는 무리가 있음을 알 수 있다.따라서 스키마를 별도의 파일로 분리하여 리팩토링을 해보도록 하자.schema.graphql 파일을 src 디렉토리 밑에 생성한다.# ./hackernews-node/srctouch src/schema.graphql다음의 스키마를 새로 생성한 파일에 작성한다.type Query {  info: String!  feed: [Link!]!}type Mutation {  post(url: String!, description: String!): Link!}type Link {  id: ID!  description: String!  url: String!}위 과정을 마치고, 기존의 index.js에서 스키마를 정의하는 부분을 삭제 후, 다음과 같이 변경한다.// ./hackernews-node/src/index.js...const server = new GraphQLServer({  typeDefs: './src/schema.graphql',  resolvers,})GraphQLServer 생성자는 위의 예시처럼, typeDefs가 String의 형태로 제공되어도 되고,스키마의 정의를 포함하는 별도의 파일을 참조해도 된다는 장점을 지닌다.2. resolver 함수 구현리졸버 함수를 다음과 같이 수정한다.// ./hackernews-node/src/index.jslet links = [{  id: 'link-0',  url: 'www.howtographql.com',  description: 'Fullstack tutorial for GraphQL'}]// 1let idCount = links.lengthconst resolvers = {  Query: {    info: () =&gt; `This is the API of a Hackernews Clone`,    feed: () =&gt; links,  },  Mutation: {    // 2    post: (parent, args) =&gt; {       const link = {        id: `link-${idCount++}`,        description: args.description,        url: args.url,      }      links.push(link)      return link    }  },}  새로 생성되는 Link 항목에 대한 고유한 ID 값의 변수를 할당한다.  post 리졸버는 새로운 link 객체를 생성하고, links 리스트에 추가 후, 새로 생성된 link 객체를 반환한다.기존에는 없었던, 리졸버 함수에 2번째 인자로 args 가 담겨온다.지금의 경우 생성될 Link의 url과 description을 의미한다.3. 뮤테이션 테스트다음과 같은 새로운 API 동작들을 테스트 해보자.mutation {  post(    url: \"www.prisma.io\"    description: \"Prisma replaces traditional ORMs\"  ) {    id  }}  이때 post 리졸버 함수는 link 객체를 반환하므로, mutation에서 해당 객체의 반환 값을 적어도 하나 이상의 필드로 받아야 한다.그렇지 않으면 에러가 발생하며, 위의 예시에서는 id를 통해 반환된 객체의 정보를 받아온다.이에 대한 서버의 응답은 다음과 같다.{  \"data\": {    \"post\": {      \"id\": \"link-1\"    }  }}위의 뮤테이션을 통해 한번 요청을 보낼 때마다, idCount 값이 1씩 증가하고, ID가 바뀜을 알 수 있다.생성된 객체들은 feed 쿼리를 통해 조회할 수 있다.끝마치며그러나 위와 같은 방법은 메모리를 사용하기에, 서버가 재시작되면 전부 초기화된다.따라서 다음 포스팅에서는 Database 연동을 통해 저장하는 방법을 알아보자.  ",
+        "url": "/devlog/2020/11/17/GraphQL-5.html"
+      }
+      ,
+    
       "devlog-2020-11-17-graphql-4-html": {
         "title": "[GraphQL] 간단한 쿼리 작성",
         "subtitle":"GraphQL + Node.js - 2",
