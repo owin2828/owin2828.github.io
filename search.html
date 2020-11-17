@@ -139,6 +139,17 @@
 <script>
   window.store = {
     
+      "devlog-2020-11-17-graphql-7-html": {
+        "title": "[GraphQL] Prisma Client를 이용한 서버-DB연결",
+        "subtitle":"GraphQL + Node.js - 5",
+        "author": "owin2828", 
+        "categories": "devlog",
+        "tags": "GraphQL",
+        "content": "들어가기 앞서지난 포스팅에 이어 Prisma API가 제공하는 인터페이스를 사용하여 GraphQL 서버와 데이터베이스를 연결을 해본다.이 연결은 Prisma Client를 사용하여 구현될 예정이다.  본 시리즈는 HOW TO GRAPHQL 글을 참고하여 작성했습니다.기존에 참조하던 cadenzah 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. 1. Prisma Client로 GraphQL 스키마 연결가장 먼저 해야 할 일은 생성된 Prisma Client 라이브러리를 가져와 GraphQL 서버를 연결하여,새로운 Prisma Cleint가 연동하는 데이터베이스 쿼리에 접근하는 것이다.2. GraphQL context Resolver 인자초반부에 진행된 포스팅에서 GraphQL의 리졸버 함수는 항상 4개의 인자를 받는다고 하였다.이 중, context 인자는 리졸버 체인에 포함된 모든 리졸버가 읽고 쓸 수 있는 일반 자바스크립트 객체이다.따라서 이를 이용하여 리졸버끼리 기본적으로 통신을 할 수 있게 된다.또한 GraphQL은 서버사 초기화되는 시점에 context 객체에 값을 쓰는것이 가능하다.최종적으로, context를 사용하면 임의의 데이터나 함수를 리졸버에 전달할 수 있다.3. Prisma Client를 사용하도록 Resolver 함수 수정index.js 파일의 상단에 PrismaClient를 가져온다.// ./hackernews-node/src/index.jsconst { PrismaClient } = require('@prisma/client')또 하단에 다음의 코드를 추가하여, 서버사 초기화될 때 context에 PrismaClient를 추가할 수 있다.// ./hackernews-node/src/index.jsconst prisma = new PrismaClient()const server = new GraphQLServer({  typeDefs: './src/schema.graphql',  resolvers,  context: {    prisma,  }})이제 context의 모든 GraphQL 리졸버로 전달 된 객체가 서버가 초기화 될 때 초기화된다.또한 PrismaClient가 인스턴스화 될 때 여기에서 연결하기 때문에, 모든 리졸버에서 접근이 가능해진다.이를 기반으로 기존 코드를 리팩토링하자.실제 데이터는 데이터베이스에 저장되므로 기존에 사용하던 배열 및 idCount 변수를 삭제한다.// ./hackernews-node/src/index.jsconst resolvers = {  Query: {    info: () =&gt; `This is the API of a Hackernews Clone`,    feed: async (parent, args, context) =&gt; {      return context.prisma.link.findMany()    },  },  Mutation: {    post: (parent, args, context, info) =&gt; {      const newLink = context.prisma.link.create({        data: {          url: args.url,          description: args.description,        },      })      return newLink    },  },}4. feed Resolver의 이해// ./hackernews-node/src/index.jsfeed: async (parent, args, context, info) =&gt; {  return context.prisma.link.findMany()},feed 리졸버는 위와 같이 구현되는데, 좀 전에 논의한 conetx를 통해 prisma 객체에 접근한다.이와 같은 방법으로, Prisma Client API가 제공하는 방법을 통해 데이터 베이스에 접근이 가능하다.5. post Resolver의 이해// ./hackernews-node/src/index.jspost: (parent, args, context) =&gt; {  const newLink = context.prisma.link.create({    data: {      url: args.url,      description: args.description,    },  })  return newLink},feed 리졸버와 비슷하게, context에 부착된 Prisma Client 객체를 통해 일을 수행한다.Prisma Cleint API가 제공하는 link의 create 함수를 호출하며, 인자는 args 인자를 통해 리졸버 내부로 전달한다.이러한 데이터베이스에 접근하여 CRUD를 수행하는 API는 schema.prisma에 작성된 내용을 기반으로 자동으로 생성된다.6. 새로운 기능 테스트데이터베이스와의 연동 및 CRUD API를 구현했으므로 GraphQL Playground(localhost:5000)에 접속하여 테스트를 진행하자.데이터 베이스에 저장하므로, feed 쿼리와 post 뮤테이션이 서버가 재시작하더라도 정상작동 할 것이다.7. Prisma Studio를 이용한 데이터베이스 접근Prisma는 Prisma Studio라는 데이터베이스 GUI를 제공한다.아래의 명령을 통해 접근이 가능하며, 이를 기반으로 좀더 직관적인 접근이 가능하다.# ./hackernews-nodenpx prisma studio --experimental  Prisma Studio 화면끝마치며Prisma Client를 이용한 리졸버 구현 및 데이터베이스 접근 방법에 대해 알아보았다.다음 포스팅에서는 검증에 대하여 알아보도록 한다.",
+        "url": "/devlog/2020/11/17/GraphQL-7.html"
+      }
+      ,
+    
       "devlog-2020-11-17-graphql-6-html": {
         "title": "[GraphQL] Psima를 이용한 Database 연동",
         "subtitle":"GraphQL + Node.js - 4",

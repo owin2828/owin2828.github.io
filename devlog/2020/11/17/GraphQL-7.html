@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    [GraphQL] Prisma Client를 이용한 서버-DB연결 - 낮코밤코
+    
+  </title>
+
+  <meta name="description" content="들어가기 앞서 지난 포스팅에 이어 Prisma API가 제공하는 인터페이스를 사용하여 GraphQL 서버와 데이터베이스를 연결을 해본다. 이 연결은 Prisma Client를 사용하여 구현될 예정이다.">
+
+  <link href='http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://owin2828.github.io/devlog/2020/11/17/GraphQL-7.html">
+  <link rel="alternate" type="application/rss+xml" title="낮코밤코" href="/feed.xml">
+
+  <!-- 웹 폰트 설정 -->
+  <!-- <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"> -->
+  <link rel="stylesheet" href="/assets/syntax.css">
+  
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TVK6F4S');</script>
+    <!-- End Google Tag Manager -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154694140-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154694140-1');
+</script>
+
+
+</head>
+
+
+<body>
+  
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TVK6F4S"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">&#9750; Fake it, till U make it</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div
+     class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/about">| About</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">| All Posts</a>
+        </li>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href=# id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Devlog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/devlog/aws">AWS</a>
+            <a class="dropdown-item" href="/devlog/devops/">DevOps</a>
+            <a class="dropdown-item" href="/devlog/java">Java</a>
+            <a class="dropdown-item" href="/devlog/GraphQL">GraphQL</a>
+            <a class="dropdown-item" href="/devlog/spring">Spring</a>
+            <a class="dropdown-item" href="/devlog/web">Web</a>
+            <a class="dropdown-item" href="/devlog/vue">Vue</a>
+            <a class="dropdown-item" href="/devlog/etc">Etc</a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/contact">| Contact</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/search">
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/background_GraphQL.png')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>[GraphQL] Prisma Client를 이용한 서버-DB연결</h1>
+            
+            <h2 class="subheading">GraphQL + Node.js - 5</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">owin2828</a>
+              on 2020-11-17 16:51 &middot; <span class="reading-time" title="Estimated read time">
+  
+   6 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-content">
+    <div class="row">
+      <div id="SideNav">
+    <div id="_sidebar" class="sidebar">
+      <div class="sidebar-bg" style="background-color:;background-image:url()"></div>
+      <header class="sidebar-sticky" role="banner">
+        <br/>
+        <div class="sidebar-about">
+          
+            <h5><a href="/devlog/GraphQL/">글 목록으로</a></h5>
+          
+        </div>
+        <br/>
+          <div class="sidebar-about">
+            <h5>목차</h5>
+          </div>
+      <nav class="sidebar-nav heading" role="navigation">
+        <ul class="">
+<li class="sidebar-nav-item toc-h2"><a href="#들어가기-앞서">들어가기 앞서</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#1-prisma-client로-graphql-스키마-연결">1. Prisma Client로 GraphQL 스키마 연결</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#2-graphql-context-resolver-인자">2. GraphQL context Resolver 인자</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#3-prisma-client를-사용하도록-resolver-함수-수정">3. Prisma Client를 사용하도록 Resolver 함수 수정</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#4-feed-resolver의-이해">4. feed Resolver의 이해</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#5-post-resolver의-이해">5. post Resolver의 이해</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#6-새로운-기능-테스트">6. 새로운 기능 테스트</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#7-prisma-studio를-이용한-데이터베이스-접근">7. Prisma Studio를 이용한 데이터베이스 접근</a></li>
+<li class="sidebar-nav-item toc-h2"><a href="#끝마치며">끝마치며</a></li>
+</ul>
+      </nav>
+      </header>
+    </div>
+  </div>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h2 id="들어가기-앞서">들어가기 앞서</h2>
+<hr />
+<p>지난 포스팅에 이어 <code class="highlighter-rouge">Prisma API</code>가 제공하는 인터페이스를 사용하여 GraphQL 서버와 데이터베이스를 연결을 해본다.<br />
+이 연결은 <code class="highlighter-rouge">Prisma Client</code>를 사용하여 구현될 예정이다.</p>
+
+<blockquote>
+  <p>본 시리즈는 <a href="https://www.howtographql.com/graphql-js/0-introduction/">HOW TO GRAPHQL</a> 글을 참고하여 작성했습니다.<br />
+기존에 참조하던 <a href="https://velog.io/@cadenzah/graphql-node-01-introduction">cadenzah</a> 님의 포스팅이 deprecated되어 새롭게 작성하였습니다.<br />
+오타 및 의역이 있을 수 있으니 양해를 부탁 드리며, 수정 사항은 댓글로 알려주세요. <br />
+<br /></p>
+</blockquote>
+
+<h2 id="1-prisma-client로-graphql-스키마-연결">1. Prisma Client로 GraphQL 스키마 연결</h2>
+<hr />
+<p>가장 먼저 해야 할 일은 생성된 <code class="highlighter-rouge">Prisma Client</code> 라이브러리를 가져와 GraphQL 서버를 연결하여,<br />
+새로운 Prisma Cleint가 연동하는 <code class="highlighter-rouge">데이터베이스</code> 쿼리에 접근하는 것이다.<br />
+<br /></p>
+
+<h2 id="2-graphql-context-resolver-인자">2. GraphQL context Resolver 인자</h2>
+<hr />
+<p>초반부에 진행된 포스팅에서 GraphQL의 리졸버 함수는 항상 <code class="highlighter-rouge">4개</code>의 인자를 받는다고 하였다.<br />
+이 중, <code class="highlighter-rouge">context</code> 인자는 리졸버 체인에 포함된 <code class="highlighter-rouge">모든</code> 리졸버가 읽고 쓸 수 있는 일반 자바스크립트 객체이다.<br />
+따라서 이를 이용하여 리졸버끼리 기본적으로 통신을 할 수 있게 된다.<br />
+또한 GraphQL은 서버사 초기화되는 시점에 <code class="highlighter-rouge">context</code> 객체에 값을 쓰는것이 가능하다.<br />
+최종적으로, <code class="highlighter-rouge">context</code>를 사용하면 임의의 데이터나 함수를 리졸버에 전달할 수 있다.<br />
+<br /></p>
+
+<h2 id="3-prisma-client를-사용하도록-resolver-함수-수정">3. Prisma Client를 사용하도록 Resolver 함수 수정</h2>
+<hr />
+<p><code class="highlighter-rouge">index.js</code> 파일의 상단에 <code class="highlighter-rouge">PrismaClient</code>를 가져온다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">PrismaClient</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@prisma/client</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>또 하단에 다음의 코드를 추가하여, 서버사 초기화될 때 <code class="highlighter-rouge">context</code>에 PrismaClient를 추가할 수 있다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="kd">const</span> <span class="nx">prisma</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PrismaClient</span><span class="p">()</span>
+
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLServer</span><span class="p">({</span>
+  <span class="na">typeDefs</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/schema.graphql</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">resolvers</span><span class="p">,</span>
+  <span class="na">context</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">prisma</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>이제 context의 모든 GraphQL 리졸버로 전달 된 객체가 서버가 초기화 될 때 <code class="highlighter-rouge">초기화</code>된다.<br />
+또한 PrismaClient가 인스턴스화 될 때 여기에서 연결하기 때문에, <code class="highlighter-rouge">모든</code> 리졸버에서 접근이 가능해진다.</p>
+
+<p>이를 기반으로 기존 코드를 리팩토링하자.<br />
+실제 데이터는 데이터베이스에 저장되므로 기존에 사용하던 배열 및 idCount 변수를 <code class="highlighter-rouge">삭제</code>한다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="kd">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">Query</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">info</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s2">`</span><span class="err">This is the API of a Hackernews Clone</span><span class="s2">`</span><span class="p">,</span>
+    <span class="na">feed</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">context</span><span class="p">.</span><span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">findMany</span><span class="p">()</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="na">Mutation</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">post</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">newLink</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">url</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+          <span class="na">description</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">})</span>
+      <span class="k">return</span> <span class="nx">newLink</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h2 id="4-feed-resolver의-이해">4. feed Resolver의 이해</h2>
+<hr />
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="nx">feed</span><span class="p">:</span> <span class="k">async</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">context</span><span class="p">.</span><span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">findMany</span><span class="p">()</span>
+<span class="p">},</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">feed</code> 리졸버는 위와 같이 구현되는데, 좀 전에 논의한 <code class="highlighter-rouge">conetx</code>를 통해 <code class="highlighter-rouge">prisma</code> 객체에 접근한다.<br />
+이와 같은 방법으로, Prisma Client API가 제공하는 방법을 통해 데이터 베이스에 접근이 가능하다.<br />
+<br /></p>
+
+<h2 id="5-post-resolver의-이해">5. post Resolver의 이해</h2>
+<hr />
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ./hackernews-node/src/index.js</span>
+
+<span class="nx">post</span><span class="p">:</span> <span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">newLink</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">prisma</span><span class="p">.</span><span class="nx">link</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">url</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+      <span class="na">description</span><span class="p">:</span> <span class="nx">args</span><span class="p">.</span><span class="nx">description</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">})</span>
+  <span class="k">return</span> <span class="nx">newLink</span>
+<span class="p">},</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">feed</code> 리졸버와 비슷하게, <code class="highlighter-rouge">context</code>에 부착된 <code class="highlighter-rouge">Prisma Client</code> 객체를 통해 일을 수행한다.</p>
+
+<p>Prisma Cleint API가 제공하는 <code class="highlighter-rouge">link</code>의 <code class="highlighter-rouge">create</code> 함수를 호출하며, 인자는 <code class="highlighter-rouge">args</code> 인자를 통해 리졸버 내부로 전달한다.<br />
+이러한 데이터베이스에 접근하여 <code class="highlighter-rouge">CRUD</code>를 수행하는 API는 <code class="highlighter-rouge">schema.prisma</code>에 작성된 내용을 기반으로 자동으로 생성된다.<br />
+<br /></p>
+
+<h2 id="6-새로운-기능-테스트">6. 새로운 기능 테스트</h2>
+<hr />
+<p>데이터베이스와의 연동 및 CRUD API를 구현했으므로 GraphQL Playground(localhost:5000)에 접속하여 테스트를 진행하자.<br />
+데이터 베이스에 저장하므로, <code class="highlighter-rouge">feed</code> 쿼리와 <code class="highlighter-rouge">post</code> 뮤테이션이 서버가 재시작하더라도 정상작동 할 것이다.<br />
+<br /></p>
+
+<h2 id="7-prisma-studio를-이용한-데이터베이스-접근">7. Prisma Studio를 이용한 데이터베이스 접근</h2>
+<hr />
+<p>Prisma는 <a href="https://github.com/prisma/studio">Prisma Studio</a>라는 데이터베이스 GUI를 제공한다.<br />
+아래의 명령을 통해 접근이 가능하며, 이를 기반으로 좀더 <code class="highlighter-rouge">직관적</code>인 접근이 가능하다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ./hackernews-node</span>
+npx prisma studio <span class="nt">--experimental</span>
+</code></pre></div></div>
+
+<figure>
+<p><img src="/img/GraphQL/graphql_7_1.png" alt="" width="100%" /></p>
+  <figcaption>Prisma Studio 화면</figcaption>
+</figure>
+<p><br /></p>
+
+<h2 id="끝마치며">끝마치며</h2>
+<hr />
+<p>Prisma Client를 이용한 리졸버 구현 및 데이터베이스 접근 방법에 대해 알아보았다.<br />
+다음 포스팅에서는 <code class="highlighter-rouge">검증</code>에 대하여 알아보도록 한다.<br />
+<br /></p>
+
+
+        <hr>
+
+        <div class="btn-movepage">
+
+          
+          <a href="/devlog/2020/11/17/GraphQL-6.html" data-toggle="tooltip" data-placement="top" title="[GraphQL] Psima를 이용한 Database 연동"> << Previous</a>
+          <!-- <span class="d-none d-md-inline">Post</span> -->
+          
+          
+
+        </div>
+
+        
+          <div id="post-disqus">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://owin2828blog/devlog/2020/11/17/GraphQL-7.html';
+this.page.identifier = '/devlog/2020/11/17/GraphQL-7';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://owin2828blog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:owin2828@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/owin2828">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; owin2828 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<!-- 이미지 및 캡션 -->
+<script src="/assets/lib/jquery-1.12.0.min.js"></script>
+<script src="/assets/lib/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/index.js"></script>
+
+<!-- 사이드바 메뉴 플로팅 -->
+<script src="/assets/sidebar.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+</body>
+
+</html>
