@@ -585,7 +585,7 @@ GraphQL은 참조관계에 있는 위의 필드들을 어디서 가져와야하�
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 <p>서버가 이 뮤테이션을 받으면, <code class="highlighter-rouge">post</code> 리졸버를 호출하여 제공된 JWT를 <code class="highlighter-rouge">검증</code>한다.  <br />
-또한, 새로 생성되는 <code class="highlighter-rouge">Link</code>는 이전에 <code class="highlighter-rouge">signup</code> 뮤테이션을 통하여 전달된 <code class="highlighter-rouge">User</code>에 연결됩니다.</p>
+또한, 새로 생성되는 <code class="highlighter-rouge">Link</code>는 이전에 <code class="highlighter-rouge">signup</code> 뮤테이션을 통하여 전달된 <code class="highlighter-rouge">User</code>에 연결된다.</p>
 
 <p>모든 과정을 테스트하기 위해 <code class="highlighter-rouge">login</code> 뮤테이션 테스트를 진행하자.</p>
 <div class="language-graphql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">mutation</span><span class="w"> </span><span class="p">{</span><span class="w">
